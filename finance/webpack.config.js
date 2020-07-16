@@ -1,0 +1,104 @@
+const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+
+let UglifyArray = [], sourceMap="cheap-module-eval-source-map";
+const extractLeSS = new ExtractTextPlugin({
+  filename: '[name].css',
+  allChunks:true,
+});
+if(process.env.NODE_ENV === 'production'){
+  UglifyArray.push(new UglifyJSPlugin({
+    sourceMap: true,
+    uglifyOptions:{
+      compress:{
+        drop_console: true,
+        dead_code: true,
+      }
+    }
+  }));
+  sourceMap="none"
+}
+
+module.exports = {
+  entry:'./src/index.js',
+  mode:process.env.NODE_ENV,
+  devtool: sourceMap,
+  output: {
+    filename: '[name].[hash].js',
+    path: path.resolve(__dirname, 'dist')
+  },
+  module: {
+    rules: [
+      {
+        test: /\.less$/,
+        use: extractLeSS.extract({
+          use: ['css-loader', 'postcss-loader',{
+            loader:'less-loader',
+            options: {
+             lessOptions: {
+               modifyVars: {},
+               javascriptEnabled: true,
+             },
+           },
+          }]
+        })
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "babel-loader"
+      }
+    ]
+  },
+  plugins:[
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+       title: '资金端系统',
+       template:'./src/index.html'
+    }),
+    extractLeSS,
+    new webpack.ProvidePlugin({
+      'React':'react'
+    }),
+    ...UglifyArray
+    // new webpack.HotModuleReplacementPlugin(),
+  ],
+  optimization:{
+    splitChunks:{
+      cacheGroups: {
+        default: false,
+        vendors: false,
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          chunks: 'initial',
+          enforce: true,
+          priority: 10,
+          name: 'vendor'
+        },
+        common: {
+          chunks: "all",
+          minChunks: 2,
+          name: 'common',
+          enforce: true,
+          priority: 5
+        }
+      }
+    }
+  },
+  resolve:{
+    modules: [
+      'node_modules',
+      path.resolve(__dirname, './src'),
+    ],
+    alias:{},
+    extensions: [".js", ".json", ".jsx", ".css"],
+  },
+  devServer: {
+    compress: true,
+    port: 9000
+  },
+};
