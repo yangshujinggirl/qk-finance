@@ -4,6 +4,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const theme = require('./theme.js');
 
 let UglifyArray = [], sourceMap="cheap-module-eval-source-map";
 const extractLeSS = new ExtractTextPlugin({
@@ -40,7 +41,7 @@ module.exports = {
             loader:'less-loader',
             options: {
              lessOptions: {
-               modifyVars: {},
+               modifyVars: theme,
                javascriptEnabled: true,
              },
            },
@@ -94,7 +95,10 @@ module.exports = {
       'node_modules',
       path.resolve(__dirname, './src'),
     ],
-    alias:{},
+    alias:{
+      'utils':path.resolve(__dirname, 'src/utils/'),
+      'common':path.resolve(__dirname, 'src/common/'),
+    },
     extensions: [".js", ".json", ".jsx", ".css"],
   },
   devServer: {
