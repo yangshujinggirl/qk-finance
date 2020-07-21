@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom'
 import ViewCardPane from '../components/ViewCardPane';
 import BlockChainNode from '../components/BlockChainNode';
 import LatestCashFlow from '../components/LatestCashFlow';
+import AssetDistributeChart from '../components/AssetDistributeChart';
 import AssestStatusChart from './components/AssestStatusChart';
 import CashChart from './components/CashChart';
-import AssetDistributeChart from './components/AssetDistributeChart';
+
 import MaxAssetChart from './components/MaxAssetChart';
 import { YtTable, YtCard } from 'common';
 import './index.less';
