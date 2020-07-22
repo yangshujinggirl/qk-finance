@@ -94,8 +94,6 @@ textarea {
 }
 //去除Inpur默认样式
 .ant-input {
-  width: 100%;
-  // padding-left: 20px;
   box-sizing: border-box;
   border-radius: 0;
   font-size: 12px;
@@ -106,20 +104,24 @@ textarea {
   }
 }
 .ant-calendar-picker {
-  width: 100%;
+  // width: 100%;
 }
 //按钮hover颜色
 .ant-btn {
   height: @btn-height;
-  // &.ant-btn-primary {
-  //   &:focus,
-  //   &:hover {
-  //     background: @btnHover;
-  //   }
-  // }
 }
+
 //左右页面布局
 .common-two-module-wrap {
+  .ant-statistic {
+    display: inline-block;
+    .ant-statistic-content-prefix {
+      margin: 0;
+    }
+  }
+  .handle-common-action {
+    padding: 30px 0;
+  }
   .module-left-wrap {
       width: 66%;
   }
@@ -130,11 +132,12 @@ textarea {
   .part-same-shadow {
     box-shadow: 0px 4px 10px 0 rgba(0,0,0,.1);
     margin-bottom: 24px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #fff;
   }
 }
-.handle-common-action {
-  padding: 30px 0;
-}
+
 //嵌套FormItem
 .common-required-formItem {
   .ant-col.ant-form-item-label {
@@ -152,40 +155,20 @@ textarea {
   }
 
 }
-//FormItem下边距统一修改
-.ant-form-item {
-  margin-bottom: 16px;
-}
-
 .ant-table thead > tr > th,
 td {
   text-align: center;
+}
+.ant-table tr{
+  &:nth-child(even) {
+    background: #fafafa;
+  }
 }
 //文字做input显示使用
 .label-show-input {
   border: 0;
   background: rgba(0, 0, 0, 0);
   color: #666;
-}
-.action-left {
-  margin-right: 20px;
-}
-.ant-modal-header {
-  text-align: center;
-}
-//编辑页提示
-.suffix_tips {
-  color: #9b9b9b;
-  margin-left: 10px;
-}
-.btn_center {
-  text-align: center;
-  margin-top: 50px;
-}
-//编辑页按钮
-.edit_btn {
-  margin-top: 100px;
-  margin-right: 200px;
 }
 //弹窗居中
 .modal_center {
@@ -200,41 +183,4 @@ td {
       padding: 12px;
     }
   }
-}
-//input ranger时间
-.ant-picker-range {
-  width: 315px;
-}
-//input必填项前面的**
-.item_required {
-  .ant-form-item-label::before {
-    display: inline-block;
-    margin-right: 4px;
-    color: #ff4d4f;
-    font-size: 12px;
-    font-family: SimSun, sans-serif;
-    line-height: 1;
-    content: "*";
-  }
-}
-//详情的基本信息
-.base_info {
-  .ant-form-item {
-    display: inline-block;
-    padding:0 25px;
-    .ant-form-item-label,
-    .ant-form-item-control {
-      display: inline-block;
-    }
-  }
-}
-//Card组件的样式
-.ant-card-bordered{
-  margin-bottom:30px;
-}
-.ant-upload-list{
-  float:left
-}
-.ant-tabs-top-content > .ant-tabs-tabpane{
-  outline:none
 }

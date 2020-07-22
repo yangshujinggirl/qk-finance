@@ -54,8 +54,8 @@ class OperateWorkbench extends React.Component {
                 <div className="company-info box-flex">
                   <p className="cmy-name">债权方:成都市众惠农资有限公司</p>
                   <p className="status">未封包</p>
-                  <p className="pkg-info">资产包名称：ZCB_20191203_009</p>
-                  <p className="pkg-info">资产包编号：ZCB_20191203_009</p>
+                  <p className="pkg-info">资产包名称：<span className="val-sty">ZCB_20191203_009</span></p>
+                  <p className="pkg-info">资产包编号：<span className="val-sty">ZCB_20191203_009</span></p>
                 </div>
                 <div className="box-flex data-info">
                   <div className="info-im">
@@ -93,8 +93,8 @@ class OperateWorkbench extends React.Component {
                 <div className="company-info box-flex">
                   <p className="cmy-name">债权方:成都市众惠农资有限公司</p>
                   <p className="status">未封包</p>
-                  <p className="pkg-info">资产包名称：ZCB_20191203_009</p>
-                  <p className="pkg-info">资产包编号：ZCB_20191203_009</p>
+                  <p className="pkg-info">资产包名称：<span className="val-sty">ZCB_20191203_009</span></p>
+                  <p className="pkg-info">资产包编号：<span className="val-sty">ZCB_20191203_009</span></p>
                 </div>
                 <div className="box-flex data-info">
                   <div className="info-im">

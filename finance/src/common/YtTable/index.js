@@ -22,6 +22,7 @@ class YtTable extends Component {
   render() {
     const dataSource = this.processData(this.props.dataSource);
     const { bordered, select, title, columns,scroll,locale } = this.props;
+    console.log(this.props)
     return(
       <Table
         className="yt-common-table"
@@ -31,7 +32,6 @@ class YtTable extends Component {
         bordered={bordered}
         dataSource={dataSource}
         columns = {this.props.columns}
-        scroll={this.props.scroll}
         locale={locale}
         rowKey={this.props.rowKey?this.props.rowKey:(record)=>record.key}
         rowSelection={select?this.props.rowSelection:null}

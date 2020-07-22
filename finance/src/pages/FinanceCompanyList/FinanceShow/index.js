@@ -18,7 +18,7 @@ class FinanceShow extends React.Component {
   render() {
     const { visible } =this.state;
     return(
-      <div className="finance-company-list-wrap">
+      <div className="finance-company-list-wrap common-two-module-wrap">
         <div className="box-flex">
           <ViewCardPane
             label="新增融资订单数"

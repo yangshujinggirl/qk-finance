@@ -2,59 +2,34 @@
   .assetView-part-content {
     align-items: flex-start;
   }
-  .company-content-wrap {
+  .three-module-wrap {
+    display: flex;
+    margin-bottom: 24px;
+    .column-item {
+      width: 35%;
+      &:not(:last-child) {
+        margin-right: 1%;
+      }
+      &.two-row-mod {
+        .yt-common-card {
+          height: 210px;
+          &:nth-child(1) {
+            margin-bottom: 16px;
+          }
+          &:nth-child(2) {
+            .card-content {
+              padding-top: 0;
+            }
+          }
+       }
+      }
+    }
+    .asset-focus {
+
+    }
+  }
+  .tab-list-wrap {
     background: #fff;
-    .company-info {
-      color: #333333;
-      font-size: 14px;
-      line-height: 24px;
-      margin-bottom: 34px;
-      justify-content: flex-start;
-      .cmy-name {
-        font-size: 16px;
-      }
-      .status {
-        text-align: center;
-        width: 86px;
-        height: 26px;
-        line-height: 26px;
-        border-radius: 4px;
-        background: #FFFFFF;
-        border: 1px solid #2D65E1;
-        color: #2D65E1;
-        margin:0 20px 0 10px;
-      }
-      .pkg-info {
-        color: #999999;
-        margin-right: 30px;
-      }
-    }
-    .fin-item {
-      border-radius: 6px;
-      background: #FFFFFF;
-      padding: 28px 20px 20px;
-      box-shadow: 0px 4px 10px 0 rgba(0,0,0,.1);
-      margin-bottom: 20px;
-      align-items: flex-start;
-      .data-lf {
-        width:82%;
-      }
-      .chart-rf {
-        width:18%;
-      }
-    }
-    .info-im {
-      flex: 1;
-      .label-value {
-        color: #333333;
-        font-size: 20px;
-        line-height: 24px;
-      }
-      .label-name {
-        color: #999999;
-        font-size: 14px;
-        line-height: 24px;
-      }
-    }
+    padding: 0 16px;
   }
 }
