@@ -6,7 +6,14 @@ import AssetPackageView from './AssetPackageView';//资产包概览
 import AssetPackageInfo from './AssetPackageInfo';//资产包详情
 import AssetPackageVerifyInfo from './AssetPackageVerifyInfo';//资产包验真详情
 import AssetList from './AssetList';//资产
-import FinancApplyList from './FinancApplyList';//融资申请列表
+import FinanceApplyList from './FinanceApplyList';//融资申请列表
+import FinanceApplyEdit from './FinanceApplyEdit';//融资申请
+import FinanceApproveList from './FinanceApproveList';//融资审批
+import FinanceApproveEdit from './FinanceApproveEdit';//融资审批
+import LoanApplyList from './LoanApplyList';//放款申请列表
+import LoanApplyEdit from './LoanApplyEdit';//放款申请
+import LoanApproveList from './LoanApproveList';//放款审批列表
+import LoanApproveEdit from './LoanApproveEdit';//放款审批
 import FinanceWorkbench from './FinanceWorkbench';
 
 
@@ -17,7 +24,14 @@ function HomeRoutes() {
         <Route exact path="/account/assetView" component={AssetView} />
         <Route exact path="/account/assetList" component={AssetList} />
         <Route exact path="/account/assetPackageView" component={AssetPackageView} />
-        <Route exact path="/account/financApplyList" component={FinancApplyList} />
+        <Route exact path="/account/financeApply/edit/:id?" component={FinanceApplyEdit} />
+        <Route exact path="/account/financeApplyList" component={FinanceApplyList} />
+        <Route exact path="/account/financeApproveList" component={FinanceApproveList} />
+        <Route exact path="/account/financeApprove/edit/:id?" component={FinanceApproveEdit} />
+        <Route exact path="/account/loanApproveList" component={LoanApproveList} />
+        <Route exact path="/account/loanApprove/edit/:id?" component={LoanApproveEdit} />
+        <Route exact path="/account/loanApplyList" component={LoanApplyList} />
+        <Route exact path="/account/loanApply/edit/:id?" component={LoanApplyEdit} />
         <Route exact path="/account/assetPackageInfo" component={AssetPackageInfo} />
         <Route exact path="/account/assetPackageVerifyInfo" component={AssetPackageVerifyInfo} />
         <Route exact path="/account/financeCompany" component={FinanceCompanyList} />

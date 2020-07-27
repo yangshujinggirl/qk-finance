@@ -36,19 +36,15 @@ class FilterForm extends BaseFilter{
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item name="payment" label="还款方式" rules={[{ required: true }]}>
-              <Select
-                placeholder="请选择"
-                onChange={this.onGenderChange}
-                allowClear>
-                <Option value="male">male</Option>
-                <Option value="female">female</Option>
-                <Option value="other">other</Option>
-              </Select>
+            <Form.Item label="申请时间" name="time">
+            <RangePicker
+                defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
+                format={dateFormat}
+              />
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="还款状态" name="size">
+            <Form.Item label="审核状态" name="size">
                <Radio.Group>
                  <Radio.Button value="small">全部</Radio.Button>
                  <Radio.Button value="default">待审核</Radio.Button>
@@ -57,20 +53,12 @@ class FilterForm extends BaseFilter{
                </Radio.Group>
             </Form.Item>
           </Col>
-          <Col {...this.colspans}>
-            <Form.Item label="资产账期" name="time">
-            <RangePicker
-                defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
-                format={dateFormat}
-              />
-            </Form.Item>
-          </Col>
-          <Col span={24} offset={10}>
-            <YtBtn htmlType="submit" onClick={this.onSubmit}>
-              查询
-            </YtBtn>
-          </Col>
         </Row>
+        <div className="submit-btn-wrap">
+          <YtBtn htmlType="submit" onClick={this.onSubmit}>
+            查询
+          </YtBtn>
+        </div>
       </Form>
     );
   }

@@ -91,7 +91,7 @@ class FinanceShow extends React.Component {
   render() {
     const { visible } =this.state;
     return(
-      <div className="finance-company-list-wrap common-two-module-wrap">
+      <div className="finance-company-list-wrap yt-common-pages-wrap">
         <div className="box-flex">
           <ViewCardPane
             label="累计资产总笔数"

@@ -49,19 +49,29 @@ const menuList=[
         id:'2-0',
         name:'融资申请',
         chidrenNode:null,
-        path:'operateWorkbench',
+        path:'financeApplyList',
       },{
         id:'2-1',
-        name:'融资放款',
+        name:'融资审批',
         chidrenNode:null,
-        path:'operateWorkbench',
+        path:'financeApproveList',
       },{
         id:'2-2',
+        name:'放款申请',
+        chidrenNode:null,
+        path:'loanApplyList',
+      },{
+        id:'2-3',
+        name:'放款审批',
+        chidrenNode:null,
+        path:'loanApproveList',
+      },{
+        id:'2-4',
         name:'企业白名单',
         chidrenNode:null,
         path:'operateWorkbench',
       },{
-        id:'2-3',
+        id:'2-5',
         name:'请款管理',
         chidrenNode:null,
         path:'operateWorkbench',

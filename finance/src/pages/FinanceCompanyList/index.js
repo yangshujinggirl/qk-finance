@@ -1,6 +1,6 @@
 import { Tabs } from 'antd';
 import FinanceShow from './FinanceShow';
-
+import './index.less';
 
 const { TabPane } = Tabs;
 

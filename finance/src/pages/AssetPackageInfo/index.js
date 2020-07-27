@@ -95,7 +95,7 @@ class AssetPackageInfo extends React.Component {
     return(
       <div className="asset-package-info-pages-wrap common-two-module-wrap">
         <AssetInfoHead>
-          <div><YtBtn>过滤异常数据</YtBtn></div>
+          <div><YtBtn size="free">过滤异常数据</YtBtn></div>
         </AssetInfoHead>
         <div className="three-module-wrap">
           <div className="column-item part-same-shadow">

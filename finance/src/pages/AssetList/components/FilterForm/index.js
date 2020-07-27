@@ -42,34 +42,24 @@ class FilterForm extends BaseFilter{
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="资产金额">
-              <Form.Item
-              name="numSt"
-              rules={[{ required: true, message: '请输入Street' }]}
-              style={{ display: 'inline-block'}}>
-                <Input  className="two-multi-form-input" placeholder="请输入"/>
+            <Form.Item label="资产金额" className="two-multi-form-item">
+              <Form.Item name="numSt">
+                <Input   placeholder="请输入"/>
               </Form.Item>
-              <span>---</span>
-              <Form.Item name="numEt"
-              rules={[{ required: true, message: '请输入' }]}
-              style={{ display: 'inline-block'}}>
-                <Input  className="two-multi-form-input" placeholder="请输入"/>
+              <span className="line">---</span>
+              <Form.Item name="numEt">
+                <Input   placeholder="请输入"/>
               </Form.Item>
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="资产账期">
-              <Form.Item
-              name="payment"
-              rules={[{ required: true, message: '请输入Street' }]}
-              style={{ display: 'inline-block'}}>
-                <Input  className="two-multi-form-input"  placeholder="请输入"/>
+            <Form.Item label="资产账期"  className="two-multi-form-item">
+              <Form.Item name="payment">
+                <Input  placeholder="请输入"/>
               </Form.Item>
-              <span>---</span>
-              <Form.Item name="numEt"
-              rules={[{ required: true, message: '请输入' }]}
-              style={{ display: 'inline-block'}}>
-                <Input  className="two-multi-form-input"  placeholder="请输入"/>
+              <span className="line">---</span>
+              <Form.Item name="numEt">
+                <Input  placeholder="请输入"/>
               </Form.Item>
             </Form.Item>
           </Col>
@@ -83,12 +73,12 @@ class FilterForm extends BaseFilter{
               <Input   placeholder="请输入"/>
             </Form.Item>
           </Col>
-          <Col span={24} offset={10}>
-            <YtBtn htmlType="submit" onClick={this.onSubmit}>
-              查询
-            </YtBtn>
-          </Col>
         </Row>
+        <div className="submit-btn-wrap">
+          <YtBtn htmlType="submit" onClick={this.onSubmit}>
+            查询
+          </YtBtn>
+        </div>
       </Form>
     );
   }

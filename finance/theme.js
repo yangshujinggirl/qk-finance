@@ -5,9 +5,9 @@ module.exports = {
   "font-size-base": "14px",
   "btn-border-radius-base": "4px",
   "btn-height-base": "40px",
-  "form-item-margin-bottom": "10px",
+  "form-item-margin-bottom": "24px",
   "table-row-hover-bg": "#F4F4F5",
   "statistic-title-font-size": "12px",
-  "statistic-content-font-size": "14px",
+  "statistic-content-font-size": "12px",
   "statistic-unit-font-size": "12px"
 };

@@ -30,7 +30,7 @@ class FilterForm extends BaseFilter{
         className="yt-condition-form">
         <Row gutter={24}>
           <Col {...this.colspans}>
-            <Form.Item label="资产评级" name="size">
+            <Form.Item label="资产评级" name="level">
                <Radio.Group>
                  <Radio.Button value="small">关注</Radio.Button>
                  <Radio.Button value="default">黄色预警</Radio.Button>
@@ -50,29 +50,32 @@ class FilterForm extends BaseFilter{
                    <Radio.Button value="other">其他</Radio.Button>
                  </Radio.Group>
               </Form.Item>
-              <Form.Item name="otherInput" noStyle>
-                 <Input className="multi-form-input" />
+              <Form.Item
+                noStyle
+                shouldUpdate={(prevValues, currentValues) => prevValues.size !== currentValues.size}>
+                {({ getFieldValue }) => {
+                  return getFieldValue('size') === 'other' ? (
+                    <Form.Item name="otherInput" noStyle>
+                       <Input className="multi-form-input" />
+                    </Form.Item>
+                  ) : null;
+                }}
               </Form.Item>
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item name="name" label="企业名称" rules={[{ required: true }]}>
+            <Form.Item name="name" label="企业名称">
               <Input />
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="累计笔数">
-              <Form.Item
-              name="numSt"
-              rules={[{ required: true, message: '请输入Street' }]}
-              style={{ display: 'inline-block'}}>
-                <Input  className="multi-form-input" placeholder="请输入"/>
+            <Form.Item label="累计笔数" className="two-multi-form-item">
+              <Form.Item name="numSt">
+                <Input placeholder="请输入"/>
               </Form.Item>
-              <span>---</span>
-              <Form.Item name="numEt"
-              rules={[{ required: true, message: '请输入' }]}
-              style={{ display: 'inline-block'}}>
-                <Input  className="multi-form-input" placeholder="请输入"/>
+              <span className="line">---</span>
+              <Form.Item name="numEt">
+                <Input placeholder="请输入"/>
               </Form.Item>
             </Form.Item>
           </Col>
@@ -90,7 +93,7 @@ class FilterForm extends BaseFilter{
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item name="gender" label="排序" rules={[{ required: true }]}>
+            <Form.Item name="gender" label="排序">
               <Select
                 placeholder="Select a option and change input text above"
                 onChange={this.onGenderChange}
@@ -101,14 +104,12 @@ class FilterForm extends BaseFilter{
               </Select>
             </Form.Item>
           </Col>
-          <Col {...this.colspans}>
-            <Form.Item {...tailLayout}>
-              <YtBtn htmlType="submit" onClick={this.onSubmit}>
-                Submit
-              </YtBtn>
-            </Form.Item>
-          </Col>
         </Row>
+        <div className="submit-btn-wrap">
+          <YtBtn htmlType="submit" onClick={this.onSubmit}>
+            查询
+          </YtBtn>
+        </div>
       </Form>
     );
   }

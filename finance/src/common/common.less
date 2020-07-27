@@ -39,17 +39,6 @@ ul {
 img {
   width: 100%;
 }
-.cf:after,
-.cf:before {
-  content: "";
-  display: table;
-}
-.cf:after {
-  clear: both;
-}
-.cf {
-  *zoom: 1;
-}
 .box-flex {
   display: flex;
   align-items: center;
@@ -92,27 +81,77 @@ img {
 textarea {
   resize: none;
 }
+.ant-form-item-label > label {
+  color: #666;
+}
+.ant-picker {
+  width: 100%;
+  box-sizing: border-box;
+}
 //去除Inpur默认样式
 .ant-input {
   box-sizing: border-box;
   border-radius: 0;
   font-size: 12px;
+  // height: 32px;
   &:hover,
   &:focus {
     box-shadow: none;
     outline: none;
   }
 }
-.ant-calendar-picker {
-  // width: 100%;
-}
-//按钮hover颜色
-.ant-btn {
-  height: @btn-height;
+
+//table操作按钮
+.operate-link-btn {
+  color: #1B53BF;
+  cursor: pointer;
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
 }
 
-//左右页面布局
-.common-two-module-wrap {
+.ant-radio-group {
+  .ant-radio-button-wrapper {
+    color: #666666;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 6px;
+    background: #FFFFFF;
+    border: 1px solid #E4E7ED;
+    &:not(:first-child)::before {
+      width: 0;height: 0;padding: 0;
+    }
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+    &.ant-radio-button-wrapper-checked {
+      color: #2D65E1;
+      background: rgba(41,85,184,.1);
+      border: 1px solid #2D65E1;
+    }
+  }
+}
+.ant-tabs {
+  .ant-tabs-tab {
+    padding: 12px 20px;
+  }
+  .ant-tabs-content-holder {
+    padding: 20px 30px;
+  }
+}
+//按钮hover颜色
+// .ant-btn {
+//   height: @btn-height;
+// }
+//
+.part-same-shadow {
+  box-shadow: 0px 4px 10px 0 rgba(0,0,0,.1);
+  margin-bottom: 24px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+}
+.yt-common-pages-wrap {
   .ant-statistic {
     display: inline-block;
     .ant-statistic-content-prefix {
@@ -122,6 +161,21 @@ textarea {
   .handle-common-action {
     padding: 30px 0;
   }
+}
+.common-edit-pages-form {
+  .form-row-title {
+    color: #FD7B1F;
+    font-size: 16px;
+    line-height: 24px;
+    margin:30px 0 14px;
+  }
+  .edit-btn-wrap {
+    text-align: center;
+    padding: 30px 0;
+  }
+}
+//左右页面布局
+.common-two-module-wrap {
   .module-left-wrap {
       width: 66%;
   }
@@ -129,13 +183,7 @@ textarea {
     width: 33%;
     margin-left: 1%;
   }
-  .part-same-shadow {
-    box-shadow: 0px 4px 10px 0 rgba(0,0,0,.1);
-    margin-bottom: 24px;
-    border-radius: 6px;
-    overflow: hidden;
-    background: #fff;
-  }
+
 }
 
 //嵌套FormItem
@@ -155,9 +203,8 @@ textarea {
   }
 
 }
-.ant-table thead > tr > th,
-td {
-  text-align: center;
+.ant-table thead > tr > th,td {
+  // text-align: center;
 }
 .ant-table tr{
   &:nth-child(even) {
@@ -174,13 +221,5 @@ td {
 .modal_center {
   .ant-modal-body {
     text-align: center;
-  }
-}
-//頂部tab切换
-.ant-tabs-nav-wrap {
-  .ant-tabs-nav {
-    .ant-tabs-tab {
-      padding: 12px;
-    }
   }
 }
