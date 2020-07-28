@@ -32,12 +32,12 @@ const menuList=[
         id:'1-0',
         name:'融资企业',
         chidrenNode:null,
-        path:'financeCompany',
+        path:'financeCompanyView',
       },{
         id:'1-1',
         name:'资产包概览',
         chidrenNode:null,
-        path:'assetView',
+        path:'assetPackage/view',
       }
     ]
   },{

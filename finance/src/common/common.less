@@ -81,6 +81,14 @@ img {
 textarea {
   resize: none;
 }
+.ant-row.ant-row-center.ant-row-top {
+  margin-left: -0.5%!important;
+  margin-right: -0.5%!important;
+  .ant-col {
+    padding-left: 0.5%!important;
+    padding-right: 0.5%!important;
+  }
+}
 .ant-form-item-label > label {
   color: #666;
 }
@@ -159,7 +167,7 @@ textarea {
     }
   }
   .handle-common-action {
-    padding: 30px 0;
+    padding: 20px 0;
   }
 }
 .common-edit-pages-form {
@@ -201,16 +209,23 @@ textarea {
       }
     }
   }
-
 }
-.ant-table thead > tr > th,td {
-  // text-align: center;
-}
-.ant-table tr{
+//表格样式
+.ant-table .ant-table-tbody tr{
   &:nth-child(even) {
     background: #fafafa;
   }
 }
+//固定列
+.ant-table-scroll-horizontal.ant-table .ant-table-tbody tr{
+  &:nth-child(odd) {
+    background: #fafafa;
+  }
+  &:nth-child(even) {
+    background: #fff;
+  }
+}
+
 //文字做input显示使用
 .label-show-input {
   border: 0;

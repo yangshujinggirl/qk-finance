@@ -49,84 +49,88 @@ class OperateWorkbench extends React.Component {
         <div className="company-content-wrap">
           <FilterForm />
           <div className="finance-list">
-            <div className="fin-item box-flex">
-              <div className="data-lf">
-                <div className="company-info box-flex">
-                  <p className="cmy-name">债权方:成都市众惠农资有限公司</p>
-                  <p className="status">未封包</p>
-                  <p className="pkg-info">资产包名称：<span className="val-sty">ZCB_20191203_009</span></p>
-                  <p className="pkg-info">资产包编号：<span className="val-sty">ZCB_20191203_009</span></p>
-                </div>
-                <div className="box-flex data-info">
-                  <div className="info-im">
-                    <p className="label-value">100万</p>
-                    <p className="label-name">资产包含金额</p>
+            <Link to="/account/assetPackage/info/12">
+              <div className="fin-item box-flex">
+                <div className="data-lf">
+                  <div className="company-info box-flex">
+                    <p className="cmy-name">债权方:成都市众惠农资有限公司</p>
+                    <p className="status">未封包</p>
+                    <p className="pkg-info">资产包名称：<span className="val-sty">ZCB_20191203_009</span></p>
+                    <p className="pkg-info">资产包编号：<span className="val-sty">ZCB_20191203_009</span></p>
                   </div>
-                  <div className="info-im">
-                    <p className="label-value">200笔</p>
-                    <p className="label-name">资产笔数</p>
-                  </div>
-                  <div className="info-im">
-                    <p className="label-value">2020-05-10</p>
-                    <p className="label-name">最长账期</p>
-                  </div>
-                  <div className="info-im">
-                    <p className="label-value">2020-05-10</p>
-                    <p className="label-name">最大资产金额</p>
-                  </div>
-                  <div className="info-im">
-                    <p className="label-value">2020-05-10</p>
-                    <p className="label-name">债务企业</p>
-                  </div>
-                  <div className="info-im">
-                    <p className="label-value">2020-05-10</p>
-                    <p className="label-name">最短账期</p>
-                  </div>
-                </div>
-              </div>
-              <div className="chart-rf">
-                <AssetChart index={1}/>
-              </div>
-            </div>
-            <div className="fin-item box-flex">
-              <div className="data-lf">
-                <div className="company-info box-flex">
-                  <p className="cmy-name">债权方:成都市众惠农资有限公司</p>
-                  <p className="status">未封包</p>
-                  <p className="pkg-info">资产包名称：<span className="val-sty">ZCB_20191203_009</span></p>
-                  <p className="pkg-info">资产包编号：<span className="val-sty">ZCB_20191203_009</span></p>
-                </div>
-                <div className="box-flex data-info">
-                  <div className="info-im">
-                    <p className="label-value">100万</p>
-                    <p className="label-name">资产包含金额</p>
-                  </div>
-                  <div className="info-im">
-                    <p className="label-value">200笔</p>
-                    <p className="label-name">资产笔数</p>
-                  </div>
-                  <div className="info-im">
-                    <p className="label-value">2020-05-10</p>
-                    <p className="label-name">最长账期</p>
-                  </div>
-                  <div className="info-im">
-                    <p className="label-value">2020-05-10</p>
-                    <p className="label-name">最大资产金额</p>
-                  </div>
-                  <div className="info-im">
-                    <p className="label-value">2020-05-10</p>
-                    <p className="label-name">债务企业</p>
-                  </div>
-                  <div className="info-im">
-                    <p className="label-value">2020-05-10</p>
-                    <p className="label-name">最短账期</p>
+                  <div className="box-flex data-info">
+                    <div className="info-im">
+                      <p className="label-value">100万</p>
+                      <p className="label-name">资产包含金额</p>
+                    </div>
+                    <div className="info-im">
+                      <p className="label-value">200笔</p>
+                      <p className="label-name">资产笔数</p>
+                    </div>
+                    <div className="info-im">
+                      <p className="label-value">2020-05-10</p>
+                      <p className="label-name">最长账期</p>
+                    </div>
+                    <div className="info-im">
+                      <p className="label-value">2020-05-10</p>
+                      <p className="label-name">最大资产金额</p>
+                    </div>
+                    <div className="info-im">
+                      <p className="label-value">2020-05-10</p>
+                      <p className="label-name">债务企业</p>
+                    </div>
+                    <div className="info-im">
+                      <p className="label-value">2020-05-10</p>
+                      <p className="label-name">最短账期</p>
+                    </div>
                   </div>
                 </div>
+                <div className="chart-rf">
+                  <AssetChart index={1}/>
+                </div>
               </div>
-              <div className="chart-rf">
-                <AssetChart index={2}/>
+            </Link>
+            <Link to="/account/assetPackage/info/12">
+              <div className="fin-item box-flex">
+                <div className="data-lf">
+                  <div className="company-info box-flex">
+                    <p className="cmy-name">债权方:成都市众惠农资有限公司</p>
+                    <p className="status">未封包</p>
+                    <p className="pkg-info">资产包名称：<span className="val-sty">ZCB_20191203_009</span></p>
+                    <p className="pkg-info">资产包编号：<span className="val-sty">ZCB_20191203_009</span></p>
+                  </div>
+                  <div className="box-flex data-info">
+                    <div className="info-im">
+                      <p className="label-value">100万</p>
+                      <p className="label-name">资产包含金额</p>
+                    </div>
+                    <div className="info-im">
+                      <p className="label-value">200笔</p>
+                      <p className="label-name">资产笔数</p>
+                    </div>
+                    <div className="info-im">
+                      <p className="label-value">2020-05-10</p>
+                      <p className="label-name">最长账期</p>
+                    </div>
+                    <div className="info-im">
+                      <p className="label-value">2020-05-10</p>
+                      <p className="label-name">最大资产金额</p>
+                    </div>
+                    <div className="info-im">
+                      <p className="label-value">2020-05-10</p>
+                      <p className="label-name">债务企业</p>
+                    </div>
+                    <div className="info-im">
+                      <p className="label-value">2020-05-10</p>
+                      <p className="label-name">最短账期</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="chart-rf">
+                  <AssetChart index={1}/>
+                </div>
               </div>
-            </div>
+            </Link>
           </div>
           <YtPagination data={{total:500,currentPage:0,limit:15}}/>
         </div>
