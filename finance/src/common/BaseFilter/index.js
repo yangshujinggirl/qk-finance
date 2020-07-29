@@ -14,10 +14,10 @@ class BaseFilter extends Component {
     // 表单的FormItem的布局比例
     this.formItemLayout = {
       labelCol: {
-        span: 8
+        span: 6
       },
       wrapperCol: {
-        span: 16
+        span: 18
       }
     };
     // 表单的FormItem的布局比例
@@ -34,8 +34,8 @@ class BaseFilter extends Component {
       xs: 24,
       md: 24,
       lg: 12,
-      xl: 12,
-      xxl: 12
+      xl: 8,
+      xxl: 8
     };
   }
   handleSubmit = async () => {

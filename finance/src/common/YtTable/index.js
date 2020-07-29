@@ -22,7 +22,7 @@ class YtTable extends Component {
   render() {
     const dataSource = this.processData(this.props.dataSource);
     const { bordered, select, title, columns,scroll,locale } = this.props;
-    console.log(this.props)
+
     return(
       <Table
         className="yt-common-table"

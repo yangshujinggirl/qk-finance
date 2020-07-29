@@ -1,31 +1,37 @@
 import { Switch, Route, Link } from "react-router-dom";
 import OperateWorkbench from './OperateWorkbench';//资产端工作台
-import AssetView from './AssetView';//资产总览
-import FinanceCompanyView from './FinanceCompanyView';//融资企业
-import FinanceCompanyList from './FinanceCompanyList';//融资企业列表
-import AssetPackageView from './AssetPackageView';//资产包概览
-import AssetPackageInfo from './AssetPackageInfo';//资产包详情
-import AssetPackageVerifyInfo from './AssetPackageVerifyInfo';//资产包验真详情
-import AssetList from './AssetList';//资产
-import FinanceApplyList from './FinanceApplyList';//融资申请列表
-import FinanceApplyEdit from './FinanceApplyEdit';//融资申请
-import FinanceApproveList from './FinanceApproveList';//融资审批
-import FinanceApproveEdit from './FinanceApproveEdit';//融资审批
+import AssetView from './asset/AssetView';//资产总览
+import FinanceCompanyView from './finance/FinanceCompanyView';//融资企业
+import FinanceCompanyList from './finance/FinanceCompanyList';//融资企业列表
+import AssetPackageView from './asset/AssetPackageView';//资产包概览
+import AssetPackageInfo from './asset/AssetPackageInfo';//资产包详情
+import AssetPackageVerifyInfo from './asset/AssetPackageVerifyInfo';//资产包验真详情
+import AssetList from './asset/AssetList';//资产列表
+import AssetInfo from './asset/AssetInfo';//资产详情
+import AssetVerifyInfo from './asset/AssetVerifyInfo';//资产验真详情
+import AssetSource from './asset/AssetSource';//资产溯源
+import FinanceApplyList from './finance/FinanceApplyList';//融资申请列表
+import FinanceApplyEdit from './finance/FinanceApplyEdit';//融资申请
+import FinanceApproveList from './finance/FinanceApproveList';//融资审批
+import FinanceApproveEdit from './finance/FinanceApproveEdit';//融资审批
 import LoanApplyList from './LoanApplyList';//放款申请列表
 import LoanApplyEdit from './LoanApplyEdit';//放款申请
 import LoanApproveList from './LoanApproveList';//放款审批列表
 import LoanApproveEdit from './LoanApproveEdit';//放款审批
 import CreditVerify from './CreditVerify';//主体信用验证
-import FinanceWorkbench from './FinanceWorkbench';//工作台
+import FinanceWorkbench from './finance/FinanceWorkbench';//工作台
 
 
 function HomeRoutes() {
   return (
     <Switch>
-        <Route exact path="/account/creditVerify" component={CreditVerify} />
+        <Route exact path="/account/asset/source/:id" component={AssetSource} />
+        <Route exact path="/account/assetVerify/info/:id" component={AssetVerifyInfo} />
+        <Route exact path="/account/creditVerify/:id" component={CreditVerify} />
         <Route exact path="/account/operateWorkbench" component={OperateWorkbench} />
         <Route exact path="/account/asset/view/:id" component={AssetView} />
         <Route exact path="/account/assetList/:id" component={AssetList} />
+        <Route exact path="/account/asset/info/:id" component={AssetInfo} />
         <Route exact path="/account/assetPackage/view" component={AssetPackageView} />
         <Route exact path="/account/financeApply/edit/:id?" component={FinanceApplyEdit} />
         <Route exact path="/account/financeApplyList" component={FinanceApplyList} />

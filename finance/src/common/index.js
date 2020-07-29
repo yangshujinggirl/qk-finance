@@ -8,6 +8,8 @@ import _BaseEditForm from './BaseEditForm';
 import _YtUpLoadAndDownLoad from './YtUpLoadAndDownLoad';
 import _YtMessage from './YtMessage';
 import _YtDownLoad from './YtDownLoad';
+import _YtBaseInfo from './YtBaseInfo';
+import _YtCollapse from './YtCollapse';
 
 export const YtTable = _YtTable;
 export const YtCard = _YtCard;
@@ -19,3 +21,5 @@ export const BaseEditForm = _BaseEditForm;
 export const YtUpLoadAndDownLoad = _YtUpLoadAndDownLoad;
 export const YtMessage = _YtMessage;
 export const YtDownLoad = _YtDownLoad;
+export const YtBaseInfo = _YtBaseInfo;
+export const YtCollapse = _YtCollapse;

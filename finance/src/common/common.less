@@ -81,7 +81,7 @@ img {
 textarea {
   resize: none;
 }
-.ant-row.ant-row-center.ant-row-top {
+.ant-row.ant-row-top {
   margin-left: -0.5%!important;
   margin-right: -0.5%!important;
   .ant-col {
@@ -183,7 +183,10 @@ textarea {
   }
 }
 //左右页面布局
-.common-two-module-wrap {
+.common-column-module-wrap {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
   .module-left-wrap {
       width: 66%;
   }
@@ -191,9 +194,15 @@ textarea {
     width: 33%;
     margin-left: 1%;
   }
-
+  //二等分
+  .module-equal-two-wrap {
+      width: 48%;
+  }
+  //三等分
+  .module-equal-thr-wrap {
+      width: 33%;
+  }
 }
-
 //嵌套FormItem
 .common-required-formItem {
   .ant-col.ant-form-item-label {
