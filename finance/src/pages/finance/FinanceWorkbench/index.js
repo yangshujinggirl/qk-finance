@@ -110,10 +110,11 @@ class OperateWorkbench extends React.Component {
               </ViewCardPane>
             </div>
             <div className="company-list part-same-shadow">
-              <YtTable
-                columns={columns}
-                dataSource={data}
-                title={() => '融资企业'}/>
+              <YtCard title="融资企业">
+                <YtTable
+                  columns={columns}
+                  dataSource={data}/>
+              </YtCard>
             </div>
             <div className="part-same-shadow">
               <LatestCashFlow />

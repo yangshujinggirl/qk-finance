@@ -15,7 +15,7 @@ class YtTable extends Component {
       return data;
     }
     data && data.map((item, i) => {
-        item.onOperateClick = (type) => { this.props.onOperateClick(item, type) };
+        item.onOperateClick = (type) => { this.props.onOperateClick({item, type}) };
     })
     return data;
   }

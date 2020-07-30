@@ -51,7 +51,7 @@ class FinanceShow extends React.Component {
   render() {
     const { visible } =this.state;
     return(
-      <div className="finance-company-list-wrap yt-common-pages-wrap">
+      <div className="finance-company-list-wrap">
         <div className="box-flex">
           <ViewCardPane
             label="累计资产总笔数"
@@ -159,11 +159,11 @@ class FinanceShow extends React.Component {
             </div>
           </ViewCardPane>
         </div>
-        <div className="handle-common-action">
-          <YtBtn onClick={this.goCreat}>+资产包创建</YtBtn>
-        </div>
-        <div className="main-content">
+        <div className="yt-common-list-pages-wrap">
           <FilterForm />
+          <div className="handle-common-action">
+            <YtBtn onClick={this.goCreat}>+资产包创建</YtBtn>
+          </div>
           <YtTable
            columns={columnsList}
            dataSource={data}/>

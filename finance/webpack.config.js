@@ -52,7 +52,17 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: "babel-loader"
-      }
+      },
+      {
+        test: /\.(png|jpg|gif)$/i,
+        use: [{
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              name: 'image/[name].[ext]'
+            },
+        }],
+      },
     ]
   },
   plugins:[
@@ -98,6 +108,7 @@ module.exports = {
     alias:{
       'utils':path.resolve(__dirname, 'src/utils/'),
       'common':path.resolve(__dirname, 'src/common/'),
+      'image':path.resolve(__dirname, 'src/image/'),
     },
     extensions: [".js", ".json", ".jsx", ".css"],
   },

@@ -2,7 +2,7 @@ import { Statistic, Progress } from 'antd';
 import { Link } from 'react-router-dom';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import { YtStatistic, YtPagination, YtTable, YtBtn } from 'common';
-import ViewCardPane from '../ViewCardPane';
+import ViewCardPane from '../../../components/ViewCardPane';
 import FilterForm from './components/FilterForm';
 import { columnsApply, columnsApprove } from './columns';
 import './index.less'
@@ -51,7 +51,7 @@ function withSubscription(handleType,Mod) {
       const { visible } =this.state;
       let columns = handleType=="1"?columnsApply:columnsApprove;
       return(
-        <div className="finance-company-list-wrap yt-common-pages-wrap">
+        <div className="finance-company-list-wrap">
           <div className="box-flex">
             <ViewCardPane
               label="累计申请融资笔数"
@@ -90,7 +90,7 @@ function withSubscription(handleType,Mod) {
               </div>
             </ViewCardPane>
           </div>
-          <div className="main-content">
+          <div className="main-content yt-common-list-pages-wrap">
             <FilterForm />
             <YtTable
               scroll={{ x: 1300 }}

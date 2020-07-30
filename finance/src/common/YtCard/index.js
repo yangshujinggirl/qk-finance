@@ -5,16 +5,9 @@ function YtCard({...props}){
   return <Card
           title={props.title}
           extra={props.extra}
-          className={`yt-common-card ${props.className}`}>
+          className={`yt-common-card ${props.className} ${props.bordered?'card-border-head':''}`}>
             {props.children}
           </Card>
 }
-//
-// function YtCard({...props}){
-//   return <div className={`yt-common-card ${props.className}`}>
-//             <p className="label-title">{props.title}</p>
-//             <div className="card-content">{props.children}</div>
-//          </div>
-// }
 
 export default YtCard;

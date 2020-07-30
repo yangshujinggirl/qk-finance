@@ -65,17 +65,18 @@ const menuList=[
         name:'放款审批',
         chidrenNode:null,
         path:'loanApproveList',
-      },{
-        id:'2-4',
-        name:'企业白名单',
-        chidrenNode:null,
-        path:'operateWorkbench',
-      },{
-        id:'2-5',
-        name:'请款管理',
-        chidrenNode:null,
-        path:'operateWorkbench',
-      }
+      },
+      // {
+      //   id:'2-4',
+      //   name:'企业白名单',
+      //   chidrenNode:null,
+      //   path:'operateWorkbench',
+      // },{
+      //   id:'2-5',
+      //   name:'请款管理',
+      //   chidrenNode:null,
+      //   path:'operateWorkbench',
+      // }
     ]
   },{
     id:3,
@@ -86,12 +87,12 @@ const menuList=[
         id:'3-0',
         name:'银行流水',
         chidrenNode:null,
-        path:'operateWorkbench',
+        path:'statement',
       },{
         id:'3-1',
         name:'回款计划',
         chidrenNode:null,
-        path:'operateWorkbench',
+        path:'paymentPlan',
       }
     ]
   },{
@@ -103,17 +104,17 @@ const menuList=[
         id:'4-0',
         name:'组织管理',
         chidrenNode:null,
-        path:'operateWorkbench',
+        path:'organization',
       },{
         id:'4-1',
         name:'角色管理',
         chidrenNode:null,
-        path:'operateWorkbench',
+        path:'role',
       },{
         id:'4-2',
         name:'用户管理',
         chidrenNode:null,
-        path:'operateWorkbench',
+        path:'user',
       }
     ]
   }

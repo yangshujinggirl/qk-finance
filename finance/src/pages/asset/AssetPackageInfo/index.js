@@ -13,13 +13,10 @@ const columns = [
   {
   title: '资产编号',
   dataIndex: 'code',
-  render: text => <a>{text}</a>,
   },
   {
   title: '资产金额(万元)',
-  className: 'column-money',
   dataIndex: 'name',
-  align: 'right',
   },
   {
   title: '资产账期(天)',
@@ -126,13 +123,13 @@ class AssetPackageInfo extends React.Component {
              </YtCard>
           </div>
         </div>
-        <div className="tab-list-wrap part-same-shadow">
+        <div className="tab-list-wrap yt-common-list-pages-wrap">
           <Tabs defaultActiveKey="1" onChange={this.callback}>
              <TabPane tab="资产数据" key="1">
                 <div>
                  <div className="handle-common-action">
-                   <YtBtn onClick={this.goCreat}>+新增</YtBtn>
-                   <YtBtn onClick={this.goCreat}>+删除</YtBtn>
+                   <YtBtn onClick={this.goCreat}>新增</YtBtn>
+                   <YtBtn onClick={this.goCreat}>删除</YtBtn>
                  </div>
                    <YtTable
                     rowSelection={rowSelection}

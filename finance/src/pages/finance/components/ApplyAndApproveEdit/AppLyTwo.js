@@ -1,7 +1,7 @@
 import { Form,Row,Col,Select,Input,DatePicker } from 'antd';
 import { BaseEditForm, YtUpLoadAndDownLoad, YtBtn, YtTable } from 'common';
 import { columnsPlan } from './columns';
-import HeadFormCard from '../../../components/HeadFormCard';
+import HeadFormCard from '../HeadFormCard';
 
 class ApplyOne extends BaseEditForm {
   formRef = React.createRef();

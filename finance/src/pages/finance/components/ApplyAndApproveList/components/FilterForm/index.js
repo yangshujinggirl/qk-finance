@@ -49,12 +49,14 @@ class FilterForm extends BaseFilter{
           </Col>
           <Col {...this.colspans}>
             <Form.Item label="还款状态" name="size">
-               <Radio.Group>
-                 <Radio.Button value="small">全部</Radio.Button>
-                 <Radio.Button value="default">待审核</Radio.Button>
-                 <Radio.Button value="large">审核通过</Radio.Button>
-                 <Radio.Button value="sc">审核不通过</Radio.Button>
-               </Radio.Group>
+               <Select
+                 placeholder="请选择"
+                 allowClear>
+                 <Option value="male">全部</Option>
+                 <Option value="female">待审核</Option>
+                 <Option value="other">审核通过</Option>
+                 <Option value="other">审核不通过</Option>
+               </Select>
             </Form.Item>
           </Col>
           <Col {...this.colspans}>

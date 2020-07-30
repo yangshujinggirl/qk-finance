@@ -1,4 +1,4 @@
-import { Slider, Radio, InputNumber, Col, Row, Form, Input, Button, Select } from 'antd';
+import { Radio, InputNumber, Col, Row, Form, Input, Button, Select } from 'antd';
 import { BaseFilter, YtBtn } from 'common';
 import { FormInstance } from 'antd/lib/form';
 import './index.less';
@@ -30,17 +30,19 @@ class FilterForm extends BaseFilter{
         className="yt-condition-form">
         <Row gutter={24}>
           <Col {...this.colspans}>
-            <Form.Item name="name" label="企业名称" rules={[{ required: true }]}>
-              <Input />
+            <Form.Item name="name" label="企业名称">
+              <Input placeholder="请输入" autoComplete="off"/>
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
             <Form.Item label="封包状态" name="size">
-               <Radio.Group>
-                 <Radio.Button value="small">全部</Radio.Button>
-                 <Radio.Button value="default">已封包</Radio.Button>
-                 <Radio.Button value="large">未封包</Radio.Button>
-               </Radio.Group>
+               <Select
+                 placeholder="请选择"
+                 allowClear>
+                 <Option value="male">全部</Option>
+                 <Option value="female">已封包</Option>
+                 <Option value="other">未封包</Option>
+               </Select>
             </Form.Item>
           </Col>
         </Row>

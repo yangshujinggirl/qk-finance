@@ -52,7 +52,7 @@ function withSubscription(handleType,Mod) {
       const { visible } =this.state;
       let columns = columnsList(handleType);
       return(
-        <div className="finance-company-list-wrap yt-common-pages-wrap">
+        <div className="finance-company-list-wrap">
           <div className="box-flex">
             <ViewCardPane
               label="累计申请融资笔数"
@@ -91,9 +91,9 @@ function withSubscription(handleType,Mod) {
               </div>
             </ViewCardPane>
           </div>
-          {Mod&&<Mod />}
-          <div className="main-content">
+          <div className="main-content yt-common-list-pages-wrap">
             <FilterForm />
+            {Mod&&<Mod />}
             <YtTable
               scroll={{ x: 1300 }}
              columns={columns}

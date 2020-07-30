@@ -44,7 +44,7 @@ class FinanceShow extends React.Component {
       },
     ]
     return(
-      <div className="finance-company-list-wrap yt-common-pages-wrap">
+      <div className="finance-company-list-wrap">
         <div className="box-flex">
           <ViewCardPane
             label="融资企业累计（家）"

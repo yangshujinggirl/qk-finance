@@ -2,9 +2,10 @@ import { Link } from 'react-router-dom';
 
 const columnsList =[
         {
-        title: '序列号',
+        title: '序号',
         dataIndex: 'code',
-        render: text => <a>{text}</a>,
+        width:100,
+        fixed:'left',
         },
         {
         title: '企业名称',

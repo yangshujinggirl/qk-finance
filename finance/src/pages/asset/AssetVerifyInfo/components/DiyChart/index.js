@@ -1,4 +1,5 @@
 import { CloseCircleOutlined, CheckCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import testImg from 'image/test.jpg';
 import './index.less';
 
 const statusMap={
@@ -23,7 +24,7 @@ function DiyChart({...props}){
       IconMod = ExclamationCircleOutlined;
       break;
   }
-  let mfImg = rowNum==2?'/img/2.png':'/img/3.png';
+  let mfImg = rowNum==2?testImg:'/img/3.png';
 
   return <div className="diy-charts box-flex">
             <div className="diyc-lf">

@@ -16,7 +16,7 @@ function withSubscription(handleType, Mod){
     }
     render() {
       return(
-        <div className="finance-apply-wrap">
+        <div className="finance-apply-wrap yt-common-bg-pages-wrap">
           <Tabs defaultActiveKey="1" onChange={this.callback}>
             <TabPane tab="合同要素" key="1">
               <AppLyOne />

@@ -1,6 +1,5 @@
 import { YtTable, YtCard } from 'common';
 import IndexChart from './components/InstrumentCharts';
-import HeadFormCard from '../components/HeadFormCard';
 import { columnsList } from './columns';
 import './index.less';
 
