@@ -1,4 +1,5 @@
-import { Form,Row,Col,Select,Input } from 'antd';
+import { Form,Row,Col,Select,Input,Button } from 'antd';
+import { Link } from 'react-router-dom';
 import { BaseEditForm, YtBtn } from 'common';
 import HeadFormCard from '../HeadFormCard';
 
@@ -24,27 +25,45 @@ class ApplyOne extends BaseEditForm {
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="融资企业" name="code">
-                    <Select placeholder="请选择" allowClear={true}>
-                      <Select.Option value="银行转账" key="银行转账">
-                        云图项目一期
-                      </Select.Option>
-                      <Select.Option value="银行转账1" key="银行转账1">
-                        云图项目二期
-                      </Select.Option>
-                    </Select>
+                  <Form.Item label="融资企业">
+                    <Row gutter={8}>
+                      <Col span={18}>
+                        <Form.Item name="code">
+                          <Select placeholder="请选择" allowClear={true}>
+                            <Select.Option value="银行转账" key="银行转账">
+                              云图项目一期
+                            </Select.Option>
+                            <Select.Option value="银行转账1" key="银行转账1">
+                              云图项目二期
+                            </Select.Option>
+                          </Select>
+                        </Form.Item>
+                      </Col>
+                      <Col span={6}>
+                        <Link to="#">关联债务人</Link>
+                      </Col>
+                    </Row>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
                   <Form.Item label="资产包" name="code">
-                    <Select placeholder="请选择" allowClear={true}>
-                      <Select.Option value="银行转账" key="银行转账">
-                        云图项目一期
-                      </Select.Option>
-                      <Select.Option value="银行转账1" key="银行转账1">
-                        云图项目二期
-                      </Select.Option>
-                    </Select>
+                    <Row gutter={8}>
+                      <Col span={18}>
+                        <Form.Item name="code">
+                          <Select placeholder="请选择" allowClear={true}>
+                            <Select.Option value="银行转账" key="银行转账">
+                              云图项目一期
+                            </Select.Option>
+                            <Select.Option value="银行转账1" key="银行转账1">
+                              云图项目二期
+                            </Select.Option>
+                          </Select>
+                        </Form.Item>
+                      </Col>
+                      <Col span={6}>
+                        <Link to="/account/assetPackage/info/12">资产包明细</Link>
+                      </Col>
+                    </Row>
                   </Form.Item>
                 </Col>
               </Row>

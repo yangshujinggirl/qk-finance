@@ -35,6 +35,12 @@ class CashChart extends React.Component{
         columnConfig:{
           color:['#F0EFF5','#1B53BF']
         },
+        legend:{
+          position:'bottom',
+          marker:{
+            symbol:'circle'
+          }
+        },
         lineConfig:{
           color:"#0093EE"
         }

@@ -19,7 +19,10 @@ class AssetDistributeChart extends React.Component{
       chart.data(data);
       chart.legend({
         position: 'right',
-        offsetX: -30
+        offsetX: -30,
+        marker:{
+          symbol:'circle'
+        }
       });
       chart.scale('percent', {
         formatter: (val) => {

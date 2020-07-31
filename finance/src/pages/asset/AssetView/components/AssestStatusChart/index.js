@@ -46,6 +46,15 @@ class AssetDistributeChart extends React.Component{
           nice: true,
         },
       });
+      chart.legend({
+        position:'top',
+        marker:{
+          symbol:'circle',
+          style:{
+            r:2
+          }
+        }
+      });
 
       chart.tooltip({
         showCrosshairs: true,

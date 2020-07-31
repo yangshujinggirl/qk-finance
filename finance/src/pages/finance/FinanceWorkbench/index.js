@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom'
 import ViewCardPane from '../../components/ViewCardPane';
 import BlockChainNode from '../../components/BlockChainNode';
 import LatestCashFlow from '../../components/LatestCashFlow';
-import { YtTable, YtCard } from 'common';
+import { YtStatistic, YtTable, YtCard } from 'common';
 import './index.less';
+import stateIcon0 from 'image/operateWorkbench/icon_state0.png';
+import stateIcon1 from 'image/operateWorkbench/icon_state1.png';
 
 class OperateWorkbench extends React.Component {
 
@@ -80,32 +82,32 @@ class OperateWorkbench extends React.Component {
                 label="新增销售订单数"
                 num="520">
                 <div className='box-flex'>
-                  <p className="label-lf">周同比 <span className="high-prercent">12</span></p>
-                  <p className="label-rf">本日变动+ <span className="hight-num">200</span></p>
+                  <YtStatistic value={12} type="up">周同比</YtStatistic>
+                  <YtStatistic value="+2">今日变动</YtStatistic>
                 </div>
               </ViewCardPane>
               <ViewCardPane
                 label="新增收货数量(吨)"
                 num="520">
                 <div className='box-flex'>
-                  <p className="label-lf">周同比 <span className="high-prercent">12</span></p>
-                  <p className="label-rf">本日变动+ <span className="hight-num">200</span></p>
+                  <YtStatistic value={12} type="up">周同比</YtStatistic>
+                  <YtStatistic value="+2">本日变动+</YtStatistic>
                 </div>
               </ViewCardPane>
               <ViewCardPane
                 label="新增收货赊销额(元)"
                 num="520">
                 <div className='box-flex'>
-                  <p className="label-lf">周同比 <span className="high-prercent">12</span></p>
-                  <p className="label-rf">本日变动+ <span className="hight-num">200</span></p>
+                  <YtStatistic value={12} type="up">周同比</YtStatistic>
+                  <YtStatistic value="+2">今日变动+</YtStatistic>
                 </div>
               </ViewCardPane>
               <ViewCardPane
                 label="新增融资订单数"
                 num="520">
                 <div className='box-flex'>
-                  <p className="label-lf">周同比 <span className="high-prercent">12</span></p>
-                  <p className="label-rf">本日变动+ <span className="hight-num">200</span></p>
+                  <YtStatistic value={12} type="down">周同比</YtStatistic>
+                  <YtStatistic value={35}>资产验真+</YtStatistic>
                 </div>
               </ViewCardPane>
             </div>
@@ -126,7 +128,7 @@ class OperateWorkbench extends React.Component {
                 <div>
                   <div className="box-flex row-dt">
                     <div className="lf">
-                      <img src=""/>
+                      <img src={stateIcon0}/>
                     </div>
                     <div className="rf">
                       <p className="tit">入金 28.0万 ，付款方 迈瑞医疗</p>
@@ -135,7 +137,7 @@ class OperateWorkbench extends React.Component {
                   </div>
                   <div className="box-flex row-dt">
                     <div className="lf">
-                      <img src=""/>
+                      <img src={stateIcon1}/>
                     </div>
                     <div className="rf">
                       <p className="tit">入金 28.0万 ，付款方 迈瑞医疗</p>
@@ -144,7 +146,7 @@ class OperateWorkbench extends React.Component {
                   </div>
                   <div className="box-flex row-dt">
                     <div className="lf">
-                      <img src=""/>
+                      <img src={stateIcon0}/>
                     </div>
                     <div className="rf">
                       <p className="tit">入金 28.0万 ，付款方 迈瑞医疗</p>

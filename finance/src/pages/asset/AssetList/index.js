@@ -1,6 +1,6 @@
 import { Statistic, Progress } from 'antd';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
-import { YtPagination, YtTable, YtBtn } from 'common';
+import { YtPagination, YtStatistic, YtTable, YtBtn } from 'common';
 import ViewCardPane from '../../components/ViewCardPane';
 import FilterForm from './components/FilterForm';
 import CreatModal from './components/CreatModal';
@@ -57,105 +57,35 @@ class FinanceShow extends React.Component {
             label="累计资产总笔数"
             num="520">
             <div className="box-flex">
-              <div className="label-itm">
-                周同比
-                <Statistic
-                  title={null}
-                  value={12}
-                  valueStyle={{ color: '#3f8600' }}
-                  prefix={<ArrowUpOutlined />}
-                  suffix="%"/>
-              </div>
-              <div className="label-itm">
-                日环比
-                <Statistic
-                  title={null}
-                  value={12}
-                  valueStyle={{ color: '#3f8600' }}
-                  prefix={<ArrowUpOutlined />}
-                  suffix="%"/>
-              </div>
-              <div className="label-itm">
-                本日新增 2笔
-              </div>
+              <YtStatistic value="12%" type="up">周同比</YtStatistic>
+              <YtStatistic value="12%" type="up">日环比</YtStatistic>
+              <YtStatistic value="2笔">本日新增</YtStatistic>
             </div>
           </ViewCardPane>
           <ViewCardPane
             label="累计资产总额(万元)"
             num="520">
             <div className="box-flex">
-              <div className="label-itm">
-                周同比
-                <Statistic
-                  title={null}
-                  value={12}
-                  valueStyle={{ color: '#3f8600' }}
-                  prefix={<ArrowUpOutlined />}
-                  suffix="%"/>
-              </div>
-              <div className="label-itm">
-                日环比
-                <Statistic
-                  title={null}
-                  value={12}
-                  valueStyle={{ color: '#3f8600' }}
-                  prefix={<ArrowUpOutlined />}
-                  suffix="%"/>
-              </div>
-              <div className="label-itm">
-                本日新增 15万元
-              </div>
+              <YtStatistic value="12%" type="up">周同比</YtStatistic>
+              <YtStatistic value="12%" type="up">日环比</YtStatistic>
+              <YtStatistic value="15万">本日新增</YtStatistic>
             </div>
           </ViewCardPane>
           <ViewCardPane
             label="资产平均账期(天)"
             num="520">
             <div className="box-flex">
-              <div className="label-itm">
-                周同比
-                <Statistic
-                  title={null}
-                  value={12}
-                  valueStyle={{ color: '#3f8600' }}
-                  prefix={<ArrowUpOutlined />}
-                  suffix="%"/>
-              </div>
-              <div className="label-itm">
-                日环比
-                <Statistic
-                  title={null}
-                  value={12}
-                  valueStyle={{ color: '#3f8600' }}
-                  prefix={<ArrowUpOutlined />}
-                  suffix="%"/>
-              </div>
-              <div className="label-itm">
-                实际账期 50天
-              </div>
+              <YtStatistic value="12%" type="up">周同比</YtStatistic>
+              <YtStatistic value="12%" type="up">日环比</YtStatistic>
+              <YtStatistic value="50天">账期</YtStatistic>
             </div>
           </ViewCardPane>
           <ViewCardPane
             label="资产验真比率"
             num="520">
             <div className="box-flex">
-              <div className="label-itm">
-                周同比
-                <Statistic
-                  title={null}
-                  value={12}
-                  valueStyle={{ color: '#3f8600' }}
-                  prefix={<ArrowUpOutlined />}
-                  suffix="%"/>
-              </div>
-              <div className="label-itm">
-                日环比
-                <Statistic
-                  title={null}
-                  value={12}
-                  valueStyle={{ color: '#3f8600' }}
-                  prefix={<ArrowUpOutlined />}
-                  suffix="%"/>
-              </div>
+              <YtStatistic value="12%" type="up">周同比</YtStatistic>
+              <YtStatistic value="12%" type="up">日环比</YtStatistic>
             </div>
           </ViewCardPane>
         </div>

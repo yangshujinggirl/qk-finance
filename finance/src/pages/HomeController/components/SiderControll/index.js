@@ -8,7 +8,6 @@ const { SubMenu } = Menu;
 
 class SiderControll extends React.Component{
   state = {
-    collapsed: false,
     selectKeys:this.props.selectKeys,
     defaultSelectedKeys:JSON.parse(Sessions.get('selectedMenuKeys')) || [],
     defaultOpenKeys:JSON.parse(Sessions.get('openMenuKeys')) || "",
@@ -41,14 +40,10 @@ class SiderControll extends React.Component{
     Sessions.set('selectedMenuKeys',JSON.stringify(e.key));
     this.setState({ defaultSelectedKeys: e.key });
   }
-   onCollapse = collapsed => {
-     this.props.toggleWidth(collapsed)
-     this.setState({ collapsed });
-   };
   render(){
     const { defaultSelectedKeys, defaultOpenKeys } = this.state;
     return(
-      <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
+      <Sider trigger={null}  collapsible collapsed={this.props.collapsed}>
         <div className="logo" />
         <Menu
           theme="dark"
