@@ -1,9 +1,10 @@
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import { Layout, Menu, Dropdown } from 'antd';
+import { Layout, Menu, Breadcrumb, Dropdown } from 'antd';
 import { DownOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import AccountRoutes from '../AccountRoutes';
 import SiderControll from './components/SiderControll';
+import menuList from './components/SiderControll/menuList';
 import './index.less';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -12,7 +13,8 @@ const { SubMenu } = Menu;
 class MyComponent extends React.Component {
   state = {
     collapsed:false,
-    widthStyle:200
+    widthStyle:200,
+    breadcrumbItems:[]
   };
   toggle =() => {
    let { widthStyle, collapsed } =this.state;
@@ -30,9 +32,11 @@ class MyComponent extends React.Component {
           <Menu.Item key="1">退出登陆</Menu.Item>
         </Menu>
       );
+    // let breadcrumbItems =
+    console.log(this.props.location)
     return  <div className="App">
               <Layout>
-                <SiderControll collapsed={collapsed}/>
+                <SiderControll collapsed={collapsed} menuList={menuList}/>
                 <Layout className="site-layout" style={{ marginLeft: widthStyle }}>
                   <Header className="site-layout-background" style={{width:`calc(100% - ${widthStyle}px)`}}>
                     <div className="box-flex header-content">
@@ -54,6 +58,7 @@ class MyComponent extends React.Component {
                   </Header>
                   <Content>
                     <div className="yuntu-pages-controll">
+                      <div>面包屑导航</div>
                       <AccountRoutes />
                     </div>
                   </Content>

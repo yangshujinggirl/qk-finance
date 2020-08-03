@@ -1,4 +1,4 @@
-import { Table, Descriptions, Popover, Tabs } from 'antd';
+import { Drawer, Table, Descriptions, Popover, Tabs } from 'antd';
 import { Link } from 'react-router-dom';
 import { YtTable, YtBtn, YtPagination, YtCard } from 'common';
 import AssetInfoHead from '../components/AssetInfoHead';
@@ -10,13 +10,15 @@ const { TabPane } = Tabs;
 class AssetPackageInfo extends React.Component {
   state={
     currentItem:{},
-    selected:false
+    selected:false,
+    visible:false,
   }
   goInfo=(value)=> {
-    this.setState({ currentItem:value, selected:true })
+    this.setState({ currentItem:value, selected:true})
+    // this.setState({ currentItem:value, visible:true })
   }
   goClose=(value)=> {
-    this.setState({ currentItem:{}, selected:false })
+    this.setState({ currentItem:{}, selected:false, visible:false })
   }
   render(){
     let data=[
@@ -61,7 +63,7 @@ class AssetPackageInfo extends React.Component {
         status2:2,
       },
     ]
-    const { selected } =this.state;
+    const { selected, visible } =this.state;
     return(
       <div className="asset-package-verify-pages-wrap">
         <AssetInfoHead />
@@ -106,6 +108,24 @@ class AssetPackageInfo extends React.Component {
                 ))
               }
             </div>
+            <Drawer
+              width={640}
+              placement="bottom"
+              closable={false}
+              onClose={this.goClose}
+              visible={visible}>
+              <div>
+                <p className="close-btn" onClick={this.goClose}>隐藏详情</p>
+                <Descriptions column={2}>
+                 <Descriptions.Item label="资产编号">AST_2886795269202004301450453940</Descriptions.Item>
+                 <Descriptions.Item label="资产金额(元)">18,000.00</Descriptions.Item>
+                 <Descriptions.Item label="资产账期(天)">18,000.00</Descriptions.Item>
+                 <Descriptions.Item label="剩余账期(天)">180</Descriptions.Item>
+                 <Descriptions.Item label="债务方">1滑县鑫农农资有限公司72</Descriptions.Item>
+                 <Descriptions.Item label="还款方">到期还款</Descriptions.Item>
+                </Descriptions>
+              </div>
+            </Drawer>
             <div className={`info-bottom part-same-shadow ${selected?'selected':''}`}>
                 <p className="close-btn" onClick={this.goClose}>隐藏详情</p>
                 <Descriptions column={2}>

@@ -1,4 +1,5 @@
 const path = require('path');
+var ip = require('ip');
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -113,6 +114,7 @@ module.exports = {
     extensions: [".js", ".json", ".jsx", ".css"],
   },
   devServer: {
+    host:ip.address(),
     compress: true,
     port: 9000
   },

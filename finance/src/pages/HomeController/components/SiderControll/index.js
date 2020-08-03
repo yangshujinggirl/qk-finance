@@ -1,7 +1,7 @@
 import { Layout, Menu } from 'antd';
 import { Switch, Route, Link } from 'react-router-dom';
 import { Sessions } from 'utils';
-import menuList from './menuList';
+// import menuList from './menuList';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -41,6 +41,7 @@ class SiderControll extends React.Component{
     this.setState({ defaultSelectedKeys: e.key });
   }
   render(){
+    const { menuList } =this.props;
     const { defaultSelectedKeys, defaultOpenKeys } = this.state;
     return(
       <Sider trigger={null}  collapsible collapsed={this.props.collapsed}>
