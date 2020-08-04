@@ -99,7 +99,7 @@ class OperateWorkbench extends React.Component {
         <div className="company-content-wrap">
           <FilterForm />
           <div className="finance-list">
-            <Link to="/account/assetPackage/info/12">
+            <Link to="/account/asset/package/info/12">
               <div className="fin-item box-flex">
                 <div className="data-lf">
                   <div className="company-info box-flex">
@@ -140,7 +140,7 @@ class OperateWorkbench extends React.Component {
                 </div>
               </div>
             </Link>
-            <Link to="/account/assetPackage/info/12">
+            <Link to="/account/asset/package/info/12">
               <div className="fin-item box-flex">
                 <div className="data-lf">
                   <div className="company-info box-flex">

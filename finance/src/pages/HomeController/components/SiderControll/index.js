@@ -23,6 +23,7 @@ class SiderControll extends React.Component{
   }
   onOpenChange = openKeys => {
     let { defaultOpenKeys } =this.state;
+    let { menuList } =this.props;
     const latestOpenKey = openKeys.find(key => defaultOpenKeys.indexOf(key) === -1);
     let openKeyIndex = menuList.findIndex((el)=>el.id == latestOpenKey);
     if (openKeyIndex=='-1') {

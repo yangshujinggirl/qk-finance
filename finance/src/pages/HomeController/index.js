@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import { Layout, Menu, Breadcrumb, Dropdown } from 'antd';
+import { PageHeader, Layout, Menu, Breadcrumb, Dropdown } from 'antd';
 import { DownOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import AccountRoutes from '../AccountRoutes';
 import SiderControll from './components/SiderControll';
@@ -32,8 +32,7 @@ class MyComponent extends React.Component {
           <Menu.Item key="1">退出登陆</Menu.Item>
         </Menu>
       );
-    // let breadcrumbItems =
-    console.log(this.props.location)
+    
     return  <div className="App">
               <Layout>
                 <SiderControll collapsed={collapsed} menuList={menuList}/>
@@ -58,7 +57,6 @@ class MyComponent extends React.Component {
                   </Header>
                   <Content>
                     <div className="yuntu-pages-controll">
-                      <div>面包屑导航</div>
                       <AccountRoutes />
                     </div>
                   </Content>

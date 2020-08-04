@@ -52,10 +52,16 @@ function HomeRoutes() {
         <Route exact path="/account/assetVerify/info/:id" component={AssetVerifyInfo} />
         <Route exact path="/account/creditVerify/:id" component={CreditVerify} />
         <Route exact path="/account/operateWorkbench" component={OperateWorkbench} />
-        <Route exact path="/account/asset/view/:id" component={AssetView} />
-        <Route exact path="/account/assetList/:id" component={AssetList} />
+        // <Route exact path="/account/asset/view/:id" component={AssetView} />
+        // <Route exact path="/account/assetList/:id" component={AssetList} />
         <Route exact path="/account/asset/info/:id" component={AssetInfo} />
-        <Route exact path="/account/assetPackage/view" component={AssetPackageView} />
+        <Route exact path="/account/asset/package/view" component={AssetPackageView} />
+        <Route exact path="/account/asset/package/info/:id" component={AssetPackageInfo} />
+        <Route exact path="/account/assetPackageVerifyInfo" component={AssetPackageVerifyInfo} />
+        <Route exact path="/account/asset/financeCompany" component={FinanceCompanyView} />
+        <Route exact path="/account/asset/financeCompany/list/:id" component={AssetList} />
+        <Route exact path="/account/asset/financeCompany/view/:id" component={AssetView} />
+
         <Route exact path="/account/financeApply/edit/:id?" component={FinanceApplyEdit} />
         <Route exact path="/account/financeApplyList" component={FinanceApplyList} />
         <Route exact path="/account/financeApproveList" component={FinanceApproveList} />
@@ -64,10 +70,8 @@ function HomeRoutes() {
         <Route exact path="/account/loanApprove/edit/:id?" component={LoanApproveEdit} />
         <Route exact path="/account/loanApplyList" component={LoanApplyList} />
         <Route exact path="/account/loanApply/edit/:id?" component={LoanApplyEdit} />
-        <Route exact path="/account/assetPackage/info/:id" component={AssetPackageInfo} />
-        <Route exact path="/account/assetPackageVerifyInfo" component={AssetPackageVerifyInfo} />
-        <Route exact path="/account/financeCompanyView" component={FinanceCompanyView} />
-        <Route exact path="/account/financeCompanyList" component={FinanceCompanyList} />
+
+        // <Route exact path="/account/financeCompanyList" component={FinanceCompanyList} />
         <Route exact path="/account/financeWorkbench" component={FinanceWorkbench} />
     </Switch>
   );

@@ -1,14 +1,15 @@
-import { Progress, Row, Col } from 'antd';
+import { PageHeader, Progress, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
-import { YtPagination, YtTable, YtBtn, YtCard } from 'common';
+import { YtBreadcrumbName, YtPagination, YtTable, YtBtn, YtCard } from 'common';
 import ViewCardPane from '../../components/ViewCardPane';
 import FilterForm from './components/FilterForm';
 import RiseChart from './components/RiseChart';
 import AssetNumCharts from './components/AssetNumCharts';
 import AssetScaleCharts from './components/AssetScaleCharts';
 import AssetVerifyCharts from './components/AssetVerifyCharts';
-import CompanyTypeCharts from './components/CompanyTypeCharts';
-import { columnsList } from './columns';
+// import CompanyTypeCharts from './components/CompanyTypeCharts';
+import CompanyList from './components/CompanyList';
+// import { columnsList } from './columns';
 import './index.less'
 
 class FinanceShow extends React.Component {
@@ -43,7 +44,26 @@ class FinanceShow extends React.Component {
         key:3
       },
     ]
+    const routes = [
+        {
+          path: 'index',
+          breadcrumbName: 'First-level Menu',
+        },
+        {
+          path: 'first',
+          breadcrumbName: 'Second-level Menu',
+        },
+        {
+          path: 'second',
+          breadcrumbName: 'Third-level Menu',
+        },
+      ];
     return(
+    <PageHeader
+      className="site-page-header"
+      breadcrumb={{ routes }}>
+      <>
+      <YtBreadcrumbName />
       <div className="finance-company-list-wrap">
         <div className="box-flex">
           <ViewCardPane
@@ -94,8 +114,8 @@ class FinanceShow extends React.Component {
                <AssetVerifyCharts />
              </YtCard>
            </Col>
-         </Row>
-        <Row justify="space-between" align="top" gutter={24} className="fcl-tow-prart">
+        </Row>
+        {/*<Row justify="space-between" align="top" gutter={24} className="fcl-tow-prart">
            <Col span={12}>
              <YtCard
                title="融资企业"
@@ -109,8 +129,11 @@ class FinanceShow extends React.Component {
                <CompanyTypeCharts />
              </YtCard>
            </Col>
-         </Row>
+         </Row>*/}
+         <CompanyList />
       </div>
+      </>
+    </PageHeader>
     )
   }
 }

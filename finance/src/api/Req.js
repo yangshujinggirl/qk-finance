@@ -25,14 +25,14 @@ function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInt
   // 添加响应拦截器
   instance.interceptors.response.use(function (response) {
     // 对响应数据做点什么
-    const { httpCode, message, data } = response;
+    const { code, message, data } = response;
     // 用户登录超时统一处理
-				if (httpCode == 'E_300') {
+				if (code == 'E_300') {
 					window.location.href = '/';
 					// sessionStorage.clear();
 					return;
 				}
-				if (httpCode != 200) {
+				if (code != "0") {
 					// 业务错误弹框
 					// Qmessage.error(resultMessage);
 					return Promise.reject(result);

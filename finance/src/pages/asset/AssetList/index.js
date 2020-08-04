@@ -98,6 +98,7 @@ class FinanceShow extends React.Component {
            columns={columnsList}
            dataSource={data}/>
           <YtPagination data={{total:500,currentPage:0,limit:15}}/>
+          <CreatModal visible={visible} onCancel={this.onCancel}/>
         </div>
       </div>
     )
