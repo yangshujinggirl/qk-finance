@@ -1,81 +1,68 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
-import { Breadcrumb } from "antd";
-import routeData from './data';
+import { Breadcrumb, Button } from "antd";
+import routerKeyMap from './routerKeyMap';
+import './index.less';
 
-const breadcrumbNameMap = {//跟路由路径保持一致
-    "/": "首页",
-    "/403": "403",
-    "/404": "404",
-    "/site_manage": "站点管理",
-    "/site_manage/site_list": "站点列表",
-
-    "/order": "订单管理",
-    "/order/order_list": "订单列表",
-
-    "/flow_manage": "流水管理",
-    "/flow_manage/business_search": "交易搜索",
-
-    "/risk_manage": "风控控制",
-    "/risk_manage/rule_manage": "规则管理",
-    "/risk_manage/rule_setting": "规则设置",
-
-    "/report_manage": "报表管理",
-    "/report_manage/transaction_report": "交易报表",
-    "/report_manage/rules_report": "规则报表",
-    "/report_manage/efficacy_report": "功效报表",
-    "/report_manage/blacklist_report": "黑名单报表",
-
-    "/name_list_manage": "名单管理",
-    "/name_list_manage/field_manage": "字段管理",
-
-    "/system_manage": "系统管理",
-    "/system_manage/role_manage": "角色管理",
-    "/system_manage/user_manage": "用户管理",
-    "/system_manage/black_white": "黑白名单",
-};
-
-const Nav = withRouter((props) => {
-  console.log('withRouter',props)
+const YtBreadcrumbName = withRouter((props) => {
     const { location } = props;
+    console.log(props)
     const pathSnippets = location.pathname.split("/").filter((i) => i);
-    console.log('pathSnippets',pathSnippets)
-    let array = pathSnippets;
-    let obj={};
-    let sat = null;
-    let linkU = null
-    array.map((el)=> {
-      sat = !sat?el:`${sat}.${el}`;
-      linkU = !linkU?el:`${linkU}/${el}`;
-      obj[sat] = linkU;
+    let pathObj={};
+    let routerKey = null;
+    let linkUrl = null;
+    let breadcrumbNameMap = [];
+    pathSnippets.map((el)=> {
+      routerKey = !routerKey?el:`${routerKey}.${el}`;
+      linkUrl = !linkUrl?`/${el}`:`${linkUrl}/${el}`;
+      pathObj[routerKey] = linkUrl;
     })
-    let newObj = {};
-    for(let key in obj) {
-      for(let mapKey in routeData) {
+
+    for(let key in pathObj) {
+      for(let mapKey in routerKeyMap) {
         if(key == mapKey) {
-          newObj[obj[key]] = routeData[key];
+          let item = {};
+          item.path = pathObj[key];
+          item.breadcrumbName = routerKeyMap[key];
+          breadcrumbNameMap.push(item)
         }
       }
     }
-    console.log(newObj)
-    const extraBreadcrumbItems = pathSnippets.map((_, index) => {
-        const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
-        return (
-            <Breadcrumb.Item key={url}>
-                <Link to={url}></Link>
-                {breadcrumbNameMap[url]}
-            </Breadcrumb.Item>
-        );
+    const goReturn=()=> {
+      const { backUrl } =props;//自定义跳转url
+      if(backUrl) {
+        props.history.push(backUrl);
+        return;
+      }
+      props.history.goBack();
+    }
+    const extraBreadcrumbItems = breadcrumbNameMap.map((value, index) => {
+      let isClick= value.path.split('/').length>3?true:false;
+      return (
+          <Breadcrumb.Item key={value.path}>
+            {
+              isClick?
+              <Link to={value.path}>{value.breadcrumbName}</Link>
+              :
+              <span>{value.breadcrumbName}</span>
+            }
+          </Breadcrumb.Item>
+      );
     });
+
     const breadcrumbItems = [
-        <Breadcrumb.Item key="home"><Link to="/">返回</Link></Breadcrumb.Item>
+        <Breadcrumb.Item key="home">
+          <Button type="link" onClick={goReturn}>返回</Button>
+        </Breadcrumb.Item>
     ].concat(extraBreadcrumbItems);
+
     return (
-        <div className="demo">
-            <Breadcrumb style={{ margin: "16px 0" }}>
-                {breadcrumbItems}
-            </Breadcrumb>
+        <div className="yt-breadcrumb-wrap box-flex">
+          <div>
+            <Breadcrumb> {breadcrumbItems}</Breadcrumb>
+          </div>
+          {props.children}
         </div>
     );
 });
-export default Nav;
+export default YtBreadcrumbName;

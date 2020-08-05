@@ -8,7 +8,6 @@ const columnsList =[
         {
         title: '资产编号',
         dataIndex: 'code',
-        render: text => <Link to="/account/asset/info/12">{text}</Link>,
         },
         {
         title: '资产类型',
@@ -65,7 +64,18 @@ const columnsList =[
         {
         title: '上链节点',
         dataIndex: 'jd',
-        }
+        },
+        {
+          title: '操作',
+          dataIndex: '操作',
+          fixed: 'right',
+          width: 200,
+          render:(text,record,index)=>{
+            return <>
+              <Link to="/account/asset/financeCompany/list/info/1" className="operate-link-btn">详情</Link>
+            </>
+          }
+        },
 ]
 
 export default columnsList;

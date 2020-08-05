@@ -54,12 +54,13 @@ function HomeRoutes() {
         <Route exact path="/account/operateWorkbench" component={OperateWorkbench} />
         // <Route exact path="/account/asset/view/:id" component={AssetView} />
         // <Route exact path="/account/assetList/:id" component={AssetList} />
-        <Route exact path="/account/asset/info/:id" component={AssetInfo} />
-        <Route exact path="/account/asset/package/view" component={AssetPackageView} />
-        <Route exact path="/account/asset/package/info/:id" component={AssetPackageInfo} />
-        <Route exact path="/account/assetPackageVerifyInfo" component={AssetPackageVerifyInfo} />
+        // <Route exact path="/account/asset/info/:id" component={AssetInfo} />
+        <Route exact path="/account/asset/packageView" component={AssetPackageView} />
+        <Route exact path="/account/asset/packageView/info/:id" component={AssetPackageInfo} />
+        <Route exact path="/account/asset/packageView/verifyInfo/:id" component={AssetPackageVerifyInfo} />
         <Route exact path="/account/asset/financeCompany" component={FinanceCompanyView} />
         <Route exact path="/account/asset/financeCompany/list/:id" component={AssetList} />
+        <Route exact path="/account/asset/financeCompany/list/info/:id" component={AssetInfo} />
         <Route exact path="/account/asset/financeCompany/view/:id" component={AssetView} />
 
         <Route exact path="/account/financeApply/edit/:id?" component={FinanceApplyEdit} />
