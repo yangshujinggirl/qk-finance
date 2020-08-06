@@ -11,6 +11,7 @@ import _YtDownLoad from './YtDownLoad';
 import _YtBaseInfo from './YtBaseInfo';
 import _YtCollapse from './YtCollapse';
 import _YtBreadcrumbName from './YtBreadcrumbName';
+import _YtenlargeImg from './YtenlargeImg';
 
 export const YtTable = _YtTable;
 export const YtCard = _YtCard;
@@ -25,3 +26,4 @@ export const YtDownLoad = _YtDownLoad;
 export const YtBaseInfo = _YtBaseInfo;
 export const YtCollapse = _YtCollapse;
 export const YtBreadcrumbName = _YtBreadcrumbName;
+export const YtenlargeImg = _YtenlargeImg;

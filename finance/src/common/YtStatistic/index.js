@@ -6,7 +6,7 @@ function YtStatistic({...props}){
   let suffix = props.suffix?props.suffix:'';
   let color = props.type=="up"?"#81C926":"#F56C6C";
   let IconMod = props.type&&props.type=="up"?ArrowUpOutlined:ArrowDownOutlined;
-  return <div className="yt-statistic-label-itm">
+  return <div className={`yt-statistic-label-itm ${props.className}`}>
             {props.children}
             {
               props.type?

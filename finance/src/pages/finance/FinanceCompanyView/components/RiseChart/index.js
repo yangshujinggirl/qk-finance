@@ -139,6 +139,7 @@ class IndexChart extends React.Component{
         legend: {
           position: 'right-top',
           marker:{
+            position:'top',
             symbol:'circle',
             style:{
               r:2

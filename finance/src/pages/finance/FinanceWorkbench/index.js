@@ -1,9 +1,11 @@
-import { Table } from 'antd';
+import { Statistic, Table } from 'antd';
 import { Link } from 'react-router-dom'
 import ViewCardPane from '../../components/ViewCardPane';
 import BlockChainNode from '../../components/BlockChainNode';
 import LatestCashFlow from '../../components/LatestCashFlow';
 import { YtStatistic, YtTable, YtCard } from 'common';
+import TinyAearChart from './components/TinyAearChart';
+import AssetDynamicChart from './components/AssetDynamicChart';
 import './index.less';
 import stateIcon0 from 'image/operateWorkbench/icon_state0.png';
 import stateIcon1 from 'image/operateWorkbench/icon_state1.png';
@@ -91,7 +93,7 @@ class OperateWorkbench extends React.Component {
                 num="520">
                 <div className='box-flex'>
                   <YtStatistic value={12} type="up">周同比</YtStatistic>
-                  <YtStatistic value="+2">本日变动+</YtStatistic>
+                  <YtStatistic value="+2">本日变动</YtStatistic>
                 </div>
               </ViewCardPane>
               <ViewCardPane
@@ -99,7 +101,7 @@ class OperateWorkbench extends React.Component {
                 num="520">
                 <div className='box-flex'>
                   <YtStatistic value={12} type="up">周同比</YtStatistic>
-                  <YtStatistic value="+2">今日变动+</YtStatistic>
+                  <YtStatistic value="+2">今日变动</YtStatistic>
                 </div>
               </ViewCardPane>
               <ViewCardPane
@@ -107,7 +109,7 @@ class OperateWorkbench extends React.Component {
                 num="520">
                 <div className='box-flex'>
                   <YtStatistic value={12} type="down">周同比</YtStatistic>
-                  <YtStatistic value={35}>资产验真+</YtStatistic>
+                  <YtStatistic value={35}>资产验真</YtStatistic>
                 </div>
               </ViewCardPane>
             </div>
@@ -158,7 +160,30 @@ class OperateWorkbench extends React.Component {
             </div>
             <div className="part-same-shadow">
               <YtCard title="资产动态">
-                 资产动态
+                <div className="box-flex asset-dynamic-chart-wrap">
+                  <div className="chart-lf">
+                    <TinyAearChart />
+                  </div>
+                  <div className="info-rf">
+                    <p className="cht-title">资产平均价值(应付)</p>
+                    <div>
+                      <Statistic value="¥154" suffix="万" />
+                      <YtStatistic value="1.5%" type="up" className="percent">周同比</YtStatistic>
+                    </div>
+                  </div>
+                </div>
+                <div className="box-flex asset-dynamic-chart-wrap">
+                  <div className="chart-lf">
+                    <AssetDynamicChart />
+                  </div>
+                  <div className="info-rf">
+                    <p className="cht-title">资产平均周期(账期)</p>
+                    <div>
+                      <Statistic value="89" suffix="天" />
+                      <YtStatistic value="0.5天" type="up" className="percent">周同比</YtStatistic>
+                    </div>
+                  </div>
+                </div>
               </YtCard>
             </div>
             <div className="part-same-shadow">

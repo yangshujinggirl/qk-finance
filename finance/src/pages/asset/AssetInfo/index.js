@@ -106,7 +106,7 @@ class AssetInfo extends React.Component {
           </div>
           <div className="aio-bottom-part">
             <VerifySource />
-            <YtCollapse defaultActiveKey={['1']} expandIconPosition="right">
+            <YtCollapse defaultActiveKey={['4']} expandIconPosition="right">
               <>
               {
                 panelArray.map((el) =>{

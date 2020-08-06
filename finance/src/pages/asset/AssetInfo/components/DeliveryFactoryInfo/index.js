@@ -1,7 +1,9 @@
 import { Collapse, Progress, Row, Col, Button } from 'antd';
-import { YtCard, YtBaseInfo, YtCollapse } from 'common';
+import { YtenlargeImg, YtCard, YtBaseInfo, YtCollapse } from 'common';
 import SubTitleMod from '../SubTitleMod';
 const { Panel } = Collapse;
+
+const testImg = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1596691069156&di=9f518086f99c00b3ecb136475ac58aba&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180223%2Fdde293d351844dbab0d6e7c0ce3c467d.jpeg";
 
 function DeliveryFactoryInfo({...props}){
   return <>
@@ -23,13 +25,13 @@ function DeliveryFactoryInfo({...props}){
               {key:'物流司机姓名',value:'贡井区源丰街241号(2号维修车间)'},
               {key:'物流司机身份证号',value:'贡井区源丰街241号(2号维修车间)'},
               {key:'物流司机手机号',value:'贡井区源丰街241号(2号维修车间)'},
-              {key:'物流司机身份证照',value:'贡井区源丰街241号(2号维修车间)'},
-              {key:'物流司机驾驶证照',value:'贡井区源丰街241号(2号维修车间)'},
-              {key:'物流车辆行驶证照',value:'贡井区源丰街241号(2号维修车间)'},
-              {key:'交货通知单照',value:'贡井区源丰街241号(2号维修车间)'},
-              {key:'装货照',value:'贡井区源丰街241号(2号维修车间)'},
-              {key:'车牌照',value:'贡井区源丰街241号(2号维修车间)'},
-              {key:'物流单凭证',value:'贡井区源丰街241号(2号维修车间)'},
+              {key:'物流司机身份证照',value:<YtenlargeImg url={testImg}/>},
+              {key:'物流司机驾驶证照',value:<YtenlargeImg url={testImg}/>},
+              {key:'物流车辆行驶证照',value:<YtenlargeImg url={testImg}/>},
+              {key:'交货通知单照',value:<YtenlargeImg url={testImg}/>},
+              {key:'装货照',value:<YtenlargeImg url={testImg}/>},
+              {key:'车牌照',value:<YtenlargeImg url={testImg}/>},
+              {key:'物流单凭证',value:<YtenlargeImg url={testImg}/>},
             ]}/>
           </SubTitleMod>
           <SubTitleMod title="物流转发信息">
