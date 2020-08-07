@@ -3,30 +3,20 @@
     align-items: flex-start;
   }
   .three-module-wrap {
-    display: flex;
     margin-bottom: 24px;
-    .column-item {
-      width: 35%;
-      &:not(:last-child) {
-        margin-right: 1%;
-      }
-      &.two-row-mod {
-        .yt-common-card {
-          height: 210px;
-          &:nth-child(1) {
-            margin-bottom: 16px;
+    .two-row-mod {
+      .yt-common-card {
+        height: 210px;
+        &:nth-child(1) {
+          margin-bottom: 16px;
+        }
+        &:nth-child(2) {
+          .ant-card-body {
+            padding-top: 0;
           }
-          &:nth-child(2) {
-            .card-content {
-              padding-top: 0;
-            }
-          }
-       }
+        }
       }
-    }
-    .asset-focus {
-
-    }
+     }
   }
   .tab-list-wrap {
     background: #fff;

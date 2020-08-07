@@ -14,7 +14,7 @@ class AssetDistributeChart extends React.Component{
 
       const donutPlot = new Donut(document.getElementById('asset-dis-container'), {
         forceFit: true,
-        radius: 0.8,
+        radius: 1,
         padding: 'auto',
         data,
         label: {
@@ -39,10 +39,11 @@ class AssetDistributeChart extends React.Component{
         },
         legend: {
           position: 'right-top',
-          offsetX:-30,
+          // offsetX:-30,
           text:{
             formatter: (text,cfg) => {
-              let textMod = `${text}----80%`
+              // let textMod = `${text}-80%`
+              let textMod = `${text}`
               return textMod;
             }
           }

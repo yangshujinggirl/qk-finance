@@ -9,38 +9,43 @@ class CashChart extends React.Component{
   }
   componentDidMount() {
     const uvBillData = [
-      { time: '2019-03', value: 350, type: 'uv' },
-      { time: '2019-04', value: 900, type: 'uv' },
-      { time: '2019-05', value: 300, type: 'uv' },
-      { time: '2019-06', value: 450, type: 'uv' },
-      { time: '2019-07', value: 470, type: 'uv' },
-      { time: '2019-03', value: 220, type: 'bill' },
-      { time: '2019-04', value: 300, type: 'bill' },
-      { time: '2019-05', value: 250, type: 'bill' },
-      { time: '2019-06', value: 220, type: 'bill' },
-      { time: '2019-07', value: 362, type: 'bill' },
+      { time: '03', value: 350, type: '资产减少' },
+      { time: '04', value: 900, type: '资产减少' },
+      { time: '05', value: 300, type: '资产减少' },
+      { time: '06', value: 450, type: '资产减少' },
+      { time: '07', value: 470, type: '资产减少' },
+      { time: '03', value: 220, type: '资产增加' },
+      { time: '04', value: 300, type: '资产增加' },
+      { time: '05', value: 250, type: '资产增加' },
+      { time: '06', value: 220, type: '资产增加' },
+      { time: '07', value: 362, type: '资产增加' },
     ];
 
     const transformData = [
-      { time: '2019-03', count: 800 },
-      { time: '2019-04', count: 600 },
-      { time: '2019-05', count: 400 },
-      { time: '2019-06', count: 380 },
-      { time: '2019-07', count: 220 },
+      { time: '03', '资产增幅': 800 },
+      { time: '04', '资产增幅': 600 },
+      { time: '05', '资产增幅': 400 },
+      { time: '06', '资产增幅': 380 },
+      { time: '07', '资产增幅': 220 },
     ];
 
     const columnLine = new StackedColumnLine(
-      document.getElementById('cash-container'),
+      document.getElementById('cash-change-container'),
       {
       data: [uvBillData, transformData],
       xField: 'time',
-      yField: ['value', 'count'],
+      yField: ['value', '资产增幅'],
       columnStackField: 'type',
       columnConfig:{
         color:['#F0EFF5','#1B53BF']
       },
       lineConfig:{
         color:"#0093EE"
+      },
+      xAxis:{
+        title:{
+          visible:false
+        }
       }
     });
     columnLine.render();
@@ -72,7 +77,7 @@ class CashChart extends React.Component{
                   onChange={this.onChange}
                   options={plainOptions}
                   checkedVal={this.state.checkedVal}/>
-                <div className="cash-flow-trend" id="cash-container"></div>
+                <div className="cash-change" id="cash-change-container"></div>
               </>
            </YtCard>
   }

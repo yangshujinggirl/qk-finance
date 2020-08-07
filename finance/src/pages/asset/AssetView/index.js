@@ -6,9 +6,11 @@ import LatestCashFlow from '../../components/LatestCashFlow';
 import AssetDistributeChart from '../components/AssetDistributeChart';
 import AssestStatusChart from './components/AssestStatusChart';
 import CashChart from './components/CashChart';
-
 import MaxAssetChart from './components/MaxAssetChart';
+import FinanceTurnChart from './components/FinanceTurnChart';
 import { YtBreadcrumbName, YtTable, YtCard } from 'common';
+
+
 import './index.less';
 import iconImg1 from './image/icon1.png';
 import iconImg2 from './image/icon2.png';
@@ -57,6 +59,7 @@ const verifyOption=[
 class OperateWorkbench extends React.Component {
 
   render(){
+
     const { params } =this.props.match;
     return(
       <>
@@ -89,9 +92,6 @@ class OperateWorkbench extends React.Component {
               <div className="company-list part-same-shadow">
                 <CashChart />
               </div>
-              <div className="part-same-shadow">
-                <LatestCashFlow/>
-              </div>
             </div>
             <div className="module-right-wrap">
               <div className="part-same-shadow">
@@ -100,6 +100,15 @@ class OperateWorkbench extends React.Component {
               <div className="part-same-shadow">
                 <BlockChainNode />
               </div>
+            </div>
+          </div>
+          <div className="common-column-module-wrap row-two-part">
+            <div className="module-left-wrap">
+              <div className="part-same-shadow">
+                <LatestCashFlow/>
+              </div>
+            </div>
+            <div className="module-right-wrap">
               <div className="part-same-shadow verify-process">
                 <YtCard title="三方数据交叉验真状态">
                   <div>
@@ -137,7 +146,7 @@ class OperateWorkbench extends React.Component {
                          <p className="status-name">农 户</p>
                       </div>
                     </div>
-                    <div className="box-flex">
+                    <div className="box-flex vfp-label-list">
                       <div className="asset-itm">
                         <p className="label-num">42,000</p>
                         <p className="label-name">已验真资产</p>
@@ -162,7 +171,7 @@ class OperateWorkbench extends React.Component {
             </div>
             <div className="part-same-shadow  module-equal-four-wrap">
               <YtCard title="资金周转率">
-                资金周转率
+                <FinanceTurnChart />
               </YtCard>
             </div>
             <div className="part-same-shadow  module-equal-four-wrap">

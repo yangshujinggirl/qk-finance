@@ -16,7 +16,7 @@ class MaxAssetChart extends React.Component{
     }
     render() {
       return <YtCard title="单比最大资产占比">
-                <div className="asst-dis-trend" id="max-asset-container"></div>
+                <div className="max-asset-trend" id="max-asset-container"></div>
               </YtCard>
     }
 }

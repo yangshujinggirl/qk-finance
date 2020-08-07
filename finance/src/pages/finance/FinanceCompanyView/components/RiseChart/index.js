@@ -7,122 +7,122 @@ class IndexChart extends React.Component{
       const data = [
         {
           date: '1月',
-          type: 'download',
+          type: '总资产',
           value: 13,
         },
         {
           date: '1月',
-          type: 'register',
+          type: '新增资产',
           value: 32,
         },
         {
           date: '2月',
-          type: 'download',
+          type: '总资产',
           value: 18,
         },
         {
           date: '2月',
-          type: 'register',
+          type: '新增资产',
           value: 13,
         },
         {
           date: '3月',
-          type: 'download',
+          type: '总资产',
           value: 10,
         },
         {
           date: '3月',
-          type: 'register',
+          type: '新增资产',
           value: 30,
         },
         {
           date: '4月',
-          type: 'download',
+          type: '总资产',
           value: 30,
         },
         {
           date: '4月',
-          type: 'register',
+          type: '新增资产',
           value: 30,
         },
         {
           date: '5月',
-          type: 'download',
+          type: '总资产',
           value: 48,
         },
         {
           date: '5月',
-          type: 'register',
+          type: '新增资产',
           value: 48,
         },
         {
           date: '6月',
-          type: 'download',
+          type: '总资产',
           value: 40,
         },
         {
           date: '6',
-          type: 'register',
+          type: '新增资产',
           value: 45,
         },
         {
           date: '7月',
-          type: 'download',
+          type: '总资产',
           value: 50,
         },
         {
           date: '7月',
-          type: 'register',
+          type: '新增资产',
           value: 38,
         },
         {
           date: '8月',
-          type: 'download',
+          type: '总资产',
           value: 72,
         },
         {
           date: '8月',
-          type: 'register',
+          type: '新增资产',
           value: 85,
         },
         {
           date: '9月',
-          type: 'download',
+          type: '总资产',
           value: 45,
         },
         {
           date: '9月',
-          type: 'register',
+          type: '新增资产',
           value: 45,
         },
         {
           date: '10月',
-          type: 'download',
+          type: '总资产',
           value: 13,
         },
         {
           date: '10月',
-          type: 'register',
+          type: '新增资产',
           value: 46,
         },
         {
           date: '11月',
-          type: 'download',
+          type: '总资产',
           value: 50,
         },
         {
           date: '11月',
-          type: 'register',
+          type: '新增资产',
           value: 72,
         },
         {
           date: '12月',
-          type: 'download',
+          type: '总资产',
           value: 45,
         },
         {
           date: '12月',
-          type: 'register',
+          type: '新增资产',
           value: 55,
         },
       ];
@@ -137,12 +137,11 @@ class IndexChart extends React.Component{
           tickInterval:15,
         },
         legend: {
-          position: 'right-top',
+          position: 'top',
           marker:{
-            position:'top',
             symbol:'circle',
             style:{
-              r:2
+              r:4
             }
           }
         },

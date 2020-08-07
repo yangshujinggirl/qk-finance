@@ -5,6 +5,7 @@ import AssetChangeChart from './components/AssetChangeChart';
 import AssetPaymentChart from './components/AssetPaymentChart';
 import AssetStatusChart from './components/AssetStatusChart';
 import AssetInfoHead from '../components/AssetInfoHead';
+import ProcessChart from './components/ProcessChart';
 import './index.less';
 
 const { TabPane } = Tabs;
@@ -90,6 +91,27 @@ class AssetPackageInfo extends React.Component {
       },
     };
     const { params } =this.props.match;
+    const processData=[
+      {
+        value:'8%',
+        key:'损失',
+      },
+      {
+        value:'12%',
+        key:'可疑',
+      },
+      {
+        value:'20%',
+        key:'次级',
+      },
+      {
+        value:'25%',
+        key:'关注',
+      },
+      {
+        value:'35%',
+        key:'正常',
+      }]
     return(
       <>
         <YtBreadcrumbName>
@@ -102,18 +124,18 @@ class AssetPackageInfo extends React.Component {
           <AssetInfoHead>
             <div><YtBtn size="free">过滤异常数据</YtBtn></div>
           </AssetInfoHead>
-          <div className="three-module-wrap">
-            <div className="column-item part-same-shadow">
+          <div className="three-module-wrap common-column-module-wrap">
+            <div className="part-same-shadow module-equal-thr-wrap">
               <AssetChangeChart />
             </div>
-            <div className="column-item part-same-shadow">
+            <div className="part-same-shadow module-equal-thr-wrap">
               <AssetPaymentChart />
             </div>
-            <div className="column-item two-row-mod">
+            <div className="two-row-mod module-equal-thr-wrap">
                <YtCard title="资产状态" className="part-same-shadow">
-                  123
+                  <ProcessChart data={processData}/>
                </YtCard>
-               <YtCard title="资产集中度" className="part-same-shadow">
+               <YtCard title="资产集中度" className="part-same-shadow" extra={<span>合计90%</span>}>
                   <div className="asset-focus">
                     <div className="process-item">
                       滑县鑫农农资有限公司

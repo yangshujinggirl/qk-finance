@@ -1,97 +1,130 @@
-import { Chart } from '@antv/g2';
+import { Line } from '@antv/g2plot';
 import { YtCard } from 'common';
+import TabsMod from '../../../../components/TabsMod'
 import './index.less';
 
 class AssetDistributeChart extends React.Component{
+    state={
+      checkedVal:3
+    }
+    onChange=(e)=>{
+      this.setState({checkedVal:e.target.value})
+    }
     componentDidMount() {
       const data = [
-        { month: 'Jan', city: 'Tokyo', temperature: 7 },
-        { month: 'Jan', city: 'London', temperature: 3.9 },
-        { month: 'Feb', city: 'Tokyo', temperature: 6.9 },
-        { month: 'Feb', city: 'London', temperature: 4.2 },
-        { month: 'Mar', city: 'Tokyo', temperature: 9.5 },
-        { month: 'Mar', city: 'London', temperature: 5.7 },
-        { month: 'Apr', city: 'Tokyo', temperature: 14.5 },
-        { month: 'Apr', city: 'London', temperature: 8.5 },
-        { month: 'May', city: 'Tokyo', temperature: 18.4 },
-        { month: 'May', city: 'London', temperature: 11.9 },
-        { month: 'Jun', city: 'Tokyo', temperature: 21.5 },
-        { month: 'Jun', city: 'London', temperature: 15.2 },
-        { month: 'Jul', city: 'Tokyo', temperature: 25.2 },
-        { month: 'Jul', city: 'London', temperature: 17 },
-        { month: 'Aug', city: 'Tokyo', temperature: 26.5 },
-        { month: 'Aug', city: 'London', temperature: 16.6 },
-        { month: 'Sep', city: 'Tokyo', temperature: 23.3 },
-        { month: 'Sep', city: 'London', temperature: 14.2 },
-        { month: 'Oct', city: 'Tokyo', temperature: 18.3 },
-        { month: 'Oct', city: 'London', temperature: 10.3 },
-        { month: 'Nov', city: 'Tokyo', temperature: 13.9 },
-        { month: 'Nov', city: 'London', temperature: 6.6 },
-        { month: 'Dec', city: 'Tokyo', temperature: 9.6 },
-        { month: 'Dec', city: 'London', temperature: 4.8 },
+        {
+          date: '01',
+          type: '总资产',
+          value: 6,
+        },
+        {
+          date: '01',
+          type: '新增资产',
+          value: 10,
+        },
+        {
+          date: '02',
+          type: '总资产',
+          value: 16,
+        },
+        {
+          date: '02',
+          type: '新增资产',
+          value: 24,
+        },
+        {
+          date: '03',
+          type: '总资产',
+          value: 22,
+        },
+        {
+          date: '03',
+          type: '新增资产',
+          value: 30,
+        },
+        {
+          date: '04',
+          type: '总资产',
+          value: 20,
+        },
+        {
+          date: '04',
+          type: '新增资产',
+          value: 26,
+        },
+        {
+          date: '05',
+          type: '总资产',
+          value: 30,
+        },
+        {
+          date: '05',
+          type: '新增资产',
+          value: 36,
+        },
+        {
+          date: '06',
+          type: '新增资产',
+          value: 30,
+        },
+        {
+          date: '06',
+          type: '总资产',
+          value: 28,
+        },
+        {
+          date: '07',
+          type: '新增资产',
+          value: 24,
+        },
+        {
+          date: '07',
+          type: '总资产',
+          value: 20,
+        },
       ];
 
-      const chart = new Chart({
-        container: 'asset-status-container',
-        autoFit: true,
-        height: 500,
-      });
-
-      chart.data(data);
-      chart.scale({
-        month: {
-          range: [0, 1],
+      const linePlot = new Line(document.getElementById('asset-status-container'), {
+        padding: 'auto',
+        forceFit: true,
+        data,
+        xField: 'date',
+        yField: 'value',
+        yAxis: {
+          tickInterval:15,
         },
-        temperature: {
-          nice: true,
-        },
-      });
-      chart.legend({
-        position:'top',
-        marker:{
-          symbol:'circle',
-          style:{
-            r:2
+        legend: {
+          position: 'top-left',
+          marker:{
+            symbol:'circle',
+            style:{ r:2 }
           }
-        }
-      });
-
-      chart.tooltip({
-        showCrosshairs: true,
-        shared: true,
-      });
-
-      chart.axis('temperature', {
-        label: {
-          formatter: (val) => {
-            return val + ' °C';
-          },
         },
+        seriesField: 'type',
+        responsive: true,
+        smooth: true,
       });
-
-      chart
-        .line()
-        .position('month*temperature')
-        .color('city',['#1B53BF','#0093EE'])
-        .shape('smooth');
-
-      chart
-        .point()
-        .position('month*temperature')
-        .color('city')
-        .shape('circle')
-        .style({
-          stroke: '#fff',
-          lineWidth: 1,
-        });
-
-      chart.removeInteraction('legend-filter'); // 移除默认的 legend-filter 数据过滤交互
-      chart.interaction('legend-visible-filter'); // 使用分类图例的图形过滤
-
-      chart.render();
+      linePlot.render();
     }
     render() {
+      const plainOptions = [
+        {
+          title:'本周',
+          key:1
+        },
+        {
+          title:'本月',
+          key:2
+        },
+        {
+          title:'本年',
+          key:3
+        }];
       return <YtCard title="资产状态">
+              <TabsMod
+                onChange={this.onChange}
+                options={plainOptions}
+                checkedVal={this.state.checkedVal}/>
                 <div className="asst-dis-trend" id="asset-status-container"></div>
               </YtCard>
     }

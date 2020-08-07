@@ -1,6 +1,6 @@
 import { PageHeader, Button, Progress, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
-import { YtBreadcrumbName, YtPagination, YtTable, YtBtn, YtCard } from 'common';
+import { YtStatistic, YtBreadcrumbName, YtPagination, YtTable, YtBtn, YtCard } from 'common';
 import ViewCardPane from '../../components/ViewCardPane';
 import FilterForm from './components/FilterForm';
 import RiseChart from './components/RiseChart';
@@ -51,30 +51,22 @@ class FinanceShow extends React.Component {
             <ViewCardPane
               label="融资企业累计（家）"
               num="520">
-              <div>
-                <p className="label-lf">本日新增 <span className="high-prercent">12笔</span></p>
-              </div>
+              <YtStatistic value="2家">本日新增</YtStatistic>
             </ViewCardPane>
             <ViewCardPane
               label="累计资产金额（万元）"
               num="520">
-              <div>
-                <p className="label-lf">本日新增 <span className="high-prercent">12笔</span></p>
-              </div>
+              <YtStatistic value="2家">本日新增</YtStatistic>
             </ViewCardPane>
             <ViewCardPane
               label="累计融资金额（万元）"
               num="520">
-              <div>
-                <p className="label-lf">本日新增 <span className="high-prercent">12笔</span></p>
-              </div>
+              <YtStatistic value="¥ 12,423">本日新增</YtStatistic>
             </ViewCardPane>
             <ViewCardPane
               label="融资比"
               num="520">
-              <div>
-                <p className="label-lf">本日新增 <span className="high-prercent">12笔</span></p>
-              </div>
+              <YtStatistic value="2笔">本日新增融资笔数</YtStatistic>
             </ViewCardPane>
           </div>
           <YtCard title="资产增长趋势" className="part-same-shadow">

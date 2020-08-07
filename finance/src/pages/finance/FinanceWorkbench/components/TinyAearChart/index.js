@@ -1,4 +1,3 @@
-import { Column } from '@antv/g2plot';
 import { TinyArea } from '@antv/g2plot';
 
 import { YtCard } from 'common';
@@ -19,6 +18,7 @@ class AssetDynamicChart extends React.Component{
         data: data,
         xField: 'sales',
         yField: 'type',
+        // smooth:true
       });
       tinyArea.render();
     }

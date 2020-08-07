@@ -1,4 +1,4 @@
-import { Column } from '@antv/g2plot';
+import { TinyColumn } from '@antv/g2plot';
 import { YtCard } from 'common';
 import './index.less';
 
@@ -59,7 +59,7 @@ class AssetDynamicChart extends React.Component{
         },
       ];
 
-      const columnPlot = new Column(document.getElementById('asst-dynamicChart-container'), {
+      const columnPlot = new TinyColumn(document.getElementById('asst-dynamicChart-container'), {
         forceFit: true,
         data,
         padding: 'auto',

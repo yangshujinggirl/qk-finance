@@ -6,7 +6,7 @@ import AssetDistributeChart from '../components/AssetDistributeChart';
 import AssetChart from './components/AssetChart';
 import CashChart from './components/CashChart';
 import FilterForm from './components/FilterForm';
-import TabsMod from '../components/TabsMod'
+import TabsMod from '../../components/TabsMod'
 import './index.less';
 
 class OperateWorkbench extends React.Component {
@@ -177,7 +177,7 @@ class OperateWorkbench extends React.Component {
                   </div>
                 </div>
                 <div className="chart-rf">
-                  <AssetChart index={1}/>
+                  <AssetChart index={2}/>
                 </div>
               </div>
             </Link>
