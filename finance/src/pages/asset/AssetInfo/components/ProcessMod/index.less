@@ -1,0 +1,41 @@
+.process-steps-wrap {
+  position: relative;
+  padding: 40px;
+  display: flex;
+  overflow: hidden;
+  .item-step {
+    flex: 1;
+    color: #fff;
+    font-size: 16px;
+    background: #fff;
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    .isp-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 16px;
+      background: #2955B8;
+      text-align: center;
+    }
+    .ps-title {
+      color: #666;
+      font-size: 16px;
+      white-space: nowrap;
+      position: relative;
+      &:after {
+        content: '';
+          width: 99999px;
+          height: 4px;
+          background: #2D65E1;
+          position: absolute;
+          left: 100%;
+          top: 50%;
+          transform: translate(-50%,-50%);
+      }
+    }
+  }
+
+}

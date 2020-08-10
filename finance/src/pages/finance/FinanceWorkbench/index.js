@@ -1,11 +1,11 @@
-import { Statistic, Table } from 'antd';
-import { Link } from 'react-router-dom'
+import { Statistic } from 'antd';
 import ViewCardPane from '../../components/ViewCardPane';
 import BlockChainNode from '../../components/BlockChainNode';
 import LatestCashFlow from '../../components/LatestCashFlow';
 import { YtStatistic, YtTable, YtCard } from 'common';
 import TinyAearChart from './components/TinyAearChart';
 import AssetDynamicChart from './components/AssetDynamicChart';
+import columns from './columns';
 import './index.less';
 import stateIcon0 from 'image/operateWorkbench/icon_state0.png';
 import stateIcon1 from 'image/operateWorkbench/icon_state1.png';
@@ -13,38 +13,6 @@ import stateIcon1 from 'image/operateWorkbench/icon_state1.png';
 class OperateWorkbench extends React.Component {
 
   render(){
-    const columns = [
-    {
-    title: '企业编号',
-    dataIndex: 'code',
-    render: text => <a>{text}</a>,
-    },
-    {
-    title: '企业名称',
-    className: 'column-money',
-    dataIndex: 'name',
-    align: 'right',
-    },
-    {
-    title: '资产总额(万元)',
-    dataIndex: 'amount',
-    },
-    {
-    title: '已融资总额(万元)',
-    dataIndex: 'amounted',
-    },
-    {
-    title: '已融资产占比(%)',
-    dataIndex: 'amountPocess',
-    },
-    {
-    title: '操作',
-    dataIndex: 'amountPocess',
-    render:(text,record,index)=> {
-      return <Link to="/account/operateWorkbench/info">详情</Link>
-    }
-    },
-    ];
 
     const data = [
     {
@@ -74,12 +42,13 @@ class OperateWorkbench extends React.Component {
     amountPocess: '￥120,000.00',
     address: 'Sidney No. 1 Lake Park',
     },
+
     ];
     return(
       <div className="financeWorkbench-pages-wrap">
         <div className="common-column-module-wrap finance-part-content">
           <div className="module-left-wrap">
-            <div className="part-overview-wrap box-flex">
+            <div className="box-flex">
               <ViewCardPane
                 label="新增销售订单数"
                 num="520">
@@ -119,9 +88,6 @@ class OperateWorkbench extends React.Component {
                   columns={columns}
                   dataSource={data}/>
               </YtCard>
-            </div>
-            <div className="part-same-shadow">
-              <LatestCashFlow />
             </div>
           </div>
           <div className="module-right-wrap">
@@ -186,6 +152,15 @@ class OperateWorkbench extends React.Component {
                 </div>
               </YtCard>
             </div>
+          </div>
+        </div>
+        <div className="common-column-module-wrap">
+          <div className="module-left-wrap">
+            <div className="part-same-shadow">
+              <LatestCashFlow />
+            </div>
+          </div>
+          <div className="module-right-wrap">
             <div className="part-same-shadow">
               <BlockChainNode />
             </div>

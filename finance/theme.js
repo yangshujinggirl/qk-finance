@@ -9,5 +9,6 @@ module.exports = {
   "table-row-hover-bg": "#F4F4F5",
   "statistic-title-font-size": "12px",
   "statistic-content-font-size": "20px",
-  "statistic-unit-font-size": "12px"
+  "statistic-unit-font-size": "12px",
+  "btn-height-base": "32px"
 };

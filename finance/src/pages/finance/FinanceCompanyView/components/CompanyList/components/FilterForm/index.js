@@ -1,5 +1,6 @@
 import { Slider, Radio, InputNumber, Col, Row, Form, Input, Button, Select } from 'antd';
 import { BaseFilter, YtBtn } from 'common';
+import { RegExpUtil } from 'utils';
 import { FormInstance } from 'antd/lib/form';
 import './index.less';
 
@@ -63,22 +64,28 @@ class FilterForm extends BaseFilter{
           </Col>
           <Col {...this.colspans}>
             <Form.Item label="资产金额" className="two-multi-form-item">
-              <Form.Item name="numSt">
+              <Form.Item name="amountSt" rules={[{pattern:RegExpUtil.noZeroInteger,message:'请输入正整数'}]}>
                 <Input placeholder="请输入" autoComplete="off"/>
               </Form.Item>
               <span className="line">---</span>
-              <Form.Item name="numEt">
+              <Form.Item
+                name="amountEt"
+                dependencies={['amountSt']}
+                rules={[{pattern:RegExpUtil.noZeroInteger,message:'请输入正整数'},{ validator:(rule, value)=>this.validatorRangNum(rule, value, "amountSt") }]}>
                 <Input placeholder="请输入" autoComplete="off"/>
               </Form.Item>
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
             <Form.Item label="资产笔数" className="two-multi-form-item">
-              <Form.Item name="numSt">
+              <Form.Item name="numSt" rules={[{pattern:RegExpUtil.noZeroInteger,message:'请输入正整数'}]}>
                 <Input placeholder="请输入"/>
               </Form.Item>
               <span className="line">---</span>
-              <Form.Item name="numEt">
+              <Form.Item
+                name="numEt"
+                dependencies={['numSt']}
+                rules={[{pattern:RegExpUtil.noZeroInteger,message:'请输入正整数'},{ validator:(rule, value)=>this.validatorRangNum(rule, value,"numSt") }]}>
                 <Input placeholder="请输入" autoComplete="off"/>
               </Form.Item>
             </Form.Item>

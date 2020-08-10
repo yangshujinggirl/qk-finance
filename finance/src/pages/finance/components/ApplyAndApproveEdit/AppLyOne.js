@@ -2,6 +2,7 @@ import { Form,Row,Col,Select,Input,Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { BaseEditForm, YtBtn } from 'common';
 import HeadFormCard from '../HeadFormCard';
+import PopoverMod from './components/PopoverMod';
 
 class ApplyOne extends BaseEditForm {
   formRef = React.createRef();
@@ -40,7 +41,7 @@ class ApplyOne extends BaseEditForm {
                         </Form.Item>
                       </Col>
                       <Col span={6}>
-                        <Link to="#">关联债务人</Link>
+                        <Link to="/account/assetPackage/info/12" className="link-tips">资产包明细</Link>
                       </Col>
                     </Row>
                   </Form.Item>
@@ -61,7 +62,7 @@ class ApplyOne extends BaseEditForm {
                         </Form.Item>
                       </Col>
                       <Col span={6}>
-                        <Link to="/account/assetPackage/info/12">资产包明细</Link>
+                        <PopoverMod dataSource={[]}/>
                       </Col>
                     </Row>
                   </Form.Item>

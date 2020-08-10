@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import AppLyOne from './AppLyOne.js';
 import AppLyTwo from './AppLyTwo.js';
 import AppLyThr from './AppLyThr.js';
+import './index.less';
 
 const { TabPane } = Tabs;
 

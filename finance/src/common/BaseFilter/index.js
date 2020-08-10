@@ -38,6 +38,14 @@ class BaseFilter extends Component {
       xxl: 8
     };
   }
+  //区间值
+  validatorRangNum=(rule, value, name)=>{
+    const stVal = this.formRef.current.getFieldValue(name);
+    if (!value || stVal <= value) {
+      return Promise.resolve();
+    }
+    return Promise.reject('请输入有效值');
+  }
   handleSubmit = async () => {
     try {
       const values = await this.formRef.current.validateFields();

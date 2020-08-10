@@ -1,15 +1,30 @@
-import { Form,Tooltip,Row,Col,Select,Input,DatePicker } from 'antd';
+import { Button, Form,Row,Col,Select,Input,DatePicker } from 'antd';
 import { Link } from 'react-router-dom';
 import { BaseEditForm, YtUpLoadAndDownLoad, YtBtn, YtTable } from 'common';
-import { columnsPlan } from './columns';
+import { columnsReceivable, columnsPlan } from './columns';
 import HeadFormCard from '../HeadFormCard';
+import ChangeModal from './components/ChangeModal';
+import './AppLyTwo.less';
 
 class ApplyOne extends BaseEditForm {
   formRef = React.createRef();
+  state={
+    visible:false
+  }
   onSubmit = async (values) => {
     console.log(values)
   };
+  goChange=()=>{
+    this.setState({ visible:true })
+  }
+  onOk=()=>{
+    this.setState({ visible:false })
+  }
+  onCancel=()=>{
+    this.setState({ visible:false })
+  }
   render() {
+    const { visible } =this.state;
     return(
       <div>
         <Form className="common-edit-pages-form" {...this.formItemLayout} ref={this.formRef}>
@@ -36,7 +51,7 @@ class ApplyOne extends BaseEditForm {
                         </Form.Item>
                       </Col>
                       <Col span={6}>
-                        <Link to="/account/assetPackage/info/12">资产包明细</Link>
+                        <Link to="/account/assetPackage/info/12" className="link-tips">资产包明细</Link>
                       </Col>
                     </Row>
                   </Form.Item>
@@ -156,10 +171,20 @@ class ApplyOne extends BaseEditForm {
               <YtUpLoadAndDownLoad />
               <YtTable columns={columnsPlan} data={[]}/>
           </HeadFormCard>
+          <HeadFormCard title="转让应收账款" extra={<YtBtn size="free">还款测算</YtBtn>}>
+              <>
+                <div className="box-flex receivable-row">
+                  <div>应收帐款条数<span className="pointerSty">200条</span>，应收帐款金额<span className="pointerSty">32000</span></div>
+                  <YtBtn onClick={this.goChange}>选择资产</YtBtn>
+                </div>
+                <YtTable columns={columnsReceivable} data={[]}/>
+              </>
+          </HeadFormCard>
           <div className="edit-btn-wrap">
             <YtBtn size="free" onClick={this.handleSubmit}>确认并下一步</YtBtn>
           </div>
         </Form>
+        <ChangeModal  visible={visible} onOk={this.onOk} onCancel={this.onCancel}/>
       </div>
     )
   }

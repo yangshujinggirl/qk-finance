@@ -6,48 +6,13 @@ import AssetPaymentChart from './components/AssetPaymentChart';
 import AssetStatusChart from './components/AssetStatusChart';
 import AssetInfoHead from '../components/AssetInfoHead';
 import ProcessChart from './components/ProcessChart';
+import CreatModal from './components/CreatModal';
+import columns from './columns';
 import './index.less';
 
 const { TabPane } = Tabs;
 
-const columns = [
-  {
-  title: '资产编号',
-  dataIndex: 'code',
-  },
-  {
-  title: '资产金额(万元)',
-  dataIndex: 'name',
-  },
-  {
-  title: '资产账期(天)',
-  dataIndex: 'amount',
-  },
-  {
-  title: '剩余账期(天)',
-  dataIndex: 'amounted',
-  },
-  {
-  title: '债务方',
-  dataIndex: 'zwf',
-  },
-  {
-  title: '还款方式',
-  dataIndex: 'pay',
-  },
-  {
-  title: '资产状态',
-  dataIndex: 'status',
-  },
-  {
-  title: '资产包选用',
-  dataIndex: 'use',
-  },
-  {
-  title: '资金方选用',
-  dataIndex: 'finuse',
-  },
-  ];
+
 
 const data = [
   {
@@ -80,8 +45,23 @@ const data = [
   ];
 
 class AssetPackageInfo extends React.Component {
+  state={
+    visible:false
+  }
   callback=(key)=> {
     console.log(key);
+  }
+  goDelete=(key)=> {
+    console.log(key);
+  }
+  goCreat=(key)=> {
+    this.setState({ visible:true })
+  }
+  onOk=()=> {
+    this.setState({ visible:false })
+  }
+  onCancel=()=> {
+    this.setState({ visible:false })
   }
   render(){
     const rowSelection = {
@@ -91,6 +71,7 @@ class AssetPackageInfo extends React.Component {
       },
     };
     const { params } =this.props.match;
+    const { visible } =this.state;
     const processData=[
       {
         value:'8%',
@@ -159,7 +140,7 @@ class AssetPackageInfo extends React.Component {
                   <div>
                    <div className="handle-common-action">
                      <YtBtn onClick={this.goCreat}>新增</YtBtn>
-                     <YtBtn onClick={this.goCreat}>删除</YtBtn>
+                     <YtBtn onClick={this.goDelete}>删除</YtBtn>
                    </div>
                      <YtTable
                       rowSelection={rowSelection}
@@ -179,6 +160,7 @@ class AssetPackageInfo extends React.Component {
             <YtPagination data={{total:500,currentPage:0,limit:15}}/>
           </div>
         </div>
+        <CreatModal  visible={visible} onOk={this.onOk} onCancel={this.onCancel}/>
       </>
     )
   }

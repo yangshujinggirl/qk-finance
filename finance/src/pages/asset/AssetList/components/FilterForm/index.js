@@ -1,5 +1,6 @@
 import { Slider, DatePicker, Radio, InputNumber, Col, Row, Form, Input, Button, Select } from 'antd';
 import { BaseFilter, YtBtn } from 'common';
+import { RegExpUtil } from 'utils';
 import { FormInstance } from 'antd/lib/form';
 import './index.less';
 
@@ -93,12 +94,15 @@ class FilterForm extends BaseFilter{
           </Col>
           <Col {...this.colspans}>
             <Form.Item label="资产金额" className="two-multi-form-item">
-              <Form.Item name="numSt">
-                <Input   placeholder="请输入"/>
+              <Form.Item name="amountSt" rules={[{pattern:RegExpUtil.twoFloat,message:'请输入正整数'}]}>
+                <Input placeholder="请输入" autoComplete="off"/>
               </Form.Item>
               <span className="line">---</span>
-              <Form.Item name="numEt">
-                <Input   placeholder="请输入"/>
+              <Form.Item
+                name="amountEt"
+                dependencies={['amountSt']}
+                rules={[{pattern:RegExpUtil.twoFloat,message:'请输入正整数'},{ validator:(rule, value)=>this.validatorRangNum(rule, value, "amountSt") }]}>
+                <Input placeholder="请输入" autoComplete="off"/>
               </Form.Item>
             </Form.Item>
           </Col>
@@ -108,13 +112,16 @@ class FilterForm extends BaseFilter{
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="资产账期"  className="two-multi-form-item">
-              <Form.Item name="payment">
-                <Input  placeholder="请输入"/>
+            <Form.Item label="资产账期" className="two-multi-form-item">
+              <Form.Item name="paymentSt" rules={[{pattern:RegExpUtil.integer,message:'请输入正整数'}]}>
+                <Input placeholder="请输入" autoComplete="off"/>
               </Form.Item>
               <span className="line">---</span>
-              <Form.Item name="numEt">
-                <Input  placeholder="请输入"/>
+              <Form.Item
+                name="paymentEt"
+                dependencies={['paymentSt']}
+                rules={[{pattern:RegExpUtil.integer,message:'请输入正整数'},{ validator:(rule, value)=>this.validatorRangNum(rule, value, "paymentSt") }]}>
+                <Input placeholder="请输入" autoComplete="off"/>
               </Form.Item>
             </Form.Item>
           </Col>

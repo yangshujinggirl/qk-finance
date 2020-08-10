@@ -81,7 +81,59 @@ const columnsContract = [
     }
   },
 ];
+const columnsReceivable = [
+  {
+    title: '序号',
+    dataIndex: 'name',
+    key: 'name',
+  },
+  {
+    title: '买方',
+    dataIndex: 'age',
+    key: 'age',
+  },
+  {
+    title: '基础交易合同及编号',
+    dataIndex: 'address',
+    key: 'address',
+  },
+  {
+    title: '应收账款种类',
+    dataIndex: 'end',
+    key: 'address',
+  },
+  {
+    title: '应收账款金额',
+    dataIndex: 'amount',
+    key: 'address',
+  },
+  {
+    title: '应收账款到期日',
+    dataIndex: 'lx',
+    key: 'address',
+  },
+  {
+    title: '发货单号',
+    dataIndex: 'lx',
+    key: 'address',
+  },
+  {
+    title: '发货金额',
+    dataIndex: 'lx',
+    key: 'address',
+  },
+  {
+    title: '操作',
+    dataIndex: 'hkAmount',
+    key: 'address',
+    render:(text,record,index)=>{
+      return <>
+        <span className="operate-link-btn">操作</span>
+      </>
+    }
+  },
+];
 
 export {
-  columnsPlan,columnsContract
+  columnsPlan,columnsContract,columnsReceivable
 }
