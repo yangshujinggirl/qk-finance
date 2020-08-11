@@ -8,7 +8,7 @@ module.exports = {
   "form-item-margin-bottom": "24px",
   "table-row-hover-bg": "#F4F4F5",
   "statistic-title-font-size": "12px",
-  "statistic-content-font-size": "20px",
+  "statistic-content-font-size": "18px",
   "statistic-unit-font-size": "12px",
   "btn-height-base": "32px"
 };

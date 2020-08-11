@@ -1,0 +1,96 @@
+.asset-status-process-wrap {
+  padding: 20px 20px 40px;
+  .aspw-content {
+    color: #FFFFFF;
+    font-size: 18px;
+    height: 44px;
+    line-height: 44px;
+    width: 100%;
+    border: 1px solid #2D65E1;
+    background: #fff;
+    box-sizing: border-box;
+  }
+  .aspw-item {
+    color: #2D65E1;
+    width: 12%;
+    height: 100%;
+    text-align: center;
+    position: relative;
+    &:nth-child(1) {
+      width: 50%;
+    }
+    &:not(:last-child) {
+      // background:url('../../image/icon_arrow2.png') right top no-repeat;
+      // background-size: auto 100%;
+    }
+    &.step-finished {
+      color: #fff;
+      background:#2D65E1 url('../../image/icon_arrow0.png') right top no-repeat;
+      background-size: auto 45px;
+    }
+    // &.step-active {
+    //   background: #2955B8;
+    //   color: #fff;
+    // }
+    .arrow-wrap {
+      width: 30px;
+      height: 44px;
+      position: absolute;
+      right: 30px;
+      top: -1px;
+      overflow:hidden;
+      .arrow-out {
+        width: 0;
+        height: 0;
+        border-width:30px;
+        border-style: solid;
+        border-color: transparent #fff transparent transparent;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform:translateY(-50%) rotate(180deg);
+      }
+      .arrow-inner {
+        width: 0;
+        height: 0;
+        border-width:26px;
+        border-style: solid;
+        border-color: transparent #2D65E1 transparent transparent;
+        position: absolute;
+        left: -4px;
+        top: 50%;
+        transform:translateY(-50%) rotate(180deg);
+      }
+    }
+    .arrow-square-wrap {
+      width: 44px;
+      height: 44px;
+      position: absolute;
+      right: 30px;
+      top: -1px;
+      overflow:hidden;
+      .arrow-out {
+        width: 36px;
+        height: 36px;
+        background: #E4E7ED;
+        border: 1px solid #2D65E1;
+        border-color: #2D65E1 #2D65E1 transparent transparent;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform:translateY(-50%) rotate(45deg);
+      }
+      .arrow-inner {
+        width: 31px;
+        height: 31px;
+        background: #fff;
+        border: 1px solid #2D65E1;
+        border-color: #2D65E1 #2D65E1 transparent transparent;
+        position: absolute;
+        left: -3px;
+        top: 50%;
+        transform:translateY(-50%) rotate(45deg);
+      }
+    }
+  }
+}

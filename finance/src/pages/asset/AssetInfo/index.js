@@ -11,7 +11,7 @@ import DeliveryFactoryInfo from './components/DeliveryFactoryInfo';
 import DeliveryWarehouseInfo from './components/DeliveryWarehouseInfo';
 import ReceiveGoodsInfo from './components/ReceiveGoodsInfo';
 import ReturnedMoneyInfo from './components/ReturnedMoneyInfo';
-import ProcessMod from './components/ProcessMod';
+import AssetStepMod from './components/AssetStepMod';
 import './index.less';
 
 
@@ -105,10 +105,10 @@ class AssetInfo extends React.Component {
               </div>
             </div>
           </div>
-          {/*<ProcessMod />*/}
+          <AssetStepMod />
           <div className="aio-bottom-part">
             <VerifySource />
-            <YtCollapse defaultActiveKey={['4']} expandIconPosition="right">
+            <YtCollapse defaultActiveKey={['1']} expandIconPosition="right">
               <>
               {
                 panelArray.map((el) =>{

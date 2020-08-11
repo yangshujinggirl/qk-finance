@@ -18,7 +18,7 @@ class AssetDistributeChart extends React.Component{
         padding: 'auto',
         data,
         label: {
-          visible: true,
+          visible: false,
           type: 'inner',
           formatter: (val) => {
             val = val * 100 + '%';
@@ -38,8 +38,8 @@ class AssetDistributeChart extends React.Component{
           visible: false,
         },
         legend: {
-          position: 'right-top',
-          // offsetX:-30,
+          position: 'right-center',
+          offsetX:10,
           text:{
             formatter: (text,cfg) => {
               // let textMod = `${text}-80%`

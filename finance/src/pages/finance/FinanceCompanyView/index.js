@@ -69,22 +69,22 @@ class FinanceShow extends React.Component {
               <YtStatistic value="2笔">本日新增融资笔数</YtStatistic>
             </ViewCardPane>
           </div>
-          <YtCard title="资产增长趋势" className="part-same-shadow">
+          <YtCard title="资产增长趋势" className="part-same-shadow mt24">
             <div><RiseChart /></div>
           </YtCard>
           <Row justify="space-between" align="top" gutter={24}>
              <Col span={8}>
-               <YtCard title="企业资产笔数" className="part-same-shadow">
+               <YtCard title="企业资产笔数" className="part-same-shadow mt24">
                  <AssetNumCharts />
                </YtCard>
              </Col>
              <Col span={8}>
-               <YtCard title="企业资产规模" className="part-same-shadow">
+               <YtCard title="企业资产规模" className="part-same-shadow mt24">
                  <AssetScaleCharts />
                </YtCard>
              </Col>
              <Col span={8}>
-               <YtCard title="资产验真" className="part-same-shadow">
+               <YtCard title="资产验真" className="part-same-shadow mt24">
                  <AssetVerifyCharts />
                </YtCard>
              </Col>

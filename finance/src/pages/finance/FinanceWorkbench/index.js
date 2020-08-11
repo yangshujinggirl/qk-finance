@@ -82,7 +82,7 @@ class OperateWorkbench extends React.Component {
                 </div>
               </ViewCardPane>
             </div>
-            <div className="company-list part-same-shadow">
+            <div className="company-list part-same-shadow mt24">
               <YtCard title="融资企业">
                 <YtTable
                   columns={columns}
@@ -91,7 +91,7 @@ class OperateWorkbench extends React.Component {
             </div>
           </div>
           <div className="module-right-wrap">
-            <div className="part-same-shadow dynamic-state-action">
+            <div className="part-same-shadow dynamic-state-action mt24">
               <YtCard title="融资动态">
                 <div>
                   <div className="box-flex row-dt">
@@ -124,7 +124,7 @@ class OperateWorkbench extends React.Component {
                 </div>
               </YtCard>
             </div>
-            <div className="part-same-shadow">
+            <div className="part-same-shadow mt24">
               <YtCard title="资产动态">
                 <div className="box-flex asset-dynamic-chart-wrap">
                   <div className="chart-lf">

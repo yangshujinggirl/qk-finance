@@ -89,27 +89,27 @@ class OperateWorkbench extends React.Component {
                   label="预计融资(万元)"
                   num="550,000"/>
               </div>
-              <div className="company-list part-same-shadow">
+              <div className="company-list part-same-shadow mt24">
                 <CashChart />
               </div>
             </div>
             <div className="module-right-wrap">
-              <div className="part-same-shadow">
+              <div className="part-same-shadow mt24">
                 <AssestStatusChart />
               </div>
-              <div className="part-same-shadow">
+              <div className="part-same-shadow mt24">
                 <BlockChainNode />
               </div>
             </div>
           </div>
           <div className="common-column-module-wrap row-two-part">
             <div className="module-left-wrap">
-              <div className="part-same-shadow">
+              <div className="part-same-shadow mt24">
                 <LatestCashFlow/>
               </div>
             </div>
             <div className="module-right-wrap">
-              <div className="part-same-shadow verify-process">
+              <div className="part-same-shadow verify-process mt24">
                 <YtCard title="三方数据交叉验真状态">
                   <div>
                     <div className="box-flex company-list">

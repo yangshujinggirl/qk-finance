@@ -32,8 +32,8 @@ class MyComponent extends React.Component {
           <Menu.Item key="1">退出登陆</Menu.Item>
         </Menu>
       );
-    
-    return  <div className="App">
+
+    return  <div className="home-controller-wrap">
               <Layout>
                 <SiderControll collapsed={collapsed} menuList={menuList}/>
                 <Layout className="site-layout" style={{ marginLeft: widthStyle }}>
