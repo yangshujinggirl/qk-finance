@@ -5,6 +5,7 @@ import AssetChangeChart from './components/AssetChangeChart';
 import AssetPaymentChart from './components/AssetPaymentChart';
 import AssetStatusChart from './components/AssetStatusChart';
 import AssetInfoHead from '../components/AssetInfoHead';
+import SubCrumb from '../components/SubCrumb';
 import ProcessChart from './components/ProcessChart';
 import CreatModal from './components/CreatModal';
 import columns from './columns';
@@ -93,13 +94,20 @@ class AssetPackageInfo extends React.Component {
         value:'35%',
         key:'正常',
       }]
+      const linkList =[
+        {
+          url:`/account/asset/packageView/info/${params.id}`,
+          key:'1',
+          name:'资产包详情'
+        },{
+          url:`/account/asset/packageView/verifyInfo/${params.id}`,
+          key:'2',
+          name:'验真详情'
+        }]
     return(
       <>
         <YtBreadcrumbName>
-          <div className="sub-crumb">
-            <Link to={`/account/asset/packageView/info/${params.id}`} className="operate-link-btn">资产包详情</Link>
-            <Link to={`/account/asset/packageView/verifyInfo/${params.id}`} className="operate-link-btn">验真详情</Link>
-          </div>
+          <SubCrumb data={linkList} active="1"/>
         </YtBreadcrumbName>
         <div className="asset-package-info-pages-wrap">
           <AssetInfoHead>

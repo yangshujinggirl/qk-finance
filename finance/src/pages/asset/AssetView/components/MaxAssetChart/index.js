@@ -9,8 +9,12 @@ class MaxAssetChart extends React.Component{
         max: 10000,
         value: 8000,
         statistic: {
+          adjustColor:true,
           formatter: (value) => ((100 * value) / 10000).toFixed(1) + '%',
         },
+        liquidStyle:{
+            fill:'#1B53BF',
+        }
       });
       liquidPlot.render();
     }

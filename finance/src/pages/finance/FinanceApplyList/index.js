@@ -5,7 +5,7 @@ import withSubscription from '../components/ApplyAndApproveList';
 const Add=({...props})=> {
   return <div className="handle-common-action">
             <YtBtn size="free">
-              <Link to="/account/financeApprove/edit/12">+新增融资申请</Link>
+              <Link to="/account/financeApprove/edit/12">新增融资申请</Link>
             </YtBtn>
           </div>
 }

@@ -36,7 +36,7 @@ class FilterForm extends BaseFilter{
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item name="payment" label="还款方式" rules={[{ required: true }]}>
+            <Form.Item name="payment" label="还款方式">
               <Select
                 placeholder="请选择"
                 onChange={this.onGenderChange}

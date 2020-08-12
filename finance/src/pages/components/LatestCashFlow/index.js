@@ -20,7 +20,7 @@ function LatestCashFlow({...props}){
           现金池/监管<br/>760万元
         </div>
         <div className="bg-thr step-same"></div>
-        <div className="step-two step-same step-diy1">现金流出760万元</div>
+        <div className="step-two step-same step-diy1">现金流出<br/>760万元</div>
         <div className="bg-four step-same"></div>
         <div className="step-thr step-same box-flex">
           <p className="stb-item">

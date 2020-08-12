@@ -7,7 +7,6 @@ const columnsList =(handleType)=>{
           dataIndex: 'code',
           width: 100,
           fixed: 'left',
-          render: text => <a>{text}</a>,
           },
           {
           title: '资产金额(万元)',

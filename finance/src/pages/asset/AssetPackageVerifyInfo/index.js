@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { YtBreadcrumbName, YtTable, YtBtn, YtPagination, YtCard } from 'common';
 import AssetInfoHead from '../components/AssetInfoHead';
 import PoverMod from './components/PoverMod';
+import SubCrumb from '../components/SubCrumb';
 import './index.less';
 
 const { TabPane } = Tabs;
@@ -65,13 +66,20 @@ class AssetPackageInfo extends React.Component {
     ]
     const { selected, visible } =this.state;
     const { params } =this.props.match;
+    const linkList =[
+      {
+        url:`/account/asset/packageView/info/${params.id}`,
+        key:'1',
+        name:'资产包详情'
+      },{
+        url:`/account/asset/packageView/verifyInfo/${params.id}`,
+        key:'2',
+        name:'验真详情'
+      }]
     return(
       <>
         <YtBreadcrumbName>
-          <div className="sub-crumb">
-            <Link to={`/account/asset/packageView/info/${params.id}`} className="operate-link-btn">资产包详情</Link>
-            <Link to={`/account/asset/packageView/verifyInfo/${params.id}`} className="operate-link-btn">验真详情</Link>
-          </div>
+          <SubCrumb data={linkList} active="2"/>
         </YtBreadcrumbName>
         <div className="asset-package-verify-pages-wrap">
           <AssetInfoHead />

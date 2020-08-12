@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import { YtBreadcrumbName, YtPagination, YtStatistic, YtTable, YtBtn } from 'common';
 import ViewCardPane from '../../components/ViewCardPane';
+import SubCrumb from '../components/SubCrumb';
 import FilterForm from './components/FilterForm';
 import CreatModal from './components/CreatModal';
 import columnsList from './columns';
 import './index.less'
-
 
 const data = [
   {
@@ -52,16 +52,33 @@ class FinanceShow extends React.Component {
   render() {
     const { visible } =this.state;
     const { params } =this.props.match;
+    const linkList =[
+      {
+        url:`/account/asset/financeCompany/view/${params.id}`,
+        key:'1',
+        name:'概览'
+      },{
+        url:`/account/asset/financeCompany/list/${params.id}`,
+        key:'2',
+        name:'资产'
+      },{
+        url:'',
+        key:'3',
+        name:'现金流'
+      },{
+        url:'',
+        key:'4',
+        name:'融资历史'
+      },{
+        url:'',
+        key:'5',
+        name:'区块链'
+      },
+    ]
     return(
       <div>
         <YtBreadcrumbName>
-          <div className="sub-crumb">
-            <Link to={`/account/asset/financeCompany/view/${params.id}`} className="operate-link-btn">概览</Link>
-            <Link to={`/account/asset/financeCompany/list/${params.id}`} className="operate-link-btn">资产</Link>
-            <Link to="" className="operate-link-btn">现金流</Link>
-            <Link to="" className="operate-link-btn">融资历史</Link>
-            <Link to="" className="operate-link-btn">区块链</Link>
-          </div>
+          <SubCrumb data={linkList} active="2"/>
         </YtBreadcrumbName>
         <div className="finance-company-list-wrap">
           <div className="box-flex">
@@ -107,6 +124,7 @@ class FinanceShow extends React.Component {
               <YtBtn onClick={this.goCreat}>+资产包创建</YtBtn>
             </div>
             <YtTable
+             scroll={{ x: 1300 }}
              columns={columnsList}
              dataSource={data}/>
             <YtPagination data={{total:500,currentPage:0,limit:15}}/>

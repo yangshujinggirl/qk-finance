@@ -6,7 +6,7 @@ import './index.less';
 
 function BlockChainNode({...props}){
   return (
-    <YtCard title="区块链组织节点">
+    <YtCard title="区块链组织节点" className="part-same-shadow block-chain-wrap">
       <div className="block-chain-node">
        <img src={mapImg} className='map-block'/>
        <div className="bcd-list">

@@ -6,14 +6,12 @@ const columnsApply = [
         dataIndex: 'code',
         width: 100,
         fixed: 'left',
-        render: text => <a>{text}</a>,
         },
         {
         title: '放款编号',
         dataIndex: 'code',
         width: 100,
         fixed: 'left',
-        render: text => <a>{text}</a>,
         },
         {
         title: '申请放款日期',
@@ -79,14 +77,12 @@ const columnsApprove = [
         dataIndex: 'code',
         width: 100,
         fixed: 'left',
-        render: text => <a>{text}</a>,
         },
         {
         title: '放款编号',
         dataIndex: 'code',
         width: 100,
         fixed: 'left',
-        render: text => <a>{text}</a>,
         },
         {
         title: '申请放款日期',

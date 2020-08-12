@@ -1,13 +1,19 @@
 import axios from 'axios';
 import { message } from 'antd';
+import { Sessions } from 'utils';
 
-const defaultHeader = {
+let defaultHeader = {
   'Content-Type': 'application/json',
 };
 
-function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInterceptors = tru}){
+function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInterceptors = true}){
+  let Authorization = Sessions.get('token')?`${Sessions.get('tokenType')} ${Sessions.get('token')}`:null;
+  headers = {
+    ...headers,
+    Authorization
+  }
   const instance = axios.create({
-    baseURL: 'https://some-domain.com/api/',
+    baseURL,
     timeout,headers,
     withCredentials: true,
   });
@@ -25,7 +31,7 @@ function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInt
   // 添加响应拦截器
   instance.interceptors.response.use(function (response) {
     // 对响应数据做点什么
-    const { code, message, data } = response;
+    const { code, message, data } = response.data;
     // 用户登录超时统一处理
 				if (code == 'E_300') {
 					window.location.href = '/';
@@ -35,9 +41,9 @@ function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInt
 				if (code != "0") {
 					// 业务错误弹框
 					// Qmessage.error(resultMessage);
-					return Promise.reject(result);
+					return Promise.reject(data);
 				}
-				return { result, httpCode, fileDomain };
+				return { data, code };
   }, function (error) {
     // 对响应错误做点什么
 
@@ -45,5 +51,5 @@ function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInt
   });
   return instance;
 }
-const Req =  new request({ baseURL: '/ytApi' });
+const Req =  new request({ baseURL: '/ytFinance' });
 export default Req;

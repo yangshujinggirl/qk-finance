@@ -55,7 +55,7 @@ class AssetDistributeChart extends React.Component{
     }
     render() {
       return <YtCard title="资产账期分布">
-                <div className="asst-payment-trend" id="asset-dis-container"></div>
+                <div className={`asst-payment-trend ${this.props.className}`} id="asset-dis-container"></div>
               </YtCard>
     }
 }

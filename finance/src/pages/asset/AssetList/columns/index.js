@@ -4,6 +4,7 @@ const columnsList =[
         {
         title: '序号',
         dataIndex: 'code',
+        width: 100,
         },
         {
         title: '资产编号',
@@ -69,10 +70,10 @@ const columnsList =[
           title: '操作',
           dataIndex: '操作',
           fixed: 'right',
-          width: 200,
+          width: 100,
           render:(text,record,index)=>{
             return <>
-              <Link to="/account/asset/financeCompany/list/info/1" className="operate-link-btn">详情</Link>
+              <Link to="/account/asset/financeCompany/list/info/1" className="operate-link-btn">查看</Link>
             </>
           }
         },

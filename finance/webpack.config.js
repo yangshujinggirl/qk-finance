@@ -116,6 +116,14 @@ module.exports = {
   devServer: {
     host:ip.address(),
     compress: true,
-    port: 9000
+    port: 9000,
+    proxy:{
+      '/ytFinance': {
+        target:'http://10.66.13.231:8080',//
+        pathRewrite: {"^/ytFinance" : ""},
+        changeOrigin: true,
+      },
+    }
+
   },
 };

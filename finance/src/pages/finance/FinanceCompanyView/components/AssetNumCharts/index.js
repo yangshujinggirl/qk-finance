@@ -33,7 +33,7 @@ class IndexChart extends React.Component{
         angleField: 'value',
         colorField: 'type',
         legend:{
-          position:'right-top'
+          position:'right-center'
         },
         label: {
           visible: true,

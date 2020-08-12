@@ -167,11 +167,11 @@ class ApplyOne extends BaseEditForm {
                 </Col>
               </Row>
           </HeadFormCard>
-          <HeadFormCard title="还款计划">
+          <HeadFormCard title="还款计划"  extra={<YtBtn size="free">还款测算</YtBtn>}>
               <YtUpLoadAndDownLoad />
               <YtTable columns={columnsPlan} data={[]}/>
           </HeadFormCard>
-          <HeadFormCard title="转让应收账款" extra={<YtBtn size="free">还款测算</YtBtn>}>
+          <HeadFormCard title="转让应收账款">
               <>
                 <div className="box-flex receivable-row">
                   <div>应收帐款条数<span className="pointerSty">200条</span>，应收帐款金额<span className="pointerSty">32000</span></div>

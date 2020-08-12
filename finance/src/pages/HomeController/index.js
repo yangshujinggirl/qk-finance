@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { PageHeader, Layout, Menu, Breadcrumb, Dropdown } from 'antd';
 import { DownOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import AccountRoutes from '../AccountRoutes';
+import { Sessions } from 'utils';
 import SiderControll from './components/SiderControll';
 import menuList from './components/SiderControll/menuList';
 import './index.less';
@@ -23,7 +24,10 @@ class MyComponent extends React.Component {
    this.setState({ widthStyle,collapsed });
   };
   onClick = ({ key }) => {
-   console.log(key)
+   if(key == 1) {
+     Sessions.clear();
+     this.props.history.push('/login')
+   }
   };
   render() {
     let { widthStyle, collapsed } =this.state;

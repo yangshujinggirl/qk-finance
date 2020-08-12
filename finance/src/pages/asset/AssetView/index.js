@@ -4,6 +4,7 @@ import ViewCardPane from '../../components/ViewCardPane';
 import BlockChainNode from '../../components/BlockChainNode';
 import LatestCashFlow from '../../components/LatestCashFlow';
 import AssetDistributeChart from '../components/AssetDistributeChart';
+import SubCrumb from '../components/SubCrumb';
 import AssestStatusChart from './components/AssestStatusChart';
 import CashChart from './components/CashChart';
 import MaxAssetChart from './components/MaxAssetChart';
@@ -59,33 +60,53 @@ const verifyOption=[
 class OperateWorkbench extends React.Component {
 
   render(){
-
     const { params } =this.props.match;
+    const linkList =[
+      {
+        url:`/account/asset/financeCompany/view/${params.id}`,
+        key:'1',
+        name:'概览'
+      },{
+        url:`/account/asset/financeCompany/list/${params.id}`,
+        key:'2',
+        name:'资产'
+      },{
+        url:'',
+        key:'3',
+        name:'现金流'
+      },{
+        url:'',
+        key:'4',
+        name:'融资历史'
+      },{
+        url:'',
+        key:'5',
+        name:'区块链'
+      },
+    ]
     return(
       <>
         <YtBreadcrumbName>
-          <div className="sub-crumb">
-            <Link to={`/account/asset/financeCompany/view/${params.id}`} className="operate-link-btn">概览</Link>
-            <Link to={`/account/asset/financeCompany/list/${params.id}`} className="operate-link-btn">资产</Link>
-            <Link to="" className="operate-link-btn">现金流</Link>
-            <Link to="" className="operate-link-btn">融资历史</Link>
-            <Link to="" className="operate-link-btn">区块链</Link>
-          </div>
+          <SubCrumb data={linkList} active="1"/>
         </YtBreadcrumbName>
         <div className="assetView-pages-wrap">
           <div className=" common-column-module-wrap assetView-part-content">
             <div className="module-left-wrap">
               <div className="part-overview-wrap box-flex">
                 <ViewCardPane
+                  className="view-diy"
                   label="资产池总金额(万元)"
                   num="550,000"/>
                 <ViewCardPane
+                  className="view-diy"
                   label="现金流入(万元)"
                   num="550,000"/>
                 <ViewCardPane
+                  className="view-diy"
                   label="现金流出(万元)"
                   num="550,000"/>
                 <ViewCardPane
+                  className="view-diy"
                   label="预计融资(万元)"
                   num="550,000"/>
               </div>

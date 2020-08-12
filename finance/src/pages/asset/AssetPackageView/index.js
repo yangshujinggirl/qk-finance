@@ -92,7 +92,7 @@ class OperateWorkbench extends React.Component {
           </div>
           <div className="module-right-wrap">
             <div className="part-same-shadow">
-              <AssetDistributeChart />
+              <AssetDistributeChart className="big-chart"/>
             </div>
           </div>
         </div>

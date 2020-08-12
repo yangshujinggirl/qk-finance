@@ -6,11 +6,21 @@ import { YtStatistic, YtTable, YtCard } from 'common';
 import TinyAearChart from './components/TinyAearChart';
 import AssetDynamicChart from './components/AssetDynamicChart';
 import columns from './columns';
+import { GetListApi } from 'api/finance/FinanceWorkbench';
 import './index.less';
 import stateIcon0 from 'image/operateWorkbench/icon_state0.png';
 import stateIcon1 from 'image/operateWorkbench/icon_state1.png';
 
 class OperateWorkbench extends React.Component {
+  componentDidMount(){
+    GetListApi()
+    .then((res)=> {
+      console.log(res)
+    })
+  }
+  fetchList(){
+
+  }
 
   render(){
 
@@ -19,27 +29,36 @@ class OperateWorkbench extends React.Component {
     code: '1',
     key: '1',
     name: 'John Brown',
-    amount: '￥300,000.00',
-    amounted: '￥300,000.00',
-    amountPocess: '￥300,000.00',
+    amount: '￥300',
+    amounted: '￥300',
+    amountPocess: '￥300',
     address: 'New York No. 1 Lake Park',
     },
     {
     code: '2',
     key: '2',
     name: 'Jim Green',
-    amount: '￥1,256,000.00',
-    amounted: '￥1,256,000.00',
-    amountPocess: '￥1,256,000.00',
+    amount: '￥1,256',
+    amounted: '￥1,256',
+    amountPocess: '￥1,256',
     address: 'London No. 1 Lake Park',
     },
     {
     code: '3',
     key: '3',
     name: 'Joe Black',
-    amount: '￥120,000.00',
-    amounted: '￥120,000.00',
-    amountPocess: '￥120,000.00',
+    amount: '￥120',
+    amounted: '￥120',
+    amountPocess: '￥120',
+    address: 'Sidney No. 1 Lake Park',
+    },
+    {
+    code: '4',
+    key: '4',
+    name: 'Joe Black',
+    amount: '￥120',
+    amounted: '￥120',
+    amountPocess: '￥120',
     address: 'Sidney No. 1 Lake Park',
     },
 
@@ -86,7 +105,8 @@ class OperateWorkbench extends React.Component {
               <YtCard title="融资企业">
                 <YtTable
                   columns={columns}
-                  dataSource={data}/>
+                  dataSource={data}
+                  scroll={{ y: 200 }}/>
               </YtCard>
             </div>
           </div>
@@ -161,9 +181,7 @@ class OperateWorkbench extends React.Component {
             </div>
           </div>
           <div className="module-right-wrap">
-            <div className="part-same-shadow">
-              <BlockChainNode />
-            </div>
+            <BlockChainNode />
           </div>
         </div>
       </div>

@@ -22,8 +22,7 @@ ReactDOM.render(
     <Router>
       <Route path="/"  render={({location})=> {
         let routeName = location.pathname;
-        let sessionKey = Sessions.get('sessionKey');
-        sessionKey = '123444444';
+        let sessionKey = Sessions.get('token');
         if(routeName == '/login') {
           return <Route exact path="/login" component={Login}/>
         } else {

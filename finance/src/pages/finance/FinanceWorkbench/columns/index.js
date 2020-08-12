@@ -5,13 +5,10 @@ const columns = [
 {
 title: '企业编号',
 dataIndex: 'code',
-render: text => <a>{text}</a>,
 },
 {
 title: '企业名称',
-className: 'column-money',
 dataIndex: 'name',
-align: 'right',
 },
 {
 title: '资产总额(万元)',
@@ -27,7 +24,7 @@ dataIndex: 'amountPocess',
 },
 {
 title: '操作',
-dataIndex: 'amountPocess',
+dataIndex: 'action',
 render:(text,record,index)=> {
   return <Link to="/account/asset/financeCompany/view/9">详情</Link>
 }
