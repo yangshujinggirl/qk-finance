@@ -23,11 +23,7 @@ class FilterForm extends BaseFilter{
   };
   render() {
     return (
-      <Form
-        {...this.formItemLayout}
-        ref={this.formRef}
-        onFinish={this.onFinish}
-        className="yt-condition-form">
+      <Form {...this.formItemLayout} ref={this.formRef} onFinish={this.onFinish} className="yt-condition-form">
         <Row gutter={24}>
           <Col {...this.colspans}>
             <Form.Item name="name" label="企业名称">
@@ -46,6 +42,11 @@ class FilterForm extends BaseFilter{
             </Form.Item>
           </Col>
         </Row>
+        <div className="submit-btn-wrap">
+          <YtBtn htmlType="submit" onClick={this.onSubmit}>
+            查询
+          </YtBtn>
+        </div>
       </Form>
     );
   }

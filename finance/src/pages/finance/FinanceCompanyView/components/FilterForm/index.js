@@ -56,7 +56,7 @@ class FilterForm extends BaseFilter{
                 {({ getFieldValue }) => {
                   return getFieldValue('size') === 'other' ? (
                     <Form.Item name="otherInput" noStyle>
-                       <Input className="multi-form-input" />
+                       <Input className="multi-form-input" autoComplete="off"/>
                     </Form.Item>
                   ) : null;
                 }}
@@ -71,7 +71,7 @@ class FilterForm extends BaseFilter{
           <Col {...this.colspans}>
             <Form.Item label="累计笔数" className="two-multi-form-item">
               <Form.Item name="numSt">
-                <Input placeholder="请输入"/>
+                <Input placeholder="请输入" autoComplete="off"/>
               </Form.Item>
               <span className="line">---</span>
               <Form.Item name="numEt">

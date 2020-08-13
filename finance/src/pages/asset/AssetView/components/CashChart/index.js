@@ -23,7 +23,6 @@ class CashChart extends React.Component{
         { time: '2019-06', value: 220, type: '现金流出' },
         { time: '2019-07', value: 362, type: '现金流出' },
       ];
-
       const transformData = [
         { time: '2019-03', "净现值": 800 },
         { time: '2019-04', "净现值": 600 },
@@ -31,7 +30,6 @@ class CashChart extends React.Component{
         { time: '2019-06', "净现值": 380 },
         { time: '2019-07', "净现值": 220 },
       ];
-
       const columnLine = new StackedColumnLine(document.getElementById('cash-flow-container'),{
         data: [uvBillData, transformData],
         forceFit:true,

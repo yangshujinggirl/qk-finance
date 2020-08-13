@@ -14,9 +14,7 @@ import iconImg7 from '../../image/icon7.png';
 function VerifySource({...props}) {
   return <div className="common-column-module-wrap aio-verify-wrap">
              <div className="module-equal-two-wrap">
-               <YtCard
-                 title="当前验真源"
-                 className="aiov-lf part-same-shadow">
+               <YtCard bordered title="当前验真源" className="aiov-lf part-same-shadow">
                  <div className="box-flex">
                     <div className="source-item">
                       <img src={iconImg0} className="icon-itm"/>
@@ -50,7 +48,7 @@ function VerifySource({...props}) {
                </YtCard>
              </div>
              <div className="module-equal-two-wrap">
-               <YtCard title="当前验真采集数据" className="aiov-rf part-same-shadow">
+               <YtCard bordered title="当前验真采集数据" className="aiov-rf part-same-shadow">
                  <div className="ver-data">
                   <div className="verd-row box-flex">
                     <div className="verdr-lf"><img src={iconImg7}/></div>

@@ -70,7 +70,7 @@ class FinanceShow extends React.Component {
             </ViewCardPane>
           </div>
           <YtCard title="资产增长趋势" className="part-same-shadow mt24">
-            <div><RiseChart /></div>
+            <RiseChart />
           </YtCard>
           <Row justify="space-between" align="top" gutter={24}>
              <Col span={8}>

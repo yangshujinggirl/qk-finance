@@ -1,5 +1,5 @@
 import { Table, Progress } from 'antd';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import ViewCardPane from '../../components/ViewCardPane';
 import BlockChainNode from '../../components/BlockChainNode';
 import LatestCashFlow from '../../components/LatestCashFlow';
@@ -10,6 +10,7 @@ import CashChart from './components/CashChart';
 import MaxAssetChart from './components/MaxAssetChart';
 import FinanceTurnChart from './components/FinanceTurnChart';
 import { YtBreadcrumbName, YtTable, YtCard } from 'common';
+import {subCrumbOptions} from '../subCrumbOptions';
 
 
 import './index.less';
@@ -61,33 +62,10 @@ class OperateWorkbench extends React.Component {
 
   render(){
     const { params } =this.props.match;
-    const linkList =[
-      {
-        url:`/account/asset/financeCompany/view/${params.id}`,
-        key:'1',
-        name:'概览'
-      },{
-        url:`/account/asset/financeCompany/list/${params.id}`,
-        key:'2',
-        name:'资产'
-      },{
-        url:'',
-        key:'3',
-        name:'现金流'
-      },{
-        url:'',
-        key:'4',
-        name:'融资历史'
-      },{
-        url:'',
-        key:'5',
-        name:'区块链'
-      },
-    ]
     return(
       <>
         <YtBreadcrumbName>
-          <SubCrumb data={linkList} active="1"/>
+          <SubCrumb data={subCrumbOptions(params.id)} active="1"/>
         </YtBreadcrumbName>
         <div className="assetView-pages-wrap">
           <div className=" common-column-module-wrap assetView-part-content">

@@ -111,7 +111,7 @@ class AssetPackageInfo extends React.Component {
         </YtBreadcrumbName>
         <div className="asset-package-info-pages-wrap">
           <AssetInfoHead>
-            <div><YtBtn size="free">过滤异常数据</YtBtn></div>
+            <YtBtn size="free">过滤异常数据</YtBtn>
           </AssetInfoHead>
           <div className="three-module-wrap common-column-module-wrap">
             <div className="part-same-shadow module-equal-thr-wrap">

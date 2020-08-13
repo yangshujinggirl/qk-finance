@@ -1,6 +1,8 @@
 import { Layout, Menu } from 'antd';
 import { Switch, Route, Link } from 'react-router-dom';
 import { Sessions } from 'utils';
+import logoImg from '../../../../image/siderbar_logo.png';
+import './index.less';
 // import menuList from './menuList';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -46,7 +48,7 @@ class SiderControll extends React.Component{
     const { defaultSelectedKeys, defaultOpenKeys } = this.state;
     return(
       <Sider trigger={null}  collapsible collapsed={this.props.collapsed}>
-        <div className="logo" />
+        <div className="logo"><img src={logoImg}/></div>
         <Menu
           theme="dark"
           mode="inline"

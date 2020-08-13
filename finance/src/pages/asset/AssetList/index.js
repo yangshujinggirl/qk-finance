@@ -7,6 +7,7 @@ import SubCrumb from '../components/SubCrumb';
 import FilterForm from './components/FilterForm';
 import CreatModal from './components/CreatModal';
 import columnsList from './columns';
+import {subCrumbOptions} from '../subCrumbOptions';
 import './index.less'
 
 const data = [
@@ -52,33 +53,11 @@ class FinanceShow extends React.Component {
   render() {
     const { visible } =this.state;
     const { params } =this.props.match;
-    const linkList =[
-      {
-        url:`/account/asset/financeCompany/view/${params.id}`,
-        key:'1',
-        name:'概览'
-      },{
-        url:`/account/asset/financeCompany/list/${params.id}`,
-        key:'2',
-        name:'资产'
-      },{
-        url:'',
-        key:'3',
-        name:'现金流'
-      },{
-        url:'',
-        key:'4',
-        name:'融资历史'
-      },{
-        url:'',
-        key:'5',
-        name:'区块链'
-      },
-    ]
+
     return(
       <div>
         <YtBreadcrumbName>
-          <SubCrumb data={linkList} active="2"/>
+          <SubCrumb data={subCrumbOptions(params.id)} active="2"/>
         </YtBreadcrumbName>
         <div className="finance-company-list-wrap">
           <div className="box-flex">
@@ -121,7 +100,7 @@ class FinanceShow extends React.Component {
           <div className="yt-common-list-pages-wrap">
             <FilterForm />
             <div className="handle-common-action">
-              <YtBtn onClick={this.goCreat}>+资产包创建</YtBtn>
+              <YtBtn onClick={this.goCreat} size="free">+资产包创建</YtBtn>
             </div>
             <YtTable
              scroll={{ x: 1300 }}

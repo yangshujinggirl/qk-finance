@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { PageHeader, Layout, Menu, Breadcrumb, Dropdown } from 'antd';
-import { DownOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
+import { UserOutlined, DownOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import AccountRoutes from '../AccountRoutes';
 import { Sessions } from 'utils';
 import SiderControll from './components/SiderControll';
@@ -52,9 +52,12 @@ class MyComponent extends React.Component {
                       </div>
                       <div>
                         <Dropdown overlay={menu}>
-                          <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                            您好,admin <DownOutlined />
-                          </a>
+                          <div>
+                            <span className="user-pic"><UserOutlined /></span>
+                            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                              您好,admin <DownOutlined />
+                            </a>
+                          </div>
                         </Dropdown>
                       </div>
                     </div>

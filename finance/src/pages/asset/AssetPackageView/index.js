@@ -38,21 +38,27 @@ class OperateWorkbench extends React.Component {
       <div className="asset-package-view-pages-wrap">
         <div className="box-flex">
           <ViewCardPane
+            className="apvp-diy-card"
             label="资产池总金额(万元)"
             num="550,000"/>
           <ViewCardPane
+            className="apvp-diy-card"
             label="资产包数量(个)"
             num="550,000"/>
           <ViewCardPane
+            className="apvp-diy-card"
             label="融资企业(家)"
             num="550,000"/>
           <ViewCardPane
+            className="apvp-diy-card"
             label="融资笔数(笔)"
             num="550,000"/>
           <ViewCardPane
+            className="apvp-diy-card"
             label="债务企业(家)"
             num="550,000"/>
           <ViewCardPane
+            className="apvp-diy-card"
             label="实际平均账期(天)"
             num="550,000"/>
         </div>
