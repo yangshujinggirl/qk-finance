@@ -1,4 +1,4 @@
-import { StackedColumnLine } from '@antv/g2plot';
+import { Line } from '@antv/g2plot';
 import { YtCard } from 'common';
 import TabsMod from '../../../../components/TabsMod'
 import './index.less';
@@ -11,58 +11,165 @@ class IndexChart extends React.Component{
       this.setState({checkedVal:e.target.value})
     }
     componentDidMount() {
-      const uvBillData = [
-        { time: '2019-03', value: 350, type: '现金流入' },
-        { time: '2019-04', value: 900, type: '现金流入' },
-        { time: '2019-05', value: 300, type: '现金流入' },
-        { time: '2019-06', value: 450, type: '现金流入' },
-        { time: '2019-07', value: 470, type: '现金流入' },
-        { time: '2019-03', value: 220, type: '现金流出' },
-        { time: '2019-04', value: 300, type: '现金流出' },
-        { time: '2019-05', value: 250, type: '现金流出' },
-        { time: '2019-06', value: 220, type: '现金流出' },
-        { time: '2019-07', value: 362, type: '现金流出' },
-      ];
-      const transformData = [
-        { time: '2019-03', "净现值": 800 },
-        { time: '2019-04', "净现值": 600 },
-        { time: '2019-05', "净现值": 400 },
-        { time: '2019-06', "净现值": 380 },
-        { time: '2019-07', "净现值": 220 },
-      ];
-      const columnLine = new StackedColumnLine(document.getElementById('cash-flow-container'),{
-        data: [uvBillData, transformData],
-        forceFit:true,
-        xField: 'time',
-        yField: ['value', '净现值'],
-        columnStackField: 'type',
-        columnSize:6,
-        columnConfig:{
-          color:['#1B53BF','#F0EFF5']
+      const data = [
+        {
+          date: '1月',
+          type: '融资金额',
+          value: 13,
         },
-        lineConfig:{
-          color:"#0093EE"
+        {
+          date: '1月',
+          type: '还款金额',
+          value: 32,
         },
-        xAxis:{
-          title:{
-            visible:false
+        {
+          date: '2月',
+          type: '融资金额',
+          value: 18,
+        },
+        {
+          date: '2月',
+          type: '还款金额',
+          value: 13,
+        },
+        {
+          date: '3月',
+          type: '融资金额',
+          value: 10,
+        },
+        {
+          date: '3月',
+          type: '还款金额',
+          value: 30,
+        },
+        {
+          date: '4月',
+          type: '融资金额',
+          value: 30,
+        },
+        {
+          date: '4月',
+          type: '还款金额',
+          value: 30,
+        },
+        {
+          date: '5月',
+          type: '融资金额',
+          value: 48,
+        },
+        {
+          date: '5月',
+          type: '还款金额',
+          value: 48,
+        },
+        {
+          date: '6月',
+          type: '融资金额',
+          value: 40,
+        },
+        {
+          date: '6',
+          type: '还款金额',
+          value: 45,
+        },
+        {
+          date: '7月',
+          type: '融资金额',
+          value: 50,
+        },
+        {
+          date: '7月',
+          type: '还款金额',
+          value: 38,
+        },
+        {
+          date: '8月',
+          type: '融资金额',
+          value: 72,
+        },
+        {
+          date: '8月',
+          type: '还款金额',
+          value: 85,
+        },
+        {
+          date: '9月',
+          type: '融资金额',
+          value: 45,
+        },
+        {
+          date: '9月',
+          type: '还款金额',
+          value: 45,
+        },
+        {
+          date: '10月',
+          type: '融资金额',
+          value: 13,
+        },
+        {
+          date: '10月',
+          type: '还款金额',
+          value: 46,
+        },
+        {
+          date: '11月',
+          type: '融资金额',
+          value: 50,
+        },
+        {
+          date: '11月',
+          type: '还款金额',
+          value: 72,
+        },
+        {
+          date: '12月',
+          type: '融资金额',
+          value: 45,
+        },
+        {
+          date: '12月',
+          type: '还款金额',
+          value: 55,
+        },
+      ];
+
+      const linePlot = new Line(document.getElementById('cash-flow-container'), {
+        padding: 'auto',
+        forceFit: true,
+        data,
+        xField: 'date',
+        yField: 'value',
+        yAxis: {
+          tickInterval:15,
+        },
+        legend: {
+          position: 'top',
+          marker:{
+            symbol:'circle',
+            style:{
+              r:4
+            }
           }
-        }
+        },
+        seriesField: 'type',
+        responsive: true,
       });
-      columnLine.render();
+
+      linePlot.render();
     }
     render() {
       const plainOptions = [
         {
-          title:'全部',
+          title:'本年',
           key:1
         },
         {
-          title:'现金流入',
+          title:'本月',
           key:2
         },
         {
-          title:'现金流出',
+          title:'本日',
           key:3
         }];
       return <YtCard title="资产规模趋势图" className="part-same-shadow mt24">
