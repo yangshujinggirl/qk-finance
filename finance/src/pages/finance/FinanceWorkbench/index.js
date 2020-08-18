@@ -8,8 +8,8 @@ import AssetDynamicChart from './components/AssetDynamicChart';
 import columns from './columns';
 import { GetListApi } from 'api/finance/FinanceWorkbench';
 import './index.less';
-import stateIcon0 from 'image/operateWorkbench/icon_state0.png';
-import stateIcon1 from 'image/operateWorkbench/icon_state1.png';
+import stateIcon0 from './image/icon_state0.png';
+import stateIcon1 from './image/icon_state1.png';
 
 class OperateWorkbench extends React.Component {
   componentDidMount(){

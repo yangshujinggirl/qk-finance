@@ -1,5 +1,5 @@
 import './index.less';
-import iconOne from 'image/operateWorkbench/icon0.png';
+import iconOne from './image/icon0.png';
 
 function CardPane({...props}){
   return <div className={`finance-card-panel mt24 ${props.className}`}>

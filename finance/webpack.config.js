@@ -119,7 +119,8 @@ module.exports = {
     port: 9000,
     proxy:{
       '/ytFinance': {
-        target:'http://10.66.13.231:8080',//
+        // target:'http://10.66.13.231:8080',//
+        target:'https://fund05.bravowhale-uat.com/admin',//
         pathRewrite: {"^/ytFinance" : ""},
         changeOrigin: true,
       },
