@@ -1,7 +1,10 @@
 import axios from 'axios';
+import { YtMessage } from 'common';
 import { message } from 'antd';
 import { Sessions } from 'utils';
 
+// console.log(process.env.NODE_ENV)
+// const baseURL =
 let defaultHeader = {
   'Content-Type': 'application/json',
 };
@@ -35,18 +38,16 @@ function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInt
     // 用户登录超时统一处理
 				if (code == 'E_300') {
 					window.location.href = '/';
-					// sessionStorage.clear();
 					return;
 				}
 				if (code != "0") {
 					// 业务错误弹框
-					// Qmessage.error(resultMessage);
+					// Ytmessage.error(resultMessage);
 					return Promise.reject(data);
 				}
 				return { data, code };
   }, function (error) {
     // 对响应错误做点什么
-
 		return Promise.reject({ message: '服务异常' });
   });
   return instance;

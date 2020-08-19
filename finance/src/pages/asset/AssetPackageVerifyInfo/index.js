@@ -1,14 +1,15 @@
 import { Drawer, Table, Descriptions, Popover, Tabs } from 'antd';
 import { Link } from 'react-router-dom';
+import { PayCircleFilled, ExclamationCircleFilled, CheckCircleFilled } from '@ant-design/icons';
 import { YtBreadcrumbName, YtTable, YtBtn, YtPagination, YtCard } from 'common';
 import AssetInfoHead from '../components/AssetInfoHead';
 import PoverMod from './components/PoverMod';
 import SubCrumb from '../components/SubCrumb';
 import './index.less';
-
 import iconVer0 from './image/icon_ver0.png';
 import iconVer1 from './image/icon_ver1.png';
 import iconVer2 from './image/icon_ver2.png';
+import iconVer3 from './image/icon_ver3.png';
 
 const { TabPane } = Tabs;
 
@@ -93,30 +94,57 @@ class AssetPackageInfo extends React.Component {
                 <p className="field-val">22/<span className="num-low">23</span></p>
               </div>
               <div className="lab-item">
-                <p className="label-name">验真通过资产笔数</p>
+                <p className="label-name">
+                  <CheckCircleFilled className="label-icon-same label-icon-ok"/>
+                  <span className="label-text">验真通过资产笔数</span>
+                </p>
                 <p className="field-val">21</p>
               </div>
               <div className="lab-item">
-                <p className="label-name">验真存疑资产笔数</p>
+                <p className="label-name">
+                  <ExclamationCircleFilled className="label-icon-sus label-icon-same"/>
+                  <span className="label-text">验真存疑资产笔数</span>
+                </p>
                 <p className="field-val">1</p>
               </div>
               <div className="lab-item">
-                <p className="label-name">资产存疑资产额</p>
+                <p className="label-name">
+                  <PayCircleFilled className="label-icon-sus label-icon-same"/>
+                  <span className="label-text">资产存疑资产额</span>
+                </p>
                 <p className="field-val">36,800.00 <span className="percent">(3.64%)</span></p>
               </div>
             </div>
             <div className="bottom-action">
               <div className="status-list box-flex">
-                <div className="sts-item"><span className="line-icon"></span>验真通过</div>
-                <div className="sts-item"><span className="line-icon"></span>验真存疑</div>
-                <div className="sts-item"><span className="line-icon"></span>待验真</div>
+                <div className="sts-item">
+                  <span className="line-icon"></span>
+                  <span className="sts-text">验真通过</span>
+                </div>
+                <div className="sts-item">
+                  <span className="line-icon"></span>
+                  <span className="sts-text">验真存疑</span>
+                </div>
+                <div className="sts-item">
+                  <span className="line-icon"></span>
+                  <span className="sts-text">待验真</span>
+                </div>
                 <div className="sts-item">
                   <span className="sts-icon"><img src={iconVer0} /></span>
-                  最高价值
+                  <span className="sts-text">最高价值</span>
                 </div>
-                <div className="sts-item"><span className="sts-icon"></span>最低价值</div>
-                <div className="sts-item"><span className="sts-icon"></span>最长账期</div>
-                <div className="sts-item"><span className="sts-icon"></span>最短账期</div>
+                <div className="sts-item">
+                  <span className="sts-icon"><img src={iconVer1} /></span>
+                  <span className="sts-text">最低价值</span>
+                </div>
+                <div className="sts-item">
+                  <span className="sts-icon"><img src={iconVer2} /></span>
+                  <span className="sts-text">最长账期</span>
+                </div>
+                <div className="sts-item">
+                  <span className="sts-icon"><img src={iconVer3} /></span>
+                  <span className="sts-text">最短账期</span>
+                </div>
               </div>
               <div className="asset-package-list box-flex">
                 {

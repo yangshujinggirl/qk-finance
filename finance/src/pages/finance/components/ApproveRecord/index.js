@@ -30,22 +30,28 @@ class ApproveRecord extends BaseEditForm {
           <div className="record-wrap">
             <YtTable dataSource={data} columns={columnsRecord}/>
           </div>
-          <Row>
-            <Col {...this.colspans}>
-              <Form.Item label="审批状态" name="name" rules={[{ required: true,message:"请选择" }]}>
-                <Radio.Group>
-                  <Radio value={1}>不通过</Radio>
-                  <Radio value={2}>通过</Radio>
-                </Radio.Group>
-              </Form.Item>
-              <Form.Item name="customizeGender" label="审批意见" rules={[{ required: true,message:"请输入" }]}>
-                <Input.TextArea rows={4}/>
-              </Form.Item>
-            </Col>
-          </Row>
-          <div className="edit-btn-wrap">
-            <YtBtn size="free" onClick={this.handleSubmit}>确认</YtBtn>
-          </div>
+          {
+            this.props.handleType!='1'&&
+            <>
+            <Row>
+              <Col {...this.colspans}>
+                <Form.Item label="审批状态" name="name" rules={[{ required: true,message:"请选择" }]}>
+                  <Radio.Group>
+                    <Radio value={1}>不通过</Radio>
+                    <Radio value={2}>通过</Radio>
+                  </Radio.Group>
+                </Form.Item>
+                <Form.Item name="customizeGender" label="审批意见" rules={[{ required: true,message:"请输入" }]}>
+                  <Input.TextArea rows={4}/>
+                </Form.Item>
+              </Col>
+            </Row>
+            <div className="edit-btn-wrap">
+              <YtBtn size="free" onClick={this.handleSubmit}>确认</YtBtn>
+            </div>
+            </>
+          }
+
         </Form>
       </div>
     )

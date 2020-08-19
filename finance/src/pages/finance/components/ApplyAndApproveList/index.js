@@ -37,7 +37,7 @@ const data = [
     address: 'Sidney No. 1 Lake Park',
   },
   ];
-function withSubscription(handleType,Mod) {
+function withSubscription(handleType,Mod,onOperateClick) {
   return class FinanceShow extends React.Component {
     state={
       visible:false
@@ -94,10 +94,7 @@ function withSubscription(handleType,Mod) {
           <div className="main-content yt-common-list-pages-wrap">
             <FilterForm />
             {Mod&&<Mod />}
-            <YtTable
-              scroll={{ x: 1300 }}
-             columns={columns}
-             dataSource={data}/>
+            <YtTable onOperateClick={onOperateClick} scroll={{ x: 1300 }} columns={columns} dataSource={data}/>
             <YtPagination data={{total:500,currentPage:0,limit:15}}/>
           </div>
         </div>

@@ -16,13 +16,19 @@ import AssetSource from './asset/AssetSource';//资产溯源
 import FinanceWorkbench from './finance/FinanceWorkbench';//工作台
 import FinanceCompanyView from './finance/FinanceCompanyView';//融资企业
 import FinanceApplyList from './finance/FinanceApplyList';//融资申请列表
-import FinanceApplyEdit from './finance/FinanceApplyEdit';//融资申请
+import FinanceApplyEdit from './finance/FinanceApplyList/FinanceApplyEdit';//融资申请
 import FinanceApproveList from './finance/FinanceApproveList';//融资审批
-import FinanceApproveEdit from './finance/FinanceApproveEdit';//融资审批
+import FinanceApproveEdit from './finance/FinanceApproveList/FinanceApproveEdit';//融资审批
 import LoanApplyList from './finance/LoanApplyList';//放款申请列表
-import LoanApplyEdit from './finance/LoanApplyEdit';//放款申请
+import LoanApplyEdit from './finance/LoanApplyList/LoanApplyEdit';//放款申请
 import LoanApproveList from './finance/LoanApproveList';//放款审批列表
 import LoanApproveEdit from './finance/LoanApproveEdit';//放款审批
+import WithdrawManage from './finance/WithdrawManage';//请款管理
+import WithdrawEdit from './finance/WithdrawManage/WithdrawEdit';//请款审批
+import WithdrawInfo from './finance/WithdrawManage/WithdrawInfo';//请款审批
+import WhiteList from './finance/WhiteList';//企业白名单
+import WhiteListEdit from './finance/WhiteList/WhiteListEdit';//企业白名单
+import WhiteListInfo from './finance/WhiteList/WhiteListInfo';//企业白名单
 
 
 // 回款管理
@@ -66,6 +72,12 @@ function HomeRoutes() {
         <Route exact path="/account/asset/financeCompany/cash/:id" component={AssetCashFlow} />
         <Route exact path="/account/asset/financeCompany/history/:id" component={AssetHistory} />
         <Route exact path="/account/asset/financeCompany/blockbChain/:id" component={BlockbChain} />
+        <Route exact path="/account/withdraw" component={WithdrawManage} />
+        <Route exact path="/account/withdraw/edit/:id" component={WithdrawEdit} />
+        <Route exact path="/account/withdraw/info/:id" component={WithdrawInfo} />
+        <Route exact path="/account/whiteList" component={WhiteList} />
+        <Route exact path="/account/whiteList/edit/:id" component={WhiteListEdit} />
+        <Route exact path="/account/whiteList/info/:id" component={WhiteListInfo} />
 
         <Route exact path="/account/financeApply/edit/:id?" component={FinanceApplyEdit} />
         <Route exact path="/account/financeApplyList" component={FinanceApplyList} />

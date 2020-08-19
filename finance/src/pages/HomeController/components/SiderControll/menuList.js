@@ -65,6 +65,16 @@ const menuList=[
         name:'放款审批',
         chidrenNode:null,
         path:'loanApproveList',
+      },{
+        id:'2-4',
+        name:'请款管理',
+        chidrenNode:null,
+        path:'withdraw',
+      },{
+        id:'2-5',
+        name:'企业白名单',
+        chidrenNode:null,
+        path:'whiteList',
       },
     ]
   },{
