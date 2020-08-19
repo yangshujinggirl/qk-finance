@@ -6,6 +6,10 @@ import PoverMod from './components/PoverMod';
 import SubCrumb from '../components/SubCrumb';
 import './index.less';
 
+import iconVer0 from './image/icon_ver0.png';
+import iconVer1 from './image/icon_ver1.png';
+import iconVer2 from './image/icon_ver2.png';
+
 const { TabPane } = Tabs;
 
 class AssetPackageInfo extends React.Component {
@@ -16,7 +20,6 @@ class AssetPackageInfo extends React.Component {
   }
   goInfo=(value)=> {
     this.setState({ currentItem:value, selected:true})
-    // this.setState({ currentItem:value, visible:true })
   }
   goClose=(value)=> {
     this.setState({ currentItem:{}, selected:false, visible:false })
@@ -107,7 +110,10 @@ class AssetPackageInfo extends React.Component {
                 <div className="sts-item"><span className="line-icon"></span>验真通过</div>
                 <div className="sts-item"><span className="line-icon"></span>验真存疑</div>
                 <div className="sts-item"><span className="line-icon"></span>待验真</div>
-                <div className="sts-item"><span className="sts-icon"></span>最高价值</div>
+                <div className="sts-item">
+                  <span className="sts-icon"><img src={iconVer0} /></span>
+                  最高价值
+                </div>
                 <div className="sts-item"><span className="sts-icon"></span>最低价值</div>
                 <div className="sts-item"><span className="sts-icon"></span>最长账期</div>
                 <div className="sts-item"><span className="sts-icon"></span>最短账期</div>

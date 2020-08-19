@@ -42,7 +42,7 @@ class YtenlargeImg extends Component {
               onCancel={this.onCancel}
               visible={visible}
               footer={null}>
-              <div>
+              <div className="enlarge-img-wrap">
                 <img src={`${fileDomain}${url}`}/>
               </div>
             </Modal>
