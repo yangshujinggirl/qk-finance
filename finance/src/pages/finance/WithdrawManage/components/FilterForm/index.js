@@ -42,32 +42,29 @@ class FilterForm extends BaseFilter{
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="用途类型" name="ytlx">
+            <Form.Item label="请款类型" name="ytlx">
                <Select
                  placeholder="请选择"
                  allowClear>
-                 <Option value="male">全部</Option>
-                 <Option value="female">再经营</Option>
-                 <Option value="other">偿还融资贷款</Option>
-                 <Option value="other">提取利润</Option>
+                 <Option value="ALL">全部</Option>
+                 <Option value="1">再经营</Option>
+                 <Option value="2">偿还融资贷款</Option>
+                 <Option value="3">提取利润</Option>
                </Select>
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="申请状态" name="sqzt">
+            <Form.Item label="审核状态" name="sqzt">
                <Select
                  placeholder="请选择"
                  allowClear>
-                 <Option value="male">全部</Option>
+                 <Option value="0">全部</Option>
                </Select>
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="交易时间" name="time">
-              <RangePicker
-                  defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
-                  format={dateFormat}
-                />
+            <Form.Item label="请款时间" name="time">
+              <RangePicker format={dateFormat}/>
             </Form.Item>
           </Col>
         </Row>

@@ -48,7 +48,9 @@ const data = [
     paycode:'6226 0101 1010 0456 782'
   },
 ];
+
 class AccountStatement extends React.Component {
+
     render() {
       return(
         <div className="yt-common-list-pages-wrap">
