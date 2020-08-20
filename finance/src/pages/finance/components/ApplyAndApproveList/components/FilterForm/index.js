@@ -31,7 +31,7 @@ class FilterForm extends BaseFilter{
         className="yt-condition-form">
         <Row gutter={24}>
           <Col {...this.colspans}>
-            <Form.Item label="企业名称" name="name">
+            <Form.Item label="融资企业" name="name">
               <Input   placeholder="请输入"/>
             </Form.Item>
           </Col>
@@ -60,11 +60,8 @@ class FilterForm extends BaseFilter{
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="资产账期" name="time">
-            <RangePicker
-                defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
-                format={dateFormat}
-              />
+            <Form.Item label="融资时间" name="time">
+              <RangePicker format={dateFormat}/>
             </Form.Item>
           </Col>
         </Row>

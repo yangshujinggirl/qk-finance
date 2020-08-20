@@ -3,70 +3,57 @@ import { Link } from 'react-router-dom';
 const columnsList =(handleType)=>{
   return [
           {
-          title: '资产编号',
+          title: '序号',
           dataIndex: 'code',
           width: 100,
           fixed: 'left',
           },
           {
-          title: '资产金额(万元)',
+          title: '融资编号',
           className: 'column-money',
           dataIndex: 'name',
           width: 100,
-          align: 'right',
           },
           {
-          title: '资产账期(天)',
+          title: '申请日期',
           dataIndex: 'amount',
           width: 100,
           },
           {
-          title: '剩余账期(天)',
+          title: '融资企业',
           dataIndex: 'amounted',
           },
           {
-          title: '债务方',
+          title: '行业',
           dataIndex: 'zwf',
           },
           {
-          title: '还款方式',
+          title: '资产包编号',
           dataIndex: 'pay',
           },
           {
-          title: '资产状态',
+          title: '资产包金额（万元）',
           dataIndex: 'status',
           },
           {
-          title: '资产包选用',
+          title: '融资金额（万元）',
           dataIndex: 'use',
           },
           {
-          title: 'test1',
+          title: '年利率',
           dataIndex: 'test1',
           },
           {
-          title: 'test2',
+          title: '还款方式',
           dataIndex: 'test2',
           },
           {
-          title: 'test3',
+          title: '审核状态',
           dataIndex: 'test3',
           },
           {
-          title: 'test4',
+          title: '实际放款时间',
           dataIndex: 'test4',
-          },
-          {
-          title: 'test5',
-          dataIndex: 'test5',
-          },
-          {
-          title: 'test6',
-          dataIndex: 'test6',
-          },
-          {
-          title: 'test7',
-          dataIndex: 'test7',
           },
           {
             title: '操作',

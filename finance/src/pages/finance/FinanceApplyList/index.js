@@ -9,9 +9,7 @@ const Add=({...props})=> {
             </YtBtn>
           </div>
 }
-const onOperateClick=(item,type)=> {
-  console.log(item,type)
-}
-const FinancApplyList = withSubscription('1',Add,onOperateClick)//1:融资申请
+
+const FinancApplyList = withSubscription('1',Add)//1:融资申请
 
 export default FinancApplyList;

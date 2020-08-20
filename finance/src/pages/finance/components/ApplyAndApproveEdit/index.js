@@ -22,7 +22,7 @@ function withSubscription(handleType, Mod){
             <TabPane tab="合同要素" key="1">
               <AppLyOne handleType={handleType}/>
             </TabPane>
-            <TabPane tab="还款预算" key="2">
+            <TabPane tab="还款预算" key="2" disabled>
               <AppLyTwo handleType={handleType}/>
             </TabPane>
             <TabPane tab="合同预览" key="3">

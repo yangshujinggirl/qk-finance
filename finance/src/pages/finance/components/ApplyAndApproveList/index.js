@@ -3,6 +3,7 @@ import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import { YtStatistic, YtPagination, YtTable, YtBtn } from 'common';
 import ViewCardPane from '../../../components/ViewCardPane';
 import FilterForm from './components/FilterForm';
+import CreatModal from './components/CreatModal';
 import { columnsList } from './columns';
 import './index.less'
 
@@ -37,16 +38,22 @@ const data = [
     address: 'Sidney No. 1 Lake Park',
   },
   ];
-function withSubscription(handleType,Mod,onOperateClick) {
+function withSubscription(handleType,Mod) {
   return class FinanceShow extends React.Component {
     state={
       visible:false
     }
-    goCreat=()=> {
-      this.setState({ visible:true });
+    componentDidMount(){
+      //feth
+    }
+    onOk=()=> {
+      this.setState({ visible:false });
     }
     onCancel=()=> {
       this.setState({ visible:false });
+    }
+    onOperateClick=(item,type)=> {
+      this.setState({ visible:true });
     }
     render() {
       const { visible } =this.state;
@@ -94,8 +101,9 @@ function withSubscription(handleType,Mod,onOperateClick) {
           <div className="main-content yt-common-list-pages-wrap">
             <FilterForm />
             {Mod&&<Mod />}
-            <YtTable onOperateClick={onOperateClick} scroll={{ x: 1300 }} columns={columns} dataSource={data}/>
+            <YtTable onOperateClick={this.onOperateClick} scroll={{ x: 1300 }} columns={columns} dataSource={data}/>
             <YtPagination data={{total:500,currentPage:0,limit:15}}/>
+            <CreatModal visible={visible} onOk={this.onOk} onCancel={this.onCancel}/>
           </div>
         </div>
       )
