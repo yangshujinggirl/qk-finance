@@ -46,10 +46,10 @@ class FilterForm extends BaseFilter{
                <Select
                  placeholder="请选择"
                  allowClear>
-                 <Option value="male">全部</Option>
-                 <Option value="female">再经营</Option>
-                 <Option value="other">偿还融资贷款</Option>
-                 <Option value="other">提取利润</Option>
+                 <Option value="ALL">全部</Option>
+                 <Option value="1">再经营</Option>
+                 <Option value="2">偿还融资贷款</Option>
+                 <Option value="3">提取利润</Option>
                </Select>
             </Form.Item>
           </Col>
@@ -58,7 +58,7 @@ class FilterForm extends BaseFilter{
                <Select
                  placeholder="请选择"
                  allowClear>
-                 <Option value="male">全部</Option>
+                 <Option value="0">全部</Option>
                </Select>
             </Form.Item>
           </Col>
