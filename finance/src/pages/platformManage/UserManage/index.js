@@ -4,6 +4,8 @@ import FilterForm from './components/FilterForm';
 import CreatModal from './components/CreatModal';
 import {columnsIndex} from './columns';
 import './index.less'
+import { getUserList} from '../../../api/platformManage';
+
 
 const data = [
   {
@@ -53,7 +55,16 @@ const data = [
 const Index=({...props})=>{
     const [visible,setVisible] = useState(false);
     const [currentItem,setCurrentItem] = useState({});
-
+    //用户管理API
+    const getUserLists=(param)=>{
+        getUserList(param).then(res=>{
+            console.log(res)
+        })
+    }
+    //获取用户数据
+    useEffect(() => {
+        getUserLists();
+    },[]);
     const goCreat=()=>{
       setVisible(true);
     }

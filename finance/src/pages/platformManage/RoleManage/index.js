@@ -4,6 +4,8 @@ import FilterForm from './components/FilterForm';
 import CreatModal from './components/CreatModal';
 import {columnsIndex} from './columns';
 import './index.less'
+import {getRoleList} from '../../../api/platformManage';
+
 
 const data = [
   {
@@ -53,7 +55,16 @@ const data = [
 const Index=({...props})=>{
     const [visible,setVisible] = useState(false);
     const [currentItem,setCurrentItem] = useState({});
-
+    // 角色管理API
+    const getRoleLists=(param)=>{
+        getRoleList(param).then(res=>{
+            console.log(res)
+        })
+    }
+    // 获取角色数据
+    useEffect(() => {
+        getRoleLists();
+    },[]);
     const goCreat=()=>{
       setVisible(true);
     }
