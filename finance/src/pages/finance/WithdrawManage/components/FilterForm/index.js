@@ -42,7 +42,7 @@ class FilterForm extends BaseFilter{
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="用途类型" name="ytlx">
+            <Form.Item label="请款类型" name="ytlx">
                <Select
                  placeholder="请选择"
                  allowClear>
@@ -54,7 +54,7 @@ class FilterForm extends BaseFilter{
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="申请状态" name="sqzt">
+            <Form.Item label="审核状态" name="sqzt">
                <Select
                  placeholder="请选择"
                  allowClear>
