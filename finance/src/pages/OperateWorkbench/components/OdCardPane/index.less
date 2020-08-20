@@ -1,0 +1,39 @@
+.order-card-panel {
+  flex:1;
+  height: 170px;
+  border-radius: 6px;
+  background: #2955B8;
+  color: #FFFFFF;
+  text-align: left;
+  padding: 24px 0 0 30px;
+  box-sizing: border-box;
+  margin-right: 1%;
+  margin-bottom: 22px;
+  .card-title {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 24px;
+  }
+  .flex-item{
+    flex: 1;
+    &:not(:last-child) {
+      flex: 1;
+      border-right: 1px solid rgba(255,255,255,.3);
+    }
+    &:last-child{
+      padding-left: 40px;
+      box-sizing: border-box;
+    }
+  }
+  .field-num{
+    color: #FBFCFD;
+    font-size: 32px;
+    line-height: 45px;
+    margin-bottom: 4px;
+  }
+  .label-title{
+    font-size: 16px;
+    line-height: 20px;
+    color: rgba(255,255,255,.7);
+  }
+}

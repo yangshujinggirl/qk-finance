@@ -1,0 +1,27 @@
+.form-head-card-wrap {
+  margin-bottom: 30px;
+  .flex-head{
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #E4E7ED;
+    padding: 10px 0;
+  }
+  .head {
+    color: #333333;
+    font-size: 20px;
+    line-height: 24px;
+    position: relative;
+    padding-left: 12px;
+    &:before {
+      content:'';
+      width: 4px;
+      height: 18px;
+      border-radius: 0px 4px 4px 0px;
+      background: #2D65E1;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
