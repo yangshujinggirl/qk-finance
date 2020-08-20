@@ -17,7 +17,7 @@ function withSubscription(handleType, Mod){
         <div className="yt-common-bg-pages-wrap">
           <Tabs defaultActiveKey="1" onChange={this.callback}>
             <TabPane tab="放款申请" key="1">
-              <AppLyOne />
+              <AppLyOne handleType={handleType}/>
             </TabPane>
             {Mod&&Mod()}
           </Tabs>

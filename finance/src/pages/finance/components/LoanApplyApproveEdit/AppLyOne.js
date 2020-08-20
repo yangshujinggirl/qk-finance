@@ -92,9 +92,12 @@ class ApplyOne extends BaseEditForm {
                 </Col>
               </Row>
           </HeadFormCard>
-          <div className="edit-btn-wrap">
-            <YtBtn size="free" onClick={this.handleSubmit}>确认并下一步</YtBtn>
-          </div>
+          {
+            this.props.handleType=='1'&&
+            <div className="edit-btn-wrap">
+              <YtBtn size="free" onClick={this.handleSubmit}>提交</YtBtn>
+            </div>
+          }
         </Form>
       </div>
     )

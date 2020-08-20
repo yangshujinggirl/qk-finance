@@ -61,7 +61,7 @@ class FinanceShow extends React.Component {
               desc:'',
               value:''
             }]}/>
-            <RiseChart />
+            {/*<RiseChart />*/}
             <div className="list-action part-same-shadow mt24">
               <YtTable columns={columnsList} dataSource={data} scroll={{ x: 1300 }}/>
               <YtPagination data={{total:500,currentPage:0,limit:15}}/>

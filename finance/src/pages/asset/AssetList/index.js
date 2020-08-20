@@ -1,15 +1,15 @@
 import { Button, Statistic, Progress } from 'antd';
+import moment from 'moment';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
-import { YtBreadcrumbName, YtPagination, YtStatistic, YtTable, YtBtn } from 'common';
+import { YtMessage, YtBreadcrumbName, YtPagination, YtStatistic, YtTable, YtBtn } from 'common';
 import ViewCardPane from '../../components/ViewCardPane';
 import SubCrumb from '../components/SubCrumb';
 import FilterForm from './components/FilterForm';
 import CreatModal from './components/CreatModal';
 import columnsList from './columns';
 import {subCrumbOptions} from '../subCrumbOptions';
-import { GetListApi } from 'api/asset/AssetList';
+import { GetListApi, GetAddApi } from 'api/asset/AssetList';
 import './index.less'
 
 const data = [
@@ -46,15 +46,18 @@ const FinanceShow=({...props})=> {
   const [visible, setVisible] = useState(false);
   const [dataPag,setDataPag] = useState({ pageSize:10, pageNow:1 });
   const [inputValues,setInputValues] = useState({});
-  const { id } = props.match.params;
+  const { id:enterpriseId } = props.match.params;
   const goCreat=()=> {
     setVisible(true)
   }
   const onCancel=()=> {
     setVisible(false)
   }
+  const onOk=(values,callback)=> {
+    props.history.push('/account/asset/packageView')
+  }
   const fetchList=(values )=>{
-    let params = { ...dataPag, ...values, enterpriseId:id }
+    let params = { ...dataPag, ...values, enterpriseId }
     GetListApi(params)
     .then((res)=> {
       console.log(res)
@@ -64,17 +67,17 @@ const FinanceShow=({...props})=> {
     fetchList({currentPage, everyPage})
   };
   const onSubmit = params => {
-    console.log(params)
+    let { time, ...values } =params;
+    values.assetDateMin = moment(time[0]).format('YYYY-MM-DD');
+    values.assetDateMax = moment(time[1]).format('YYYY-MM-DD');
     setInputValues(params);
-    fetchList(params)
+    fetchList(values)
   };
-  useEffect(() => {
-    fetchList()
-  },[id]);
+  useEffect(() => { fetchList() },[enterpriseId]);
   return(
     <div>
       <YtBreadcrumbName>
-        <SubCrumb data={subCrumbOptions(id)} active="2"/>
+        <SubCrumb data={subCrumbOptions(enterpriseId)} active="2"/>
       </YtBreadcrumbName>
       <div className="finance-company-list-wrap">
         <div className="box-flex">
@@ -124,7 +127,11 @@ const FinanceShow=({...props})=> {
            columns={columnsList}
            dataSource={data}/>
           <YtPagination data={{total:500,currentPage:0,limit:15}}/>
-          <CreatModal visible={visible} onCancel={onCancel}/>
+        <CreatModal
+          visible={visible}
+          onCancel={onCancel}
+          onOk={onOk}
+          enterpriseId={enterpriseId}/>
         </div>
       </div>
     </div>

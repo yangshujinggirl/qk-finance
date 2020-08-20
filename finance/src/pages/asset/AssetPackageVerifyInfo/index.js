@@ -149,7 +149,7 @@ class AssetPackageInfo extends React.Component {
               <div className="asset-package-list box-flex">
                 {
                   data.map((el,index)=> (
-                    <div key={index} className={`asset-tem ${el.assetStatus==1?'':'no-pass'}`} onClick={this.goInfo}>
+                    <div key={index} className={`asset-tem ${el.assetStatus==1?'':'no-pass'}`}>
                       <span className="status-line"></span>
                       <Popover className="popover-block" content={<PoverMod />} title={null} placement="bottom">
                         资产{++index}

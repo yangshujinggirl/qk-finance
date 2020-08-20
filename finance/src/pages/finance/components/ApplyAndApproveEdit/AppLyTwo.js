@@ -180,9 +180,12 @@ class ApplyOne extends BaseEditForm {
                 <YtTable columns={columnsReceivable} data={[]}/>
               </>
           </HeadFormCard>
-          <div className="edit-btn-wrap">
-            <YtBtn size="free" onClick={this.handleSubmit}>确认并下一步</YtBtn>
-          </div>
+          {
+            this.props.handleType=='1'&&
+            <div className="edit-btn-wrap">
+              <YtBtn size="free" onClick={this.handleSubmit}>确认并下一步</YtBtn>
+            </div>
+          }
         </Form>
         <ChangeModal  visible={visible} onOk={this.onOk} onCancel={this.onCancel}/>
       </div>

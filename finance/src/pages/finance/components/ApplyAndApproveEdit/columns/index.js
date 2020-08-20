@@ -74,7 +74,6 @@ const columnsContract = [
       return <>
         <span className="operate-link-btn">预览</span>
         <span className="operate-link-btn">下载</span>
-        <span className="operate-link-btn">重新生成</span>
         <span className="operate-link-btn">手动上传</span>
         <span className="operate-link-btn">移除</span>
       </>

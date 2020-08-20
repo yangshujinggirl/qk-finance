@@ -82,9 +82,12 @@ class ApplyOne extends BaseEditForm {
               select={true}
               rowSelection={rowSelection}/>
           </HeadFormCard>
-          <div className="edit-btn-wrap">
-            <YtBtn size="free" onClick={this.handleSubmit}>提交审批</YtBtn>
-          </div>
+          {
+            this.props.handleType=='1'&&
+            <div className="edit-btn-wrap">
+              <YtBtn size="free" onClick={this.handleSubmit}>提交审批</YtBtn>
+            </div>
+          }
         </Form>
       </div>
     )

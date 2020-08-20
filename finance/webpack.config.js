@@ -9,7 +9,7 @@ const theme = require('./theme.js');
 
 let UglifyArray = [], sourceMap="cheap-module-eval-source-map";
 const extractLeSS = new ExtractTextPlugin({
-  filename: '[name].css',
+  filename: '[name].[hash].css',
   allChunks:true,
 });
 if(process.env.NODE_ENV === 'production'){

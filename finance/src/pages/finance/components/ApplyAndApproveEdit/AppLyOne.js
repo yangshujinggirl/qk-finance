@@ -6,7 +6,7 @@ import PopoverMod from './components/PopoverMod';
 
 class ApplyOne extends BaseEditForm {
   formRef = React.createRef();
-  onSubmit = async (values) => {
+  onSubmit = (values) => {
     console.log(values)
   };
   render() {
@@ -191,9 +191,12 @@ class ApplyOne extends BaseEditForm {
                 </Col>
               </Row>
           </HeadFormCard>
-          <div className="edit-btn-wrap">
-            <YtBtn size="free" onClick={this.handleSubmit}>确认并下一步</YtBtn>
-          </div>
+          {
+            this.props.handleType=='1'&&
+            <div className="edit-btn-wrap">
+              <YtBtn size="free" onClick={this.handleSubmit}>确认并下一步</YtBtn>
+            </div>
+          }
         </Form>
       </div>
     )

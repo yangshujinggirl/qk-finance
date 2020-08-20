@@ -20,13 +20,13 @@ function withSubscription(handleType, Mod){
         <div className="finance-apply-wrap yt-common-bg-pages-wrap">
           <Tabs defaultActiveKey="1" onChange={this.callback}>
             <TabPane tab="合同要素" key="1">
-              <AppLyOne />
+              <AppLyOne handleType={handleType}/>
             </TabPane>
             <TabPane tab="还款预算" key="2">
-              <AppLyTwo />
+              <AppLyTwo handleType={handleType}/>
             </TabPane>
             <TabPane tab="合同预览" key="3">
-              <AppLyThr />
+              <AppLyThr handleType={handleType}/>
             </TabPane>
             {Mod&&Mod()}
           </Tabs>

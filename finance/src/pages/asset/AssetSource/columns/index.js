@@ -4,9 +4,6 @@ const columns =[
         {
           title: '序号',
           dataIndex: 'code',
-          render:(text,record,index)=> {
-            return <Link to="/account">{text}</Link>
-          }
         },
         {
           title: '更新时间',

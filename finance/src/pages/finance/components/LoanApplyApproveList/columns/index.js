@@ -65,7 +65,7 @@ const columnsApply = [
           render:(text,record,index)=>{
             return <>
               <Link to="/account/loanApply/edit/12" className="operate-link-btn">申请放款</Link>
-              <Link to="/" className="operate-link-btn">详情</Link>
+              <Link to="/" className="operate-link-btn">查看</Link>
             </>
           }
         },
@@ -136,7 +136,7 @@ const columnsApprove = [
           render:(text,record,index)=>{
             return <>
               <Link to="/account/loanApprove/edit/12" className="operate-link-btn">审核</Link>
-              <Link to="/" className="operate-link-btn">详情</Link>
+              <Link to="/" className="operate-link-btn">查看</Link>
             </>
           }
         },
