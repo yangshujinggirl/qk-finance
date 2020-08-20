@@ -9,7 +9,7 @@ import FilterForm from './components/FilterForm';
 import CreatModal from './components/CreatModal';
 import columnsList from './columns';
 import {subCrumbOptions} from '../subCrumbOptions';
-import { GetListApi, GetAddApi } from 'api/asset/AssetList';
+import { GetTotalApi, GetListApi, GetAddApi } from 'api/asset/AssetList';
 import './index.less'
 
 const data = [
@@ -46,6 +46,7 @@ const FinanceShow=({...props})=> {
   const [visible, setVisible] = useState(false);
   const [dataPag,setDataPag] = useState({ pageSize:10, pageNow:1 });
   const [inputValues,setInputValues] = useState({});
+  const [totalData,setTotalData] = useState({})
   const { id:enterpriseId } = props.match.params;
   const goCreat=()=> {
     setVisible(true)
@@ -55,6 +56,19 @@ const FinanceShow=({...props})=> {
   }
   const onOk=(values,callback)=> {
     props.history.push('/account/asset/packageView')
+  }
+  const fetchTotal=(values )=>{
+    let params = { industryTypeCode:'AGNPK', enterpriseId }
+    GetTotalApi(params)
+    .then((res)=> {
+      const { aseetsStatisticsVO } =res.data;
+      setTotalData({
+        assetTotalCount:aseetsStatisticsVO.assetTotalCount,
+        assetsRatio:aseetsStatisticsVO.assetsRatio,
+        assetsTotal:aseetsStatisticsVO.assetsTotal,
+        averageAccountingPeriod:aseetsStatisticsVO.averageAccountingPeriod,
+      })
+    })
   }
   const fetchList=(values )=>{
     let params = { ...dataPag, ...values, enterpriseId }
@@ -73,7 +87,10 @@ const FinanceShow=({...props})=> {
     setInputValues(params);
     fetchList(values)
   };
-  useEffect(() => { fetchList() },[enterpriseId]);
+  useEffect(() => {
+    fetchList();
+    fetchTotal()
+  },[enterpriseId]);
   return(
     <div>
       <YtBreadcrumbName>
@@ -81,36 +98,28 @@ const FinanceShow=({...props})=> {
       </YtBreadcrumbName>
       <div className="finance-company-list-wrap">
         <div className="box-flex">
-          <ViewCardPane
-            label="累计资产总笔数"
-            num="520">
+          <ViewCardPane label="累计资产总笔数" num={totalData.assetTotalCount}>
             <div className="box-flex">
               <YtStatistic value="12%" type="up">周同比</YtStatistic>
               <YtStatistic value="12%" type="up">日环比</YtStatistic>
               <YtStatistic value="2笔">本日新增</YtStatistic>
             </div>
           </ViewCardPane>
-          <ViewCardPane
-            label="累计资产总额(万元)"
-            num="520">
+          <ViewCardPane label="累计资产总额(万元)" num={totalData.assetsTotal}>
             <div className="box-flex">
               <YtStatistic value="12%" type="up">周同比</YtStatistic>
               <YtStatistic value="12%" type="up">日环比</YtStatistic>
               <YtStatistic value="15万">本日新增</YtStatistic>
             </div>
           </ViewCardPane>
-          <ViewCardPane
-            label="资产平均账期(天)"
-            num="520">
+          <ViewCardPane label="资产平均账期(天)" num={totalData.averageAccountingPeriod}>
             <div className="box-flex">
               <YtStatistic value="12%" type="up">周同比</YtStatistic>
               <YtStatistic value="12%" type="up">日环比</YtStatistic>
               <YtStatistic value="50天">账期</YtStatistic>
             </div>
           </ViewCardPane>
-          <ViewCardPane
-            label="资产验真比率"
-            num="520">
+          <ViewCardPane label="资产验真比率" num={totalData.assetsRatio}>
             <div className="box-flex">
               <YtStatistic value="12%" type="up">周同比</YtStatistic>
               <YtStatistic value="12%" type="up">日环比</YtStatistic>
