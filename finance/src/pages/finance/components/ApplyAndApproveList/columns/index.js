@@ -5,19 +5,17 @@ const columnsList =(handleType)=>{
           {
           title: '序号',
           dataIndex: 'code',
-          width: 100,
           fixed: 'left',
           },
           {
           title: '融资编号',
           className: 'column-money',
           dataIndex: 'name',
-          width: 100,
+          align: 'right',
           },
           {
           title: '申请日期',
           dataIndex: 'amount',
-          width: 100,
           },
           {
           title: '融资企业',

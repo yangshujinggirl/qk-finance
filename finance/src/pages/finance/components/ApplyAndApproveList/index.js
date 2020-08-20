@@ -13,7 +13,7 @@ const data = [
   {
     code: '1',
     key: '1',
-    name: 'John Brown',
+    name: '张三',
     amount: '300',
     amounted: '30',
     amountPocess: '30',
@@ -22,7 +22,7 @@ const data = [
   {
     code: '2',
     key: '2',
-    name: 'Jim Green',
+    name: '李四',
     amount: '300',
     amounted: '30',
     amountPocess: '30',
@@ -31,7 +31,7 @@ const data = [
   {
     code: '3',
     key: '3',
-    name: 'Joe Black',
+    name: '王五',
     amount: '300',
     amounted: '30',
     amountPocess: '30',

@@ -41,21 +41,28 @@ class FilterForm extends BaseFilter{
                 placeholder="请选择"
                 onChange={this.onGenderChange}
                 allowClear>
-                <Option value="male">male</Option>
-                <Option value="female">female</Option>
-                <Option value="other">other</Option>
+                <Option value="1">等额本金</Option>
+                <Option value="2">等额本息</Option>
+                <Option value="3">平息</Option>
+                <Option value="4">先息后本</Option>
+                <Option value="5">到期还本付息</Option>
               </Select>
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="还款状态" name="size">
-               <Select
-                 placeholder="请选择"
-                 allowClear>
-                 <Option value="male">全部</Option>
-                 <Option value="female">待审核</Option>
-                 <Option value="other">审核通过</Option>
-                 <Option value="other">审核不通过</Option>
+            <Form.Item label="状态" name="size">
+               <Select placeholder="请选择" allowClear>
+          				<Option value="-1">全部</Option>
+          				<Option value="0">待提交申请</Option>
+          				<Option value="1">已提交申请审核</Option>
+          				<Option value="2">申请审核未通过</Option>
+          				<Option value="3">待提交放款</Option>
+          				<Option value="4">已提交放款审核</Option>
+          				<Option value="5">放款审核不通过</Option>
+          				<Option value="6">已放款</Option>
+          				<Option value="7">已放款存续中</Option>
+          				<Option value="8">待确认还款审核</Option>
+          				<Option value="9">已结束</Option>
                </Select>
             </Form.Item>
           </Col>
