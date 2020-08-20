@@ -63,11 +63,8 @@ class FilterForm extends BaseFilter{
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="交易时间" name="time">
-              <RangePicker
-                  defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
-                  format={dateFormat}
-                />
+            <Form.Item label="请款时间" name="time">
+              <RangePicker format={dateFormat}/>
             </Form.Item>
           </Col>
         </Row>
