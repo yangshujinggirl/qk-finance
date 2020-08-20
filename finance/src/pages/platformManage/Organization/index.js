@@ -4,6 +4,7 @@ import FilterForm from './components/FilterForm';
 import CreatModal from './components/CreatModal';
 import {columnsIndex} from './columns';
 import './index.less'
+import {getOrgList} from '../../../api/platformManage';
 
 const data = [
   {
@@ -53,7 +54,16 @@ const data = [
 const Index=({...props})=>{
     const [visible,setVisible] = useState(false);
     const [currentItem,setCurrentItem] = useState({});
-
+    //组织管理API
+    const getOrgLists=(param)=>{
+        getOrgList(param).then(res=>{
+            console.log(res)
+        })
+    }
+    //获取组织数据
+    useEffect(() => {
+        getOrgLists();
+    },[]);
     const goCreat=()=>{
       setVisible(true);
     }
