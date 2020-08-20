@@ -44,6 +44,8 @@ const data = [
 
 const FinanceShow=({...props})=> {
   const [visible, setVisible] = useState(false);
+  const [dataPag,setDataPag] = useState({ pageSize:10, pageNow:1 });
+  const [inputValues,setInputValues] = useState({});
   const { id } = props.match.params;
   const goCreat=()=> {
     setVisible(true)
@@ -51,11 +53,23 @@ const FinanceShow=({...props})=> {
   const onCancel=()=> {
     setVisible(false)
   }
-  useEffect(() => {
-    GetListApi({id})
+  const fetchList=(values )=>{
+    let params = { ...dataPag, ...values, enterpriseId:id }
+    GetListApi(params)
     .then((res)=> {
       console.log(res)
     })
+  }
+  const changePage = (currentPage, everyPage) => {
+    fetchList({currentPage, everyPage})
+  };
+  const onSubmit = params => {
+    console.log(params)
+    setInputValues(params);
+    fetchList(params)
+  };
+  useEffect(() => {
+    fetchList()
   },[id]);
   return(
     <div>
@@ -101,7 +115,7 @@ const FinanceShow=({...props})=> {
           </ViewCardPane>
         </div>
         <div className="yt-common-list-pages-wrap">
-          <FilterForm />
+          <FilterForm  onSubmit={onSubmit}/>
           <div className="handle-common-action">
             <YtBtn onClick={goCreat} size="free">+资产包创建</YtBtn>
           </div>

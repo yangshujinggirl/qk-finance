@@ -16,18 +16,11 @@ class FilterForm extends BaseFilter{
       note: `Hi, ${value === 'male' ? 'man' : 'lady'}!`,
     });
   };
-  onFinish = values => {
-    console.log(values);
-  };
-  onSubmit =(values)=> {
-    console.log(values)
-  };
   render() {
     return (
       <Form
         {...this.formItemLayout}
         ref={this.formRef}
-        onFinish={this.onFinish}
         className="yt-condition-form">
         <Row gutter={24}>
           <Col {...this.colspans}>
@@ -127,7 +120,7 @@ class FilterForm extends BaseFilter{
           </Col>
         </Row>
         <div className="submit-btn-wrap">
-          <YtBtn htmlType="submit" onClick={this.onSubmit}>
+          <YtBtn htmlType="submit" onClick={this.handleSubmit}>
             查询
           </YtBtn>
         </div>

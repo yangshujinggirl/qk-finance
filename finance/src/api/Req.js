@@ -42,11 +42,12 @@ function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInt
 				}
 				if (code != "0") {
 					// 业务错误弹框
-					// Ytmessage.error(resultMessage);
+					// YtMessage.error(resultMessage);
 					return Promise.reject(data);
 				}
 				return { data, code };
   }, function (error) {
+    YtMessage.error('服务异常');
     // 对响应错误做点什么
 		return Promise.reject({ message: '服务异常' });
   });
