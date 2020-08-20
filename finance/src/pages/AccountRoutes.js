@@ -22,7 +22,7 @@ import FinanceApproveEdit from './finance/FinanceApproveList/FinanceApproveEdit'
 import LoanApplyList from './finance/LoanApplyList';//放款申请列表
 import LoanApplyEdit from './finance/LoanApplyList/LoanApplyEdit';//放款申请
 import LoanApproveList from './finance/LoanApproveList';//放款审批列表
-import LoanApproveEdit from './finance/LoanApproveEdit';//放款审批
+import LoanApproveEdit from './finance/LoanApproveList/LoanApproveEdit';//放款审批
 import WithdrawManage from './finance/WithdrawManage';//请款管理
 import WithdrawEdit from './finance/WithdrawManage/WithdrawEdit';//请款审批
 import WithdrawInfo from './finance/WithdrawManage/WithdrawInfo';//请款审批
