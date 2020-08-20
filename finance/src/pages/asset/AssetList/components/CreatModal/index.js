@@ -72,7 +72,7 @@ const CreatModal=({...props})=>{
           </Row>
           <div className="box-flex handle-footer">
             <div className="handle-item">
-              <Form.Item name="checkStatus" rules={[{ required: true }]}>
+              <Form.Item name="checkStatus" rules={[{ required: true }]} valuePropName="checked">
                 <Checkbox>记住本次筛选条件</Checkbox>
               </Form.Item>
             </div>
