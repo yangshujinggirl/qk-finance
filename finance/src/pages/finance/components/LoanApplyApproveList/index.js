@@ -1,10 +1,12 @@
 import { Statistic, Progress } from 'antd';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import { YtStatistic, YtPagination, YtTable, YtBtn } from 'common';
 import ViewCardPane from '../../../components/ViewCardPane';
 import FilterForm from './components/FilterForm';
 import { columnsApply, columnsApprove } from './columns';
+import { GetLoanOutStatisticalData } from 'api/finance/FinanceManagement';
 import './index.less'
 
 const data = [
@@ -36,11 +38,58 @@ const data = [
     address: 'Sidney No. 1 Lake Park',
   },
   ];
+	
+	let totalData = {
+		financeApplyCount: 550,
+		financeApplyWeekRatio: 20,
+		financeApplyDayRatio: 12,
+		financeApplyDayAdd: 3,
+		loanApplyMoney: 320,
+		loanApplyMoneyWeekRatio: 12,
+		loanApplyMoneyDayRatio: 3,
+		loanApplyMoneyDayAdd: 22,
+		loanAprovedCount: 3512,
+		loanAprovedCountWeekRatio: 12,
+		loanAprovedCountDayRatio: 3,
+		loanAprovedCountDayAdd: 32,
+		loanApprovedMoney: 2342,
+		loanApprovedMoneyWeekRatio: 5,
+		loanApprovedMoneyDayRatio: 23,
+		loanApprovedMoneyDayAdd: 12
+	}
+	
 function withSubscription(handleType,Mod) {
   return class FinanceShow extends React.Component {
     state={
       visible:false
     }
+		
+		componentWillMount(){
+			totalData.financeApplyCount = 999;
+		
+		  GetLoanOutStatisticalData({})
+		  .then((res)=> {
+		    console.log(res)
+				// setTotalData({
+				// 	financeApplyCount: 550,
+				// 	financeApplyWeekRatio: 20,
+				// 	financeApplyDayRatio: 12,
+				// 	financeApplyDayAdd: 3,
+				// 	loanApplyMoney: 320,
+				// 	loanApplyMoneyWeekRatio: 12,
+				// 	loanApplyMoneyDayRatio: 3,
+				// 	loanApplyMoneyDayAdd: 22,
+				// 	loanAprovedCount: 3512,
+				// 	loanAprovedCountWeekRatio: 12,
+				// 	loanAprovedCountDayRatio: 3,
+				// 	loanAprovedCountDayAdd: 32,
+				// 	loanApprovedMoney: 2342,
+				// 	loanApprovedMoneyWeekRatio: 5,
+				// 	loanApprovedMoneyDayRatio: 23,
+				// 	loanApprovedMoneyDayAdd: 12					
+				// })
+		  })
+		}
     goCreat=()=> {
       this.setState({ visible:true });
     }
@@ -55,38 +104,38 @@ function withSubscription(handleType,Mod) {
           <div className="box-flex">
             <ViewCardPane
               label="累计申请融资笔数"
-              num="520">
+              num={totalData.financeApplyCount}>
               <div className="box-flex">
-                <YtStatistic value={12} type="up">周同比</YtStatistic>
-                <YtStatistic value={12} type="down">日环比</YtStatistic>
-                <YtStatistic value="2笔">本日新增</YtStatistic>
+                <YtStatistic value={totalData.financeApplyWeekRatio} type="up">周同比</YtStatistic>
+                <YtStatistic value={totalData.financeApplyDayRatio} type="down">日环比</YtStatistic>
+                <YtStatistic value={totalData.financeApplyDayAdd}>本日新增</YtStatistic>
               </div>
             </ViewCardPane>
             <ViewCardPane
               label="累计申请放款金额(万元)"
-              num="520">
+              num={totalData.loanApplyMoney}>
               <div className="box-flex">
-                <YtStatistic value={12} type="up">周同比</YtStatistic>
-                <YtStatistic value={12} type="down">日环比</YtStatistic>
-                <YtStatistic value="15万元">本日新增</YtStatistic>
+                <YtStatistic value={totalData.loanApplyMoneyWeekRatio} type="up">周同比</YtStatistic>
+                <YtStatistic value={totalData.loanApplyMoneyDayRatio} type="down">日环比</YtStatistic>
+                <YtStatistic value={totalData.loanApplyMoneyDayAdd}>本日新增</YtStatistic>
               </div>
             </ViewCardPane>
             <ViewCardPane
               label="已审核放款笔数"
-              num="520">
+              num={totalData.loanAprovedCount}>
               <div className="box-flex">
-                <YtStatistic value={12} type="up">周同比</YtStatistic>
-                <YtStatistic value={12} type="down">日环比</YtStatistic>
-                <YtStatistic value="2笔">本日新增</YtStatistic>
+                <YtStatistic value={totalData.loanAprovedCountWeekRatio} type="up">周同比</YtStatistic>
+                <YtStatistic value={totalData.loanAprovedCountDayRatio} type="down">日环比</YtStatistic>
+                <YtStatistic value={totalData.loanAprovedCountDayAdd}>本日新增</YtStatistic>
               </div>
             </ViewCardPane>
             <ViewCardPane
               label="累计放款金额(万元)"
-              num="520">
+              num={totalData.loanApprovedMoney}>
               <div className="box-flex">
-                <YtStatistic value={12} type="up">周同比</YtStatistic>
-                <YtStatistic value={12} type="down">日环比</YtStatistic>
-                <YtStatistic value="15万元">本日新增</YtStatistic>
+                <YtStatistic value={totalData.loanApprovedMoneyWeekRatio} type="up">周同比</YtStatistic>
+                <YtStatistic value={totalData.loanApprovedMoneyDayRatio} type="down">日环比</YtStatistic>
+                <YtStatistic value={totalData.loanApprovedMoneyDayAdd}>本日新增</YtStatistic>
               </div>
             </ViewCardPane>
           </div>

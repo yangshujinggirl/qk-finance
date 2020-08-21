@@ -6,45 +6,28 @@ import FilterForm from './components/FilterForm';
 import CreatModal from './components/CreatModal';
 import { columnsList } from './columns';
 import './index.less'
+import { GetStatisticalData, GetFinanceList } from 'api/finance/FinanceManagement';
+import { useState, useEffect } from 'react';
 
-
-
-const data = [
-  {
-    code: '1',
-    key: '1',
-    name: '张三',
-    amount: '300',
-    amounted: '30',
-    amountPocess: '30',
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    code: '2',
-    key: '2',
-    name: '李四',
-    amount: '300',
-    amounted: '30',
-    amountPocess: '30',
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    code: '3',
-    key: '3',
-    name: '王五',
-    amount: '300',
-    amounted: '30',
-    amountPocess: '30',
-    address: 'Sidney No. 1 Lake Park',
-  },
-  ];
 function withSubscription(handleType,Mod) {
+	
   return class FinanceShow extends React.Component {
     state={
-      visible:false
+      visible:false,
+			data: [],
+			pagination: {pageSize: 15, pageNow: 1}
     }
     componentDidMount(){
-      //feth
+      GetFinanceList(this.state.pagination)
+			.then((res)=> {
+				this.state.data = res.data.result;
+				console.log(data)
+			})
+			
+			GetStatisticalData({})
+      .then((res)=> {
+        console.log(res)
+      })
     }
     onOk=()=> {
       this.setState({ visible:false });
@@ -52,9 +35,16 @@ function withSubscription(handleType,Mod) {
     onCancel=()=> {
       this.setState({ visible:false });
     }
+		onChange=(currentPage,limit)=> {
+			console.log(currentPage, limit)
+		}
     onOperateClick=(item,type)=> {
       this.setState({ visible:true });
     }
+		onSubmit = values => {
+			console.log('onSubmit', values);
+			// todo: 调用接口查询融资列表
+		};
     render() {
       const { visible } =this.state;
       let columns = columnsList(handleType);
@@ -99,9 +89,9 @@ function withSubscription(handleType,Mod) {
             </ViewCardPane>
           </div>
           <div className="main-content yt-common-list-pages-wrap">
-            <FilterForm />
+            <FilterForm onSubmit={this.onSubmit}/>
             {Mod&&<Mod />}
-            <YtTable onOperateClick={this.onOperateClick} scroll={{ x: 1300 }} columns={columns} dataSource={data}/>
+            <YtTable onOperateClick={this.onOperateClick} scroll={{ x: 1300 }} columns={columns} dataSource={this.state.data}/>
             <YtPagination data={{total:500,currentPage:0,limit:15}}/>
             <CreatModal visible={visible} onOk={this.onOk} onCancel={this.onCancel}/>
           </div>

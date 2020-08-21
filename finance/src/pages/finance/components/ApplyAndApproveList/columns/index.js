@@ -4,54 +4,60 @@ const columnsList =(handleType)=>{
   return [
           {
           title: '序号',
-          dataIndex: 'code',
+          dataIndex: 'id',
           fixed: 'left',
           },
           {
           title: '融资编号',
           className: 'column-money',
-          dataIndex: 'name',
+          dataIndex: 'loanNo',
           align: 'right',
           },
           {
           title: '申请日期',
-          dataIndex: 'amount',
+          dataIndex: 'applyLoanDate',
           },
           {
           title: '融资企业',
-          dataIndex: 'amounted',
+          dataIndex: 'enterpriseName',
           },
           {
           title: '行业',
-          dataIndex: 'zwf',
+          dataIndex: 'typeCode',
           },
           {
           title: '资产包编号',
-          dataIndex: 'pay',
+          dataIndex: 'packageId',
           },
           {
           title: '资产包金额（万元）',
-          dataIndex: 'status',
+          dataIndex: 'packageAmount',
           },
           {
           title: '融资金额（万元）',
-          dataIndex: 'use',
+          dataIndex: 'creditAmount',
           },
           {
-          title: '年利率',
-          dataIndex: 'test1',
+						title: '年利率',
+						dataIndex: 'loanRate',
+						render:(text,record,index)=>{
+							return <> {
+								<span>{text}%</span>
+							}
+							</>
+						}
           },
           {
           title: '还款方式',
-          dataIndex: 'test2',
+          dataIndex: 'repayMethod',
           },
           {
           title: '审核状态',
-          dataIndex: 'test3',
+          dataIndex: 'loanStatus',
           },
           {
           title: '实际放款时间',
-          dataIndex: 'test4',
+          dataIndex: 'loanDate',
           },
           {
             title: '操作',
@@ -64,7 +70,6 @@ const columnsList =(handleType)=>{
                 handleType=="1"?
                 <>
                   <Link to="/account/financeApply/edit/12" className="operate-link-btn">编辑</Link>
-                  <Link to="/" className="operate-link-btn">取消</Link>
                   <span className="operate-link-btn" onClick={()=>record.onOperateClick('download')}>项目资料下载</span>
                 </>
                 :
