@@ -57,7 +57,7 @@ class AccountStatement extends React.Component {
             scroll={{x:1300}}
              columns={columnsIndex}
              dataSource={data}/>
-            <YtPagination data={{total:500,currentPage:0,limit:15}}/>
+            <YtPagination data={{totalSize:500,pageNow:1,pageSize:15}}/>
         </div>
       )
     }
