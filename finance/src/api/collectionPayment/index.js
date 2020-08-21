@@ -2,10 +2,14 @@ import Req from '../Req';
 
 
 // 银行流水
-export function bankStatement(values) {
+export function bankStatementList(values) {
     return Req.post(`/moneyBack/bankStatement/search`, values)
 }
+// 流水明细
+export function bankStatement(values) {
+    return Req.post(`/moneyBack/statement/search`, values)
+}
 // 回款计划
-export function getRoleList(values) {
+export function payPlanInfo(values) {
     return Req.post(`/moneyBack/payPlanInfo/search`, values)
 }

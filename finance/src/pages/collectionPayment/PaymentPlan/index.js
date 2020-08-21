@@ -2,6 +2,7 @@ import { YtStatistic, YtPagination, YtTable, YtBtn } from 'common';
 import FilterForm from './components/FilterForm';
 import {columnsIndex} from './columns';
 import './index.less'
+import {payPlanInfo} from '../../../api/collectionPayment';
 
 const data = [
   {
@@ -50,6 +51,16 @@ const data = [
 ];
 
 class AccountStatement extends React.Component {
+  // componentDidMount(){
+  //   //初始化数据
+  //   this.getPayPlanInfo();
+  // }
+  // //回款计划
+  // getPayPlanInfo=(param)=>{
+  //   payPlanInfo(param).then(res={
+  //     console.log(res);
+  //   })
+  // }
 
     render() {
       return(
