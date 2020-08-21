@@ -45,7 +45,7 @@ const OperateWorkbench=({...props})=>{
       fetchTotal();
       fetchList();
     },[])
-    console.log(dataPag)
+
     return(
       <div className="asset-package-view-pages-wrap">
         <div className="box-flex">

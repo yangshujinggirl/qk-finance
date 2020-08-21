@@ -2,41 +2,43 @@ import TabsMod from '../../../../components/TabsMod';
 import { YtStatistic, YtTable, YtPagination, YtCard } from 'common';
 import { useState, useEffect } from 'react';
 import { GetPackegChangeApi } from 'api/asset/AssetPackageView';
+import './index.less';
+
+const plainOptions = [
+  {
+    title:'今日',
+    key:'Day'
+  },
+  {
+    title:'本周',
+    key:'Week'
+  },
+  {
+    title:'本月',
+    key:'Month'
+  },
+  {
+    title:'本年',
+    key:'Year'
+  }];
 
 const ChangeRankMod=({...props})=>{
-  const [checkedVal,setCheckedVal] = useState(3);
+  const [checkedVal,setCheckedVal] = useState('Year');
   const [list,setList] = useState([]);
   const onChange=(e)=>{
-    setCheckedVal(e.target.value)
+    let value = e.target.value;
+    setCheckedVal(e.target.value);
+    fetchList({chartTimePeriods:value})
   }
-  const plainOptions = [
-    {
-      title:'今日',
-      key:0
-    },
-    {
-      title:'本周',
-      key:1
-    },
-    {
-      title:'本月',
-      key:2
-    },
-    {
-      title:'本年',
-      key:3
-    }];
-  const fetchData=()=> {
-    GetPackegChangeApi()
+  const fetchList=(values)=> {
+    GetPackegChangeApi(values)
     .then((res)=> {
       const { data }=res;
       data.map((el,index)=>el.key = ++index)
       setList(data);
     })
   }
-  useEffect(()=>{
-    fetchData()
-  },[])
+  useEffect(()=>{ fetchList() },[])
   return <YtCard title="资产包变动排行">
             <TabsMod
               onChange={onChange}

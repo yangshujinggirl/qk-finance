@@ -3,7 +3,7 @@ import OperateWorkbench from './OperateWorkbench';//资产端工作台
 
 import AssetView from './asset/AssetView';//资产总览
 import AssetPackageView from './asset/AssetPackageView';//资产包概览
-import AssetPackageInfo from './asset/AssetPackageInfo';//资产包详情
+import AssetPackageInfo from './asset/AssetPackageView/AssetPackageInfo';//资产包详情
 import AssetPackageVerifyInfo from './asset/AssetPackageVerifyInfo';//资产包验真详情
 import AssetList from './asset/AssetList';//资产列表
 import AssetCashFlow from './asset/AssetCashFlow';//现金流
