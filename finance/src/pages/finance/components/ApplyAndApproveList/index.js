@@ -102,7 +102,7 @@ function withSubscription(handleType,Mod) {
             <FilterForm />
             {Mod&&<Mod />}
             <YtTable onOperateClick={this.onOperateClick} scroll={{ x: 1300 }} columns={columns} dataSource={data}/>
-            <YtPagination data={{total:500,currentPage:0,limit:15}}/>
+            <YtPagination data={{totalSize:500,pageNow:0,pageSize:15}}/>
             <CreatModal visible={visible} onOk={this.onOk} onCancel={this.onCancel}/>
           </div>
         </div>

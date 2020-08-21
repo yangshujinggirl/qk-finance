@@ -42,7 +42,7 @@ class FinanceShow extends React.Component {
       <div className="finance-company-list-wrap yt-common-list-pages-wrap">
           <FilterForm />
           <YtTable columns={columnsList} dataSource={data} scroll={{ x: 1300 }}/>
-          <YtPagination data={{total:500,currentPage:0,limit:15}}/>
+          <YtPagination data={{totalSize:500,pageNow:0,pageSize:15}}/>
       </div>
     )
   }

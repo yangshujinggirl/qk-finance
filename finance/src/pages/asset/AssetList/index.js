@@ -77,8 +77,8 @@ const FinanceShow=({...props})=> {
       console.log(res)
     })
   }
-  const changePage = (currentPage, everyPage) => {
-    fetchList({currentPage, everyPage})
+  const changePage = (pageNow, pageSize) => {
+    fetchList({pageNow, pageSize})
   };
   const onSubmit = params => {
     let { time, ...values } =params;
@@ -135,7 +135,7 @@ const FinanceShow=({...props})=> {
            scroll={{ x: 1300 }}
            columns={columnsList}
            dataSource={data}/>
-          <YtPagination data={{total:500,currentPage:0,limit:15}}/>
+          <YtPagination data={{totalSize:500,pageNow:0,pageSize:15}}/>
         <CreatModal
           visible={visible}
           onCancel={onCancel}

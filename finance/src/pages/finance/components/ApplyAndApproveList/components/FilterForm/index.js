@@ -36,17 +36,8 @@ class FilterForm extends BaseFilter{
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item name="payment" label="还款方式">
-              <Select
-                placeholder="请选择"
-                onChange={this.onGenderChange}
-                allowClear>
-                <Option value="1">等额本金</Option>
-                <Option value="2">等额本息</Option>
-                <Option value="3">平息</Option>
-                <Option value="4">先息后本</Option>
-                <Option value="5">到期还本付息</Option>
-              </Select>
+            <Form.Item label="项目名称" name="name">
+              <Input   placeholder="请输入"/>
             </Form.Item>
           </Col>
           <Col {...this.colspans}>

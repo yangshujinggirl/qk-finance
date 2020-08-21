@@ -23,14 +23,14 @@ class YtPagination extends React.Component {
   }
 
   render() {
-    let { total, limit, currentPage } = this.props.data;
+    let { totalSize, pageSize, pageNow } = this.props.data;
     return(
       <div className="common-pagination-components">
         <Pagination
-          showTotal={total => `共${total}条`}
-          total={total}
-          pageSize={limit}
-          current={currentPage}
+          showTotal={total => `共${totalSize}条`}
+          total={totalSize}
+          pageSize={pageSize}
+          current={pageNow}
           // pageSizeOptions={this.initPageSize()}
           onChange={this.props.onChange}
           onShowSizeChange={this.onShowSizeChange.bind(this)}/>
