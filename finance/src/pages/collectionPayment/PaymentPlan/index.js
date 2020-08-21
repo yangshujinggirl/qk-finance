@@ -4,72 +4,58 @@ import {columnsIndex} from './columns';
 import './index.less'
 import {payPlanInfo} from '../../../api/collectionPayment';
 
-const data = [
-  {
-    code: '1',
-    key: '1',
-    name: 'John Brown',
-    amount: '300',
-    amounted: '+10,000.00',
-    amountPocess: '+10,000.00',
-    address: 'New York No. 1 Lake Park',
-    time0:'2020-08-01',
-    time1:'2020-08-01',
-    zwf:'民生银行',
-    pay:'自贡市金玉农资有限公司',
-    paycode:'6226 0101 1010 0456 782'
-  },
-  {
-    code: '2',
-    key: '2',
-    name: 'Jim Green',
-    amount: '300',
-    amounted: '10,000.00',
-    amountPocess: '10,000.00',
-    address: 'London No. 1 Lake Park',
-    time0:'2020-08-01',
-    time1:'2020-08-01',
-    zwf:'民生银行',
-    pay:'自贡市金玉农资有限公司',
-    paycode:'6226 0101 1010 0456 782',
-    test2:'网银导入'
-  },
-  {
-    code: '3',
-    key: '3',
-    name: 'Joe Black',
-    amount: '300',
-    amounted: '10,000.00',
-    amountPocess: '10,000.00',
-    address: 'Sidney No. 1 Lake Park',
-    time0:'2020-04-06  11:00:00',
-    time1:'2020-08-01',
-    zwf:'民生银行',
-    pay:'自贡市金玉农资有限公司',
-    paycode:'6226 0101 1010 0456 782'
-  },
-];
-
 class AccountStatement extends React.Component {
-  // componentDidMount(){
-  //   //初始化数据
-  //   this.getPayPlanInfo();
-  // }
-  // //回款计划
-  // getPayPlanInfo=(param)=>{
-  //   payPlanInfo(param).then(res={
-  //     console.log(res);
-  //   })
-  // }
-
+  state={
+    pageNow: 1,
+    pageSize: 5,
+    loanNo: 1,
+    projectName: 1,
+    totalSize:1,
+    list:[]
+  }
+  componentDidMount(){
+    //初始化数据
+    this.getPayPlanInfo();
+  }
+  //回款计划
+  getPayPlanInfo=()=>{
+let {
+  pageNow,
+  pageSize,
+  loanNo,
+  projectName,
+}=this.state
+    payPlanInfo({  pageNow,
+      pageSize,
+      loanNo,
+      projectName,}).then(res=>{
+      let list =res.data.result
+     let totalSize= res.data.condition.totalSize
+      let p= {...this.state,list,totalSize }
+      this.setState(p)
+    })
+  }
+  //查询
+  search=({loanNo,projectName})=>{
+    let p= {...this.state,loanNo,projectName }
+    this.setState(p)
+    this.getPayPlanInfo();
+  }
+  //分页
+   pagination=(pageNow)=>{
+    let p = {...this.setState, pageNow };
+     this.setState(p)
+      this.getPayPlanInfo();
+  }
     render() {
+    let {totalSize,pageNow,pageSize,list}=this.state
       return(
         <div className="yt-common-list-pages-wrap">
-            <FilterForm />
+            <FilterForm  onSubmit={this.search}/>
             <YtTable
              columns={columnsIndex}
-             dataSource={data}/>
-            <YtPagination data={{total:500,currentPage:0,limit:15}}/>
+             dataSource={list}/>
+           <YtPagination data={{totalSize,pageNow,pageSize}} onChange={this.pagination}/>
         </div>
       )
     }

@@ -11,6 +11,7 @@ let defaultHeader = {
 
 function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInterceptors = true}){
   let Authorization = Sessions.get('token')?`${Sessions.get('tokenType')} ${Sessions.get('token')}`:null;
+  console.log('Authorization',Authorization)
   headers = {
     ...headers,
     Authorization

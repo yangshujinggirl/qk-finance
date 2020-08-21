@@ -19,13 +19,13 @@ class FilterForm extends BaseFilter{
         className="yt-condition-form">
         <Row gutter={24}>
           <Col {...this.colspans}>
-            <Form.Item label="用户名称" name="name">
+            <Form.Item label="用户名称" name="userName">
               <Input placeholder="请输入" autoComplete="off"/>
             </Form.Item>
           </Col>
         </Row>
         <div className="submit-btn-wrap">
-          <YtBtn htmlType="submit" onClick={this.onSubmit}>
+          <YtBtn htmlType="submit" onClick={this.handleSubmit}>
             查询
           </YtBtn>
         </div>

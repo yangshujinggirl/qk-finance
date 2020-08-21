@@ -10,22 +10,22 @@ const { Option } = Select;
 
 class FilterForm extends BaseFilter{
   formRef = React.createRef();
+
   render() {
-    return (
+      return (
       <Form
         {...this.formItemLayout}
         ref={this.formRef}
-        onFinish={this.onFinish}
         className="yt-condition-form">
         <Row gutter={24}>
           <Col {...this.colspans}>
-            <Form.Item label="组织名称" name="name">
+            <Form.Item label="组织名称" name="orgName"  rules={[{ required: true,message:'请输入' }]}>
               <Input placeholder="请输入" autoComplete="off"/>
             </Form.Item>
           </Col>
         </Row>
         <div className="submit-btn-wrap">
-          <YtBtn htmlType="submit" onClick={this.onSubmit}>
+          <YtBtn htmlType="submit" onClick={this.handleSubmit}>
             查询
           </YtBtn>
         </div>

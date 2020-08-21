@@ -4,75 +4,60 @@ import FilterForm from './components/FilterForm';
 import CreatModal from './components/CreatModal';
 import {columnsIndex} from './columns';
 import './index.less'
-import {getOrgList} from '../../../api/platformManage';
+import {getOrgList,deleteOrg} from '../../../api/platformManage/Organization.js';
+import { YtMessage } from 'common';
+import { Modal} from 'antd';
 
-const data = [
-  {
-    code: '1',
-    key: '1',
-    name: 'John Brown',
-    amount: '300',
-    amounted: '+10,000.00',
-    amountPocess: '+10,000.00',
-    address: 'New York No. 1 Lake Park',
-    time0:'2020-08-01',
-    time1:'2020-08-01',
-    zwf:'民生银行',
-    pay:'自贡市金玉农资有限公司',
-    paycode:'6226 0101 1010 0456 782'
-  },
-  {
-    code: '2',
-    key: '2',
-    name: 'Jim Green',
-    amount: '300',
-    amounted: '10,000.00',
-    amountPocess: '10,000.00',
-    address: 'London No. 1 Lake Park',
-    time0:'2020-08-01',
-    time1:'2020-08-01',
-    zwf:'民生银行',
-    pay:'自贡市金玉农资有限公司',
-    paycode:'6226 0101 1010 0456 782',
-    test2:'网银导入'
-  },
-  {
-    code: '3',
-    key: '3',
-    name: 'Joe Black',
-    amount: '300',
-    amounted: '10,000.00',
-    amountPocess: '10,000.00',
-    address: 'Sidney No. 1 Lake Park',
-    time0:'2020-04-06  11:00:00',
-    time1:'2020-08-01',
-    zwf:'民生银行',
-    pay:'自贡市金玉农资有限公司',
-    paycode:'6226 0101 1010 0456 782'
-  },
-];
 const Index=({...props})=>{
     const [visible,setVisible] = useState(false);
-    const [currentItem,setCurrentItem] = useState({});
+    const [currentItem, setCurrentItem] = useState({});
+    const [totalSize, setTotalSize] = useState(1);
+    const [param, setParam] = useState({
+        orgName: '',
+        pageNow: 1,
+        pageSize: 1,
+    });
+    const [list, setList] = useState([]);
+    const {
+        pageNow,
+        pageSize,
+        orgName
+    } = {...param}
     //组织管理API
-    const getOrgLists=(param)=>{
-        getOrgList(param).then(res=>{
+    const getOrgLists = (param) => {
+        getOrgList(param).then(res => {
+            setTotalSize(res.data.pagination.totalSize)
+            setList(res.data.result)
             console.log(res)
         })
     }
     //获取组织数据
     useEffect(() => {
-        getOrgLists();
+        getOrgLists(param);
     },[]);
     const goCreat=()=>{
       setVisible(true);
     }
     const onOk=()=>{
       setVisible(false);
+      getOrgLists(param);
     }
     const onCancel=()=>{
       setCurrentItem({})
       setVisible(false);
+    }
+    //查询
+    const search=({orgName})=>{
+        let p = {...param, orgName };
+        console.log(p)
+        setParam(p);
+        getOrgLists(p);
+    }
+    //分页
+    const pagination=(pageNow)=>{
+        let p = {...param, pageNow };
+        setParam(p);
+        getOrgLists(p);
     }
     const onOperateClick=({type,item})=>{
       switch(type){
@@ -85,21 +70,33 @@ const Index=({...props})=>{
           break;
       }
     }
+    //删除
     const handleDelete=(record)=> {
+        Modal.confirm({
+            title: '提示',
+            content: '是否确认删除？',
+            okText: '确认',
+            cancelText: '取消',
+            onOk:()=>{
+            deleteOrg(record.orgId).then(res=>{
+                YtMessage.success('操作成功');
+            })
+        }
+    });
       console.log(record)
     }
     return(
       <div className="account-organization-wrap yt-common-list-pages-wrap">
-          <FilterForm />
+          <FilterForm onSubmit={search} />
           <div className="handle-common-action">
             <YtBtn onClick={goCreat}>新增</YtBtn>
           </div>
           <YtTable
            columns={columnsIndex}
-           dataSource={data}
+           dataSource={list}
            onOperateClick={onOperateClick}/>
-          <YtPagination data={{total:500,currentPage:0,limit:15}}/>
-          <CreatModal visible={visible} onOk={onOk} onCancel={onCancel}/>
+          <YtPagination data={{totalSize,pageNow,pageSize}} onChange={pagination}/>
+          <CreatModal data={currentItem} visible={visible} onOk={onOk} onCancel={onCancel}/>
       </div>
     )
 }

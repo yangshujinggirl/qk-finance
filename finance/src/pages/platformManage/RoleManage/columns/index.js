@@ -5,7 +5,10 @@ const columnsIndex = [
 
         {
           title: '序号',
-          dataIndex: 'code',
+            dataIndex: 'id',
+            render:(text,record,index)=>{
+                return  index+1
+            }
         },
         {
           title: '角色名称',

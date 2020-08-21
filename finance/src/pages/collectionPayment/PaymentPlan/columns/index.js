@@ -1,14 +1,20 @@
 import { Link } from 'react-router-dom';
-
+// 1-未回款待还，2-已回款结清 3-部分待还
+const typeName= {
+    1:'未回款待还', 2:'已回款结清',3:'部分待还'
+}
 const columnsIndex = [
 
         {
           title: '序号',
-          dataIndex: 'code',
+            dataIndex: 'id',
+            render:(text,record,index)=>{
+                return  index+1
+            }
         },
         {
           title: '项目名称',
-          dataIndex: 'code',
+          dataIndex: 'projectName',
         },
         {
           title: '款项类别',
@@ -16,7 +22,7 @@ const columnsIndex = [
         },
         {
           title: '期次',
-          dataIndex: 'time1',
+          dataIndex: 'payPeriodNo',
         },
         {
           title: '款项金额',
@@ -25,19 +31,26 @@ const columnsIndex = [
         },
         {
           title: '回款状态',
-          dataIndex: 'zwf',
+          dataIndex: 'isMoneyBack',
+            render:(text,record,index)=>{
+                return  typeName[text]
+            }
         },
         {
           title: '融资编号',
-          dataIndex: 'pay',
+          dataIndex: 'loanNo',
+
         },
         {
           title: '还款日期',
-          dataIndex: 'time0',
+          dataIndex: 'payDate',
+            render:(text,record,index)=>{
+                return  typeName[text]
+            }
         },
         {
           title: '本金',
-          dataIndex: 'use',
+          dataIndex: 'payPrincipalAmount',
         },
         {
           title: '操作',
