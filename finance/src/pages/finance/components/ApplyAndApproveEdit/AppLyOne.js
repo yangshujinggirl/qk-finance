@@ -26,10 +26,15 @@ class ApplyOne extends BaseEditForm {
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
+                  <Form.Item label="项目名称" name="code">
+                    <Input autoComplete="off"   placeholder="请输入" rules={[{ required: true, message:'请输入'}]}/>
+                  </Form.Item>
+                </Col>
+                <Col {...this.colspans}>
                   <Form.Item label="融资企业">
                     <Row gutter={8}>
                       <Col span={18}>
-                        <Form.Item name="code">
+                        <Form.Item name="code" rules={[{ required: true,message:'请输入'}]}>
                           <Select placeholder="请选择" allowClear={true}>
                             <Select.Option value="银行转账" key="银行转账">
                               云图项目一期
@@ -50,7 +55,7 @@ class ApplyOne extends BaseEditForm {
                   <Form.Item label="资产包" name="code">
                     <Row gutter={8}>
                       <Col span={18}>
-                        <Form.Item name="code">
+                        <Form.Item name="code" rules={[{ required: true, message:'请输入'}]}>
                           <Select placeholder="请选择" allowClear={true}>
                             <Select.Option value="银行转账" key="银行转账">
                               云图项目一期
@@ -70,7 +75,7 @@ class ApplyOne extends BaseEditForm {
               </Row>
           </HeadFormCard>
           <HeadFormCard title="银行信息">
-              <p className="form-row-title">资金方收款账户【监管户】</p>
+              <p className="form-row-title">资金方 </p>
               <Row>
                 <Col {...this.colspans}>
                   <Form.Item label="收款方式" name="name">
@@ -85,7 +90,7 @@ class ApplyOne extends BaseEditForm {
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="收款银行账户" name="code" rules={[{ required: true, message: '请选择收款银行账户'}]}>
+                  <Form.Item label="银行账户" name="code" rules={[{ required: true, message: '请选择收款银行账户'}]}>
                     <Select placeholder="请选择" allowClear={true} onChange={this.onChangeCategoryCode}>
                       <Select.Option value="建设银行" key="建设银行">建设银行</Select.Option>
                       <Select.Option value="民生银行" key="民生银行">民生银行</Select.Option>
@@ -93,17 +98,17 @@ class ApplyOne extends BaseEditForm {
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="收款账户名" name="code" rules={[{ required: true, message: '请输入收款账户名'}]}>
+                  <Form.Item label="账户名称" name="code" rules={[{ required: true, message: '请输入收款账户名'}]}>
                     <Input autoComplete="off"   placeholder="请输入" disabled/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="收款账号" name="code" rules={[{ required: true, message: '请输入收款账号'}]}>
+                  <Form.Item label="账号" name="code" rules={[{ required: true, message: '请输入收款账号'}]}>
                     <Input autoComplete="off"   placeholder="请输入" disabled/>
                   </Form.Item>
                 </Col>
               </Row>
-              <p className="form-row-title">融资方收款账户</p>
+              <p className="form-row-title">监管户回款信息</p>
               <Row>
                 <Col {...this.colspans}>
                   <Form.Item label="收款方式" name="name">
@@ -114,7 +119,7 @@ class ApplyOne extends BaseEditForm {
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                <Form.Item label="收款银行账户" name="name" rules={[{ required: true, message: '请选择收款银行账户'}]}>
+                <Form.Item label="共管账户开户行" name="name" rules={[{ required: true, message: '请选择收款银行账户'}]}>
                   <Select placeholder="请选择" allowClear={true} onChange={this.onChangeCategoryCode}>
                     <Select.Option value="银行转账" key="银行转账">电汇</Select.Option>
                     <Select.Option value="银行转账1" key="银行转账1">银行转账</Select.Option>
@@ -122,12 +127,12 @@ class ApplyOne extends BaseEditForm {
                 </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="收款账户名" name="code" rules={[{ required: true, message: '请输入收款账户名'}]}>
+                  <Form.Item label="账户名称" name="code" rules={[{ required: true, message: '请输入收款账户名'}]}>
                     <Input autoComplete="off"   placeholder="请输入"/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="收款账号" name="code" rules={[{ required: true, message: '请输入收款账号'}]}>
+                  <Form.Item label="账号" name="code" rules={[{ required: true, message: '请输入收款账号'}]}>
                     <Input autoComplete="off"   placeholder="请输入"/>
                   </Form.Item>
                 </Col>
