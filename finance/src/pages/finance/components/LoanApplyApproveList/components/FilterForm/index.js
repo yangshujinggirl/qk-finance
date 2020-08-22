@@ -45,10 +45,10 @@ class FilterForm extends BaseFilter{
                <Select
                  placeholder="请选择"
                  allowClear>
-                 <Option value="male">全部</Option>
-                 <Option value="female">待审核</Option>
-                 <Option value="other">审核通过</Option>
-                 <Option value="other">审核不通过</Option>
+                 <Option value="0">全部</Option>
+                 <Option value="1">待审核</Option>
+                 <Option value="2">审核通过</Option>
+                 <Option value="3">审核不通过</Option>
                </Select>
             </Form.Item>
           </Col>

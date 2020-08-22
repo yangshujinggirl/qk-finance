@@ -3,59 +3,59 @@ import { Link } from 'react-router-dom';
 const columnsApply = [
         {
         title: '序列号',
-        dataIndex: 'code',
+        dataIndex: 'id',
         width: 100,
         fixed: 'left',
         },
         {
         title: '放款编号',
-        dataIndex: 'code',
+        dataIndex: 'loanNo',
         width: 100,
         fixed: 'left',
         },
         {
         title: '申请放款日期',
         className: 'column-money',
-        dataIndex: 'name',
+        dataIndex: 'applyLoanDate',
         width: 100,
         align: 'right',
         },
         {
         title: '融资企业',
-        dataIndex: 'amount',
+        dataIndex: 'enterpriseName',
         width: 100,
         },
         {
         title: '资产金额（万元）',
-        dataIndex: 'amounted',
+        dataIndex: 'assetAmount',
         },
         {
         title: '资产包编号',
-        dataIndex: 'zwf',
+        dataIndex: 'packageId',
         },
         {
         title: '授信金额（万元）',
-        dataIndex: 'pay',
+        dataIndex: 'creditAmount',
         },
         {
         title: '融资利率',
-        dataIndex: 'status',
+        dataIndex: 'loanRate',
         },
         {
         title: '实际放款时间',
-        dataIndex: 'use',
+        dataIndex: 'loanDate',
         },
         {
         title: '审核状态',
-        dataIndex: 'test1',
+        dataIndex: 'loanStatus',
         },
         {
         title: '备注',
-        dataIndex: 'test2',
+        dataIndex: 'remark',
         },
         {
         title: '申请人',
-        dataIndex: 'test3',
+        dataIndex: 'legalPerson',
         },
         {
           title: '操作',
@@ -74,59 +74,59 @@ const columnsApply = [
 const columnsApprove = [
         {
         title: '序列号',
-        dataIndex: 'code',
+        dataIndex: 'id',
         width: 100,
         fixed: 'left',
         },
         {
         title: '放款编号',
-        dataIndex: 'code',
+        dataIndex: 'loanNo',
         width: 100,
         fixed: 'left',
         },
         {
         title: '申请放款日期',
         className: 'column-money',
-        dataIndex: 'name',
+        dataIndex: 'applyLoanDate',
         width: 100,
         align: 'right',
         },
         {
         title: '融资企业',
-        dataIndex: 'amount',
+        dataIndex: 'enterpriseName',
         width: 100,
         },
         {
         title: '资产金额（万元）',
-        dataIndex: 'amounted',
+        dataIndex: 'assetAmount',
         },
         {
         title: '资产包编号',
-        dataIndex: 'zwf',
+        dataIndex: 'packageId',
         },
         {
         title: '授信金额（万元）',
-        dataIndex: 'pay',
+        dataIndex: 'creditAmount',
         },
         {
         title: '融资利率',
-        dataIndex: 'status',
+        dataIndex: 'loanRate',
         },
         {
         title: '实际放款时间',
-        dataIndex: 'use',
+        dataIndex: 'loanDate',
         },
         {
         title: '审核状态',
-        dataIndex: 'test1',
+        dataIndex: 'loanStatus',
         },
         {
         title: '审批意见',
-        dataIndex: 'test2',
+        dataIndex: 'remark',
         },
         {
         title: '审核人',
-        dataIndex: 'test3',
+        dataIndex: 'fundLegalPerson',
         },
         {
           title: '操作',

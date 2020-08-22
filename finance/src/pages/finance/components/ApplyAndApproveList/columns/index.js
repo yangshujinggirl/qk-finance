@@ -3,9 +3,14 @@ import { Link } from 'react-router-dom';
 const columnsList =(handleType)=>{
   return [
           {
-          title: '序号',
-          dataIndex: 'id',
-          fixed: 'left',
+						title: '序号',
+						fixed: 'left',
+						render:(text,record,index)=>{
+							return <> {
+								<span>{index+1}</span>
+							}
+							</>
+						}
           },
           {
           title: '融资编号',

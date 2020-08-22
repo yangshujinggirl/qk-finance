@@ -20,7 +20,10 @@ function withSubscription(handleType,Mod) {
     componentDidMount(){
       GetFinanceList(this.state.pagination)
 			.then((res)=> {
-        this.setState({ data: res.data.result })
+        this.setState({ 
+					data: res.data.result,
+					pagination: res.data.pagination,
+				})
 			})
 
 			GetStatisticalData({})
@@ -90,7 +93,7 @@ function withSubscription(handleType,Mod) {
           <div className="main-content yt-common-list-pages-wrap">
             <FilterForm onSubmit={this.onSubmit}/>
             {Mod&&<Mod />}
-            <YtTable onOperateClick={this.onOperateClick} scroll={{ x: 1300 }} columns={columns} dataSource={[]}/>
+            <YtTable onOperateClick={this.onOperateClick} scroll={{ x: 1300 }} columns={columns} dataSource={this.state.data}/>
             <YtPagination data={{totalSize:500,pageNow:0,pageSize:15}}/>
             <CreatModal visible={visible} onOk={this.onOk} onCancel={this.onCancel}/>
           </div>

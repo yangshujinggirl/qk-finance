@@ -16,12 +16,17 @@ export function GetFinanceList(values) {
 
 // 放款申请列表
 export function GetLoanList(values) {
-    return Req.post('/applyLoanOut/search', {...values})
+    return Req.post('/loanV2/applyLoanOut/search', {...values})
 }
 
 // 放款申请摘要
 export function GetLoanOutStatisticalData() {
     return Req.post('/loanV2/management/getLoanOutStatisticalData', {})
+}
+
+// 融资详情
+export function GetFinanceDetail(loanId) {
+    return Req.post('loanV2/apply/add/baseInfo', {loanId: loanId})
 }
 
 // 放款详情
