@@ -16,27 +16,12 @@ const columnsList =[
           dataIndex: 'assetNo',
         },
         {
-          title: '资产类型',
-          dataIndex: 'type',
-          render:(text,record,index)=> {
-            return <>应收账款-货款</>;
-          }
-        },
-        {
-          title: '资产生成日期',
-          dataIndex: 'assetDate',
-        },
-        {
           title: '资产金额',
           dataIndex: 'orderAmount',
         },
         {
         title: '债务方',
         dataIndex: 'orderSourceCompany',
-        },
-        {
-        title: '资产账期',
-        dataIndex: 'expectedDate',
         },
         {
           title: '资产剩余账期',
@@ -50,34 +35,20 @@ const columnsList =[
           }
         },
         {
-        title: '回款状态',
-        dataIndex: 'isMoneyBack',
-        },
-        {
         title: '资产状态',
         dataIndex: 'applyLoanStatus',
         },
         {
-        title: '是否转让',
-        dataIndex: 'transferStatus',
+        title: '融资状态',
+        dataIndex: 'applyLoanStatus',
         },
         {
-          title: '验证比例',
-          dataIndex: 'yzbl',
-          render:(text,record,index)=> {
-            return <>-</>;
-          }
+          title: '验真状态',
+          dataIndex: 'assetStatus',
         },
         {
           title: '验真结果',
           dataIndex: 'assetStatus',
-        },
-        {
-          title: '多方验真源',
-          dataIndex: 'yzy',
-          render:(text,record,index)=>{
-            return<>待定</>
-          }
         },
         {
         title: '上链节点',

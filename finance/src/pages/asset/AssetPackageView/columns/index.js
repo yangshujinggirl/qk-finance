@@ -1,9 +1,4 @@
-const option = {
-  1:"未占用",
-  2:"预占用",
-  3:"已占用",
-  4:"已请款"
-}
+import { assetStatus, checkStatus } from '../components/options';
 const columns = [
   {
     title: '资产编号',
@@ -29,7 +24,7 @@ const columns = [
     title: '资产状态',
     dataIndex: 'assetStatus',
     render:(tet,record,index)=>{
-      return <>{option[record.assetStatus]}</>
+      return <>{assetStatus[record.assetStatus]}</>
     }
   },
   {
@@ -42,7 +37,10 @@ const columns = [
   },
   {
     title: '验真状态',
-    dataIndex: 'status',
+    dataIndex: 'checkStatus',
+    render:(tet,record,index)=>{
+      return <>{checkStatus[record.checkStatus]}</>
+    }
   },
   ];
   export default columns;

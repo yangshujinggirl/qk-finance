@@ -1,26 +1,17 @@
 import { Slider, Radio, InputNumber, Col, Row, Form, Input, Button, Select } from 'antd';
 import { BaseFilter, YtBtn } from 'common';
+import { RegExpUtil } from 'utils';
 import { FormInstance } from 'antd/lib/form';
 import './index.less';
 
 const tailLayout = {
-  wrapperCol: { offset: 4, span: 16 },
-};
+  labelCol: { span: 2 },
+  wrapperCol: { span: 18 }
+}
 const { Option } = Select;
 
 class FilterForm extends BaseFilter{
   formRef = React.createRef();
-  onGenderChange = value => {
-    this.formRef.current.setFieldsValue({
-      note: `Hi, ${value === 'male' ? 'man' : 'lady'}!`,
-    });
-  };
-  onFinish = values => {
-    console.log(values);
-  };
-  onSubmit =(values)=> {
-    console.log(values)
-  };
   render() {
     return (
       <Form
@@ -30,83 +21,41 @@ class FilterForm extends BaseFilter{
         className="yt-condition-form">
         <Row gutter={24}>
           <Col {...this.colspans}>
-            <Form.Item label="资产评级" name="level">
-               <Radio.Group>
-                 <Radio.Button value="small">关注</Radio.Button>
-                 <Radio.Button value="default">黄色预警</Radio.Button>
-                 <Radio.Button value="large">红色预警</Radio.Button>
-                 <Radio.Button value="sc">收藏</Radio.Button>
-               </Radio.Group>
+            <Form.Item name="enterpriseName" label="企业名称">
+              <Input placeholder="请输入"  autoComplete="off"/>
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="资产评级">
-              <Form.Item name="size">
-                 <Radio.Group noStyle>
-                   <Radio.Button value="small">北京</Radio.Button>
-                   <Radio.Button value="default">上海</Radio.Button>
-                   <Radio.Button value="large">江苏</Radio.Button>
-                   <Radio.Button value="sc">四川</Radio.Button>
-                   <Radio.Button value="other">其他</Radio.Button>
-                 </Radio.Group>
-              </Form.Item>
-              <Form.Item
-                noStyle
-                shouldUpdate={(prevValues, currentValues) => prevValues.size !== currentValues.size}>
-                {({ getFieldValue }) => {
-                  return getFieldValue('size') === 'other' ? (
-                    <Form.Item name="otherInput" noStyle>
-                       <Input className="multi-form-input" autoComplete="off"/>
-                    </Form.Item>
-                  ) : null;
-                }}
-              </Form.Item>
-            </Form.Item>
-          </Col>
-          <Col {...this.colspans}>
-            <Form.Item name="name" label="企业名称">
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col {...this.colspans}>
-            <Form.Item label="累计笔数" className="two-multi-form-item">
-              <Form.Item name="numSt">
+            <Form.Item label="资产金额" className="two-multi-form-item">
+              <Form.Item name="assetSizeMin" rules={[{pattern:RegExpUtil.noZeroInteger,message:'请输入正整数'}]}>
                 <Input placeholder="请输入" autoComplete="off"/>
               </Form.Item>
               <span className="line">---</span>
-              <Form.Item name="numEt">
+              <Form.Item
+                name="assetSizeMax"
+                dependencies={['assetSizeMin']}
+                rules={[{pattern:RegExpUtil.noZeroInteger,message:'请输入正整数'},{ validator:(rule, value)=>this.validatorRangNum(rule, value, "assetSizeMin") }]}>
+                <Input placeholder="请输入" autoComplete="off"/>
+              </Form.Item>
+            </Form.Item>
+          </Col>
+          <Col {...this.colspans}>
+            <Form.Item label="资产笔数" className="two-multi-form-item">
+              <Form.Item name="assetsNumMin" rules={[{pattern:RegExpUtil.noZeroInteger,message:'请输入正整数'}]}>
                 <Input placeholder="请输入"/>
               </Form.Item>
-            </Form.Item>
-          </Col>
-          <Col {...this.colspans}>
-            <Form.Item name="slider" label="资产验真比率">
-              <Slider/>
-            </Form.Item>
-          </Col>
-          <Col {...this.colspans}>
-            <Form.Item label="累计资产规模">
-              <Form.Item name="slider" noStyle>
-                <Slider max={500}/>
+              <span className="line">---</span>
+              <Form.Item
+                name="assetsNumMax"
+                dependencies={['assetsNumMin']}
+                rules={[{pattern:RegExpUtil.noZeroInteger,message:'请输入正整数'},{ validator:(rule, value)=>this.validatorRangNum(rule, value,"assetsNumMin") }]}>
+                <Input placeholder="请输入" autoComplete="off"/>
               </Form.Item>
-              <span>500万</span>
-            </Form.Item>
-          </Col>
-          <Col {...this.colspans}>
-            <Form.Item name="gender" label="排序">
-              <Select
-                placeholder="Select a option and change input text above"
-                onChange={this.onGenderChange}
-                allowClear>
-                <Option value="male">male</Option>
-                <Option value="female">female</Option>
-                <Option value="other">other</Option>
-              </Select>
             </Form.Item>
           </Col>
         </Row>
         <div className="submit-btn-wrap">
-          <YtBtn htmlType="submit" onClick={this.onSubmit}>
+          <YtBtn htmlType="submit" onClick={this.handleSubmit}>
             查询
           </YtBtn>
         </div>

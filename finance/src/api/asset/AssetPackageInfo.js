@@ -23,9 +23,7 @@ export function GetAddAssetApi(values){
 export function GetDeleteAssetApi(values){
     return Req.post('/assets/package/delete/assetsList',{...values})
 }
-// export function GetAmountChangeChartApi(values){
-//     return Req.post('/assets/packet/getOpData',{...values})
-// }
-// export function GetPackegChangeApi(values){
-//     return Req.post('/assets/packet/findTop5List',{...values})
-// }
+//过滤异常数据
+export function GetFilterDataApi(values){
+    return Req.post('/assets/package/filter/assetsList',{...values})
+}

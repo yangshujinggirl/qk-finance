@@ -1,29 +1,21 @@
 import { Rose } from '@antv/g2plot';
+import { useState, useEffect } from 'react';
 import { YtCard } from 'common';
 import './index.less';
 
-class IndexChart extends React.Component{
-    componentDidMount() {
-      const data = [
-        {
-          type: '50万以下',
-          value: 27,
-        },
-        {
-          type: '50万-100万',
-          value: 25,
-        },
-        {
-          type: '100万-300万',
-          value: 18,
-        },
-        {
-          type: '300万以上',
-          value: 30,
-        },
-      ];
-
-      const rosePlot = new Rose(document.getElementById('asset-scale-container'), {
+const IndexChart=({...props})=>{
+  let { data } =props;
+  const [plot,setPlot] = useState(null);
+  const initChart=()=>{
+      let dom = document.getElementById('asset-scale-container');
+      if(!dom||data.length==0) {
+        return;
+      }
+      if(plot) {
+        plot.changeData(data);
+        return;
+      }
+      const rosePlot = new Rose(dom, {
         forceFit: true,
         radius: 0.8,
         data,
@@ -39,11 +31,10 @@ class IndexChart extends React.Component{
           content: (text) => text.value,
         },
       });
-
       rosePlot.render();
+      setPlot(rosePlot);
     }
-    render() {
-      return <div  className="asset-num-container" id="asset-scale-container"></div>
-    }
+    useEffect(() => { initChart() },[data]);
+    return <div  className="asset-num-container" id="asset-scale-container"></div>
 }
 export default IndexChart;

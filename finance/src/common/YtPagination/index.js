@@ -31,7 +31,7 @@ class YtPagination extends React.Component {
           total={totalSize}
           pageSize={pageSize}
           current={pageNow}
-          // pageSizeOptions={this.initPageSize()}
+          showSizeChanger={false}
           onChange={this.props.onChange}
           onShowSizeChange={this.onShowSizeChange.bind(this)}/>
       </div>
