@@ -27,6 +27,7 @@ class FilterForm extends BaseFilter{
   onChange = data => {
     console.log(data)
   };
+
   render() {
     const dateFormat = "YYYY-MM-DD"
     return (
@@ -45,7 +46,7 @@ class FilterForm extends BaseFilter{
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="交易流水号" name="name">
+            <Form.Item label="交易流水号" name="transactionSerialNumber">
               <AutoComplete
                 options={[]}
                 onSelect={this.onSelect}
@@ -56,18 +57,18 @@ class FilterForm extends BaseFilter{
           </Col>
           <Col {...this.colspans}>
             <Form.Item label="交易金额" className="two-multi-form-item">
-              <Form.Item name="numSt">
+              <Form.Item name="minAmount">
                 <Input placeholder="请输入" autoComplete="off"/>
               </Form.Item>
               <span className="line">---</span>
-              <Form.Item name="numEt">
+              <Form.Item name="maxAmount">
                 <Input placeholder="请输入" autoComplete="off"/>
               </Form.Item>
             </Form.Item>
 
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="对方账户名" name="name">
+            <Form.Item label="对方账户名" name="reciprocalAccountName">
               <AutoComplete
                 options={[]}
                 onSelect={this.onSelect}
@@ -77,7 +78,7 @@ class FilterForm extends BaseFilter{
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="对方账户号" name="name">
+            <Form.Item label="对方账户号" name="reciprocalAccountNo">
               <AutoComplete
                 options={[]}
                 onSelect={this.onSelect}

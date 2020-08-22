@@ -6,7 +6,7 @@ export function bankStatementList(values) {
     return Req.post(`/moneyBack/bankStatement/search`, values)
 }
 // 流水明细
-export function bankStatement(values) {
+export function getBankStatement(values) {
     return Req.post(`/moneyBack/statement/search`, values)
 }
 // 回款计划

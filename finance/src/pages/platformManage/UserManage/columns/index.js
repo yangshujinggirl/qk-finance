@@ -5,7 +5,10 @@ const columnsIndex = [
 
         {
           title: '序号',
-          dataIndex: 'code',
+            dataIndex: 'id',
+            render:(text,record,index)=>{
+                return  index+1
+            }
         },
         {
           title: '用户名称',
@@ -36,9 +39,9 @@ const columnsIndex = [
           dataIndex: '操作',
           render:(text,record,index)=>{
             return <>
-              <Button type="link" onClick={()=>record.onOperateClick('edit')}>停用</Button>
-              <Button type="link" onClick={()=>record.onOperateClick('delete')}>角色关联</Button>
-              <Button type="link" onClick={()=>record.onOperateClick('auth')}>编辑</Button>
+              <Button type="link" onClick={()=>record.onOperateClick('delete')}>停用</Button>
+              <Button type="link" onClick={()=>record.onOperateClick('relate')}>角色关联</Button>
+              <Button type="link" onClick={()=>record.onOperateClick('edit')}>编辑</Button>
             </>
           }
         },

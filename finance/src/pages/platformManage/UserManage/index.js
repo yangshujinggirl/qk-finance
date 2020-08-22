@@ -4,72 +4,57 @@ import FilterForm from './components/FilterForm';
 import CreatModal from './components/CreatModal';
 import {columnsIndex} from './columns';
 import './index.less'
-import { getUserList} from '../../../api/platformManage';
+import { getUserList,validUser,relateUser} from '../../../api/platformManage/UserManage.js';
+import { Modal} from 'antd';
 
 
-const data = [
-  {
-    code: '1',
-    key: '1',
-    name: 'John Brown',
-    amount: '300',
-    amounted: '+10,000.00',
-    amountPocess: '+10,000.00',
-    address: 'New York No. 1 Lake Park',
-    time0:'2020-08-01',
-    time1:'2020-08-01',
-    zwf:'民生银行',
-    pay:'自贡市金玉农资有限公司',
-    paycode:'6226 0101 1010 0456 782'
-  },
-  {
-    code: '2',
-    key: '2',
-    name: 'Jim Green',
-    amount: '300',
-    amounted: '10,000.00',
-    amountPocess: '10,000.00',
-    address: 'London No. 1 Lake Park',
-    time0:'2020-08-01',
-    time1:'2020-08-01',
-    zwf:'民生银行',
-    pay:'自贡市金玉农资有限公司',
-    paycode:'6226 0101 1010 0456 782',
-    test2:'网银导入'
-  },
-  {
-    code: '3',
-    key: '3',
-    name: 'Joe Black',
-    amount: '300',
-    amounted: '10,000.00',
-    amountPocess: '10,000.00',
-    address: 'Sidney No. 1 Lake Park',
-    time0:'2020-04-06  11:00:00',
-    time1:'2020-08-01',
-    zwf:'民生银行',
-    pay:'自贡市金玉农资有限公司',
-    paycode:'6226 0101 1010 0456 782'
-  },
-];
 const Index=({...props})=>{
     const [visible,setVisible] = useState(false);
     const [currentItem,setCurrentItem] = useState({});
+    const [totalSize, setTotalSize] = useState(1);
+
+    const [param, setParam] = useState({
+        userName: '',
+        pageNow: 1,
+        pageSize: 1,
+    });
+    const [list, setList] = useState([]);
+    const {
+        pageNow,
+        pageSize,
+    } = {...param}
     //用户管理API
     const getUserLists=(param)=>{
         getUserList(param).then(res=>{
+            setList(res.data.data.result)
+            setTotalSize(res.data.pagination.totalSize)
+
             console.log(res)
         })
     }
     //获取用户数据
     useEffect(() => {
-        getUserLists();
+        getUserLists(param);
     },[]);
+    //查询
+    const search=({userName})=>{
+        let p = {...param, userName };
+        console.log(p)
+        setParam(p);
+        getUserLists(p);
+    }
+    //分页
+    const pagination=(pageNow)=>{
+        let p = {...param, pageNow };
+        setParam(p);
+        getUserLists(p);
+    }
     const goCreat=()=>{
       setVisible(true);
     }
     const onOk=()=>{
-      setVisible(false);
+        getUserLists(param);
+        setVisible(false);
     }
     const onCancel=()=>{
       setCurrentItem({})
@@ -84,23 +69,57 @@ const Index=({...props})=>{
         case 'delete':
           handleDelete(item)
           break;
+        case 'relate':
+          handleRelate(item)
+          break;
       }
     }
+    //停用
     const handleDelete=(record)=> {
-      console.log(record)
+        Modal.confirm({
+            title: '提示',
+            content: '是否确认停用？',
+            okText: '确认',
+            cancelText: '取消',
+            onOk:()=>{
+                validUser(record.id,isValid).then(res=>{
+                    YtMessage.success('操作成功');
+                })
+            }
+        });
+        console.log(record)
+    }
+    //角色关联
+    const handleRelate=(record)=> {
+        Modal.confirm({
+            title: '提示',
+            content: '是否确认删除？',
+            okText: '确认',
+            cancelText: '取消',
+            onOk:()=>{
+                relateUser({
+                    id: "60305",
+                    roleIds: "F5AYQN706K6CUL7WPJTXQ1JQ9BKX771M",
+                    userId: "I4WTC9OC3TX4VNYOXQCUP8TZUHCZK3DB",
+                }).then(res=>{
+                    YtMessage.success('操作成功');
+                })
+            }
+        });
+        console.log(record)
     }
     return(
       <div className="account-organization-wrap yt-common-list-pages-wrap">
-          <FilterForm />
+          <FilterForm  onSubmit={search} />
           <div className="handle-common-action">
             <YtBtn onClick={goCreat}>新增</YtBtn>
           </div>
           <YtTable
            columns={columnsIndex}
-           dataSource={data}
+           dataSource={list}
            onOperateClick={onOperateClick}/>
-          <YtPagination data={{total:500,currentPage:0,limit:15}}/>
-          <CreatModal visible={visible} onOk={onOk} onCancel={onCancel}/>
+    <YtPagination data={{totalSize,pageNow,pageSize}} onChange={pagination}/>
+    <CreatModal data={currentItem} visible={visible} onOk={onOk} onCancel={onCancel}/>
       </div>
     )
 }

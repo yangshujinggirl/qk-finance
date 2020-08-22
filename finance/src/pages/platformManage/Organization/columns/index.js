@@ -1,28 +1,39 @@
 import { Link } from 'react-router-dom';
 import { Button } from 'antd';
-
+const typeName= {
+    1:'是', 2:'否'
+}
 const columnsIndex = [
 
         {
           title: '序号',
-          dataIndex: 'code',
+          dataIndex: 'id',
+            render:(text,record,index)=>{
+                return  index+1
+            }
         },
         {
           title: 'UUID',
-          dataIndex: 'code',
+          dataIndex: 'orgId',
         },
         {
           title: '组织名称',
-          dataIndex: 'lb',
+          dataIndex: 'orgName',
         },
         {
           title: '是否根组织',
-          dataIndex: 'time1',
+          dataIndex: 'isRoot',
+            render:(text,record,index)=>{
+                return  typeName[text]
+            }
         },
         {
           title: '是否有效',
-          dataIndex: 'amounted',
+          dataIndex: 'isValid',
           width: 120,
+            render:(text,record,index)=>{
+                return  typeName[text]
+            }
         },
         {
           title: '操作',

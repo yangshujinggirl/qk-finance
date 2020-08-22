@@ -1,5 +1,7 @@
 import { Form, Row, Radio, Col, Modal, Checkbox, Button, Input } from 'antd';
 import './index.less';
+import {addOrg} from '../../../../../api/platformManage/Organization.js'
+import { YtMessage } from 'common';
 
 const formItemLayout = {
   labelCol: {
@@ -10,12 +12,17 @@ const formItemLayout = {
   }
 };
 const CreatModal=({...props})=>{
+    console.log('props',props);
   const [form] = Form.useForm();
+  const {id}=props.data;
   const handleOk = async() => {
     try {
       const values = await form.validateFields();
       console.log(values)
-      props.onOk && props.onOk(values);
+        addOrg({...values,id}).then(res=>{
+            YtMessage.success('新增成功');
+            props.onOk && props.onOk(values);
+        })
     } catch (errorInfo) {
       console.log("Failed:", errorInfo);
     }
@@ -35,12 +42,12 @@ const CreatModal=({...props})=>{
         <Form form={form} name="control-hooks" {...formItemLayout}>
           <Row gutter={24}>
             <Col span={24}>
-              <Form.Item name="name1" label="组织名称" rules={[{ required: true,message:'请输入' }]}>
+              <Form.Item name="orgName" label="组织名称" rules={[{ required: true,message:'请输入' }]}>
                 <Input placeholder="请输入"  autoComplete="off"/>
               </Form.Item>
             </Col>
             <Col span={24}>
-              <Form.Item name="name2" label="是否根组织" rules={[{ required: true,message:'请输入' }]}>
+              <Form.Item name="isRoot" label="是否根组织" rules={[{ required: true,message:'请输入' }]}>
                 <Radio.Group>
                   <Radio value={1}>是</Radio>
                   <Radio value={2}>否</Radio>
@@ -48,7 +55,7 @@ const CreatModal=({...props})=>{
               </Form.Item>
             </Col>
             <Col span={24}>
-              <Form.Item name="amount1" label="是否有效" rules={[{ required: true,message:'请输入' }]}>
+              <Form.Item name="isValid" label="是否有效" rules={[{ required: true,message:'请输入' }]}>
                 <Radio.Group>
                   <Radio value={1}>是</Radio>
                   <Radio value={2}>否</Radio>

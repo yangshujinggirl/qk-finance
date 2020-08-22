@@ -3,46 +3,33 @@ import { Link } from 'react-router-dom';
 
 const columns = [
   {
-  title: '资产编号',
-  dataIndex: 'code',
+    title: '资产编号',
+    dataIndex: 'assetNo',
   },
   {
-  title: '资产金额(万元)',
-  dataIndex: 'name',
+    title: '资产金额(万元)',
+    dataIndex: 'orderAmount',
   },
   {
-  title: '资产账期(天)',
-  dataIndex: 'amount',
+    title: '剩余账期(天)',
+    dataIndex: 'realDay',
   },
   {
-  title: '剩余账期(天)',
-  dataIndex: 'amounted',
-  },
-  {
-  title: '债务方',
-  dataIndex: 'zwf',
-  },
-  {
-  title: '还款方式',
-  dataIndex: 'pay',
+    title: '债务方',
+    dataIndex: 'orderSourceCompany',
   },
   {
     title: '资产状态',
-    dataIndex: 'status',
+    dataIndex: 'assetStatus',
   },
   {
-    title: '操作',
-    dataIndex: 'action',
-    render:(text,record,index)=>{
-      return(
-        <Link to="/account/asset/financeCompany/list/info/1">查看</Link>
-      )
-    }
+    title: '验真状态',
+    dataIndex: 'status',
   },
 ];
 
   function EditTable({...props}){
-    const { dataSource } = props;
+    const { dataSource, dataPag } = props;
     const onChange=(selectedRowKeys, selectedRows) => {
       props.onSelect(selectedRows);
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
@@ -57,7 +44,7 @@ const columns = [
           rowSelection={rowSelection}/>
           {
             dataSource.length>0&&
-            <YtPagination data={{total:500,currentPage:0,limit:15}}/>
+            <YtPagination data={dataPag}/>
           }
       </div>
     )

@@ -1,7 +1,8 @@
 import { Form, Row, Col, Modal, Checkbox, Button, Input } from 'antd';
 import { useState } from 'react';
-import { YtEditModal, YtBtn } from 'common';
+import { YtMessage, YtEditModal, YtBtn } from 'common';
 import EditTable from './EditTable';
+import { GetChooseListApi, GetAddAssetApi } from 'api/asset/AssetPackageInfo';
 import './index.less';
 
 const formItemLayout = {
@@ -14,40 +15,60 @@ const formItemLayout = {
 };
 const CreatModal=({...props})=>{
   const [form] = Form.useForm();
+  const [dataPag,setDataPag] = useState({ pageNow:1, pageSize:5, totalSize:0 });
+  const { industryTypeCode, info } =props;
   const [disabled, setDisabled] = useState([]);
   const [dataSource, setDataSource] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const goSearch = async () => {
-    const data=[
-      {
-        code:'code',
-        name:'name',
-        amount:'amount',
-        key:1
-      },
-      {
-        code:'code',
-        name:'name',
-        amount:'amount',
-        key:2
-      },
-      {
-        code:'code',
-        name:'name',
-        amount:'amount',
-        key:3
-      }
-    ]
-    setDataSource(data)
+    try {
+      const values = await form.validateFields();
+      fetchList(values)
+    } catch (errorInfo) {
+      console.log("Failed:", errorInfo);
+    }
+
   };
+  const fetchList=(values)=> {
+    let params = {
+      industryTypeCode, packetId:info.packetId,
+      pageNow:dataPag.pageNow,
+      pageSize:dataPag.pageSize,
+      ...values
+    }
+    GetChooseListApi(params)
+    .then((res)=> {
+      const { pagination, result } =res.data;
+      const { pageNow, pageSize, totalSize } =pagination;
+      result.map((el,index)=>el.key=index)
+      setDataSource(result);
+      setDataPag({pageNow, pageSize, totalSize})
+    })
+  }
   const onSelect = (value) => {
-    console.log(value);
-    setDisabled(false);
+    let selArr = value.map((el) =>{ return el.assetNo })
+    let selectStr = selArr.join(',');
+    setSelectedRows(selectStr)
   };
-  const handleOk = e => {
-    console.log(e);
+  const handleOk =()=> {
+    let params = {
+      industryTypeCode,
+      assetsNoStrs:selectedRows,
+      packetId:info.packetId,
+      enterpriseId:info.enterpriseId,
+      packetName:info.packetName
+    }
     setLoading(true)
+    GetAddAssetApi(params)
+    .then((res)=> {
+      setLoading(false)
+      YtMessage.success('操作成功');
+      props.upDateList();
+      handleCancel();
+    })
+
   };
   const handleCancel = e => {
     form.resetFields();
@@ -62,7 +83,7 @@ const CreatModal=({...props})=>{
         onOk={handleOk}
         onCancel={handleCancel}
         className="search-add-modal-wrap"
-        okButtonProps={{loading,disabled}}>
+        okButtonProps={{loading,disabled:selectedRows.length==0}}>
         <Form form={form} {...formItemLayout}>
           <Row gutter={24}>
             <Col span={12}>
@@ -109,7 +130,7 @@ const CreatModal=({...props})=>{
           <div className="search-action">
             <YtBtn type="primary" onClick={goSearch} size="free">查询</YtBtn>
           </div>
-          <EditTable dataSource={dataSource} onSelect={onSelect}/>
+          <EditTable dataSource={dataSource} onSelect={onSelect} dataPag={dataPag}/>
         </Form>
       </YtEditModal>
   );
