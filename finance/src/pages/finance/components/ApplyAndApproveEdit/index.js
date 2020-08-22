@@ -11,24 +11,17 @@ const { TabPane } = Tabs;
 function withSubscription(handleType, Mod){
   return class FinanceApplyEdit extends React.Component {
     state = {
-      isEdit:this.props.match.params.id?true:false,
-			financeDetail: {}
+      isEdit:this.props.match.params.id?true:false
     }
     callback=(key)=> {
       // console.log(key);
     }
-		componentDidMount(){		
-			GetFinanceDetail('loanId')
-		  .then((res)=> {
-		    console.log(res)
-		  })
-		}
     render() {
       return(
         <div className="finance-apply-wrap yt-common-bg-pages-wrap">
           <Tabs defaultActiveKey="1" onChange={this.callback}>
             <TabPane tab="合同要素" key="1">
-              <AppLyOne handleType={handleType}/>
+              <AppLyOne handleType={handleType} loanId={this.props.match.params.id}/>
             </TabPane>
             <TabPane tab="还款预算" key="2">
               <AppLyTwo handleType={handleType}/>

@@ -20,17 +20,17 @@ class FilterForm extends BaseFilter{
         className="yt-condition-form">
         <Row gutter={24}>
           <Col {...this.colspans}>
-            <Form.Item label="融资客户" name="name">
+            <Form.Item label="融资客户" name="customerName">
               <Input   placeholder="请输入"/>
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="项目名称" name="name">
+            <Form.Item label="项目名称" name="projectName">
               <Input   placeholder="请输入"/>
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="状态" name="size">
+            <Form.Item label="状态" name="financeStatus">
                <Select placeholder="请选择" allowClear>
 								<Option value="-1">全部</Option>
 								<Option value="0">待提交申请</Option>
@@ -47,7 +47,7 @@ class FilterForm extends BaseFilter{
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="融资时间" name="time">
+            <Form.Item label="融资时间" name="applyTime">
               <RangePicker format={dateFormat}/>
             </Form.Item>
           </Col>

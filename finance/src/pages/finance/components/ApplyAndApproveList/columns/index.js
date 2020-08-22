@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 
-const columnsList =(handleType)=>{
+const columnsList =(handleType, pagination)=>{
   return [
           {
 						title: '序号',
 						fixed: 'left',
 						render:(text,record,index)=>{
 							return <> {
-								<span>{index+1}</span>
+								<span>{(pagination.pageNow-1)*pagination.pageSize+index+1}</span>
 							}
 							</>
 						}
@@ -62,7 +62,7 @@ const columnsList =(handleType)=>{
               {
                 handleType=="1"?
                 <>
-                  <Link to="/account/financeApply/edit/12" className="operate-link-btn">编辑</Link>
+                  <Link to={'/account/financeApply/edit/'+record.loanId} className="operate-link-btn">编辑</Link>
                   <span className="operate-link-btn" onClick={()=>record.onOperateClick('download')}>项目资料下载</span>
                 </>
                 :

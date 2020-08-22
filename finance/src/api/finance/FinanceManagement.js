@@ -6,7 +6,7 @@ import Req from '../Req';
 
 // 融资申请摘要
 export function GetStatisticalData(values) {
-	return Req.post('/management/getStatisticalData', {...values})
+	return Req.post('/loan/management/getStatisticalData', {...values})
 }
 
 // 融资申请列表
@@ -26,7 +26,7 @@ export function GetLoanOutStatisticalData() {
 
 // 融资详情
 export function GetFinanceDetail(loanId) {
-    return Req.post('loanV2/apply/add/baseInfo', {loanId: loanId})
+    return Req.post('loanV2/apply/add/baseInfo', {loanId: loanId, currentStatus: 'view'})
 }
 
 // 放款详情

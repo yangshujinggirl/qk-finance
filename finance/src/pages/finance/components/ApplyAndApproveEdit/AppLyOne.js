@@ -3,12 +3,27 @@ import { Link } from 'react-router-dom';
 import { BaseEditForm, YtBtn } from 'common';
 import HeadFormCard from '../HeadFormCard';
 import PopoverMod from './components/PopoverMod';
+import { GetFinanceDetail } from 'api/finance/FinanceManagement';
 
 class ApplyOne extends BaseEditForm {
   formRef = React.createRef();
+	state = {
+		basicInfo: {}
+	}
   onSubmit = (values) => {
     console.log(values)
   };
+	fetchBasicInfo=()=> {
+		GetFinanceDetail(this.props.loanId)
+		.then((res)=> {
+		  this.state.basicInfo = res.data.obj;
+			console.log('basicInfo:', this.state.basicInfo)
+			this.forceUpdate();
+		})
+	}
+	componentDidMount(){		
+		this.fetchBasicInfo();
+	}
   render() {
     return(
       <div>
@@ -16,18 +31,18 @@ class ApplyOne extends BaseEditForm {
           <HeadFormCard title="基本信息">
               <Row>
                 <Col {...this.colspans}>
-                  <Form.Item label="融资编号" name="name">
-                    <Input autoComplete="off"   placeholder="请输入" disabled/>
+                  <Form.Item label="融资编号" name="loanNo">
+                    <Input autoComplete="off" placeholder="请输入"/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
                   <Form.Item label="行业" name="code">
-                    <Input autoComplete="off"   placeholder="请输入" disabled/>
+                    <Input autoComplete="off" placeholder="请输入"/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
                   <Form.Item label="项目名称" name="code">
-                    <Input autoComplete="off"   placeholder="请输入" rules={[{ required: true, message:'请输入'}]}/>
+                    <Input autoComplete="off" placeholder="请输入" rules={[{ required: true, message:'请输入'}]}/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
