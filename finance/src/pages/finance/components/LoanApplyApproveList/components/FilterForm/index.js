@@ -16,10 +16,9 @@ class FilterForm extends BaseFilter{
     });
   };
   onFinish = values => {
-    console.log(values);
+		this.props.onSearch(values);
   };
   onSubmit =(values)=> {
-    console.log(values)
   };
   render() {
     const dateFormat = "YYYY-MM-DD"
@@ -41,14 +40,21 @@ class FilterForm extends BaseFilter{
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="审核状态" name="size">
+            <Form.Item label="审核状态" name="loanStatus">
                <Select
                  placeholder="请选择"
                  allowClear>
-                 <Option value="0">全部</Option>
-                 <Option value="1">待审核</Option>
-                 <Option value="2">审核通过</Option>
-                 <Option value="3">审核不通过</Option>
+								<Option value="-1">全部</Option>
+								<Option value="0">待提交申请</Option>
+								<Option value="1">已提交申请审核</Option>
+								<Option value="2">申请审核未通过</Option>
+								<Option value="3">待提交放款</Option>
+								<Option value="4">已提交放款审核</Option>
+								<Option value="5">放款审核不通过</Option>
+								<Option value="6">已放款</Option>
+								<Option value="7">已放款存续中</Option>
+								<Option value="8">待确认还款审核</Option>
+								<Option value="9">已结束</Option>
                </Select>
             </Form.Item>
           </Col>

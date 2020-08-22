@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 const columnsApply = [
         {
         title: '序列号',
-        dataIndex: 'id',
         width: 100,
         fixed: 'left',
+				dataIndex: 'id',
         },
         {
         title: '放款编号',
@@ -74,9 +74,9 @@ const columnsApply = [
 const columnsApprove = [
         {
         title: '序列号',
-        dataIndex: 'id',
         width: 100,
         fixed: 'left',
+				dataIndex: 'id',
         },
         {
         title: '放款编号',

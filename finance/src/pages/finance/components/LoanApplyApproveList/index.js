@@ -44,6 +44,10 @@ function withSubscription(handleType,Mod) {
     state={
       visible:false,
 			loanList: [],
+			searchParam: {
+				loanStatus: "-1"
+			},
+			pagination: {totalSize:100, totalPage:5, pageNow:1, pageSize:15},
 			summary: {
 				"cumulativeLoan": {
 					"totalData": 20,
@@ -71,27 +75,16 @@ function withSubscription(handleType,Mod) {
 				}
 			}
     }
-		
+				
 		componentWillMount(){		
 		  // 顶部统计值
 			GetLoanOutStatisticalData({})
 		  .then((res)=> {
 				this.state.summary = res.data
-				this.forceUpdate();
 		  })
 			
 			// 放款列表
-			GetLoanList({
-				"pageNow": 1,
-				"pageSize": 15,
-				"typeCode": "ALL",
-				"enterpriseId": "ALL",
-				"loanStatus": "-1"
-			})
-			.then((res)=> {
-				this.state.loanList = res.data.result;
-				this.forceUpdate();
-			});
+			this.fetchLoanList();
 		}
     goCreat=()=> {
       this.setState({ visible:true });
@@ -99,6 +92,29 @@ function withSubscription(handleType,Mod) {
     onCancel=()=> {
       this.setState({ visible:false });
     }
+		fetchLoanList=()=> {
+			GetLoanList({
+				"pageNow": this.state.pagination.pageNow,
+				"pageSize": this.state.pagination.pageSize,
+				"typeCode": "ALL",
+				"enterpriseId": "ALL",
+				"loanStatus": this.state.searchParam.loanStatus
+			})
+			.then((res)=> {
+				this.state.loanList = res.data.result;
+				this.state.pagination = res.data.pagination;
+				this.forceUpdate();
+			});
+		} 
+		onSearch=(values)=> {
+			this.state.searchParam.loanStatus = values.loanStatus+''
+			this.fetchLoanList();
+		}
+		onPageChange=(currentPage, pageSize)=> {
+			console.log('onPageChange:', currentPage, pageSize);
+			this.state.pagination.pageNow = currentPage;
+			this.fetchLoanList();
+		}
     render() {
       // const { visible } =this.state;
 			const summary = this.state.summary;
@@ -146,12 +162,12 @@ function withSubscription(handleType,Mod) {
             </ViewCardPane>
           </div>
           <div className="main-content yt-common-list-pages-wrap">
-            <FilterForm />
+            <FilterForm onSearch={this.onSearch}/>
             <YtTable
               scroll={{ x: 1300 }}
              columns={columns}
              dataSource={loanList}/>
-            <YtPagination data={{totalSize:500,pageNow:1,pageSize:15}}/>
+            <YtPagination data={this.state.pagination} onChange={this.onPageChange}/>
           </div>
         </div>
       )
