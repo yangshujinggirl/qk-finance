@@ -36,7 +36,7 @@ class FilterForm extends BaseFilter{
         className="yt-condition-form">
         <Row gutter={24}>
           <Col {...this.colspans}>
-            <Form.Item label="融资编号" name="name">
+            <Form.Item label="融资编号" name="loanNo">
               <AutoComplete
                 options={[]}
                 onSelect={this.onSelect}
@@ -46,7 +46,7 @@ class FilterForm extends BaseFilter{
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="项目名称" name="name">
+            <Form.Item label="项目名称" name="projectName">
               <AutoComplete
                 options={[]}
                 onSelect={this.onSelect}
@@ -57,7 +57,7 @@ class FilterForm extends BaseFilter{
           </Col>
         </Row>
         <div className="submit-btn-wrap">
-          <YtBtn htmlType="submit" onClick={this.onSubmit}>
+          <YtBtn htmlType="submit"  onClick={this.handleSubmit}>
             查询
           </YtBtn>
         </div>

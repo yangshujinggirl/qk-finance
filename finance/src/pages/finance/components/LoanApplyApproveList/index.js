@@ -6,7 +6,7 @@ import { YtStatistic, YtPagination, YtTable, YtBtn } from 'common';
 import ViewCardPane from '../../../components/ViewCardPane';
 import FilterForm from './components/FilterForm';
 import { columnsApply, columnsApprove } from './columns';
-import { GetLoanOutStatisticalData } from 'api/finance/FinanceManagement';
+import { GetLoanOutStatisticalData, GetLoanList } from 'api/finance/FinanceManagement';
 import './index.less'
 
 const data = [
@@ -38,57 +38,53 @@ const data = [
     address: 'Sidney No. 1 Lake Park',
   },
   ];
-	
-	let totalData = {
-		financeApplyCount: 550,
-		financeApplyWeekRatio: 20,
-		financeApplyDayRatio: 12,
-		financeApplyDayAdd: 3,
-		loanApplyMoney: 320,
-		loanApplyMoneyWeekRatio: 12,
-		loanApplyMoneyDayRatio: 3,
-		loanApplyMoneyDayAdd: 22,
-		loanAprovedCount: 3512,
-		loanAprovedCountWeekRatio: 12,
-		loanAprovedCountDayRatio: 3,
-		loanAprovedCountDayAdd: 32,
-		loanApprovedMoney: 2342,
-		loanApprovedMoneyWeekRatio: 5,
-		loanApprovedMoneyDayRatio: 23,
-		loanApprovedMoneyDayAdd: 12
-	}
-	
+		
 function withSubscription(handleType,Mod) {
   return class FinanceShow extends React.Component {
     state={
-      visible:false
+      visible:false,
+			loanList: [],
+			searchParam: {
+				loanStatus: "-1"
+			},
+			pagination: {totalSize:100, totalPage:5, pageNow:1, pageSize:15},
+			summary: {
+				"cumulativeLoan": {
+					"totalData": 20,
+					"weekYoY": "0",
+					"dayChainRation": "0",
+					"dayAddition": "0"
+				},
+				"accumulatedFinancing": {
+					"totalData": 77.93,
+					"weekYoY": "0",
+					"dayChainRation": "0",
+					"dayAddition": "0"
+				},
+				"cumulativeLoanApplication": {
+					"totalData": 25,
+					"weekYoY": "0",
+					"dayChainRation": "0",
+					"dayAddition": "0"
+				},
+				"reviewLoan": {
+					"totalData": 888.43,
+					"weekYoY": "0",
+					"dayChainRation": "0",
+					"dayAddition": "0"
+				}
+			}
     }
-		
-		componentWillMount(){
-			totalData.financeApplyCount = 999;
-		
-		  GetLoanOutStatisticalData({})
+				
+		componentWillMount(){		
+		  // 顶部统计值
+			GetLoanOutStatisticalData({})
 		  .then((res)=> {
-		    console.log(res)
-				// setTotalData({
-				// 	financeApplyCount: 550,
-				// 	financeApplyWeekRatio: 20,
-				// 	financeApplyDayRatio: 12,
-				// 	financeApplyDayAdd: 3,
-				// 	loanApplyMoney: 320,
-				// 	loanApplyMoneyWeekRatio: 12,
-				// 	loanApplyMoneyDayRatio: 3,
-				// 	loanApplyMoneyDayAdd: 22,
-				// 	loanAprovedCount: 3512,
-				// 	loanAprovedCountWeekRatio: 12,
-				// 	loanAprovedCountDayRatio: 3,
-				// 	loanAprovedCountDayAdd: 32,
-				// 	loanApprovedMoney: 2342,
-				// 	loanApprovedMoneyWeekRatio: 5,
-				// 	loanApprovedMoneyDayRatio: 23,
-				// 	loanApprovedMoneyDayAdd: 12					
-				// })
+				this.state.summary = res.data
 		  })
+			
+			// 放款列表
+			this.fetchLoanList();
 		}
     goCreat=()=> {
       this.setState({ visible:true });
@@ -96,56 +92,82 @@ function withSubscription(handleType,Mod) {
     onCancel=()=> {
       this.setState({ visible:false });
     }
+		fetchLoanList=()=> {
+			GetLoanList({
+				"pageNow": this.state.pagination.pageNow,
+				"pageSize": this.state.pagination.pageSize,
+				"typeCode": "ALL",
+				"enterpriseId": "ALL",
+				"loanStatus": this.state.searchParam.loanStatus
+			})
+			.then((res)=> {
+				this.state.loanList = res.data.result;
+				this.state.pagination = res.data.pagination;
+				this.forceUpdate();
+			});
+		} 
+		onSearch=(values)=> {
+			this.state.searchParam.loanStatus = values.loanStatus+''
+			this.fetchLoanList();
+		}
+		onPageChange=(currentPage, pageSize)=> {
+			console.log('onPageChange:', currentPage, pageSize);
+			this.state.pagination.pageNow = currentPage;
+			this.fetchLoanList();
+		}
     render() {
-      const { visible } =this.state;
+      // const { visible } =this.state;
+			const summary = this.state.summary;
+			const loanList = this.state.loanList;
+			console.log('loanList==>', loanList);
       let columns = handleType=="1"?columnsApply:columnsApprove;
       return(
         <div className="finance-company-list-wrap">
           <div className="box-flex">
             <ViewCardPane
               label="累计申请融资笔数"
-              num={totalData.financeApplyCount}>
+              num={summary.cumulativeLoan.totalData}>
               <div className="box-flex">
-                <YtStatistic value={totalData.financeApplyWeekRatio} type="up">周同比</YtStatistic>
-                <YtStatistic value={totalData.financeApplyDayRatio} type="down">日环比</YtStatistic>
-                <YtStatistic value={totalData.financeApplyDayAdd}>本日新增</YtStatistic>
+                <YtStatistic value={summary.cumulativeLoan.weekYoY} type="up">周同比</YtStatistic>
+                <YtStatistic value={summary.cumulativeLoan.dayChainRation} type="down">日环比</YtStatistic>
+                <YtStatistic value={summary.cumulativeLoan.dayAddition}>本日新增</YtStatistic>
               </div>
             </ViewCardPane>
             <ViewCardPane
               label="累计申请放款金额(万元)"
-              num={totalData.loanApplyMoney}>
+              num={summary.accumulatedFinancing.totalData}>
               <div className="box-flex">
-                <YtStatistic value={totalData.loanApplyMoneyWeekRatio} type="up">周同比</YtStatistic>
-                <YtStatistic value={totalData.loanApplyMoneyDayRatio} type="down">日环比</YtStatistic>
-                <YtStatistic value={totalData.loanApplyMoneyDayAdd}>本日新增</YtStatistic>
+                <YtStatistic value={summary.accumulatedFinancing.weekYoY} type="up">周同比</YtStatistic>
+                <YtStatistic value={summary.accumulatedFinancing.dayChainRation} type="down">日环比</YtStatistic>
+                <YtStatistic value={summary.accumulatedFinancing.dayAddition}>本日新增</YtStatistic>
               </div>
             </ViewCardPane>
             <ViewCardPane
               label="已审核放款笔数"
-              num={totalData.loanAprovedCount}>
+              num={summary.cumulativeLoanApplication.totalData}>
               <div className="box-flex">
-                <YtStatistic value={totalData.loanAprovedCountWeekRatio} type="up">周同比</YtStatistic>
-                <YtStatistic value={totalData.loanAprovedCountDayRatio} type="down">日环比</YtStatistic>
-                <YtStatistic value={totalData.loanAprovedCountDayAdd}>本日新增</YtStatistic>
+                <YtStatistic value={summary.cumulativeLoanApplication.weekYoY} type="up">周同比</YtStatistic>
+                <YtStatistic value={summary.cumulativeLoanApplication.dayChainRation} type="down">日环比</YtStatistic>
+                <YtStatistic value={summary.cumulativeLoanApplication.dayAddition}>本日新增</YtStatistic>
               </div>
             </ViewCardPane>
             <ViewCardPane
               label="累计放款金额(万元)"
-              num={totalData.loanApprovedMoney}>
+              num={summary.reviewLoan.totalData}>
               <div className="box-flex">
-                <YtStatistic value={totalData.loanApprovedMoneyWeekRatio} type="up">周同比</YtStatistic>
-                <YtStatistic value={totalData.loanApprovedMoneyDayRatio} type="down">日环比</YtStatistic>
-                <YtStatistic value={totalData.loanApprovedMoneyDayAdd}>本日新增</YtStatistic>
+                <YtStatistic value={summary.reviewLoan.weekYoY} type="up">周同比</YtStatistic>
+                <YtStatistic value={summary.reviewLoan.dayChainRation} type="down">日环比</YtStatistic>
+                <YtStatistic value={summary.reviewLoan.dayAddition}>本日新增</YtStatistic>
               </div>
             </ViewCardPane>
           </div>
           <div className="main-content yt-common-list-pages-wrap">
-            <FilterForm />
+            <FilterForm onSearch={this.onSearch}/>
             <YtTable
               scroll={{ x: 1300 }}
              columns={columns}
-             dataSource={data}/>
-            <YtPagination data={{totalSize:500,pageNow:0,pageSize:15}}/>
+             dataSource={loanList}/>
+            <YtPagination data={this.state.pagination} onChange={this.onPageChange}/>
           </div>
         </div>
       )
