@@ -1,4 +1,5 @@
 import { YtBtn } from 'common';
+import { statusOption } from '../options';
 import './index.less';
 
 function AssetInfoHead({...props}) {
@@ -8,7 +9,13 @@ function AssetInfoHead({...props}) {
               <div className="box-flex row-one">
                 <div className="company-info box-flex">
                   <p className="cmy-name">债权方:{data.enterpriseName}</p>
-                  <p className="status">已封包</p>
+                  <p className="status">
+                    {
+                      statusOption.map((el)=> (
+                          <span key={el.key}>{el.key == data.packetStatus&&el.value}</span>
+                      ))
+                    }
+                  </p>
                   <p className="pkg-info">资产包名称：<span className="val-sty">{data.packetName}</span></p>
                   <p className="pkg-info">资产包编号：<span className="val-sty">{data.packetId}</span></p>
                   <p className="pkg-info">关联融资订单：<span className="val-sty">{data.loanNo?data.loanNo:'未关联'}</span></p>

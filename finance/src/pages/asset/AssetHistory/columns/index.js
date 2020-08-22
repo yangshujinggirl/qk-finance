@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 const columnsList =[
         {
         title: '序号',
-        dataIndex: 'code',
+        dataIndex: 'key',
         },
         {
-        title: '融资单号',
+        title: '融资编号',
         dataIndex: 'name',
         },
         {
-        title: '新增时间',
+        title: '申请融资日期',
         dataIndex: 'amount',
         },
         {
@@ -18,38 +18,41 @@ const columnsList =[
         dataIndex: 'amounted',
         },
         {
-        title: '融资金额（万元）',
+        title: '资产金额（万元）',
         dataIndex: 'rzje',
         },
         {
-        title: '利率（年化）',
+        title: '资产包编号',
         dataIndex: 'lv',
         },
         {
-        title: '融资期限',
+        title: '融资金额（万元）',
         dataIndex: 'rzqx',
         },
         {
-        title: '是否有逾期',
+        title: '年化利率%',
         dataIndex: 'yq',
         },
         {
-        title: '是否提前还款',
+        title: '还款方式',
         dataIndex: 'hk',
         },
         {
-        title: '累计请款金额（万元）',
+        title: '状态',
         dataIndex: 'qk',
         },
         {
-        title: '状态',
+        title: '实际放款时间',
         dataIndex: 'zt',
         },
         {
-        title: '操作',
-        dataIndex: 'action',
-        fixed: 'right',
-        width: 100,
+          title: '操作',
+          dataIndex: 'action',
+          fixed: 'right',
+          width: 100,
+          render:(text,record,index)=>{
+            return <span className="operate-link-btn">审核</span>
+          }
         },
 ]
 

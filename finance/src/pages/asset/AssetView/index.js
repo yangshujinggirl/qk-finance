@@ -1,16 +1,20 @@
-import { Table, Progress } from 'antd';
-import { Link } from 'react-router-dom';
+import NP from 'number-precision';
+import moment from 'moment';
+import { useState, useEffect } from 'react';
 import ViewCardPane from '../../components/ViewCardPane';
-import BlockChainNode from '../../components/BlockChainNode';
-import LatestCashFlow from '../../components/LatestCashFlow';
 import AssetDistributeChart from '../components/AssetDistributeChart';
+import RiseChart from '../../components/RiseChart';
 import SubCrumb from '../components/SubCrumb';
 import AssestStatusChart from './components/AssestStatusChart';
 import CashChart from './components/CashChart';
 import MaxAssetChart from './components/MaxAssetChart';
 import FinanceTurnChart from './components/FinanceTurnChart';
+import LatestFund from './components/LatestFund';
+import DebtMod from './components/DebtMod';
 import { YtBreadcrumbName, YtTable, YtCard } from 'common';
 import {subCrumbOptions} from '../subCrumbOptions';
+import { GetTotalApi,  GetPaymentApi } from 'api/asset/AssetView';
+import { GetAssetRiseApi } from 'api/finance/FinanceCompanyView';
 
 
 import './index.less';
@@ -58,147 +62,121 @@ const verifyOption=[
   },
 ]
 
-class OperateWorkbench extends React.Component {
+const Index=({...props})=>{
+  const [totalData,setTotalData] = useState({assetsLoanTotal:0,assetsTotal:1});
+  const [payMentList,setPayMentList] = useState([]);
+  const [riseList,setRiseList] = useState([]);
+  const { id:enterpriseId } = props.match.params;
 
-  render(){
-    const { params } =this.props.match;
-    return(
-      <>
-        <YtBreadcrumbName>
-          <SubCrumb data={subCrumbOptions(params.id)} active="1"/>
-        </YtBreadcrumbName>
-        <div className="assetView-pages-wrap">
-          <div className=" common-column-module-wrap assetView-part-content">
-            <div className="module-left-wrap">
-              <div className="part-overview-wrap box-flex">
-                <ViewCardPane
-                  className="view-diy"
-                  label="资产池总金额(万元)"
-                  num="550,000"/>
-                <ViewCardPane
-                  className="view-diy"
-                  label="现金流入(万元)"
-                  num="550,000"/>
-                <ViewCardPane
-                  className="view-diy"
-                  label="现金流出(万元)"
-                  num="550,000"/>
-                <ViewCardPane
-                  className="view-diy"
-                  label="预计融资(万元)"
-                  num="550,000"/>
-              </div>
-              <div className="company-list part-same-shadow mt24">
-                <CashChart />
-              </div>
-            </div>
-            <div className="module-right-wrap">
-              <div className="part-same-shadow mt24">
-                <AssestStatusChart />
-              </div>
-              <div className="part-same-shadow mt24">
-                <BlockChainNode />
-              </div>
-            </div>
+  const fetchTotal=(values )=>{
+    let params = { industryTypeCode:'AGNPK', enterpriseId }
+    GetTotalApi(params)
+    .then((res)=> {
+      const { assetsCountSumVO } =res.data;
+      assetsCountSumVO.assetsLoanTotal = assetsCountSumVO.assetsLoanTotal?assetsCountSumVO.assetsLoanTotal:0
+      assetsCountSumVO.assetsTotal = assetsCountSumVO.assetsTotal?assetsCountSumVO.assetsTotal:1;
+      setTotalData(assetsCountSumVO)
+    })
+  }
+  const fetchRise=()=>{
+    GetAssetRiseApi({enterpriseId})
+    .then((res)=> {
+      let { addOrderAmountList, allOrderAmountList } =res.data;
+      addOrderAmountList = addOrderAmountList.map((el)=> {
+        el.dateNode = moment(el.dateNode).format('YYYY-MM-DD');
+        el.type = "新增资产";
+        el.value = el.addOrderAmount;
+        return el;
+      })
+      allOrderAmountList = allOrderAmountList.map((el)=> {
+        el.dateNode = moment(el.dateNode).format('YYYY-MM-DD');
+        el.value = el.allOrderAmount;
+        el.type = "总资产";
+        return el;
+      })
+      let arr = [...addOrderAmountList,...allOrderAmountList];
+      setRiseList(arr)
+    })
+  }
+  const fetchPayment=(values )=>{
+    let params = { enterpriseId }
+    GetPaymentApi(params)
+    .then((res)=> {
+      const { loanPeriodMap } =res.data;
+      let arr=[
+        {
+          item:'30天内',
+          count:loanPeriodMap.zeroThirty,
+          percent:loanPeriodMap.zeroThirty,
+        },{
+          item:'30-60天',
+          count:loanPeriodMap.thirtySixty,
+          percent:loanPeriodMap.thirtySixty,
+        },{
+          item:'60-90天',
+          count:loanPeriodMap.sixtyNinety,
+          percent:loanPeriodMap.sixtyNinety,
+        },{
+          item:'90-180天',
+          count:loanPeriodMap.ninetyOneHundredAndEighty,
+          percent:loanPeriodMap.ninetyOneHundredAndEighty,
+        },{
+          item:'180天以上',
+          count:loanPeriodMap.oneHundredAndEighty,
+          percent:loanPeriodMap.oneHundredAndEighty,
+        },
+      ]
+      setPayMentList(arr);
+    })
+  }
+
+  useEffect(() => { fetchTotal();fetchPayment();fetchRise() },[enterpriseId]);
+  return(
+    <>
+      <YtBreadcrumbName>
+        <SubCrumb data={subCrumbOptions(enterpriseId)} active="1"/>
+      </YtBreadcrumbName>
+      <div className="assetView-pages-wrap">
+        <div className="part-overview-wrap box-flex">
+          <ViewCardPane
+            className="view-diy"
+            label="累计资产总额(万元)"
+            num={totalData.assetsTotal}/>
+          <ViewCardPane
+            className="view-diy"
+            label="累计融资总数(笔)"
+            num={totalData.assetTotalCount}/>
+          <ViewCardPane
+            className="view-diy"
+            label="当前融资总额(万元)"
+            num={totalData.assetsLoanTotal}/>
+          <ViewCardPane
+            className="view-diy"
+            label="整体融资比(%)"
+            num={NP.round(NP.divide(totalData.assetsLoanTotal,totalData.assetsTotal),2)}/>
+        </div>
+        <div className="common-column-module-wrap">
+          <div className="module-equal-two-wrap">
+            <RiseChart data={riseList}/>
           </div>
-          <div className="common-column-module-wrap row-two-part">
-            <div className="module-left-wrap">
-              <div className="part-same-shadow mt24">
-                <LatestCashFlow/>
-              </div>
-            </div>
-            <div className="module-right-wrap">
-              <div className="part-same-shadow verify-process mt24">
-                <YtCard title="三方数据交叉验真状态">
-                  <div>
-                    <div className="box-flex company-list">
-                      <div className="status-item">
-                         <img src={iconImg1} className="img-name"/>
-                         <p className="status-name">融资企业</p>
-                      </div>
-                      <div className="status-item">
-                         <img src={iconImg2} className="img-name"/>
-                         <p className="status-name"> 国税局</p>
-                      </div>
-                      <div className="status-item">
-                         <img src={iconImg3} className="img-name"/>
-                         <p className="status-name"> 云 图</p>
-                      </div>
-                      <div className="status-item">
-                         <img src={iconImg4} className="img-name"/>
-                         <p className="status-name">经销商</p>
-                      </div>
-                      <div className="status-item">
-                         <img src={iconImg5} className="img-name"/>
-                         <p className="status-name">物 流</p>
-                      </div>
-                      <div className="status-item">
-                         <img src={iconImg6} className="img-name"/>
-                         <p className="status-name">银 行</p>
-                      </div>
-                      <div className="status-item">
-                         <img src={iconImg7} className="img-name"/>
-                         <p className="status-name">企查查</p>
-                      </div>
-                      <div className="status-item">
-                         <img src={iconImg8} className="img-name"/>
-                         <p className="status-name">农 户</p>
-                      </div>
-                    </div>
-                    <div className="box-flex vfp-label-list">
-                      <div className="asset-itm">
-                        <p className="label-num">42,000</p>
-                        <p className="label-name">已验真资产</p>
-                      </div>
-                      <div className="asset-itm">
-                        <p className="label-num">42,000</p>
-                        <p className="label-name">待验真资产</p>
-                      </div>
-                      <div className="asset-itm">
-                        <p className="label-num">42,000</p>
-                        <p className="label-name">疑似资产</p>
-                      </div>
-                    </div>
-                  </div>
-                </YtCard>
-              </div>
-            </div>
-          </div>
-          <div className="asset-module-wrap box-flex common-column-module-wrap">
-            <div className="part-same-shadow  module-equal-four-wrap">
-              <AssetDistributeChart />
-            </div>
-            <div className="part-same-shadow  module-equal-four-wrap">
-              <YtCard title="资金周转率">
-                <FinanceTurnChart />
-              </YtCard>
-            </div>
-            <div className="part-same-shadow  module-equal-four-wrap">
-              <YtCard title="债务占比TOP 3">
-                <>
-                  <div className="process-wrap">
-                    <p className="prw-title">XXX企业</p>
-                    <Progress percent={30} />
-                  </div>
-                  <div className="process-wrap">
-                    <p className="prw-title">XXX企业</p>
-                    <Progress percent={30} />
-                  </div>
-                  <div className="process-wrap">
-                    <p className="prw-title">XXX企业</p>
-                    <Progress percent={30} />
-                  </div>
-                </>
-              </YtCard>
-            </div>
-            <div className="part-same-shadow  module-equal-four-wrap">
-              <MaxAssetChart />
-            </div>
+          <div className="module-equal-two-wrap company-list part-same-shadow mt24">
+            <LatestFund enterpriseId={enterpriseId}/>
           </div>
         </div>
-      </>
-    )
-  }
+        <div className="asset-module-wrap box-flex common-column-module-wrap">
+          <div className="part-same-shadow  module-equal-thr-wrap">
+            <AssetDistributeChart data={payMentList}/>
+          </div>
+          <div className="part-same-shadow  module-equal-thr-wrap">
+            <YtCard title="资产规模分布"> 资产规模分布</YtCard>
+          </div>
+          <div className="part-same-shadow  module-equal-thr-wrap">
+            <DebtMod enterpriseId={enterpriseId}/>
+          </div>
+        </div>
+      </div>
+    </>
+  )
 }
 
-export default OperateWorkbench;
+export default Index;

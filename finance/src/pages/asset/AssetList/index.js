@@ -12,39 +12,10 @@ import {subCrumbOptions} from '../subCrumbOptions';
 import { GetTotalApi, GetListApi, GetAddApi } from 'api/asset/AssetList';
 import './index.less'
 
-const data = [
-  {
-  code: '1',
-  key: '1',
-  name: 'John Brown',
-  amount: '￥300,000.00',
-  amounted: '￥300,000.00',
-  amountPocess: '￥300,000.00',
-  address: 'New York No. 1 Lake Park',
-  },
-  {
-  code: '2',
-  key: '2',
-  name: 'Jim Green',
-  amount: '￥1,256,000.00',
-  amounted: '￥1,256,000.00',
-  amountPocess: '￥1,256,000.00',
-  address: 'London No. 1 Lake Park',
-  },
-  {
-  code: '3',
-  key: '3',
-  name: 'Joe Black',
-  amount: '￥120,000.00',
-  amounted: '￥120,000.00',
-  amountPocess: '￥120,000.00',
-  address: 'Sidney No. 1 Lake Park',
-  },
-  ];
-
 const FinanceShow=({...props})=> {
   const [visible, setVisible] = useState(false);
-  const [dataPag,setDataPag] = useState({ pageSize:10, pageNow:1 });
+  const [list,setList] = useState([])
+  const [dataPag,setDataPag] = useState({ pageSize:10, pageNow:1, totalSize:0 });
   const [inputValues,setInputValues] = useState({});
   const [totalData,setTotalData] = useState({})
   const { id:enterpriseId } = props.match.params;
@@ -71,10 +42,18 @@ const FinanceShow=({...props})=> {
     })
   }
   const fetchList=(values )=>{
-    let params = { ...dataPag, ...values, enterpriseId }
+    let params = {
+      pageSize:dataPag.pageSize,
+      pageNow:dataPag.pageNow,
+      ...inputValues,
+      ...values,
+      enterpriseId
+    }
     GetListApi(params)
     .then((res)=> {
-      console.log(res)
+      const { pagination, result } =res.data;
+      setDataPag(pagination)
+      setList(result)
     })
   }
   const changePage = (pageNow, pageSize) => {
@@ -82,8 +61,10 @@ const FinanceShow=({...props})=> {
   };
   const onSubmit = params => {
     let { time, ...values } =params;
-    values.assetDateMin = moment(time[0]).format('YYYY-MM-DD');
-    values.assetDateMax = moment(time[1]).format('YYYY-MM-DD');
+    if(time) {
+      values.assetDateMin = moment(time[0]).format('YYYY-MM-DD');
+      values.assetDateMax = moment(time[1]).format('YYYY-MM-DD');
+    }
     setInputValues(params);
     fetchList(values)
   };
@@ -134,8 +115,11 @@ const FinanceShow=({...props})=> {
           <YtTable
            scroll={{ x: 1300 }}
            columns={columnsList}
-           dataSource={data}/>
-          <YtPagination data={{totalSize:500,pageNow:0,pageSize:15}}/>
+           dataSource={list}/>
+         {
+          list.length>0&&
+          <YtPagination data={dataPag} onChange={changePage}/>
+         }
         <CreatModal
           visible={visible}
           onCancel={onCancel}

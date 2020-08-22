@@ -14,7 +14,7 @@ import './index.less';
 
 const OperateWorkbench=({...props})=>{
     const [totalData,setTotalData] = useState({});
-    const [dataPag,setDataPag] =useState({pageSize:5,pageNow:0,totalSize:0});
+    const [dataPag,setDataPag] =useState({pageSize:5,pageNow:1,totalSize:0});
     const [list,setList] = useState([]);
     const [inputValues,setInputValues] = useState({});
     const fetchTotal=()=>{
@@ -24,7 +24,12 @@ const OperateWorkbench=({...props})=>{
       })
     }
     const fetchList=(values)=>{
-      let params = {...values }
+      let params = {
+            pageSize:dataPag.pageSize,
+            pageNow:dataPag.pageNow,
+            ...inputValues,
+            ...values,
+          }
       GetListApi(params)
       .then((res)=>{
         let { result, pagination } =res.data;
@@ -83,7 +88,7 @@ const OperateWorkbench=({...props})=>{
           </div>
           <div className="module-right-wrap">
             <div className="part-same-shadow">
-              <AssetDistributeChart className="big-chart"/>
+              <AssetDistributeChart className="big-chart" data={[]}/>
             </div>
           </div>
         </div>
@@ -142,7 +147,10 @@ const OperateWorkbench=({...props})=>{
             ))
           }
           </div>
-          <YtPagination data={dataPag} onChange={changePage}/>
+          {
+            list.length>0&&
+            <YtPagination data={dataPag} onChange={changePage}/>
+          }
         </div>
       </div>
     )
