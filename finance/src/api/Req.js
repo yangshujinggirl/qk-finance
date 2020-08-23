@@ -5,7 +5,7 @@ import { Sessions } from 'utils';
 
  console.log("env.NODE_ENV:"+process.env.NODE_ENV)
 
-const baseMainAPIURL ="https://fund05.bravowhale-uat.com/admin";
+//const baseMainAPIURL ="https://fund05.bravowhale-uat.com/admin";
 // const baseURL =
 let defaultHeader = {
   'Content-Type': 'application/json',
