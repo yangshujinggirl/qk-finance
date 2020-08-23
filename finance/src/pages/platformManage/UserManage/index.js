@@ -15,7 +15,6 @@ const Index = ({...props}) => {
     const [currentItem, setCurrentItem] = useState({});
     const [totalSize, setTotalSize] = useState(1);
     const [relateUserList, setRelateUserList] = useState([]);
-
     const [param, setParam] = useState({
         userName: '',
         pageNow: 1,
@@ -26,20 +25,6 @@ const Index = ({...props}) => {
         pageNow,
         pageSize,
     } = {...param}
-    //用户管理API
-    const getUserLists = (param) => {
-        getUserList(param).then(res => {
-            setList(res.data.result)
-            setTotalSize(res.data.pagination.totalSize)
-        })
-    }
-    // 角色管理API
-    const getRelateUserLists = (id) => {
-        getRelateUserList(id).then(res => {
-            // console.log(res.data)
-            setRelateUserList(res.data)
-        })
-    }
     //获取用户数据
     useEffect(() => {
         getUserLists(param);
@@ -47,7 +32,6 @@ const Index = ({...props}) => {
     //查询
     const search = ({userName}) => {
         let p = {...param, userName};
-        console.log(p)
         setParam(p);
         getUserLists(p);
     }
@@ -57,31 +41,26 @@ const Index = ({...props}) => {
         setParam(p);
         getUserLists(p);
     }
-    const goCreat = () => {
-        setVisible(1);
-    }
-    const onOk = () => {
-        getUserLists(param);
-        setVisible(false);
-    }
-    const onCancel = () => {
-        setCurrentItem({})
-        setVisible(false);
-    }
+    //操作
     const onOperateClick = ({type, item}) => {
         switch (type) {
+            //编辑
             case 'edit':
+                //显示弹窗
                 setVisible(1);
+                //设置当前操作记录项
                 setCurrentItem(item);
                 break;
+            //停用&启用
             case 'delete':
                 handleDelete(item)
                 break;
+            //关联角色
             case 'relate':
+                //获取角色列表
                 getRelateUserLists(item.id);
                 setVisible(2);
                 setCurrentItem(item);
-                handleRelate(item)
                 break;
         }
     }
@@ -104,30 +83,34 @@ const Index = ({...props}) => {
                 })
             }
         });
-        console.log(record)
     }
-    const onRelateOk = (item) => {
-        handleRelate(item);
+    const goCreat = () => {
+        setVisible(1);
+    }
+    const onOk = () => {
+        getUserLists(param);
         setVisible(false);
     }
-    //角色关联
-    const handleRelate = (record) => {
-        // Modal.confirm({
-        //     title: '提示',
-        //     content: '是否确认删除？',
-        //     okText: '确认',
-        //     cancelText: '取消',
-        //     onOk: () => {
-        //         relateUser({
-        //             id: "60305",
-        //             roleIds: "F5AYQN706K6CUL7WPJTXQ1JQ9BKX771M",
-        //             userId: "I4WTC9OC3TX4VNYOXQCUP8TZUHCZK3DB",
-        //         }).then(res => {
-        //             YtMessage.success('操作成功');
-        //         })
-        //     }
-        // });
-        console.log(record)
+    const onCancel = () => {
+        setCurrentItem({})
+        setVisible(false);
+    }
+    const onRelateOk = (item) => {
+        setVisible(false);
+    }
+    //用户管理API
+    const getUserLists = (param) => {
+        getUserList(param).then(res => {
+            setList(res.data.result)
+            setTotalSize(res.data.pagination.totalSize)
+        })
+    }
+    // 角色关联列表API
+    const getRelateUserLists = (id) => {
+        getRelateUserList(id).then(res => {
+            // console.log(res.data)
+            setRelateUserList(res.data)
+        })
     }
     return (
         <div className="account-organization-wrap yt-common-list-pages-wrap">
@@ -139,9 +122,17 @@ const Index = ({...props}) => {
                 columns={columnsIndex}
                 dataSource={list}
                 onOperateClick={onOperateClick}/>
-            <YtPagination data={{totalSize, pageNow, pageSize}} onChange={pagination}/>
-            <CreatModal data={currentItem} visible={visible} onOk={onOk} onCancel={onCancel}/>
-            <RelateModal data={relateUserList} visible={visible} onOk={onRelateOk} onCancel={onCancel}/>
+            <YtPagination data={{totalSize, pageNow, pageSize}}
+                          onChange={pagination}/>
+            <CreatModal data={currentItem}
+                        visible={visible}
+                        onOk={onOk}
+                        onCancel={onCancel}/>
+            <RelateModal relateUserList={relateUserList}
+                         selectedRowKeys={1}
+                         visible={visible}
+                         onOk={onRelateOk}
+                         onCancel={onCancel}/>
         </div>
     )
 }
