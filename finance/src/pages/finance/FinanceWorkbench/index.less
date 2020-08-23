@@ -1,58 +1,140 @@
-.finance-part-content {
-  .dynamic-state-action {
-    .ant-card-body {
-      padding: 0 0 24px 0;
-    }
-    .row-dt{
-      background: #FFFFFF;
-      padding: 10px 0 10px 24px;
-      cursor: pointer;
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0px 1px 10px 6px #eaeaea;
-        transition: all .5s ease-out;
-      }
-      .lf {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        img {
-          width: 100%;
+.financeWorkbench-pages-wrap {
+  width: 100%;
+
+  .total {
+    font-size: 26px;
+    color: #333;
+  }
+
+  .m0-20 {
+    margin: 0 20px;
+  }
+
+  .m0-2 {
+    margin: 0 2px;
+  }
+
+  .part {
+    color: #333;
+  }
+
+  .rate {
+    margin-top: 30px;
+    color: #999;
+  }
+
+  .fs-14 {
+    font-size: 12px;
+  }
+
+  .tc-333 {
+    color: #333;
+  }
+
+  .green {
+    color: rgb(129, 201, 38);
+  }
+
+  .red {
+    color: rgb(245, 108, 108);
+  }
+}
+
+.flex-pb {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.no-break {
+  white-space: nowrap;
+}
+
+.overflowHidden(@max-w:100px) {
+  overflow: hidden;
+  display: inline-block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: @max-w;
+}
+
+.shadow {
+  box-shadow: 0px 4px 10px 0 rgba(0, 0, 0, .1);
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.bc-fff {
+  background-color: #fff;
+
+}
+
+.flex-c {
+  display: flex;
+  flex-direction: column;
+}
+
+.wh100 {
+  width: 100%;
+  height: 100%;
+}
+
+
+.zichanchi:extend(.flex-c,.flex-pb) {
+  height: 200px;
+
+  ul:extend(.flex-pb) {
+    width: 100%;
+    height: 100%;
+
+    > li:extend(.flex) {
+      width: 150px;
+      justify-content: start;
+      //align-items: center;
+      //padding: 0 30px;
+      position: relative;
+
+      &:not(:last-child) {
+        &::after {
+          content: '';
+          width: 1px;
+          height: 30px;
+          background-color: #eee;
+          display: inline-block;
+          position: absolute;
+          right: 0;
+          top: 30%;
         }
       }
-      .rf {
-        margin-left: 24px;
+
+      img {
+        width: 30px;
+        height: 30px;
+      }
+
+      .key:extend(.no-break) {
+        font-size: 12px;
         color: #999;
-        font-size: 14px;
-        line-height: 20px;
-        .tit{
-          font-size: 14px;
-          color: #333;
+
+      }
+
+      .val {
+        font-size: 16px;
+        .overflowHidden();
+        color: #333;
+
+        span {
+          font-size: 20px;
+
         }
       }
-     }
-  }
-  .yt-common-table {
-    height: 285px;
-    overflow: hidden;
-  }
-  .asset-dynamic-chart-wrap {
-     .chart-lf {
-       width: 48%;
-       margin-right: 2%;
-     }
-     .info-rf {
-       width: 50%;
-     }
-     .cht-title {
-        color: #666;
-        font-size: 14px;
-     }
-     .ant-statistic,.percent {
-       display: inline-block;
-     }
-     .percent {
-       margin-left: 10px;
-     }
+
+    }
   }
 }
