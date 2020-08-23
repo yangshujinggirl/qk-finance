@@ -14,7 +14,7 @@ const formItemLayout = {
 };
 const CreatModal = ({...props}) => {
     const [treeOrgs, setTreeOrgs] = useState([]);
-    const {userName,userFullNameCn,orgName,userPassword,id} = props.data;
+    const {userName, userFullNameCn, orgName, userPassword, id} = props.data;
     const [form] = Form.useForm();
 
     const handleOk = async () => {
@@ -59,7 +59,7 @@ const CreatModal = ({...props}) => {
         <Modal
             width={520}
             title="新增"
-            visible={props.visible===1}
+            visible={props.visible === 1}
             onOk={handleOk}
             onCancel={handleCancel}
             className="creat-modal"
@@ -78,7 +78,8 @@ const CreatModal = ({...props}) => {
                     </Col>
                     <Col span={24}>
                         <Form.Item name="orgId" label="所属机构" rules={[{required: true, message: '请输入'}]}>
-                            <Select options={treeOrgs} defaultValue={orgName} placeholder="请输入" allowClear autoComplete="off"/>
+                            <Select options={treeOrgs} defaultValue={orgName} placeholder="请输入" allowClear
+                                    autoComplete="off"/>
                         </Form.Item>
                     </Col>
                     <Col span={24}>

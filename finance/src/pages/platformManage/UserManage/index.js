@@ -5,7 +5,7 @@ import CreatModal from './components/CreatModal';
 import RelateModal from './components/RelateModal';
 import {columnsIndex} from './columns';
 import './index.less'
-import {getUserList, validUser, relateUser,getRelateUserList} from '../../../api/platformManage/UserManage.js';
+import {getUserList, validUser, relateUser, getRelateUserList} from '../../../api/platformManage/UserManage.js';
 import {Modal} from 'antd';
 
 import {YtMessage} from 'common';
@@ -88,9 +88,9 @@ const Index = ({...props}) => {
     //停用
     const handleDelete = (record) => {
         let typeName = {0: '启用', 1: '停用'}
-        let isValid={
-            0:1,
-            1:0
+        let isValid = {
+            0: 1,
+            1: 0
         }
         Modal.confirm({
             title: '提示',
@@ -106,7 +106,7 @@ const Index = ({...props}) => {
         });
         console.log(record)
     }
-    const onRelateOk=(item)=>{
+    const onRelateOk = (item) => {
         handleRelate(item);
         setVisible(false);
     }

@@ -15,15 +15,12 @@ const formItemLayout = {
 };
 const CreatModal=({...props})=>{
   const [form] = Form.useForm();
-  const [treeData,setTreeData] = useState({});
-
-  const {roleId}=props.data;
+  const treeData=props.data;
 
     const handleOk = async() => {
     try {
-      const values = await form.validateFields();
-      console.log(values)
-      saveRolePermissionRef({...values,id}).then(res=>{
+
+      saveRolePermissionRef().then(res=>{
           YtMessage.success('操作成功');
           props.onOk && props.onOk(values);
       })
@@ -60,7 +57,7 @@ const CreatModal=({...props})=>{
           />
           <div className="handle-item">
             <Button onClick={handleCancel} className="reset-btn">取消</Button>
-            <Button type="primary" onClick={handleOk} className="creat-btn">保存</Button>
+            <Button type="primary" onClick={handleOk} className="creat-btn">确定</Button>
           </div>
         </Form>
       </Modal>

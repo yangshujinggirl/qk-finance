@@ -3,7 +3,8 @@ import './index.less';
 import {addUser, getRelateUserList} from '../../../../../api/platformManage/UserManage.js'
 import {YtMessage} from 'common';
 import {useState, useEffect} from 'react';
-import { Table } from 'antd';
+import {Table} from 'antd';
+
 const formItemLayout = {
     labelCol: {
         span: 6
@@ -66,7 +67,7 @@ const CreatModal = ({...props}) => {
         <Modal
             width={520}
             title="角色关联"
-            visible={props.visible===2}
+            visible={props.visible === 2}
             onOk={handleOk}
             onCancel={handleCancel}
             className="creat-modal"

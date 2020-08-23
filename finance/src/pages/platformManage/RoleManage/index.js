@@ -14,6 +14,7 @@ const Index = ({...props}) => {
     const [visible, setVisible] = useState(false);
     const [currentItem, setCurrentItem] = useState({});
     const [totalSize, setTotalSize] = useState(1);
+    const [treeData, setTreeData] = useState({});
 
     const [param, setParam] = useState({
         roleName: '',
@@ -34,49 +35,9 @@ const Index = ({...props}) => {
         })
     }
     // 授权树
-    const getPermissionTrees=(roleId)=>{
-        getPermissionTree(roleId).then(res=>{
-            // checked: false
-            // chkDisabled: false
-            // icon: "/admin/js/ztree/3.5.17/css/zTreeStyle/img/diy/1_open.png"
-            // id: "O6G64S18HSSEGHM7XMHE00765LKT8E30"
-            // level: 0
-            // name: "全部权限"
-            // open: true
-            // pId: ""
-            // parent: false
-            // permission_fk: "O6G64S18HSSEGHM7XMHE00765LKT8E30"
-            // {
-            //     title: '0-1',
-            //     key: '0-1',
-            //     children: [
-            //     { title: '0-1-0-0', key: '0-1-0-0' },
-            //     { title: '0-1-0-1', key: '0-1-0-1' },
-            //     { title: '0-1-0-2', key: '0-1-0-2' },
-            // ],
-            // },
-            let arr=[]
-            res.data.forEach(item=>{
-                let children=[]
-                let obj={
-                    title:item.name,
-                    key:item.id,
-                    children
-                }
-                arr.push(obj);
-                arr.forEach(item2=>{
-                    if(item2.key==item.pId){
-                        let o={
-                            title:item2.name,
-                            key:item2.id,
-                        }
-                        obj.children.push(o)
-                    }
-                })
-            })
-console.log(arr);
-            setTreeData(res.data.result)
-            console.log(res)
+    const getPermissionTrees = (roleId) => {
+        getPermissionTree(roleId).then(res => {
+
         })
     }
     // 获取角色数据
@@ -162,7 +123,7 @@ console.log(arr);
                 onOperateClick={onOperateClick}/>
             <YtPagination data={{totalSize, pageNow, pageSize}} onChange={pagination}/>
             <CreatModal data={currentItem} visible={visible} onOk={onOk} onCancel={onCancel}/>
-            <AuthModal data={currentItem} visible={visible} onOk={onAuthOk} onCancel={onCancel}/>
+            <AuthModal data={treeData} visible={visible} onOk={onAuthOk} onCancel={onCancel}/>
         </div>
     )
 }
