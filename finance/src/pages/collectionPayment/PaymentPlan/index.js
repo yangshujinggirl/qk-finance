@@ -2,7 +2,8 @@ import { YtStatistic, YtPagination, YtTable, YtBtn } from 'common';
 import FilterForm from './components/FilterForm';
 import {columnsIndex} from './columns';
 import './index.less'
-import {payPlanInfo} from '../../../api/collectionPayment';
+import {getPayPlanList} from '../../../api/collectionPayment';
+import { YtMessage } from 'common';
 
 class AccountStatement extends React.Component {
   state={
@@ -19,13 +20,13 @@ class AccountStatement extends React.Component {
   }
   //回款计划
   getPayPlanInfo=()=>{
-let {
-  pageNow,
-  pageSize,
-  loanNo,
-  projectName,
-}=this.state
-    payPlanInfo({  pageNow,
+    let {
+      pageNow,
+      pageSize,
+      loanNo,
+      projectName,
+    }=this.state
+      getPayPlanList({  pageNow,
       pageSize,
       loanNo,
       projectName,}).then(res=>{
@@ -38,14 +39,19 @@ let {
   //查询
   search=({loanNo,projectName})=>{
     let p= {...this.state,loanNo,projectName }
-    this.setState(p)
-    this.getPayPlanInfo();
+    this.setState(p,()=>{
+        this.getPayPlanInfo();
+    })
+
   }
   //分页
    pagination=(pageNow)=>{
-    let p = {...this.setState, pageNow };
-     this.setState(p)
-      this.getPayPlanInfo();
+       console.log(pageNow);
+       let p = {...this.setState, pageNow };
+     this.setState(p,()=>{
+         this.getPayPlanInfo();
+     })
+
   }
     render() {
     let {totalSize,pageNow,pageSize,list}=this.state

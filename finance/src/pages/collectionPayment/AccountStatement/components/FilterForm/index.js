@@ -10,23 +10,20 @@ const { Option } = Select;
 
 class FilterForm extends BaseFilter{
   formRef = React.createRef();
-  onFinish = values => {
-    console.log(values);
-  };
-  onSubmit =(values)=> {
-    console.log(values)
-  };
-  onSearch = searchText => {
-    console.log(searchText)
-  };
-
-  onSelect = data => {
-    console.log('onSelect', data);
-  };
-
-  onChange = data => {
-    console.log(data)
-  };
+  // onFinish = values => {
+  //   console.log(values);
+  // };
+  // onSearch = searchText => {
+  //   console.log(searchText)
+  // };
+  //
+  // onSelect = data => {
+  //   console.log('onSelect', data);
+  // };
+  //
+  // onChange = data => {
+  //   console.log(data)
+  // };
 
   render() {
     const dateFormat = "YYYY-MM-DD"
@@ -40,8 +37,8 @@ class FilterForm extends BaseFilter{
           <Col {...this.colspans}>
             <Form.Item label="交易时间" name="time">
               <RangePicker
-                  defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
-                  format={dateFormat}
+                  // defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
+                format="YYYY-MM-DD"
                 />
             </Form.Item>
           </Col>
@@ -89,7 +86,7 @@ class FilterForm extends BaseFilter{
           </Col>
         </Row>
         <div className="submit-btn-wrap">
-          <YtBtn htmlType="submit" onClick={this.onSubmit}>
+          <YtBtn htmlType="submit" onClick={this.handleSubmit}>
             查询
           </YtBtn>
         </div>

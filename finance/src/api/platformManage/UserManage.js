@@ -17,6 +17,10 @@ export function addUser(values) {
 export function validUser(id,isValid) {
     return Req.post(`/users/updateUser/${id}/${isValid}`)
 }
+// 关联用户列表
+export function getRelateUserList() {
+    return Req.get(`/users/roles/search`)
+}
 // 关联用户
 export function relateUser(values) {
     return Req.post(`/users/roles/saveUserRoles`,values)

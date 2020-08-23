@@ -19,7 +19,7 @@ class FilterForm extends BaseFilter{
         className="yt-condition-form">
         <Row gutter={24}>
           <Col {...this.colspans}>
-            <Form.Item label="组织名称" name="orgName"  rules={[{ required: true,message:'请输入' }]}>
+            <Form.Item label="组织名称" name="orgName">
               <Input placeholder="请输入" autoComplete="off"/>
             </Form.Item>
           </Col>

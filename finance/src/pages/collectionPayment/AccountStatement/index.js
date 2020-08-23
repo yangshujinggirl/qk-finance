@@ -3,21 +3,25 @@ import FilterForm from './components/FilterForm';
 import {columnsIndex} from './columns';
 import './index.less'
 import {getBankStatement} from '../../../api/collectionPayment';
+import { YtMessage } from 'common';
+import moment from 'moment';
 
 class AccountStatement extends React.Component {
 
   state={
-    pageNow: 1,
-    pageSize: 5,
-    bankName: '牧融氏家收款账户',
-    bankAccount: '1131080913840182348',
-    startDate: '2020-08-21',
-    endDate: '2020-08-22',
-    transactionSerialNumber: 1,
-    minAmount: 1,
-    maxAmount: 12,
-    reciprocalAccountName: 1,
-    reciprocalAccountNo: 1,
+   param:{
+     pageNow: 1,
+     pageSize: 5,
+     bankName: '牧融氏家收款账户',
+     bankAccount: '1131080913840182348',
+     startDate:'',
+     endDate: '',
+     transactionSerialNumber: '',
+     minAmount: '',
+     maxAmount: '',
+     reciprocalAccountName: '',
+     reciprocalAccountNo: '',
+   },
     totalSize:1,
     list:[]
   }
@@ -27,32 +31,7 @@ class AccountStatement extends React.Component {
   }
   //回款计划
   getBankStatements=()=>{
-    let  {
-      pageNow,
-      pageSize,
-      bankName,
-      bankAccount,
-      startDate,
-      endDate,
-      transactionSerialNumber,
-      minAmount,
-      maxAmount,
-      reciprocalAccountName,
-      reciprocalAccountNo,
-    }=this.state
-    getBankStatement({
-      pageNow,
-      pageSize,
-      bankName,
-      bankAccount,
-      startDate,
-      endDate,
-      transactionSerialNumber,
-      minAmount,
-      maxAmount,
-      reciprocalAccountName,
-      reciprocalAccountNo,
-    }).then(res=>{
+    getBankStatement({...this.state.param}).then(res=>{
       let list =res.data.result
       let totalSize= res.data.pagination.totalSize
       let p= {...this.state,list,totalSize }
@@ -60,19 +39,31 @@ class AccountStatement extends React.Component {
     })
   }
   //查询
-  search=({loanNo,projectName})=>{
-    let p= {...this.state,loanNo,projectName }
-    this.setState(p)
-    this.getBankStatements();
+  search=(param)=>{
+    let [ startDate, endDate]=param.time
+    param.startDate=moment(startDate).format('YYYY-MM-DD');
+    param.endDate=moment(endDate).format('YYYY-MM-DD');
+    delete param.time;
+
+    // let p= {...this.state,param}
+    let p=Object.assign(this.state,{param})
+    console.log(p)
+    this.setState(p,()=>{
+      this.getBankStatements();
+    })
+
   }
   //分页
   pagination=(pageNow)=>{
     let p = {...this.setState, pageNow };
-    this.setState(p)
-    this.getBankStatements();
+    this.setState(p,()=>{
+      this.getBankStatements();
+    })
+
   }
     render() {
-      let {totalSize,pageNow,pageSize,list}=this.state
+      let {totalSize,list}={...this.state}
+      let {pageNow,pageSize}={...this.state.param}
 
       return(
         <div className="yt-common-list-pages-wrap">

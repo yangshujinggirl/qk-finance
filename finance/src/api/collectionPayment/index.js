@@ -9,7 +9,15 @@ export function bankStatementList(values) {
 export function getBankStatement(values) {
     return Req.post(`/moneyBack/statement/search`, values)
 }
+// 核销详情
+export function getBankStatementDetail(values) {
+    return Req.post(`/moneyBack/statement/writeOff/search`, values)
+}
 // 回款计划
-export function payPlanInfo(values) {
+export function getPayPlanList(values) {
     return Req.post(`/moneyBack/payPlanInfo/search`, values)
+}
+// 回款计划详情
+export function getPayPlan(values) {
+    return Req.post(`/moneyBack/payPlanInfo/backList`, values)
 }

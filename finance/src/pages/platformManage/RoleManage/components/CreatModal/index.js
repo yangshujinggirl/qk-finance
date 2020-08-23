@@ -26,7 +26,8 @@ const CreatModal=({...props})=>{
       })
 
     } catch (errorInfo) {
-      console.log("Failed:", errorInfo);
+
+        console.log("Failed:", errorInfo);
     }
   };
   const handleCancel = (e) => {
@@ -36,7 +37,7 @@ const CreatModal=({...props})=>{
       <Modal
         width={520}
         title="新增"
-        visible={props.visible}
+        visible={props.visible===1}
         onOk={handleOk}
         onCancel={handleCancel}
         className="creat-modal"

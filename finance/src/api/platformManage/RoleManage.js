@@ -13,9 +13,9 @@ export function addRole(values) {
 export function deleteRole(values) {
     return Req.post(`/role/deleteRole/${values}`)
 }
-// 授予权限1
-export function getPermissionTree(id,date) {
-    return Req.post(`/role/getPermissionTree/${id}/${date}`)
+// 授权树
+export function getPermissionTree(id) {
+    return Req.post(`/role/getPermissionTree/${id}`)
 }
 // 授予权限2
 export function saveRolePermissionRef(values) {

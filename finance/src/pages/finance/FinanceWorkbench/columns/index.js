@@ -3,24 +3,16 @@ import { Link } from 'react-router-dom';
 
 const columns = [
 {
-title: '企业编号',
-dataIndex: 'code',
-},
-{
 title: '企业名称',
-dataIndex: 'name',
+dataIndex: 'enterpriseName',
 },
 {
-title: '资产总额(万元)',
+title: '放款总额',
 dataIndex: 'amount',
 },
 {
-title: '已融资总额(万元)',
+title: '应收回款额',
 dataIndex: 'amounted',
-},
-{
-title: '已融资产占比(%)',
-dataIndex: 'amountPocess',
 },
 {
 title: '操作',

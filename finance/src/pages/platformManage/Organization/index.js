@@ -15,7 +15,7 @@ const Index=({...props})=>{
     const [param, setParam] = useState({
         orgName: '',
         pageNow: 1,
-        pageSize: 1,
+        pageSize: 5,
     });
     const [list, setList] = useState([]);
     const {
@@ -29,6 +29,8 @@ const Index=({...props})=>{
             setTotalSize(res.data.pagination.totalSize)
             setList(res.data.result)
             console.log(res)
+        },e=>{
+            console.log("Failed:", e);
         })
     }
     //获取组织数据
@@ -80,6 +82,7 @@ const Index=({...props})=>{
             onOk:()=>{
             deleteOrg(record.orgId).then(res=>{
                 YtMessage.success('操作成功');
+                getOrgLists(param);
             })
         }
     });

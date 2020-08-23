@@ -22,9 +22,14 @@ const CreatModal=({...props})=>{
         addOrg({...values,id}).then(res=>{
             YtMessage.success('新增成功');
             props.onOk && props.onOk(values);
+        },e=>{
+          console.log(e)
+          YtMessage.error(e||'操作失败');
+          // props.onCancel()
+
         })
     } catch (errorInfo) {
-      console.log("Failed:", errorInfo);
+        console.log("Failed:", errorInfo);
     }
   };
   const handleCancel = (e) => {

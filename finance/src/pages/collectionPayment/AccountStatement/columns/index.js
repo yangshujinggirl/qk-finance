@@ -1,64 +1,74 @@
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 const columnsIndex = [
         {
           title: '序列号',
-          dataIndex: 'code',
+          dataIndex: 'id',
           width: 80,
+            render:(text,record,index)=>{
+                return  index+1
+            }
         },
         {
           title: '交易流水号',
-          dataIndex: 'code',
+          dataIndex: 'transactionSerialNumber',
           width: 120,
         },
         {
           title: '交易时间',
-          dataIndex: 'time0',
+          dataIndex: 'tradingDate',
           width: 200,
+            render:(text,record,index)=>{
+                return  moment(text).format('YYYY-MM-DD hh:mm:ss')
+            }
         },
         {
           title: '导入时间',
-          dataIndex: 'time1',
+          dataIndex: 'dateOfCreate',
           width:200,
+            render:(text,record,index)=>{
+                return  moment(text).format('YYYY-MM-DD hh:mm:ss')
+            }
         },
-        {
-          title: '交易金额',
-          dataIndex: 'amounted',
-          width: 120,
-        },
+        // {
+        //   title: '交易金额',
+        //   dataIndex: 'amounted',
+        //   width: 120,
+        // },
         {
           title: '对方银行',
-          dataIndex: 'zwf',
+          dataIndex: 'oppositeCompanyName',
           width: 100,
         },
         {
           title: '对方账户名称',
-          dataIndex: 'pay',
+          dataIndex: 'accountName',
           width: 200,
         },
         {
           title: '对方账户号',
-          dataIndex: 'paycode',
+          dataIndex: 'accountNumber',
           width: 200,
         },
         {
           title: '业务摘要',
-          dataIndex: 'use',
+          dataIndex: 'businessAbstract',
           width: 100,
         },
-        {
-          title: '备注',
-          dataIndex: 'test1',
-          width: 100,
-        },
+        // {
+        //   title: '备注',
+        //   dataIndex: 'test1',
+        //   width: 100,
+        // },
         {
           title: '数据来源',
-          dataIndex: 'test2',
+          dataIndex: 'dataFrom',
           width: 100,
         },
         {
           title: '操作人',
-          dataIndex: 'test3',
+          dataIndex: 'creator',
           width: 100,
         },
         {
@@ -68,7 +78,7 @@ const columnsIndex = [
           fixed: 'right',
           render:(text,record,index)=>{
             return <>
-              <Link to="/account/writeOff/info/12" className="operate-link-btn">核销详情</Link>
+              <Link to={`/account/writeOff/info/${record.planId}`} className="operate-link-btn">核销详情</Link>
             </>
           }
         },

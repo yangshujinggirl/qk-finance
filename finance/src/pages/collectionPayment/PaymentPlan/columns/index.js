@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import moment from 'moment';
+
 // 1-未回款待还，2-已回款结清 3-部分待还
 const typeName= {
     1:'未回款待还', 2:'已回款结清',3:'部分待还'
@@ -16,19 +18,19 @@ const columnsIndex = [
           title: '项目名称',
           dataIndex: 'projectName',
         },
-        {
-          title: '款项类别',
-          dataIndex: 'lb',
-        },
+        // {
+        //   title: '款项类别',//
+        //   dataIndex: 'lb',
+        // },
         {
           title: '期次',
           dataIndex: 'payPeriodNo',
         },
-        {
-          title: '款项金额',
-          dataIndex: 'amounted',
-          width: 120,
-        },
+        // {
+        //   title: '款项金额',//
+        //   dataIndex: 'amounted',
+        //   width: 120,
+        // },
         {
           title: '回款状态',
           dataIndex: 'isMoneyBack',
@@ -45,7 +47,7 @@ const columnsIndex = [
           title: '还款日期',
           dataIndex: 'payDate',
             render:(text,record,index)=>{
-                return  typeName[text]
+                return  moment(text).format('YYYY-MM-DD hh:mm:ss')
             }
         },
         {
@@ -57,7 +59,7 @@ const columnsIndex = [
           dataIndex: '操作',
           render:(text,record,index)=>{
             return <>
-              <Link to="/account/paymentPlan/info/12" className="operate-link-btn">详情</Link>
+              <Link to={`/account/paymentPlan/info/${record.planId}`} className="operate-link-btn">详情</Link>
             </>
           }
         },

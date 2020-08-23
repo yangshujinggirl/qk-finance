@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
 import { Button } from 'antd';
-
+const typeName={
+    1:'管理后台',
+    2:'Fabric'
+}
 const columnsIndex = [
 
         {
@@ -12,15 +15,18 @@ const columnsIndex = [
         },
         {
           title: '角色名称',
-          dataIndex: 'code',
+          dataIndex: 'roleName',
         },
         {
           title: '角色中文名称',
-          dataIndex: 'lb',
+          dataIndex: 'roleFullNameCn',
         },
         {
           title: '用途',
-          dataIndex: 'time1',
+          dataIndex: 'roleUsage',
+            render:(text,record,index)=>{
+                return  typeName[text]
+            }
         },
         {
           title: '操作',
