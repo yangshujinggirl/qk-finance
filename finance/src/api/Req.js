@@ -56,5 +56,5 @@ function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInt
   });
   return instance;
 }
-const Req =  new request({ baseURL: '/ytFinance' });
+const Req =  new request({ baseURL: '/admin/ytFinance' });
 export default Req;
