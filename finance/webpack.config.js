@@ -12,6 +12,7 @@ const extractLeSS = new ExtractTextPlugin({
   filename: '[name].[hash].css',
   allChunks:true,
 });
+
 if(process.env.NODE_ENV === 'production'){
   UglifyArray.push(new UglifyJSPlugin({
     sourceMap: true,
@@ -118,7 +119,7 @@ module.exports = {
     compress: true,
     port: 9000,
     proxy:{
-      '/ytFinance': {
+      'https://fund05.bravowhale-uat.com/admin': {
         // target:'http://10.66.13.231:8080',//
         target:'https://fund05.bravowhale-uat.com/admin',//
         pathRewrite: {"^/ytFinance" : ""},
