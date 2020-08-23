@@ -3,7 +3,9 @@ import { YtMessage } from 'common';
 import { message } from 'antd';
 import { Sessions } from 'utils';
 
-// console.log(process.env.NODE_ENV)
+ console.log("env.NODE_ENV:"+process.env.NODE_ENV)
+
+const baseMainAPIURL ="https://fund05.bravowhale-uat.com/admin";
 // const baseURL =
 let defaultHeader = {
   'Content-Type': 'application/json',
@@ -54,5 +56,5 @@ function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInt
   });
   return instance;
 }
-const Req =  new request({ baseURL: '/ytFinance' });
+const Req =  new request({ baseURL: baseMainAPIURL });
 export default Req;

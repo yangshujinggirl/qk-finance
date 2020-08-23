@@ -14,7 +14,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --progress --open",
     "build:test": "cross-env NODE_ENV=pre webpack --progress",
-    "build:uat": "cross-env NODE_ENV=pre && rm -rf dist && webpack -d --config webpack.config.js",
+    "build:uat": "cross-env NODE_ENV=uat && rm -rf dist && webpack -d --config webpack.config.js",
     "build:prod": "cross-env NODE_ENV=production webpack --progress"
   },
   "repository": {
