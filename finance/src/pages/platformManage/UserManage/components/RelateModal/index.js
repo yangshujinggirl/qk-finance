@@ -1,18 +1,8 @@
-import {Form, Select, Row, Radio, Col, Modal, Checkbox, Button, Input} from 'antd';
+import { Modal,Button,Table} from 'antd';
 import './index.less';
-import {addUser, getRelateUserList} from '../../../../../api/platformManage/UserManage.js'
+import {relateUser, getRelateUserList} from '../../../../../api/platformManage/UserManage.js'
 import {YtMessage} from 'common';
 import {useState, useEffect} from 'react';
-import {Table} from 'antd';
-
-const formItemLayout = {
-    labelCol: {
-        span: 6
-    },
-    wrapperCol: {
-        span: 14
-    }
-};
 
 const columns = [
     {
@@ -36,21 +26,21 @@ const columns = [
 ];
 
 const CreatModal = ({...props}) => {
-    // const [relateUserList, setRelateUserList] = useState([]);
-    const [selectionType, setSelectionType] = useState('checkbox');
-    const relateUserList = props.data;
+    const {relateUserList, selectedRowKeys} = props;
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: onSelectChange,
+    };
 
-    const [form] = Form.useForm();
     const handleOk = async () => {
         try {
-            const values = await form.validateFields();
-            if (values.userPassword2 !== values.userPassword) {
-                YtMessage.error('密码不一致');
-                return;
-            }
-            console.log(values)
-            addUser({...values, id}).then(res => {
-                console.log(res);
+            const values = selectedRowKeys;
+            //角色关联
+            relateUser({
+                id: "60305",
+                roleIds: "F5AYQN706K6CUL7WPJTXQ1JQ9BKX771M",
+                userId: "I4WTC9OC3TX4VNYOXQCUP8TZUHCZK3DB",
+            }).then(res => {
                 YtMessage.success('操作成功');
                 props.onOk && props.onOk(values);
             })
@@ -61,6 +51,10 @@ const CreatModal = ({...props}) => {
     };
     const handleCancel = (e) => {
         props.onCancel()
+    };
+
+    const onSelectChange = (e) => {
+
     };
 
     return (
@@ -74,13 +68,14 @@ const CreatModal = ({...props}) => {
             footer={null}>
             <div>
                 <Table
-                    rowSelection={{
-                        // type: selectionType,
-                        // ...rowSelection,
-                    }}
+                    owSelection={rowSelection}
                     columns={columns}
                     dataSource={relateUserList}
                 />
+                <div className="handle-item">
+                    <Button onClick={handleCancel} className="reset-btn">取消</Button>
+                    <Button type="primary" onClick={handleOk} className="creat-btn">保存</Button>
+                </div>
             </div>
         </Modal>
     );
