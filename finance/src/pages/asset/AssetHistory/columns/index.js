@@ -1,5 +1,13 @@
 import { Link } from 'react-router-dom';
 
+const authStatus={
+  1:'待审核',
+  2:'审核未通过',
+  3:'待确认融资金额',
+  4:'待放款',
+  5:'已放款存续期',
+  6:'已完结',
+}
 const columnsList =[
         {
         title: '序号',
@@ -7,7 +15,7 @@ const columnsList =[
         },
         {
         title: '融资编号',
-        dataIndex: 'name',
+        dataIndex: 'loanNo',
         },
         {
         title: '申请融资日期',
@@ -15,7 +23,7 @@ const columnsList =[
         },
         {
         title: '融资企业',
-        dataIndex: 'amounted',
+        dataIndex: 'enterpriseName',
         },
         {
         title: '资产金额（万元）',
@@ -27,23 +35,29 @@ const columnsList =[
         },
         {
         title: '融资金额（万元）',
-        dataIndex: 'rzqx',
+        dataIndex: 'loanAmount',
         },
         {
         title: '年化利率%',
-        dataIndex: 'yq',
+        dataIndex: 'loanRate',
         },
         {
-        title: '还款方式',
-        dataIndex: 'hk',
+          title: '还款方式',
+          dataIndex: 'repayMethod',
+          render:(text,record,index)=> {
+            return <>{record.repayMethod==1?'先息后本':'等额本金'}</>
+          }
         },
         {
-        title: '状态',
-        dataIndex: 'qk',
+          title: '状态',
+          dataIndex: 'qk',
+          render:(text,record,index)=> {
+            return <>{authStatus[record.loanStatus]}</>
+          }
         },
         {
         title: '实际放款时间',
-        dataIndex: 'zt',
+        dataIndex: 'loanDate',
         },
         {
           title: '操作',

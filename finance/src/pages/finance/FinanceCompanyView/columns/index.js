@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import NP from 'number-precision';
+import { CommonUtils } from 'utils';
 
 const columnsList =[
         {
@@ -19,6 +20,10 @@ const columnsList =[
         {
           title: '累计资产规模（万元）',
           dataIndex: 'assetSize',
+          render:(text,record,index)=> {
+            return <>{CommonUtils.formatAmount(record.assetSize)}</>
+
+          }
         },
         {
           title: '待融资产规模',
@@ -26,7 +31,8 @@ const columnsList =[
           render:(text,record,index)=>{
             record.assetSize = record.assetSize?record.assetSize:0;
             record.totalLoanHistory = record.totalLoanHistory?record.totalLoanHistory:0;
-            return <>{NP.round(NP.minus(record.assetSize,record.totalLoanHistory),2)}</>
+            let amount = NP.round(NP.minus(record.assetSize,record.totalLoanHistory),2);
+            return <>{CommonUtils.formatAmount(amount)}</>
           }
         },
         {
@@ -35,7 +41,8 @@ const columnsList =[
           render:(text,record,index)=>{
             record.totalLoanHistory = record.totalLoanHistory?record.totalLoanHistory:0;
             record.assetSize = record.assetSize?record.assetSize:1;
-            return <>{NP.round(NP.divide(record.totalLoanHistory,record.assetSize),2)}</>
+            let ratio = NP.round(NP.divide(record.totalLoanHistory,record.assetSize),2);
+            return <>{CommonUtils.formatRatio(ratio)}</>
           }
         },
         {

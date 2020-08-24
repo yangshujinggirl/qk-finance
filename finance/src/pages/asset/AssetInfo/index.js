@@ -28,54 +28,20 @@ const assetStatusMap={
 }
 
 const { Panel } = Collapse;
-const panelArray=[
-  {
-    key:'1',
-    name:'区块信息',
-    content:BlockInfo
-  },{
-    key:'2',
-    name:'企业基本信息',
-    content:BaseInfo
-  },{
-    key:'3',
-    name:'长期供销协议',
-    content:SupplySellInfo
-  },{
-    key:'4',
-    name:'销售合同信息',
-    content:SalesInfo
-  },{
-    key:'5',
-    name:'进货采购信息',
-    content:PurchaseInfo
-  },{
-    key:'6',
-    name:'物流发货信息（厂方直发）',
-    content:DeliveryFactoryInfo
-  },{
-    key:'7',
-    name:'物流发货信息（仓库直发）',
-    content:DeliveryWarehouseInfo
-  },{
-    key:'8',
-    name:'物流收货信息',
-    content:ReceiveGoodsInfo
-  },{
-    key:'9',
-    name:'回款信息',
-    content:ReturnedMoneyInfo
-  },
-]
+
 const AssetInfo=({...props})=>{
   const { id:assetNo } = props.match.params;
   const [assetsInfo,setAssetsInfo] = useState({});
+  const [companyBaseInfo,setCompanyBaseInfo] = useState({});
+  const [blockInfo,setBlockInfo] = useState({});
   const industryTypeCode = 'AGNPK';
   const fetchInfo=(values )=>{
     let params = { industryTypeCode, assetNo }
     GetInfoApi(params)
     .then((res)=> {
-      const { authStatus, assetsInfo } =res.data;
+      const { authStatus, assetsInfo, assetEnterpriseInfo, blockChainInfo } =res.data;
+      setCompanyBaseInfo(assetEnterpriseInfo);
+      setBlockInfo(blockChainInfo);
       setAssetsInfo({...assetsInfo,authStatus});
     })
   }
@@ -160,14 +126,33 @@ const AssetInfo=({...props})=>{
           <VerifySource />
           <YtCollapse defaultActiveKey={['1']} expandIconPosition="right">
             <>
-            {
-              panelArray.map((el) =>{
-                let Mod = el.content;
-                return <Panel header={el.name} key={el.key}>
-                  <Mod props={{pr:'12333'}}/>
-                </Panel>
-              })
-            }
+              <Panel header="区块信息" key="1">
+                <BlockInfo info={blockInfo}/>
+              </Panel>
+              <Panel header="企业基本信息" key="2">
+                <BaseInfo info={blockInfo}/>
+              </Panel>
+              <Panel header="长期供销协议" key="3">
+                <SupplySellInfo info={blockInfo}/>
+              </Panel>
+              <Panel header="销售合同信息" key="4">
+                <SalesInfo info={blockInfo}/>
+              </Panel>
+              <Panel header="进货采购信息" key="5">
+                <PurchaseInfo info={blockInfo}/>
+              </Panel>
+              <Panel header="物流发货信息（厂方直发）" key="6">
+                <DeliveryFactoryInfo info={blockInfo}/>
+              </Panel>
+              <Panel header="物流发货信息（仓库直发）" key="7">
+                <DeliveryWarehouseInfo info={blockInfo}/>
+              </Panel>
+              <Panel header="物流收货信息" key="8">
+                <ReceiveGoodsInfo info={blockInfo}/>
+              </Panel>
+              <Panel header="回款信息" key="9">
+                <ReturnedMoneyInfo info={blockInfo}/>
+              </Panel>
             </>
           </YtCollapse>
         </div>

@@ -4,7 +4,8 @@ import { message } from 'antd';
 import { Sessions } from 'utils';
 
  console.log("env.NODE_ENV:"+process.env.NODE_ENV)
-
+// http://fund05.bravowhale-uat.com/admin/   资金端uat
+// http://yuntuappapitest01.bravowhale-uat.com/api   api端uat
 //const baseMainAPIURL ="https://fund05.bravowhale-uat.com/admin";
 // const baseURL =
 let defaultHeader = {

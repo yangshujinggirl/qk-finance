@@ -27,3 +27,7 @@ export function GetAssetPoolApi() {
 export function GetWarningInfoApi() {
     return Req.post(`/bigdatadashboard/warningInfo`)
 }
+//资金池
+export function GetFundPoolApi(values) {
+    return Req.post(`/asset/cashflow`,{...values})
+}

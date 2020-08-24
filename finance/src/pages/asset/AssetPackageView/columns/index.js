@@ -1,4 +1,5 @@
 import { assetStatus, checkStatus } from '../components/options';
+import { CommonUtils } from 'utils';
 const columns = [
   {
     title: '资产编号',
@@ -7,6 +8,10 @@ const columns = [
   {
     title: '资产金额(万元)',
     dataIndex: 'orderAmount',
+    render:(text,record,index)=> {
+      return <>{CommonUtils.formatAmount(record.orderAmount)}</>
+
+    }
   },
   {
     title: '剩余账期(天)',

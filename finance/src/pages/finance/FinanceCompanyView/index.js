@@ -94,7 +94,7 @@ const FinanceShow=({...props})=> {
             <YtStatistic value="¥ 12,423">本日新增</YtStatistic>
           </ViewCardPane>
           <ViewCardPane
-            label="融资比"
+            label="融资占比"
             num={`${NP.round(NP.divide(totalData.assetsLoanTotal,totalData.assetTotalCount),2)}%`}>
             <YtStatistic value="2笔">本日新增融资笔数</YtStatistic>
           </ViewCardPane>
