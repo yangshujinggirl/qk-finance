@@ -14,11 +14,16 @@ const formItemLayout = {
   }
 };
 const CreatModal=({...props})=>{
-  const treeData=props.data;
-
+  const {treeData,defaultSelectedKeys,roleid}=props;
+    const [checkeds, setCheckeds] = useState([]);
+    console.log(defaultSelectedKeys);
+    // const defaultExpandedKeys=treeData[0]&&treeData[0].key
     const handleOk = async() => {
     try {
-      saveRolePermissionRef().then(res=>{
+      saveRolePermissionRef({
+          allPermissionId:checkeds.join(','),
+          roleid
+      }).then(res=>{
           YtMessage.success('操作成功');
           props.onOk && props.onOk(values);
       })
@@ -30,6 +35,10 @@ const CreatModal=({...props})=>{
   const handleCancel = (e) => {
     props.onCancel()
   };
+  const onCheck = (e) => {
+      setCheckeds(e)
+      console.log(e);
+  };
 
   return (
       <Modal
@@ -40,15 +49,9 @@ const CreatModal=({...props})=>{
         onCancel={handleCancel}
         className="creat-modal">
           <Tree
-              // onExpand={onExpand}
-              // expandedKeys={expandedKeys}
-              // autoExpandParent={autoExpandParent}
-              // onCheck={onCheck}
-              // checkedKeys={checkedKeys}
-              // onSelect={onSelect}
-              // selectedKeys={selectedKeys}
-              treeData={treeData}
-          />
+             checkable
+             defaultSelectedKeys={defaultSelectedKeys}
+              onCheck={onCheck}/>
       </Modal>
   );
 }

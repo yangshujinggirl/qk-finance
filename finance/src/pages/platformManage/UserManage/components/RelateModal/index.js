@@ -27,6 +27,7 @@ const columns = [
 
 const CreatModal = ({...props}) => {
     const {relatedUser} = props
+    console.log(relatedUser);
     const [relateUserList, setRelateUserList] = useState([]);
     const [selectedRowKeys, setSelectedRowKeys] = useState(relatedUser);
     const [totalSize, setTotalSize] = useState(1);
@@ -69,6 +70,7 @@ const CreatModal = ({...props}) => {
                 userId
             }).then(res => {
                 YtMessage.success('操作成功');
+                setSelectedRowKeys([])
                 setTimeout(() => {
                     props.onOk && props.onOk();
                 }, 500)
@@ -79,6 +81,7 @@ const CreatModal = ({...props}) => {
         }
     };
     const handleCancel = (e) => {
+        setSelectedRowKeys([])
         props.onCancel()
     };
     const rowSelection = {
@@ -86,6 +89,15 @@ const CreatModal = ({...props}) => {
         onChange: selectedRowKeys => {
             setSelectedRowKeys(selectedRowKeys)
             console.log(selectedRowKeys);
+        },
+        selections: true, // 不设置的话表格项不可以手动勾选和取消
+        getCheckboxProps: record => {
+            console.log(relatedUser.includes(`${record.roleId}`));
+            return {
+                props: {
+                    defaultChecked: !!relatedUser.includes(`${record.roleId}`)
+                }
+            };
         },
     };
     return (
