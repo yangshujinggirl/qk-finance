@@ -15,6 +15,8 @@ const CreatModal = ({...props}) => {
     console.log('props', props);
     const [form] = Form.useForm();
     const {id} = props.data;
+    form.setFieldsValue(props.data)
+
     const handleOk = async () => {
         try {
             const values = await form.validateFields();

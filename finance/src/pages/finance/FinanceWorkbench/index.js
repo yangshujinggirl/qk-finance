@@ -18,6 +18,12 @@ import {
 import './index.less';
 import stateIcon0 from './image/icon_state0.png';
 import stateIcon1 from './image/icon_state1.png';
+import lj_icon from './image/lj_icon.png';
+import qy_icon from './image/qy_icon.png';
+import xz_icon from './image/xz_icon.png';
+import yz_icon from './image/yz_icon.png';
+import zq_icon from './image/zq_icon.png';
+import dingwei_icon from './image/dingwei_icon.png';
 
 class OperateWorkbench extends React.Component {
     state = {
@@ -153,7 +159,7 @@ class OperateWorkbench extends React.Component {
                             <YtStatistic value={loanWithdrawalData.monthYoY} type="up"></YtStatistic>
                         </div>
                     </ViewCardPane>
-                    <div className='flex-1 shadow mt24'>
+                    <div className='flex-1 mt24'>
                         <YtCard title={dateInfo.currentDate}>
                             <p className="key">
                                 <span>{dateInfo.chineseDate}</span>
@@ -161,7 +167,8 @@ class OperateWorkbench extends React.Component {
                             </p>
                             <p className='flex-pb'>
                                 <span className="rate tc-333">{dateInfo.currentHourMinute}</span>
-                                <span className="rate tc-333">{dateInfo.currentCity}</span>
+                                <span className="rate tc-333"><img className='dingwei_icon' src={dingwei_icon}
+                                                                   alt=""/>{dateInfo.currentCity}</span>
                             </p>
                         </YtCard>
                     </div>
@@ -180,44 +187,42 @@ class OperateWorkbench extends React.Component {
                             <div className="zichanchi">
                                 <ul>
                                     <li>
-                                        <img src="" alt=""/>
+                                        <img src={lj_icon} alt=""/>
                                         <div>
                                             <p className='key'>累计新增资产额</p>
                                             <p className='val'><span>{assetPool.cumulativelyAdded}</span>万元</p>
                                         </div>
                                     </li>
                                     <li>
-                                        <img src="" alt=""/>
+                                        <img src={xz_icon} alt=""/>
                                         <div>
                                             <p className='key'>新增资产平均价值</p>
                                             <p className='val'><span>{assetPool.averageValue}</span>万元</p>
                                         </div>
                                     </li>
                                     <li>
-                                        <img src="" alt=""/>
+                                        <img src={zq_icon} alt=""/>
                                         <div>
                                             <p className='key'>新增平均账期</p>
                                             <p className='val'><span>{assetPool.averageAccountPeriod}</span>天</p>
                                         </div>
                                     </li>
-                                </ul>
-                                <ul>
                                     <li>
-                                        <img src="" alt=""/>
+                                        <img src={qy_icon} alt=""/>
                                         <div>
                                             <p className='key'>可融资资产最多企业</p>
                                             <p className='val'>{assetPool.assetMaxCompany}</p>
                                         </div>
                                     </li>
                                     <li>
-                                        <img src="" alt=""/>
+                                        <img src={qy_icon} alt=""/>
                                         <div>
                                             <p className='key'>应回收款最多企业</p>
                                             <p className='val'>{assetPool.paybackMaxCompany}</p>
                                         </div>
                                     </li>
                                     <li>
-                                        <img src="" alt=""/>
+                                        <img src={yz_icon} alt=""/>
                                         <div>
                                             <p className='key'>资产验真通过率</p>
                                             <p className='val'>{assetPool.verificationRatio}</p>

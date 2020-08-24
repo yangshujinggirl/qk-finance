@@ -3,67 +3,66 @@ import { Link } from 'react-router-dom';
 const columnsIndex = [
         {
           title: '序列号',
-          dataIndex: 'code',
+          dataIndex: 'id',
           width: 80,
         },
         {
           title: '请款单号',
-          dataIndex: 'code',
+          dataIndex: 'applyNo',
           width: 120,
         },
         {
           title: '请款时间',
-          dataIndex: 'time0',
+          dataIndex: 'applyTime',
           width: 200,
         },
         {
           title: '融资编号',
-          dataIndex: 'time1',
+          dataIndex: 'loanNo',
           width:200,
         },
         {
           title: '融资企业',
-          dataIndex: 'amounted',
+          dataIndex: 'enterpriseName',
           width: 120,
         },
         {
           title: '融资金额（万元）',
-          dataIndex: 'zwf',
+          dataIndex: 'loanAmount',
           width: 100,
         },
         {
           title: '年化利率%',
-          dataIndex: 'pay',
+          dataIndex: 'loanRate',
           width: 200,
         },
         {
           title: '用途类型',
-          dataIndex: 'paycode',
+          dataIndex: 'useType',
           width: 200,
         },
         {
           title: '请款金额（万元）',
-          dataIndex: 'use',
+          dataIndex: 'purchaseAmount',
           width: 100,
         },
         {
           title: '收款方',
-          dataIndex: 'test1',
+          dataIndex: 'receiverName',
           width: 100,
         },
         {
           title: '审批状态',
-          dataIndex: 'test2',
+          dataIndex: 'loanStatus',
           width: 100,
         },
         {
           title: '实际放款时间',
-          dataIndex: 'test3',
+          dataIndex: 'payTime',
           width: 100,
         },
         {
           title: '操作',
-          dataIndex: '操作',
           width: 100,
           fixed: 'right',
           render:(text,record,index)=>{

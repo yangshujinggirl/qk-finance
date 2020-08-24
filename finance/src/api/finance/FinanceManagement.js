@@ -33,3 +33,15 @@ export function GetFinanceDetail(loanId) {
 export function GetLoanDetail(loanId) {
     return Req.post('/loan/management/view/approveStep/'+loanId, {})
 }
+
+// 请款管理
+export function GetLoanManagementList() {
+    return Req.post('loan/applyLoan/search', {})
+}
+
+// 企业白名单
+export function GetWhiteList() {
+    return Req.post('api/dealer/bankAccount/search', {})
+}
+
+

@@ -14,9 +14,10 @@ const formItemLayout = {
 };
 const CreatModal = ({...props}) => {
     const [treeOrgs, setTreeOrgs] = useState([]);
-    const {userName, userFullNameCn, orgName, userPassword, id} = props.data;
+    const {userPassword, id} = props.data;
+    props.data.userPassword2 = userPassword
     const [form] = Form.useForm();
-
+    form.setFieldsValue(props.data)
     const handleOk = async () => {
         try {
             const values = await form.validateFields();
@@ -68,28 +69,28 @@ const CreatModal = ({...props}) => {
                 <Row gutter={24}>
                     <Col span={24}>
                         <Form.Item name="userName" label="用户名称" rules={[{required: true, message: '请输入'}]}>
-                            <Input placeholder="请输入" defaultValue={userName} allowClear autoComplete="off"/>
+                            <Input placeholder="请输入" allowClear autoComplete="off"/>
                         </Form.Item>
                     </Col>
                     <Col span={24}>
                         <Form.Item name="userFullNameCn" label="用户中文名称" rules={[{required: true, message: '请输入'}]}>
-                            <Input placeholder="请输入" defaultValue={userFullNameCn} allowClear autoComplete="off"/>
+                            <Input placeholder="请输入" allowClear autoComplete="off"/>
                         </Form.Item>
                     </Col>
                     <Col span={24}>
                         <Form.Item name="orgId" label="所属机构" rules={[{required: true, message: '请输入'}]}>
-                            <Select options={treeOrgs} defaultValue={orgName} placeholder="请输入" allowClear
+                            <Select options={treeOrgs} placeholder="请输入" allowClear
                                     autoComplete="off"/>
                         </Form.Item>
                     </Col>
                     <Col span={24}>
                         <Form.Item name="userPassword" label="密码" rules={[{required: true, message: '请输入'}]}>
-                            <Input placeholder="请输入" defaultValue={userPassword} allowClear autoComplete="off"/>
+                            <Input placeholder="请输入" allowClear autoComplete="off"/>
                         </Form.Item>
                     </Col>
                     <Col span={24}>
                         <Form.Item name="userPassword2" label="密码确认" rules={[{required: true, message: '请输入'}]}>
-                            <Input placeholder="请输入" defaultValue={userPassword} allowClear autoComplete="off"/>
+                            <Input placeholder="请输入" allowClear autoComplete="off"/>
                         </Form.Item>
                     </Col>
                 </Row>
