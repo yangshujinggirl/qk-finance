@@ -40,6 +40,11 @@
   }
 }
 
+.dingwei_icon {
+  width: 15px;
+  height: 15px;
+}
+
 .flex-pb {
   display: flex;
   justify-content: space-between;
@@ -104,10 +109,12 @@
   display: flex;
   justify-content: flex-start;
 }
+
 .flex-warp {
   display: flex;
   flex-wrap: wrap;
 }
+
 .zichanchi:extend(.flex-c,.flex-pb) {
   height: 200px;
 
@@ -133,6 +140,7 @@
       //  }
       //}
 
+
       img {
         width: 30px;
         height: 30px;
@@ -140,7 +148,7 @@
         margin-top: 10px;
       }
 
-      .key {
+      .key:extend(.no-break) {
         font-size: 12px;
         color: #999;
 

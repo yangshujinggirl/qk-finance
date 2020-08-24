@@ -23,6 +23,7 @@ import qy_icon from './image/qy_icon.png';
 import xz_icon from './image/xz_icon.png';
 import yz_icon from './image/yz_icon.png';
 import zq_icon from './image/zq_icon.png';
+import dingwei_icon from './image/dingwei_icon.png';
 
 class OperateWorkbench extends React.Component {
     state = {
@@ -166,7 +167,8 @@ class OperateWorkbench extends React.Component {
                             </p>
                             <p className='flex-pb'>
                                 <span className="rate tc-333">{dateInfo.currentHourMinute}</span>
-                                <span className="rate tc-333">{dateInfo.currentCity}</span>
+                                <span className="rate tc-333"><img className='dingwei_icon' src={dingwei_icon}
+                                                                   alt=""/>{dateInfo.currentCity}</span>
                             </p>
                         </YtCard>
                     </div>
@@ -205,8 +207,6 @@ class OperateWorkbench extends React.Component {
                                             <p className='val'><span>{assetPool.averageAccountPeriod}</span>天</p>
                                         </div>
                                     </li>
-                                </ul>
-                                <ul>
                                     <li>
                                         <img src={qy_icon} alt=""/>
                                         <div>
@@ -215,7 +215,7 @@ class OperateWorkbench extends React.Component {
                                         </div>
                                     </li>
                                     <li>
-                                        <img src={qy_icon}  alt=""/>
+                                        <img src={qy_icon} alt=""/>
                                         <div>
                                             <p className='key'>应回收款最多企业</p>
                                             <p className='val'>{assetPool.paybackMaxCompany}</p>
