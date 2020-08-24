@@ -166,7 +166,7 @@ class OperateWorkbench extends React.Component {
                         </YtCard>
                     </div>
                 </div>
-                <div className='flex mt24 common-column-module-wrap'>
+                <div className='mt24 common-column-module-wrap'>
                     <div className="module-equal-thr-wrap part-same-shadow bc-fff">
                         <YtCard title="融资企业">
                             <YtTable
