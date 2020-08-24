@@ -5,12 +5,9 @@ import ViewCardPane from '../../components/ViewCardPane';
 import AssetDistributeChart from '../components/AssetDistributeChart';
 import RiseChart from '../../components/RiseChart';
 import SubCrumb from '../components/SubCrumb';
-import AssestStatusChart from './components/AssestStatusChart';
-import CashChart from './components/CashChart';
-import MaxAssetChart from './components/MaxAssetChart';
-import FinanceTurnChart from './components/FinanceTurnChart';
 import LatestFund from './components/LatestFund';
 import DebtMod from './components/DebtMod';
+import FundPoolChart from '../../components/FundPoolChart';
 import { YtBreadcrumbName, YtTable, YtCard } from 'common';
 import {subCrumbOptions} from '../subCrumbOptions';
 import { GetTotalApi,  GetPaymentApi } from 'api/asset/AssetView';
@@ -155,9 +152,10 @@ const Index=({...props})=>{
             label="整体融资比(%)"
             num={NP.round(NP.divide(totalData.assetsLoanTotal,totalData.assetsTotal),2)}/>
         </div>
+        <FundPoolChart />
         <div className="common-column-module-wrap">
           <div className="module-equal-two-wrap">
-            <RiseChart data={riseList}/>
+            <RiseChart data={riseList} className="asset-view-rise-chart"/>
           </div>
           <div className="module-equal-two-wrap company-list part-same-shadow mt24">
             <LatestFund enterpriseId={enterpriseId}/>

@@ -15,16 +15,16 @@ const Index=({...props})=> {
     })
   }
   useEffect(() => { fetchLatest()},[enterpriseId]);
-  return <YtCard title="近期融资">
-    <div className="box-flex latest-fund-mod">
-        <div className="item-fund">资金方：{fundData.fundSide}</div>
-        <div className="item-fund">资产包名称：{fundData.packetName}</div>
-        <div className="item-fund">放款金额：{fundData.loanAmountReal}元</div>
-        <div className="item-fund">项目名称：{fundData.projectName}元</div>
-        <div className="item-fund">融资账期：{fundData.loanPeriod}天</div>
-        <div className="item-fund">资产包金额：{fundData.packageAmount}元</div>
-        <div className="item-fund">放款时间：{fundData.loanDate}</div>
-        <div className="item-fund">债务企业：{fundData.num}家</div>
+  return <YtCard title="近期融资" className="part-same-shadow">
+    <div className="latest-fund-mod">
+      <div className="item-fund box-flex"><span className="label">资金方：</span><span className="val">{fundData.fundSide}</span></div>
+      <div className="item-fund box-flex"><span className="label">资产包名称：</span><span className="val">{fundData.packetName}</span></div>
+      <div className="item-fund box-flex"><span className="label">放款金额：</span><span className="val">{fundData.loanAmountReal}元</span></div>
+      <div className="item-fund box-flex"><span className="label">项目名称：</span><span className="val">{fundData.projectName}元</span></div>
+      <div className="item-fund box-flex"><span className="label">融资账期：</span><span className="val">{fundData.loanPeriod}天</span></div>
+      <div className="item-fund box-flex"><span className="label">资产包金额：</span><span className="val">{fundData.packageAmount}元</span></div>
+      <div className="item-fund box-flex"><span className="label">放款时间：</span><span className="val">{fundData.loanDate}</span></div>
+      <div className="item-fund box-flex"><span className="label">债务企业：</span><span className="val">{fundData.num}家</span></div>
     </div>
   </YtCard>
 }

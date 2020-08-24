@@ -39,7 +39,7 @@ const IndexChart=({...props})=>{
   }
   useEffect(()=>{ initChart() },[data])
   return <YtCard title="资产增长趋势" className="part-same-shadow mt24">
-    <div  className="rise-container" id="rise-container"></div>
+    <div  className={`rise-container ${props.className}`} id="rise-container"></div>
   </YtCard>
 }
 export default IndexChart;

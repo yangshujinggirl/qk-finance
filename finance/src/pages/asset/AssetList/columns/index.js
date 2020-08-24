@@ -27,16 +27,16 @@ const columnsList =[
           title: '资产剩余账期',
           dataIndex: 'syzq',
           render:(text,record,index)=>{
-            let expectedDate = record.expectedDate?record.expectedDate:0;
+            let debtExpireDate = record.debtExpireDate?record.debtExpireDate:0;
             let transactionDate = record.transactionDate?record.transactionDate:0;
             return<>{
-              NP.minus(expectedDate,transactionDate)
+              NP.minus(debtExpireDate,transactionDate)
             }</>
           }
         },
         {
         title: '资产状态',
-        dataIndex: 'applyLoanStatus',
+        dataIndex: 'assetStatus',
         },
         {
         title: '融资状态',
@@ -61,7 +61,7 @@ const columnsList =[
           width: 100,
           render:(text,record,index)=>{
             return <>
-              <Link to="/account/asset/financeCompany/list/info/1" className="operate-link-btn">查看</Link>
+              <Link to={`/account/asset/financeCompany/list/info/${record.assetNo}`} className="operate-link-btn">查看</Link>
             </>
           }
         },
