@@ -15,6 +15,7 @@ const Index = ({...props}) => {
     const [currentItem, setCurrentItem] = useState({});
     const [totalSize, setTotalSize] = useState(1);
     const [treeData, setTreeData] = useState({});
+    const [defaultSelectedKeys, setDefaultSelectedKeys] = useState([]);
 
     const [param, setParam] = useState({
         roleName: '',
@@ -31,14 +32,35 @@ const Index = ({...props}) => {
         getRoleList(param).then(res => {
             setTotalSize(res.data.pagination.totalSize)
             setList(res.data.result)
-            console.log(res)
         })
     }
     // 授权树
     const getPermissionTrees = (roleId) => {
         getPermissionTree(roleId).then(res => {
-
+            let arr = getTree(res.data)
+            setTreeData(arr)
+            setVisible(2);
         })
+    }
+
+    const getTree = (list) => {
+        if (!list.length) return
+        let arr = []
+        let arr2 = []
+        list.forEach(item => {
+            let obj = {
+                title: item.name,
+                key: item.id,
+                children: getTree(item.children)
+            }
+            if (item.checked) {
+                arr2.push(item.id)
+            }
+            if (!obj.children) delete obj.children;
+            arr.push(obj)
+        })
+        setDefaultSelectedKeys(arr2)
+        return arr;
     }
     // 获取角色数据
     useEffect(() => {
@@ -80,7 +102,6 @@ const Index = ({...props}) => {
             case 'auth':
                 getPermissionTrees(item.roleId);
                 setCurrentItem(item);
-                setVisible(2);
                 break;
         }
     }
@@ -123,7 +144,10 @@ const Index = ({...props}) => {
                 onOperateClick={onOperateClick}/>
             <YtPagination data={{totalSize, pageNow, pageSize}} onChange={pagination}/>
             <CreatModal data={currentItem} visible={visible} onOk={onOk} onCancel={onCancel}/>
-            <AuthModal data={treeData} visible={visible} onOk={onAuthOk} onCancel={onCancel}/>
+            <AuthModal treeData={treeData}
+                       roleid={currentItem.roleId}
+                       defaultSelectedKeys={defaultSelectedKeys}
+                       visible={visible} onOk={onAuthOk} onCancel={onCancel}/>
         </div>
     )
 }

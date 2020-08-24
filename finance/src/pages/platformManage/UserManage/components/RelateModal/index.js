@@ -26,8 +26,10 @@ const columns = [
 ];
 
 const CreatModal = ({...props}) => {
+    const {relatedUser} = props
+    console.log(relatedUser);
     const [relateUserList, setRelateUserList] = useState([]);
-    const [selectedRowKeys, setSelectedRowKeys] = useState([1, 2]);
+    const [selectedRowKeys, setSelectedRowKeys] = useState(relatedUser);
     const [totalSize, setTotalSize] = useState(1);
     const [param, setParam] = useState({
         pageNow: 1,
@@ -41,6 +43,9 @@ const CreatModal = ({...props}) => {
     const getRelateUserLists = () => {
         getRelateUserList(param).then(res => {
             setTotalSize(res.data.pagination.totalSize)
+            res.data.result.forEach(item => {
+                item.key = item.roleId;
+            })
             setRelateUserList(res.data.result)
         })
     }
@@ -61,11 +66,14 @@ const CreatModal = ({...props}) => {
             //角色关联
             relateUser({
                 id,
-                roleIds: "F5AYQN706K6CUL7WPJTXQ1JQ9BKX771M,WWL61OLG0FEKQQ7CFOXGLNMOZ7W57O08",
+                roleIds: selectedRowKeys.join(','),
                 userId
             }).then(res => {
                 YtMessage.success('操作成功');
-                props.onOk && props.onOk();
+                setSelectedRowKeys([])
+                setTimeout(() => {
+                    props.onOk && props.onOk();
+                }, 500)
             })
         } catch (errorInfo) {
             YtMessage.error('操作失败');
@@ -73,14 +81,23 @@ const CreatModal = ({...props}) => {
         }
     };
     const handleCancel = (e) => {
+        setSelectedRowKeys([])
         props.onCancel()
     };
     const rowSelection = {
         selectedRowKeys,
-        onChange: (idx, e) => {
-            let p = {...selectedRowKeys, e}
-            setSelectedRowKeys(e)
+        onChange: selectedRowKeys => {
+            setSelectedRowKeys(selectedRowKeys)
             console.log(selectedRowKeys);
+        },
+        selections: true, // 不设置的话表格项不可以手动勾选和取消
+        getCheckboxProps: record => {
+            console.log(relatedUser.includes(`${record.roleId}`));
+            return {
+                props: {
+                    defaultChecked: !!relatedUser.includes(`${record.roleId}`)
+                }
+            };
         },
     };
     return (
@@ -90,21 +107,14 @@ const CreatModal = ({...props}) => {
             visible={props.visible === 2}
             onOk={handleOk}
             onCancel={handleCancel}
-            className="creat-modal"
-            footer={null}>
-            <div>
-                <Table
-                    rowSelection={rowSelection}
-                    columns={columns}
-                    dataSource={relateUserList}
-                />
-                <YtPagination data={{totalSize, pageNow, pageSize}}
-                              onChange={pagination}/>
-                <div className="handle-item">
-                    <Button onClick={handleCancel} className="reset-btn">取消</Button>
-                    <Button type="primary" onClick={handleOk} className="creat-btn">保存</Button>
-                </div>
-            </div>
+            className="creat-modal">
+            <Table
+                rowSelection={rowSelection}
+                columns={columns}
+                dataSource={relateUserList}
+            />
+            <YtPagination data={{totalSize, pageNow, pageSize}}
+                          onChange={pagination}/>
         </Modal>
     );
 }

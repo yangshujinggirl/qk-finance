@@ -14,17 +14,19 @@ const formItemLayout = {
   }
 };
 const CreatModal=({...props})=>{
-  const [form] = Form.useForm();
-  const treeData=props.data;
-
+  const {treeData,defaultSelectedKeys,roleid}=props;
+    const [checkeds, setCheckeds] = useState([]);
+    console.log(defaultSelectedKeys);
+    // const defaultExpandedKeys=treeData[0]&&treeData[0].key
     const handleOk = async() => {
     try {
-
-      saveRolePermissionRef().then(res=>{
+      saveRolePermissionRef({
+          allPermissionId:checkeds.join(','),
+          roleid
+      }).then(res=>{
           YtMessage.success('操作成功');
           props.onOk && props.onOk(values);
       })
-
     } catch (errorInfo) {
 
         console.log("Failed:", errorInfo);
@@ -32,6 +34,10 @@ const CreatModal=({...props})=>{
   };
   const handleCancel = (e) => {
     props.onCancel()
+  };
+  const onCheck = (e) => {
+      setCheckeds(e)
+      console.log(e);
   };
 
   return (
@@ -41,25 +47,11 @@ const CreatModal=({...props})=>{
         visible={props.visible===2}
         onOk={handleOk}
         onCancel={handleCancel}
-        className="creat-modal"
-        footer={null}>
-        <Form form={form} name="control-hooks" {...formItemLayout}>
+        className="creat-modal">
           <Tree
-              checkable
-              // onExpand={onExpand}
-              // expandedKeys={expandedKeys}
-              // autoExpandParent={autoExpandParent}
-              // onCheck={onCheck}
-              // checkedKeys={checkedKeys}
-              // onSelect={onSelect}
-              // selectedKeys={selectedKeys}
-              // treeData={treeData}
-          />
-          <div className="handle-item">
-            <Button onClick={handleCancel} className="reset-btn">取消</Button>
-            <Button type="primary" onClick={handleOk} className="creat-btn">确定</Button>
-          </div>
-        </Form>
+             checkable
+             defaultSelectedKeys={defaultSelectedKeys}
+              onCheck={onCheck}/>
       </Modal>
   );
 }
