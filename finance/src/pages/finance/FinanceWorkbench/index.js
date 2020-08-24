@@ -6,6 +6,7 @@ import {YtStatistic, YtTable, YtCard} from 'common';
 import TinyAearChart from './components/TinyAearChart';
 import AssetDynamicChart from './components/AssetDynamicChart';
 import columns, {management} from './columns';
+import FundPoolChart from '../../components/FundPoolChart'
 import {
     GetListApi,
     GetManagementListApi,
@@ -173,6 +174,7 @@ class OperateWorkbench extends React.Component {
                         </YtCard>
                     </div>
                 </div>
+                <FundPoolChart/>
                 <div className='mt24 common-column-module-wrap'>
                     <div className="module-equal-thr-wrap part-same-shadow bc-fff">
                         <YtCard title="融资企业">

@@ -1,17 +1,17 @@
-import { Modal,Button,Table} from 'antd';
+import {Modal, Button, Table} from 'antd';
 import './index.less';
 import {relateUser, getRelateUserList} from '../../../../../api/platformManage/UserManage.js'
-import {YtMessage} from 'common';
+import {YtMessage, YtPagination} from 'common';
 import {useState, useEffect} from 'react';
 
 const columns = [
     {
         title: '角色名称',
-        dataIndex: 'userName',
+        dataIndex: 'roleName',
     },
     {
         title: '角色中文名称',
-        dataIndex: 'orgName',
+        dataIndex: 'roleFullNameCn',
     },
     {
         title: '用途',
@@ -26,23 +26,46 @@ const columns = [
 ];
 
 const CreatModal = ({...props}) => {
-    const {relateUserList, selectedRowKeys} = props;
-    const rowSelection = {
-        selectedRowKeys,
-        onChange: onSelectChange,
-    };
+    const [relateUserList, setRelateUserList] = useState([]);
+    const [selectedRowKeys, setSelectedRowKeys] = useState([1, 2]);
+    const [totalSize, setTotalSize] = useState(1);
+    const [param, setParam] = useState({
+        pageNow: 1,
+        pageSize: 5,
+    });
+    const {
+        pageNow,
+        pageSize,
+    } = {...param}
+    // 角色关联列表API
+    const getRelateUserLists = () => {
+        getRelateUserList(param).then(res => {
+            setTotalSize(res.data.pagination.totalSize)
+            setRelateUserList(res.data.result)
+        })
+    }
+    //获取用户数据
+    useEffect(() => {
+        getRelateUserLists();
+    }, []);
 
+    //分页
+    const pagination = (pageNow) => {
+        let p = {...param, pageNow};
+        setParam(p);
+        getRelateUserLists(p);
+    }
     const handleOk = async () => {
         try {
-            const values = selectedRowKeys;
+            let {id, userId} = props.data
             //角色关联
             relateUser({
-                id: "60305",
-                roleIds: "F5AYQN706K6CUL7WPJTXQ1JQ9BKX771M",
-                userId: "I4WTC9OC3TX4VNYOXQCUP8TZUHCZK3DB",
+                id,
+                roleIds: "F5AYQN706K6CUL7WPJTXQ1JQ9BKX771M,WWL61OLG0FEKQQ7CFOXGLNMOZ7W57O08",
+                userId
             }).then(res => {
                 YtMessage.success('操作成功');
-                props.onOk && props.onOk(values);
+                props.onOk && props.onOk();
             })
         } catch (errorInfo) {
             YtMessage.error('操作失败');
@@ -52,11 +75,14 @@ const CreatModal = ({...props}) => {
     const handleCancel = (e) => {
         props.onCancel()
     };
-
-    const onSelectChange = (e) => {
-
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: (idx, e) => {
+            let p = {...selectedRowKeys, e}
+            setSelectedRowKeys(e)
+            console.log(selectedRowKeys);
+        },
     };
-
     return (
         <Modal
             width={520}
@@ -68,10 +94,12 @@ const CreatModal = ({...props}) => {
             footer={null}>
             <div>
                 <Table
-                    owSelection={rowSelection}
+                    rowSelection={rowSelection}
                     columns={columns}
                     dataSource={relateUserList}
                 />
+                <YtPagination data={{totalSize, pageNow, pageSize}}
+                              onChange={pagination}/>
                 <div className="handle-item">
                     <Button onClick={handleCancel} className="reset-btn">取消</Button>
                     <Button type="primary" onClick={handleOk} className="creat-btn">保存</Button>

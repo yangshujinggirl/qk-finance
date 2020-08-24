@@ -14,6 +14,7 @@ const Index = ({...props}) => {
     const [visible, setVisible] = useState(false);
     const [currentItem, setCurrentItem] = useState({});
     const [totalSize, setTotalSize] = useState(1);
+    const [relate_totalSize, setRelate_totalSize] = useState(1);
     const [relateUserList, setRelateUserList] = useState([]);
     const [param, setParam] = useState({
         userName: '',
@@ -58,7 +59,6 @@ const Index = ({...props}) => {
             //关联角色
             case 'relate':
                 //获取角色列表
-                getRelateUserLists(item.id);
                 setVisible(2);
                 setCurrentItem(item);
                 break;
@@ -105,13 +105,6 @@ const Index = ({...props}) => {
             setTotalSize(res.data.pagination.totalSize)
         })
     }
-    // 角色关联列表API
-    const getRelateUserLists = (id) => {
-        getRelateUserList(id).then(res => {
-            // console.log(res.data)
-            setRelateUserList(res.data)
-        })
-    }
     return (
         <div className="account-organization-wrap yt-common-list-pages-wrap">
             <FilterForm onSubmit={search}/>
@@ -128,7 +121,7 @@ const Index = ({...props}) => {
                         visible={visible}
                         onOk={onOk}
                         onCancel={onCancel}/>
-            <RelateModal relateUserList={relateUserList}
+            <RelateModal data={currentItem}
                          selectedRowKeys={1}
                          visible={visible}
                          onOk={onRelateOk}
