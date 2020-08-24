@@ -17,7 +17,9 @@ const TableList=({...props})=>{
   const industryTypeCode = 'AGNPK';
   const fetchList=(type,values)=>{
     setTabKey(type);
-    setList([])
+    setList([]);
+    dataPag.pageNow = 1;
+    dataPag.pageSize = 10;
     let params = {
       industryTypeCode,
       packetId,
@@ -35,6 +37,9 @@ const TableList=({...props})=>{
       setDataPag({ pageNow, pageSize, totalSize })
     })
   }
+  const changePage = (pageNow, pageSize) => {
+    fetchList(tabKey, {pageNow, pageSize})
+  };
   const goDelete=(key)=> {
     Modal.confirm({
       title: '提示',
@@ -90,7 +95,7 @@ const TableList=({...props})=>{
                   dataSource={list}/>
                </TabPane>
             </Tabs>
-            <YtPagination data={dataPag}/>
+            <YtPagination data={dataPag} onChange={changePage}/>
             <CreatModal
               upDateList={()=>fetchList(1)}
               info={props.info}

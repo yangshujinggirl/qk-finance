@@ -115,7 +115,7 @@ const OperateWorkbench=({...props})=>{
                     <div className="box-flex data-info">
                       <div className="info-im">
                         <p className="label-value">{el.assetAmount}万</p>
-                        <p className="label-name">资产包含金额</p>
+                        <p className="label-name">资产包金额</p>
                       </div>
                       <div className="info-im">
                         <p className="label-value">2{el.assetCount}笔</p>
