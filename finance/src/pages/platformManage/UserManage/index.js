@@ -5,7 +5,13 @@ import CreatModal from './components/CreatModal';
 import RelateModal from './components/RelateModal';
 import {columnsIndex} from './columns';
 import './index.less'
-import {getUserList, validUser, relateUser, getRelateUserList} from '../../../api/platformManage/UserManage.js';
+import {
+    getUserList,
+    validUser,
+    relateUser,
+    getRelateUserList,
+    getRelatedUser
+} from '../../../api/platformManage/UserManage.js';
 import {Modal} from 'antd';
 
 import {YtMessage} from 'common';
@@ -16,6 +22,7 @@ const Index = ({...props}) => {
     const [totalSize, setTotalSize] = useState(1);
     const [relate_totalSize, setRelate_totalSize] = useState(1);
     const [relateUserList, setRelateUserList] = useState([]);
+    const [relatedUser, setRelatedUser] = useState([]);
     const [param, setParam] = useState({
         userName: '',
         pageNow: 1,
@@ -58,11 +65,22 @@ const Index = ({...props}) => {
                 break;
             //关联角色
             case 'relate':
-                //获取角色列表
+                //获取已关联用户
+                getRelatedUsers(item.id);
                 setVisible(2);
                 setCurrentItem(item);
                 break;
         }
+    }
+    //获取已关联用户
+    const getRelatedUsers = (id) => {
+        getRelatedUser(id).then(res => {
+            let arr = []
+            res.data.roleList.forEach(item => {
+                arr.push(item.roleId)
+            })
+            setRelatedUser(arr);
+        })
     }
     //停用
     const handleDelete = (record) => {
@@ -122,6 +140,7 @@ const Index = ({...props}) => {
                         onOk={onOk}
                         onCancel={onCancel}/>
             <RelateModal data={currentItem}
+                         relatedUser={relatedUser}
                          selectedRowKeys={1}
                          visible={visible}
                          onOk={onRelateOk}

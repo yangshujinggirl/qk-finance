@@ -37,8 +37,25 @@ const Index = ({...props}) => {
     // 授权树
     const getPermissionTrees = (roleId) => {
         getPermissionTree(roleId).then(res => {
-
+            let arr = getTree(res.data)
+            console.log(arr);
+            setTreeData(arr)
         })
+    }
+
+    const getTree = (list) => {
+        if (!list.length) return
+        let arr = []
+        list.forEach(item => {
+            let obj = {
+                title: item.name,
+                key: item.id,
+                children: getTree(item.children)
+            }
+            if (!obj.children) delete obj.children;
+            arr.push(obj)
+        })
+        return arr;
     }
     // 获取角色数据
     useEffect(() => {
