@@ -166,8 +166,8 @@ class OperateWorkbench extends React.Component {
                         </YtCard>
                     </div>
                 </div>
-                <div className='flex mt24'>
-                    <div className="flex-1 shadow bc-fff">
+                <div className='flex mt24 common-column-module-wrap'>
+                    <div className="module-equal-thr-wrap part-same-shadow bc-fff">
                         <YtCard title="融资企业">
                             <YtTable
                                 columns={columns}
@@ -175,7 +175,7 @@ class OperateWorkbench extends React.Component {
                                 scroll={{y: 150}}/>
                         </YtCard>
                     </div>
-                    <div className="flex-1 m0-20 shadow bc-fff">
+                    <div className="module-equal-thr-wrap part-same-shadow bc-fff">
                         <YtCard title="行业资产池表现">
                             <div className="zichanchi">
                                 <ul>
@@ -227,7 +227,7 @@ class OperateWorkbench extends React.Component {
                             </div>
                         </YtCard>
                     </div>
-                    <div className="flex-1 shadow bc-fff">
+                    <div className="module-equal-thr-wrap part-same-shadow bc-fff">
                         <YtCard title="预警信息">
                             <YtTable
                                 columns={management}
