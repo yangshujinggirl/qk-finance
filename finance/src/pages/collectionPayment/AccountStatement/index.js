@@ -41,14 +41,15 @@ class AccountStatement extends React.Component {
         })
     }
     //查询
-    search = (param) => {
-        let [startDate, endDate] = param.time
-        param.startDate = moment(startDate).format('YYYY-MM-DD');
-        param.endDate = moment(endDate).format('YYYY-MM-DD');
-        delete param.time;
-
-        // let p= {...this.state,param}
-        let p = Object.assign(this.state, {param})
+    search = (values) => {
+        if (values.time) {
+            let [startDate, endDate] = values.time
+            values.startDate = moment(startDate).format('YYYY-MM-DD');
+            values.endDate = moment(endDate).format('YYYY-MM-DD');
+            delete values.time;
+        }
+        let param = {...this.state.param, ...values}
+        let p={...this.state, param}
         console.log(p)
         this.setState(p, () => {
             this.getBankStatements();
