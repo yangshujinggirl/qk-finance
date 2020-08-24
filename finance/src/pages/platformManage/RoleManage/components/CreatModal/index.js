@@ -15,6 +15,7 @@ const formItemLayout = {
 const CreatModal = ({...props}) => {
     const [form] = Form.useForm();
     const {id} = props.data;
+    form.setFieldsValue(props.data)
 
     const handleOk = async () => {
         try {
