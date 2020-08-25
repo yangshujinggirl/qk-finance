@@ -92,7 +92,7 @@ const IndexChart=({...props})=>{
         statistic:{
           visible:true,
           content: {
-            value: '32',
+            value: cashAmount,
             name: '流出资金',
           },
         },

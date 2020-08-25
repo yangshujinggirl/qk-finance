@@ -21,13 +21,13 @@ class Login extends Component {
   handleSubmit = async () => {
     try {
       const values = await this.formRef.current.validateFields();
-      console.log(values)
       this.setState({ disabled:true,loading:true })
       GoLogin({"userName":"superadmin","userPassword":"admin123456"})
       .then((res)=> {
-        const { tokenType, accessToken } =res.data;
-        Sessions.set('token',accessToken)
-        Sessions.set('tokenType',tokenType)
+        const { Authorization, userInfo } =res.data;
+        Sessions.set('token',Authorization.accessToken)
+        Sessions.set('tokenType',Authorization.tokenType)
+        Sessions.set('userName',userInfo.userFullNameCn)
         this.setState({ disabled:false, loading:false })
         this.props.history.push('/account')
       },(err)=> {

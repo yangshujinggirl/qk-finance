@@ -55,7 +55,7 @@ class MyComponent extends React.Component {
                           <div>
                             <span className="user-pic"><UserOutlined /></span>
                             <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                              您好,admin <DownOutlined />
+                              您好,{Sessions.get('userName')}<DownOutlined />
                             </a>
                           </div>
                         </Dropdown>

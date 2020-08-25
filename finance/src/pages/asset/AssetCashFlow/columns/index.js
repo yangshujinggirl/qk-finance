@@ -39,11 +39,11 @@ const columnsList =[
         dataIndex: 'remainingAmount',
         },
         {
-        title: '回款状态',
-        dataIndex: 'isMoneyBack',//1-未回款，2-已回款，3部分还款
-        render:(text,record,index)=> {
-          return <>{returnBackMap[record.isMoneyBack]}</>
-        }
+          title: '回款状态',
+          dataIndex: 'isMoneyBack',//1-未回款，2-已回款，3部分还款
+          render:(text,record,index)=> {
+            return <>{returnBackMap[record.isMoneyBack]}</>
+          }
         },{
           title: '操作',
           dataIndex: '操作',
