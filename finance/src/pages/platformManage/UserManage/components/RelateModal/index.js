@@ -46,10 +46,10 @@ const RelateModal = ({...props}) => {
     }, [relatedUser]);
     //获取用户数据
     useEffect(() => {
-        getRelateUserLists();
+        getRelateUserLists(param);
     }, []);
     // 角色关联列表API
-    const getRelateUserLists = () => {
+    const getRelateUserLists = (param) => {
         getRelateUserList(param).then(res => {
             setTotalSize(res.data.pagination.totalSize)
             res.data.result.forEach(item => {
