@@ -15,35 +15,9 @@ const formItemLayout = {
   }
 };
 const { TabPane } = Tabs;
-const arr = [
-  {
-    code: '1',
-    key: '1',
-    name: 'John Brown',
-    amount: '300',
-    amounted: '30',
-    amountPocess: '30',
-  },
-  {
-    code: '2',
-    key: '2',
-    name: 'Jim Green',
-    amount: '300',
-    amounted: '30',
-    amountPocess: '30',
-  },
-  {
-    code: '3',
-    key: '3',
-    name: 'Joe Black',
-    amount: '300',
-    amounted: '30',
-    amountPocess: '30',
-  },
-  ];
 const CreatModal=({...props})=>{
   let [loading, setLoading] = useState(false);
-  let [data,setData] = useState([]);
+  let [data,setData] = useState(props.fileList);
 
   const handleCancel = e => {
     props.onCancel();
@@ -74,11 +48,7 @@ const CreatModal=({...props})=>{
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
     },
   };
-  useEffect(()=>{
-    //fetch
-    arr.map((el)=>el.editing= false);
-    setData(arr);
-  },[])
+  useEffect(()=>{},[])
   return (
       <Modal
         width={920}

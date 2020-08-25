@@ -7,7 +7,7 @@ import FilterForm from './components/FilterForm';
 import CreatModal from './components/CreatModal';
 import { columnsList } from './columns';
 import './index.less'
-import { GetStatisticalData, GetFinanceList } from 'api/finance/FinanceManagement';
+import { GetProFileList, GetStatisticalData, GetFinanceList } from 'api/finance/FinanceManagement';
 import { useState, useEffect } from 'react';
 
 function withSubscription(handleType,Mod) {
@@ -16,6 +16,7 @@ function withSubscription(handleType,Mod) {
     state={
       visible:false,
       inputValues:{},
+      fileList:[],
 			data: [],
 			pagination: {
 				totalSize: 0,
@@ -40,7 +41,7 @@ function withSubscription(handleType,Mod) {
       GetFinanceList(param)
       .then((res)=> {
         const { result, pagination } =res.data;
-        result.map((el,index)=>{ index++; el.key = index});
+        result.map((el,index)=>{ el.key = el.id});
         this.setState({ data: result, pagination: pagination })
       })
     }
@@ -78,8 +79,11 @@ function withSubscription(handleType,Mod) {
 		onChange=(pageNow,pageSize)=> {
 			this.fetchFinanceList({ pageNow,pageSize });
 		}
-    onOperateClick=(item,type)=> {
-      this.setState({ visible:true });
+    onOperateClick=({item,type})=> {
+      GetProFileList({ loanNo: item.loanNo })
+      .then((res) => {
+        this.setState({ fileList:res.data,visible:true });
+      })
     }
 		onSubmit = values => {
       let { applyTime, ...params } = values;
@@ -91,7 +95,7 @@ function withSubscription(handleType,Mod) {
 			this.fetchFinanceList(params);
 		};
     render() {
-      const { data, visible, pagination, summary } =this.state;
+      const { fileList, data, visible, pagination, summary } =this.state;
       let columns = columnsList(handleType, this.state.pagination);
       return(
         <div className="finance-company-list-wrap">
@@ -142,7 +146,7 @@ function withSubscription(handleType,Mod) {
               columns={columns}
               dataSource={data}/>
             <YtPagination data={pagination} onChange={this.onChange}/>
-            <CreatModal visible={visible} onOk={this.onOk} onCancel={this.onCancel}/>
+          <CreatModal visible={visible} onOk={this.onOk} onCancel={this.onCancel} data={fileList}/>
           </div>
         </div>
       )
