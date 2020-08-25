@@ -4,6 +4,7 @@ import { YtTable, YtBtn } from 'common';
 import { GetAddApi } from 'api/asset/AssetList';
 import { YtMessage } from 'common';
 import columns from './columns';
+import { GetDownLoadFile, GetSaveFileList } from 'api/finance/FinanceManagement';
 import './index.less';
 
 const formItemLayout = {
@@ -16,31 +17,58 @@ const formItemLayout = {
 };
 const { TabPane } = Tabs;
 const CreatModal=({...props})=>{
+  const [form] = Form.useForm();
+  let [currentItem,setCurrentItem] =useState({});
+  let dataSource = [...props.data];
   let [loading, setLoading] = useState(false);
-  let [data,setData] = useState(props.fileList);
+  let [data,setData] = useState(dataSource);
 
   const handleCancel = e => {
     props.onCancel();
   };
+  const handledownLoad=(values)=> {
+    GetDownLoadFile()
+    .then((res) => {
+      console.log(res)
+    })
+  }
 
   const onOperateClick=({item,type})=> {
     switch(type){
       case 'edit':
-        edit(item)
+        edit(item,true)
         break;
       case 'save':
         save();
+        break;
+      case 'download':
+        handledownLoad();
+        break;
     }
   }
-  const edit = (item) => {
-    item.editing = true;
+  const edit = (item,status) => {
     let currentIdx = data.findIndex((el)=>el.key == item.key);
+    item.editing = status;
     data[currentIdx] = {...data[currentIdx],...item};
     data = [...data];
+    setCurrentItem(item);
     setData(data);
   };
-  const save = () => {
-
+  const save = async () => {
+    try {
+      const values = await form.validateFields();
+      let fileDesc = values.fields[0].fileDesc;
+      GetSaveFileList({
+        fileDesc,
+        id:currentItem.id
+      })
+      .then((res)=>{
+        currentItem.fileDesc = fileDesc;
+        edit(currentItem,false)
+      })
+    } catch (errorInfo) {
+      console.log("Failed:", errorInfo);
+    }
   };
   const rowSelection = {
     type: "checkbox",
@@ -48,7 +76,9 @@ const CreatModal=({...props})=>{
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
     },
   };
-  useEffect(()=>{},[])
+  useEffect(()=>{
+    setData(props.data)
+  },[props.data])
   return (
       <Modal
         width={920}
@@ -57,6 +87,7 @@ const CreatModal=({...props})=>{
         onCancel={handleCancel}
         className="creat-modal"
         footer={null}>
+        <Form form={form}>
           <Tabs defaultActiveKey="1">
              <TabPane tab="全部资料" key="1">
                <>
@@ -72,6 +103,7 @@ const CreatModal=({...props})=>{
                 </>
              </TabPane>
           </Tabs>
+        </Form>
       </Modal>
   );
 }

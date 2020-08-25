@@ -41,7 +41,7 @@ function withSubscription(handleType,Mod) {
       GetFinanceList(param)
       .then((res)=> {
         const { result, pagination } =res.data;
-        result.map((el,index)=>{ el.key = el.id});
+        result.map((el,index)=>{ index++; el.key = index});
         this.setState({ data: result, pagination: pagination })
       })
     }

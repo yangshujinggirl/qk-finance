@@ -1,30 +1,33 @@
 import { Input } from 'antd';
+import { Form } from 'antd';
 
 const columns=[
   {
     title: '文件大类',
-    dataIndex: 'code',
+    dataIndex: 'fileTypeName',
   },
   {
     title: '文件名称',
-    dataIndex: 'code',
+    dataIndex: 'fileName',
   },
   {
     title: '必要项',
-    dataIndex: 'code',
+    dataIndex: 'isRequired',
   },
   {
     title: '文件数量',
-    dataIndex: 'code',
+    dataIndex: 'fileNum',
   },
   {
     title: '文件说明',
-    dataIndex: 'code',
+    dataIndex: 'fileDesc',
     render:(text,record,index)=>{
       return <>
         {
           record.editing?
-          <Input />
+          <Form.Item name={['fields',index,'fileDesc']}>
+            <Input />
+          </Form.Item>
           :
           text
         }
@@ -43,7 +46,11 @@ const columns=[
           :
           <span className="operate-link-btn" onClick={()=>record.onOperateClick('edit')}>编辑</span>
         }
-        <span className="operate-link-btn" onClick={()=>record.onOperateClick('download')}>下载</span>
+        {
+          record.fileNum&&
+          <span className="operate-link-btn" onClick={()=>record.onOperateClick('download')}>下载</span>
+        }
+
       </>
     }
   },

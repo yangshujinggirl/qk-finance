@@ -48,3 +48,13 @@ export function GetWhiteList() {
 export function GetProFileList(values) {
     return Req.post('/loanV2/file/findProjectFile', {...values})
 }
+
+// 项目下载 保存
+export function GetSaveFileList(values) {
+    return Req.post('/loanV2/file/saveFileDesc', {...values})
+}
+
+//项目下载 下载
+export function GetDownLoadFile(values) {
+    return Req.post('/loanV2/file/forwardOperationEnd', {...values})
+}

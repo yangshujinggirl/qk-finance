@@ -3,14 +3,6 @@ import { YtMessage } from 'common';
 import { message } from 'antd';
 import { Sessions } from 'utils';
 
- let baseUrlFinance,baseUrlApi;
- switch (process.env.NODE_ENV) {
-   case 'development':
-   case 'uat':
-     baseUrlFinance = 'http://fund05.bravowhale-uat.com/admin/'
-     baseUrlApi = 'http://yuntuappapitest01.bravowhale-uat.com/api'
-     break;
- }
 
 let defaultHeader = {
   'Content-Type': 'application/json',
