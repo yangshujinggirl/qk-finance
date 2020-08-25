@@ -1,9 +1,8 @@
-import {YtStatistic, YtPagination, YtTable, YtBtn} from 'common';
+import {YtMessage, YtPagination, YtTable} from 'common';
 import FilterForm from './components/FilterForm';
 import {columnsIndex} from './columns';
 import './index.less'
 import {getPayPlanList} from '../../../api/collectionPayment';
-import {YtMessage} from 'common';
 
 class AccountStatement extends React.Component {
     state = {
@@ -15,8 +14,8 @@ class AccountStatement extends React.Component {
         list: []
     }
 
+    //初始化数据
     componentDidMount() {
-        //初始化数据
         this.getPayPlanInfo();
     }
 
@@ -55,7 +54,6 @@ class AccountStatement extends React.Component {
         this.setState(p, () => {
             this.getPayPlanInfo();
         })
-
     }
 
     render() {
