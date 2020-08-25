@@ -38,7 +38,7 @@ class YtTable extends Component {
                 dataSource={dataSource}
                 columns={this.props.columns}
                 locale={locale}
-                rowKey={this.props.rowKey ? this.props.rowKey : (record, index) => record.id || record.key || index}
+                rowKey={(record) => record.id || record.key}
                 rowSelection={this.props.rowSelection || null}
                 scroll={scroll && this.props.scroll}/>
         )
