@@ -37,16 +37,15 @@ const AuthModal = ({...props}) => {
             title="授予权限"
             visible={props.visible === 2}
             onOk={handleOk}
-            onCancel = {handleCancel}
-            className = "creat-modal">
-                <Tree
-                    checkable
-                    defaultSelectedKeys={defaultSelectedKeys}
-                    onCheck={onCheck}
-                    treeData={treeData}/>
-            </Modal>
-)
-    ;
+            onCancel={handleCancel}
+            className="creat-modal">
+            <Tree
+                checkable
+                defaultSelectedKeys={defaultSelectedKeys}
+                onCheck={onCheck}
+                treeData={treeData}/>
+        </Modal>
+    );
 }
 
 export default AuthModal;

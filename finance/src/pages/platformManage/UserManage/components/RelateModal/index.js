@@ -1,7 +1,7 @@
 import {Modal, Button, Table} from 'antd';
 import './index.less';
 import {relateUser, getRelateUserList} from '../../../../../api/platformManage/UserManage.js'
-import {YtMessage, YtPagination} from 'common';
+import {YtMessage, YtPagination,YtTable} from 'common';
 import {useState, useEffect} from 'react';
 
 const columns = [
@@ -108,8 +108,9 @@ const CreatModal = ({...props}) => {
             onOk={handleOk}
             onCancel={handleCancel}
             className="creat-modal">
-            <Table
+            <YtTable
                 rowSelection={rowSelection}
+                select={true}
                 columns={columns}
                 dataSource={relateUserList}
             />

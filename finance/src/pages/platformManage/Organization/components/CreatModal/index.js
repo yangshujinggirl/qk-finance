@@ -22,7 +22,7 @@ const CreatModal = ({...props}) => {
             const values = await form.validateFields();
             console.log(values)
             addOrg({...values, id}).then(res => {
-                YtMessage.success('新增成功');
+                YtMessage.success('操作成功');
                 props.onOk && props.onOk(values);
             }, e => {
                 console.log(e)
