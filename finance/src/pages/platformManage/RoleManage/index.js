@@ -38,8 +38,10 @@ const Index = ({...props}) => {
     const getPermissionTrees = (roleId) => {
         getPermissionTree(roleId).then(res => {
             let arr = getTree(res.data)
-            setTreeData(arr)
-            setVisible(2);
+            setTreeData(arr);
+            setTimeout(()=>{
+                setVisible(2);
+            },500)
         })
     }
 
@@ -146,8 +148,11 @@ const Index = ({...props}) => {
             <CreatModal data={currentItem} visible={visible} onOk={onOk} onCancel={onCancel}/>
             <AuthModal treeData={treeData}
                        roleid={currentItem.roleId}
+                       defaultExpandedKeys={['O6G64S18HSSEGHM7XMHE00765LKT8E30']}
                        defaultSelectedKeys={defaultSelectedKeys}
-                       visible={visible} onOk={onAuthOk} onCancel={onCancel}/>
+                       visible={visible}
+                       onOk={onAuthOk}
+                       onCancel={onCancel}/>
         </div>
     )
 }
