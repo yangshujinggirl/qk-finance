@@ -16,7 +16,10 @@ const CreatModal = ({...props}) => {
     const [treeOrgs, setTreeOrgs] = useState([]);
     const {userPassword, id, userId} = props.data;
     const [form] = Form.useForm();
+    const title = props.visible === 1 ? '新增' : '编辑';
+    const visible = props.visible === 1 || props.visible === 3;
     form.setFieldsValue({...props.data, userPassword2: userPassword})
+    //确认操作
     const handleOk = async () => {
         const values = await form.validateFields();
         if (values.userPassword2 !== values.userPassword) {
@@ -34,6 +37,7 @@ const CreatModal = ({...props}) => {
             }, 500)
         })
     };
+    //取消操作
     const handleCancel = (e) => {
         //清空表单
         form.resetFields()
@@ -42,7 +46,6 @@ const CreatModal = ({...props}) => {
     // 角色管理API
     const getTreeOrgs = () => {
         getTreeOrg().then(res => {
-            console.log(res.data)
             let arr = []
             res.data.data.forEach(item => {
                 arr.push({
@@ -60,8 +63,8 @@ const CreatModal = ({...props}) => {
         <Modal
             getContainer={false}
             width={520}
-            title="新增"
-            visible={props.visible === 1}
+            title={title}
+            visible={visible}
             onOk={handleOk}
             onCancel={handleCancel}
             className="creat-modal"

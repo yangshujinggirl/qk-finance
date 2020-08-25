@@ -1,28 +1,25 @@
 import {useState, useEffect} from 'react';
-import {YtStatistic, YtPagination, YtTable, YtBtn} from 'common';
+import {YtStatistic, YtPagination, YtTable, YtBtn, YtMessage} from 'common';
+import {getRoleList, deleteRole, getPermissionTree} from '../../../api/platformManage/RoleManage.js';
 import FilterForm from './components/FilterForm';
 import CreatModal from './components/CreatModal';
 import AuthModal from './components/AuthModal';
 import {columnsIndex} from './columns';
 import './index.less'
-import {getRoleList, deleteRole, saveRolePermissionRef} from '../../../api/platformManage/RoleManage.js';
 import {Modal} from 'antd';
-import {YtMessage} from 'common';
-import {getPermissionTree} from "../../../api/platformManage/RoleManage";
 
 const Index = ({...props}) => {
     const [visible, setVisible] = useState(false);
     const [currentItem, setCurrentItem] = useState({});
     const [totalSize, setTotalSize] = useState(1);
     const [treeData, setTreeData] = useState({});
+    const [list, setList] = useState([]);
     const [defaultSelectedKeys, setDefaultSelectedKeys] = useState([]);
-
     const [param, setParam] = useState({
         roleName: '',
         pageNow: 1,
         pageSize: 5,
     });
-    const [list, setList] = useState([]);
     const {
         pageNow,
         pageSize,
@@ -34,7 +31,7 @@ const Index = ({...props}) => {
             setList(res.data.result)
         })
     }
-    // 授权树
+    // 获取授权数据
     const getPermissionTrees = (roleId) => {
         getPermissionTree(roleId).then(res => {
             let arr = getTree(res.data)
@@ -44,7 +41,7 @@ const Index = ({...props}) => {
             }, 500)
         })
     }
-
+    //处理数据为树结构
     const getTree = (list) => {
         if (!list.length) return
         let arr = []
@@ -61,6 +58,7 @@ const Index = ({...props}) => {
             if (!obj.children) delete obj.children;
             arr.push(obj)
         })
+        //设置回显值
         setDefaultSelectedKeys(arr2)
         return arr;
     }
@@ -71,7 +69,6 @@ const Index = ({...props}) => {
     //查询
     const search = ({roleName}) => {
         let p = {...param, roleName};
-        console.log(p)
         setParam(p);
         getRoleLists(p);
     }
@@ -81,24 +78,28 @@ const Index = ({...props}) => {
         setParam(p);
         getRoleLists(p);
     }
+    //新增弹窗
     const goCreat = () => {
         setCurrentItem({})
         setVisible(1);
     }
+    //确认保存
     const onOk = () => {
         getRoleLists(param);
         setVisible(false);
         setCurrentItem({})
     }
+    //取消操作
     const onCancel = () => {
         setCurrentItem({})
         setVisible(false);
         setCurrentItem({})
     }
+    //表单操作
     const onOperateClick = ({type, item}) => {
         switch (type) {
             case 'edit':
-                setVisible(1);
+                setVisible(3);
                 setCurrentItem(item);
                 break;
             case 'delete':
@@ -124,8 +125,8 @@ const Index = ({...props}) => {
                 })
             }
         });
-        console.log(record)
     }
+    //取消授权
     const onAuthOk = (item) => {
         setVisible(false);
     }

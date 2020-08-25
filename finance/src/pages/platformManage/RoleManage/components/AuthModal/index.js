@@ -42,7 +42,6 @@ const AuthModal = ({...props}) => {
     //选择授权对象
     const onCheck = (e) => {
         setCheckeds(e)
-        console.log(e);
     };
 
     return (

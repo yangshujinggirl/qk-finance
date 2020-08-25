@@ -1,12 +1,9 @@
-import {AutoComplete, DatePicker, Col, Row, Form, Input, Button, Select} from 'antd';
+import {Col, Row, Form, Input} from 'antd';
 import {BaseFilter, YtBtn} from 'common';
 import moment from 'moment';
 import {FormInstance} from 'antd/lib/form';
 import './index.less';
 
-const {RangePicker} = DatePicker;
-
-const {Option} = Select;
 
 class FilterForm extends BaseFilter {
     formRef = React.createRef();

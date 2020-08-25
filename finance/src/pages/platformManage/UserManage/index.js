@@ -8,8 +8,6 @@ import './index.less'
 import {
     getUserList,
     validUser,
-    relateUser,
-    getRelateUserList,
     getRelatedUser
 } from '../../../api/platformManage/UserManage.js';
 import {Modal} from 'antd';
@@ -21,7 +19,6 @@ const Index = ({...props}) => {
     const [currentItem, setCurrentItem] = useState({});
     const [totalSize, setTotalSize] = useState(1);
     const [relate_totalSize, setRelate_totalSize] = useState(1);
-    const [relateUserList, setRelateUserList] = useState([]);
     const [relatedUser, setRelatedUser] = useState([]);
     const [param, setParam] = useState({
         userName: '',
@@ -55,7 +52,7 @@ const Index = ({...props}) => {
             //编辑
             case 'edit':
                 //显示弹窗
-                setVisible(1);
+                setVisible(3);
                 //设置当前操作记录项
                 setCurrentItem(item);
                 break;
@@ -67,7 +64,6 @@ const Index = ({...props}) => {
             case 'relate':
                 //获取已关联用户
                 getRelatedUsers(item.id);
-                setVisible(2);
                 setCurrentItem(item);
                 break;
         }
@@ -80,6 +76,9 @@ const Index = ({...props}) => {
                 arr.push(item.roleId)
             })
             setRelatedUser(arr);
+            setTimeout(() => {
+                setVisible(2);
+            }, 500)
         })
     }
     //停用
@@ -102,18 +101,22 @@ const Index = ({...props}) => {
             }
         });
     }
+    //新增弹窗
     const goCreat = () => {
         setVisible(1);
     }
+    //确认操作
     const onOk = () => {
         getUserLists(param);
         setCurrentItem({})
         setVisible(false);
     }
+    //取消操作
     const onCancel = () => {
         setCurrentItem({})
         setVisible(false);
     }
+    //关联成功
     const onRelateOk = (item) => {
         setVisible(false);
     }
@@ -142,7 +145,6 @@ const Index = ({...props}) => {
                         onCancel={onCancel}/>
             <RelateModal data={currentItem}
                          relatedUser={relatedUser}
-                         selectedRowKeys={1}
                          visible={visible}
                          onOk={onRelateOk}
                          onCancel={onCancel}/>

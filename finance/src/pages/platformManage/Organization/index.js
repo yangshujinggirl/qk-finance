@@ -38,7 +38,7 @@ const Index = ({...props}) => {
     }
     //新增弹窗
     const goCreat = () => {
-        setVisible(true);
+        setVisible(1);
         setCurrentItem({})
     }
     //确认新增
@@ -68,7 +68,7 @@ const Index = ({...props}) => {
     const onOperateClick = ({type, item}) => {
         switch (type) {
             case 'edit':
-                setVisible(true);
+                setVisible(2);
                 setCurrentItem(item);
                 break;
             case 'delete':

@@ -1,4 +1,4 @@
-import {Form, Select, Row, Radio, Col, Modal, Checkbox, Button, Input} from 'antd';
+import {Form, Select, Row, Col, Modal, Button, Input} from 'antd';
 import './index.less';
 import {YtMessage} from 'common';
 import {addRole} from '../../../../../api/platformManage/RoleManage.js'
@@ -41,8 +41,8 @@ const CreatModal = ({...props}) => {
         <Modal
             getContainer={false}
             width={520}
-            title="新增"
-            visible={props.visible === 1}
+            title={props.visible === 1 ? '新增' : '编辑'}
+            visible={props.visible === 1 || props.visible === 3}
             onOk={handleOk}
             onCancel={handleCancel}
             className="creat-modal"

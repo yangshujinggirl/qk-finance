@@ -25,20 +25,9 @@ const columns = [
     },
 ];
 
-const CreatModal = ({...props}) => {
+const RelateModal = ({...props}) => {
     const {relatedUser} = props
-    console.log('relatedUser', relatedUser);
     const [selectedRowKeys, setSelectedRowKeys] = useState(relatedUser);
-    console.log('selectedRowKeys', selectedRowKeys);
-    //表格选中实时回显
-    useEffect(() => {
-        setSelectedRowKeys(relatedUser);
-    }, [relatedUser]);
-    console.log('selectedRowKeys', selectedRowKeys);
-    //获取用户数据
-    useEffect(() => {
-        getRelateUserLists();
-    }, []);
     const [relateUserList, setRelateUserList] = useState([]);
     const [totalSize, setTotalSize] = useState(1);
     const [param, setParam] = useState({
@@ -49,6 +38,16 @@ const CreatModal = ({...props}) => {
         pageNow,
         pageSize,
     } = {...param}
+    //表格选中实时回显
+    useEffect(() => {
+        if (relatedUser.length) {
+            setSelectedRowKeys(relatedUser);
+        }
+    }, [relatedUser]);
+    //获取用户数据
+    useEffect(() => {
+        getRelateUserLists();
+    }, []);
     // 角色关联列表API
     const getRelateUserLists = () => {
         getRelateUserList(param).then(res => {
@@ -95,7 +94,6 @@ const CreatModal = ({...props}) => {
         selectedRowKeys,
         onChange: selectedRowKeys => {
             setSelectedRowKeys(selectedRowKeys)
-            console.log(selectedRowKeys);
         },
     };
     return (
@@ -108,7 +106,6 @@ const CreatModal = ({...props}) => {
             className="creat-modal">
             <YtTable
                 rowSelection={rowSelection}
-                select={true}
                 columns={columns}
                 dataSource={relateUserList}
             />
@@ -118,4 +115,4 @@ const CreatModal = ({...props}) => {
     );
 }
 
-export default CreatModal;
+export default RelateModal;
