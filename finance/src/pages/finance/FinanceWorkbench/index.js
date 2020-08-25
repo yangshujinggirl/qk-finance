@@ -8,13 +8,11 @@ import AssetDynamicChart from './components/AssetDynamicChart';
 import columns, {management} from './columns';
 import FundPoolChart from '../../components/FundPoolChart'
 import {
-    GetListApi,
     GetManagementListApi,
     GetStatisticsDataApi,
     GetDateApi,
     GetAssetPoolApi,
     GetWarningInfoApi,
-    GetCashflowApi,
 } from 'api/finance/FinanceWorkbench';
 import './index.less';
 import stateIcon0 from './image/icon_state0.png';
@@ -37,12 +35,8 @@ class OperateWorkbench extends React.Component {
     }
 
     componentWillMount() {
-        console.log(111);
         // 融资企业
         this.GetManagementList()
-        //现金流
-        this.GetCashflow()
-        this.GetList()
         //日期时间
         this.GetDate()
         //统计信息
@@ -53,13 +47,10 @@ class OperateWorkbench extends React.Component {
         this.GetWarningInfo()
     }
 
-    componentDidMount() {
-        console.log(222);
-    }
-
     // 融资企业
     GetManagementList() {
         GetManagementListApi({pageSize: 3, pageNow: 1}).then(res => {
+            res.data.forEach((item, index) => item.key = index);//ant table rowkey
             let managementList = res.data;
             let p = {...this.state, managementList}
             this.setState(p)
@@ -84,15 +75,6 @@ class OperateWorkbench extends React.Component {
         })
     }
 
-    //现金流
-    GetCashflow() {
-        GetCashflowApi({pageSize: 3, pageNow: 1}).then(res => {
-            let cashflow = res.data;
-            let p = {...this.state, cashflow}
-            this.setState(p)
-        })
-    }
-
     //资产池
     GetAssetPool() {
         GetAssetPoolApi({pageSize: 3, pageNow: 1}).then(res => {
@@ -105,24 +87,16 @@ class OperateWorkbench extends React.Component {
     //预警信息
     GetWarningInfo() {
         GetWarningInfoApi({pageSize: 3, pageNow: 1}).then(res => {
+            res.data.forEach((item, index) => item.key = index);//ant table rowkey
             let warningInfo = res.data;
             let p = {...this.state, warningInfo}
             this.setState(p)
         })
     }
 
-    GetList() {
-        GetListApi()
-            .then((res) => {
-                console.log(res)
-            })
-    }
-
     render() {
-        console.log(333);
         let {managementList, statisticsData, warningInfo, assetPool, dateInfo} = this.state
         let {currentLoanData, receivableData, loanWithdrawalData} = statisticsData
-        console.log(statisticsData)
         return (
             <div className="financeWorkbench-pages-wrap">
                 <div className="box-flex">
