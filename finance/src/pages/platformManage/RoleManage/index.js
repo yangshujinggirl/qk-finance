@@ -39,9 +39,9 @@ const Index = ({...props}) => {
         getPermissionTree(roleId).then(res => {
             let arr = getTree(res.data)
             setTreeData(arr);
-            setTimeout(()=>{
+            setTimeout(() => {
                 setVisible(2);
-            },500)
+            }, 500)
         })
     }
 
@@ -82,15 +82,18 @@ const Index = ({...props}) => {
         getRoleLists(p);
     }
     const goCreat = () => {
+        setCurrentItem({})
         setVisible(1);
     }
     const onOk = () => {
         getRoleLists(param);
         setVisible(false);
+        setCurrentItem({})
     }
     const onCancel = () => {
         setCurrentItem({})
         setVisible(false);
+        setCurrentItem({})
     }
     const onOperateClick = ({type, item}) => {
         switch (type) {
@@ -124,15 +127,7 @@ const Index = ({...props}) => {
         console.log(record)
     }
     const onAuthOk = (item) => {
-        handleAuth(item);
         setVisible(false);
-    }
-    //授权
-    const handleAuth = (record) => {
-        saveRolePermissionRef({roleid: record.roleid, allPermissionId: ''}).then(res => {
-            YtMessage.success('授权成功');
-        });
-        console.log(record)
     }
     return (
         <div className="account-organization-wrap yt-common-list-pages-wrap">
@@ -148,8 +143,7 @@ const Index = ({...props}) => {
             <CreatModal data={currentItem} visible={visible} onOk={onOk} onCancel={onCancel}/>
             <AuthModal treeData={treeData}
                        roleid={currentItem.roleId}
-                       defaultExpandedKeys={['O6G64S18HSSEGHM7XMHE00765LKT8E30']}
-                       defaultSelectedKeys={defaultSelectedKeys}
+                       defaultSelectedKey={defaultSelectedKeys}
                        visible={visible}
                        onOk={onAuthOk}
                        onCancel={onCancel}/>

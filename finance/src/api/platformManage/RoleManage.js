@@ -23,5 +23,5 @@ export function getPermissionTree(id) {
 
 // 授予权限2
 export function saveRolePermissionRef({allPermissionId, roleid}) {
-    return Req.post(`/role/saveRolePermissionRef?allPermissionId=${allPermissionId}&roleid=${roleid}`, values)
+    return Req.post(`/role/saveRolePermissionRef?allPermissionId=${allPermissionId}&roleid=${roleid}`)
 }

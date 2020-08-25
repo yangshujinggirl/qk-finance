@@ -5,10 +5,20 @@ import {saveRolePermissionRef, getPermissionTree} from '../../../../../api/platf
 import {useState, useEffect} from 'react';
 
 const AuthModal = ({...props}) => {
-    const {treeData, defaultSelectedKeys, roleid} = props;
-    const [checkeds, setCheckeds] = useState([]);
-    console.log(defaultSelectedKeys);
-    console.log(treeData[0]);
+    const {treeData, roleid, defaultSelectedKey} = props;
+    const [checkeds, setCheckeds] = useState(defaultSelectedKey);
+    const [defaultExpandedKeys, setDefaultExpandedKeys] = useState([]);
+    //选中实时回显
+    useEffect(() => {
+        if (defaultSelectedKey.length) {
+            setCheckeds(defaultSelectedKey)
+        }
+        if (treeData[0]) {
+            //默认展开根结点
+            setDefaultExpandedKeys([treeData[0].key]);
+        }
+    }, [treeData, defaultSelectedKey]);
+//确定授权
     const handleOk = async () => {
         try {
             saveRolePermissionRef({
@@ -16,16 +26,19 @@ const AuthModal = ({...props}) => {
                 roleid
             }).then(res => {
                 YtMessage.success('操作成功');
-                props.onOk && props.onOk(values);
+                setCheckeds([])
+                props.onOk && props.onOk();
             })
         } catch (errorInfo) {
-
             console.log("Failed:", errorInfo);
         }
     };
+//取消选择
     const handleCancel = (e) => {
+        setCheckeds([])
         props.onCancel()
     };
+//选择授权对象
     const onCheck = (e) => {
         setCheckeds(e)
         console.log(e);
@@ -37,16 +50,16 @@ const AuthModal = ({...props}) => {
             title="授予权限"
             visible={props.visible === 2}
             onOk={handleOk}
-            onCancel = {handleCancel}
-            className = "creat-modal">
-                <Tree
-                    checkable
-                    defaultSelectedKeys={defaultSelectedKeys}
-                    onCheck={onCheck}
-                    treeData={treeData}/>
-            </Modal>
-)
-    ;
+            onCancel={handleCancel}
+            className="creat-modal">
+            <Tree
+                checkable
+                defaultExpandedKeys={defaultExpandedKeys}
+                checkedKeys={checkeds}
+                onCheck={onCheck}
+                treeData={treeData}/>
+        </Modal>
+    );
 }
 
 export default AuthModal;

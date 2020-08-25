@@ -14,10 +14,9 @@ const formItemLayout = {
 };
 const CreatModal = ({...props}) => {
     const [treeOrgs, setTreeOrgs] = useState([]);
-    const {userPassword, id} = props.data;
-    props.data.userPassword2 = userPassword
+    const {userPassword, id, userId} = props.data;
     const [form] = Form.useForm();
-    form.setFieldsValue(props.data)
+    form.setFieldsValue({...props.data, userPassword2: userPassword})
     const handleOk = async () => {
         try {
             const values = await form.validateFields();
@@ -25,11 +24,18 @@ const CreatModal = ({...props}) => {
                 YtMessage.error('密码不一致');
                 return;
             }
-            console.log(values)
-            addUser({...values, id}).then(res => {
-                console.log(res);
+            delete values.userPassword2
+            addUser({...values, id, userId}).then(res => {
                 YtMessage.success('操作成功');
+                //清空表单
+                form.resetFields()
                 props.onOk && props.onOk(values);
+            }, e => {
+                console.log("e:", e);
+
+            }).catch(e=>{
+                console.log("catch:", e);
+
             })
         } catch (errorInfo) {
             YtMessage.error('操作失败');
@@ -37,6 +43,8 @@ const CreatModal = ({...props}) => {
         }
     };
     const handleCancel = (e) => {
+        //清空表单
+        form.resetFields()
         props.onCancel()
     };
     // 角色管理API
@@ -58,6 +66,7 @@ const CreatModal = ({...props}) => {
     }, []);
     return (
         <Modal
+            getContainer={false}
             width={520}
             title="新增"
             visible={props.visible === 1}

@@ -1,7 +1,7 @@
 import {Modal, Button, Table} from 'antd';
 import './index.less';
 import {relateUser, getRelateUserList} from '../../../../../api/platformManage/UserManage.js'
-import {YtMessage, YtPagination} from 'common';
+import {YtMessage, YtPagination, YtTable} from 'common';
 import {useState, useEffect} from 'react';
 
 const columns = [
@@ -27,9 +27,19 @@ const columns = [
 
 const CreatModal = ({...props}) => {
     const {relatedUser} = props
-    console.log(relatedUser);
-    const [relateUserList, setRelateUserList] = useState([]);
+    console.log('relatedUser',relatedUser);
     const [selectedRowKeys, setSelectedRowKeys] = useState(relatedUser);
+    console.log('selectedRowKeys',selectedRowKeys);
+    //表格选中实时回显
+    useEffect(() => {
+        setSelectedRowKeys(relatedUser);
+    }, [relatedUser]);
+    console.log('selectedRowKeys',selectedRowKeys);
+    //获取用户数据
+    useEffect(() => {
+        getRelateUserLists();
+    }, []);
+    const [relateUserList, setRelateUserList] = useState([]);
     const [totalSize, setTotalSize] = useState(1);
     const [param, setParam] = useState({
         pageNow: 1,
@@ -49,21 +59,16 @@ const CreatModal = ({...props}) => {
             setRelateUserList(res.data.result)
         })
     }
-    //获取用户数据
-    useEffect(() => {
-        getRelateUserLists();
-    }, []);
-
     //分页
     const pagination = (pageNow) => {
         let p = {...param, pageNow};
         setParam(p);
         getRelateUserLists(p);
     }
+    //确定关联
     const handleOk = async () => {
         try {
             let {id, userId} = props.data
-            //角色关联
             relateUser({
                 id,
                 roleIds: selectedRowKeys.join(','),
@@ -80,24 +85,17 @@ const CreatModal = ({...props}) => {
             console.log("Failed:", errorInfo);
         }
     };
+    //取消选择
     const handleCancel = (e) => {
         setSelectedRowKeys([])
         props.onCancel()
     };
+    //表格选择配置
     const rowSelection = {
         selectedRowKeys,
         onChange: selectedRowKeys => {
             setSelectedRowKeys(selectedRowKeys)
             console.log(selectedRowKeys);
-        },
-        selections: true, // 不设置的话表格项不可以手动勾选和取消
-        getCheckboxProps: record => {
-            console.log(relatedUser.includes(`${record.roleId}`));
-            return {
-                props: {
-                    defaultChecked: !!relatedUser.includes(`${record.roleId}`)
-                }
-            };
         },
     };
     return (
@@ -108,8 +106,9 @@ const CreatModal = ({...props}) => {
             onOk={handleOk}
             onCancel={handleCancel}
             className="creat-modal">
-            <Table
+            <YtTable
                 rowSelection={rowSelection}
+                select={true}
                 columns={columns}
                 dataSource={relateUserList}
             />
