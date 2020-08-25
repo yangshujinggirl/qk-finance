@@ -23,6 +23,8 @@ const CreatModal = ({...props}) => {
             console.log(values)
             addRole({...values, id}).then(res => {
                 YtMessage.success('操作成功');
+                //清空表单
+                form.resetFields()
                 props.onOk && props.onOk(values);
             })
 
@@ -33,9 +35,12 @@ const CreatModal = ({...props}) => {
     };
     const handleCancel = (e) => {
         props.onCancel()
+        //清空表单
+        form.resetFields()
     };
     return (
         <Modal
+            getContainer={false}
             width={520}
             title="新增"
             visible={props.visible === 1}

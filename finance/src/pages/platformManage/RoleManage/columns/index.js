@@ -9,7 +9,7 @@ const columnsIndex = [
 
     {
         title: '序号',
-        dataIndex: 'id',
+        dataIndex: 'key',
         render: (text, record, index) => {
             return index + 1
         }

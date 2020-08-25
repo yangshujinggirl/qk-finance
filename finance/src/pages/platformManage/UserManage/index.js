@@ -107,6 +107,7 @@ const Index = ({...props}) => {
     }
     const onOk = () => {
         getUserLists(param);
+        setCurrentItem({})
         setVisible(false);
     }
     const onCancel = () => {
