@@ -1,6 +1,12 @@
 import { Link } from 'react-router-dom';
 import NP from 'number-precision';
 
+let applyLoanStatusMap = {
+  1:"未占用",
+  2:"预占用",
+  3:"已占用",
+  4:"已请款"
+}
 const columnsList =[
         {
           title: '序号',
@@ -35,25 +41,30 @@ const columnsList =[
           }
         },
         {
-        title: '资产状态',
-        dataIndex: 'assetStatus',
+          title: '资产状态',
+          dataIndex: 'applyLoanStatus',
+          render:(text,record,index)=>{
+            return <>{applyLoanStatusMap[record.applyLoanStatus]}</>
+          }
         },
         {
-        title: '融资状态',
-        dataIndex: 'applyLoanStatus',
-        },
-        {
-          title: '验真状态',
-          dataIndex: 'assetStatus',
+          title: '融资状态',
+          dataIndex: 'rzzt',
+          render:(text,record,index)=>{
+            return <>待融资</>
+          }
         },
         {
           title: '验真结果',
-          dataIndex: 'assetStatus',
+          dataIndex: 'yzjg',
+          render:(text,record,index)=>{
+            return <>验真通过</>
+          }
         },
-        {
-        title: '上链节点',
-        dataIndex: 'nodeBlockDate',
-        },
+        // {
+        // title: '上链节点',
+        // dataIndex: 'nodeBlockDate',
+        // },
         {
           title: '操作',
           dataIndex: '操作',

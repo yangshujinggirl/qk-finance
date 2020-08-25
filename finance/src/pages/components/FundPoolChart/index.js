@@ -146,7 +146,7 @@ const IndexChart=({...props})=>{
                     </div>
                     {
                       index<1?
-                      <img src={arrowImg0} className={`lf-line${index} line-img`}/>
+                      <img src={arrowImg2} className={`lf-line${index} line-img`}/>
                       :
                       <img src={arrowImg1} className={`lf-line${index} line-img`}/>
                     }

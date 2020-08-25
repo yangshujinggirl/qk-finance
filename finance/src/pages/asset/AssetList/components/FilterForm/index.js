@@ -51,13 +51,7 @@ class FilterForm extends BaseFilter{
           </Col>
           <Col {...this.colspans}>
             <Form.Item name="orderSourceCompany" label="债务方">
-              <Select
-                placeholder="请选择"
-                allowClear>
-                <Option value="male">male</Option>
-                <Option value="female">female</Option>
-                <Option value="other">other</Option>
-              </Select>
+              <Input placeholder="请输入" autoComplete="off"/>
             </Form.Item>
           </Col>
           <Col {...this.colspans}>

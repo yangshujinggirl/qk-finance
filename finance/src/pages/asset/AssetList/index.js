@@ -33,12 +33,7 @@ const FinanceShow=({...props})=> {
     GetTotalApi(params)
     .then((res)=> {
       const { aseetsStatisticsVO } =res.data;
-      setTotalData({
-        assetTotalCount:aseetsStatisticsVO.assetTotalCount,
-        assetsRatio:aseetsStatisticsVO.assetsRatio,
-        assetsTotal:aseetsStatisticsVO.assetsTotal,
-        averageAccountingPeriod:aseetsStatisticsVO.averageAccountingPeriod,
-      })
+      setTotalData(aseetsStatisticsVO)
     })
   }
   const fetchList=(values )=>{
@@ -81,30 +76,30 @@ const FinanceShow=({...props})=> {
         <div className="box-flex">
           <ViewCardPane label="累计资产总笔数" num={totalData.assetTotalCount}>
             <div className="box-flex">
-              <YtStatistic value="12%" type="up">周同比</YtStatistic>
-              <YtStatistic value="12%" type="up">日环比</YtStatistic>
-              <YtStatistic value="2笔">本日新增</YtStatistic>
+              {/* <YtStatistic value="12%" type="up">周同比</YtStatistic>
+              <YtStatistic value="12%" type="up">日环比</YtStatistic> */}
+              <YtStatistic value={`${totalData.assetTotalCountToday}笔`}>本日新增</YtStatistic>
             </div>
           </ViewCardPane>
           <ViewCardPane label="累计资产总额(万元)" num={totalData.assetsTotal}>
             <div className="box-flex">
-              <YtStatistic value="12%" type="up">周同比</YtStatistic>
-              <YtStatistic value="12%" type="up">日环比</YtStatistic>
-              <YtStatistic value="15万">本日新增</YtStatistic>
+              {/* <YtStatistic value="12%" type="up">周同比</YtStatistic>
+              <YtStatistic value="12%" type="up">日环比</YtStatistic> */}
+              <YtStatistic value={`${totalData.assetsTotalToday}万`}>本日新增</YtStatistic>
             </div>
           </ViewCardPane>
           <ViewCardPane label="资产平均账期(天)" num={totalData.averageAccountingPeriod}>
             <div className="box-flex">
-              <YtStatistic value="12%" type="up">周同比</YtStatistic>
-              <YtStatistic value="12%" type="up">日环比</YtStatistic>
-              <YtStatistic value="50天">账期</YtStatistic>
+              {/* <YtStatistic value="12%" type="up">周同比</YtStatistic>
+              <YtStatistic value="12%" type="up">日环比</YtStatistic> */}
+              <YtStatistic value={`${totalData.realDate}天`}>账期</YtStatistic>
             </div>
           </ViewCardPane>
           <ViewCardPane label="资产验真比率" num={totalData.assetsRatio}>
-            <div className="box-flex">
+            {/* <div className="box-flex">
               <YtStatistic value="12%" type="up">周同比</YtStatistic>
               <YtStatistic value="12%" type="up">日环比</YtStatistic>
-            </div>
+            </div> */}
           </ViewCardPane>
         </div>
         <div className="yt-common-list-pages-wrap">

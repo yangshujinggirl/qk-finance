@@ -27,3 +27,15 @@ export function GetDeleteAssetApi(values){
 export function GetFilterDataApi(values){
     return Req.post('/assets/package/filter/assetsList',{...values})
 }
+//资产集中度
+export function GetConcentrApi(values){
+    return Req.post('/assets/package/sourceRate',{...values})
+}
+//账期
+export function GetRealDayApi(values){
+    return Req.post('/assets/package/satatistics/realDay',{...values})
+}
+//资产分类
+export function GetAssetTypeApi(values){
+    return Req.post('/assets/package/realDate/statistics',{...values})
+}

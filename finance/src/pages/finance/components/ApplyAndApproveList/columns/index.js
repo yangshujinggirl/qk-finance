@@ -5,18 +5,12 @@ const columnsList =(handleType, pagination)=>{
           {
 						title: '序号',
 						fixed: 'left',
-						render:(text,record,index)=>{
-							return <> {
-								<span>{(pagination.pageNow-1)*pagination.pageSize+index+1}</span>
-							}
-							</>
-						}
+            dataIndex: 'key',
           },
           {
           title: '融资编号',
           className: 'column-money',
           dataIndex: 'loanNo',
-          align: 'right',
           },
           {
           title: '申请日期',
@@ -28,7 +22,7 @@ const columnsList =(handleType, pagination)=>{
           },
           {
           title: '项目名称',
-          dataIndex: 'packageId',
+          dataIndex: 'projectName',
           },
           {
           title: '资产包金额（万元）',

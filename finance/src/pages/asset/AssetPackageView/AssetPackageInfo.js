@@ -1,5 +1,6 @@
 import { Table, Progress, Tabs } from 'antd';
 import { Link } from 'react-router-dom';
+import NP from 'number-precision';
 import { useState, useEffect } from 'react';
 import { YtMessage, YtBreadcrumbName, YtTable, YtBtn, YtPagination, YtCard } from 'common';
 import AssetInfoHead from './components/AssetInfoHead';
@@ -10,17 +11,57 @@ import AssetStatusChart from './components/info/AssetStatusChart';
 import ProcessChart from './components/info/ProcessChart';
 import TableList from './components/info/TableList';
 
-import { GetInfoApi, GetFilterDataApi } from 'api/asset/AssetPackageInfo';
+import { GetAssetTypeApi, GetConcentrApi, GetInfoApi, GetFilterDataApi } from 'api/asset/AssetPackageInfo';
 import './AssetPackageInfo.less';
 
 
 const AssetPackageInfo=({...props})=>{
   const [totalData,setTotalData] = useState({});
+  const [processData,setProcessData] = useState([]);
+  const [list,setList] = useState([]);
+  const [rateTotal,setRateTotal] = useState(0);
   const { id:packetId } = props.match.params;
   const fetchInfo=()=>{
     GetInfoApi({packetId})
     .then((res)=>{
       setTotalData(res.data.result);
+    })
+  }
+  const fetchConcentr=()=>{
+    GetConcentrApi({packetId})
+    .then((res)=>{
+      const { data } =res;
+      let sum=0
+      data.rateList.map((el) => {
+        el[1] = NP.round(el[1],2);
+        sum = NP.plus(sum,el[1]);
+      })
+      setList(data.rateList);
+      setRateTotal(sum);
+    })
+  }
+  const fetchAssetType=()=>{
+    GetAssetTypeApi({ packetId })
+    .then((res)=>{
+      const { data } =res;
+      const { totalCount, normalCount, sencondCount, troubleCount, lossCount } =data;
+      const processData=[{
+          value:`${NP.round(NP.divide(lossCount,totalCount),2)}%`,
+          key:'损失',
+        },{
+          value:`${NP.round(NP.divide(troubleCount,totalCount),2)}%`,
+          key:'可疑',
+        },{
+          value:`${NP.round(NP.divide(sencondCount,totalCount),2)}%`,
+          key:'次级',
+        },{
+          value:`${NP.round(NP.divide(noticeCount,totalCount),2)}%`,
+          key:'关注',
+        },{
+          value:`${NP.round(NP.divide(normalCount,totalCount),2)}%`,
+          key:'正常',
+        }]
+      setProcessData(processData);
     })
   }
   const goFilter=()=>{
@@ -30,29 +71,13 @@ const AssetPackageInfo=({...props})=>{
       window.location.reload()
     })
   }
-  const processData=[
-    {
-      value:'8%',
-      key:'损失',
-    },
-    {
-      value:'12%',
-      key:'可疑',
-    },
-    {
-      value:'20%',
-      key:'次级',
-    },
-    {
-      value:'25%',
-      key:'关注',
-    },
-    {
-      value:'35%',
-      key:'正常',
-    }]
 
-  useEffect(()=>{ fetchInfo() },[packetId]);
+
+  useEffect(()=>{
+    fetchAssetType();
+    fetchInfo();
+    fetchConcentr()
+  },[packetId]);
 
 
   const linkList =[
@@ -75,30 +100,23 @@ const AssetPackageInfo=({...props})=>{
           <YtBtn size="free" onClick={goFilter}>过滤异常数据</YtBtn>
         </AssetInfoHead>
         <div className="three-module-wrap common-column-module-wrap">
-          <div className="part-same-shadow module-equal-thr-wrap">
-            <AssetChangeChart />
+          <div className="part-same-shadow module-left-wrap">
+            <AssetPaymentChart packetId={packetId}/>
           </div>
-          <div className="part-same-shadow module-equal-thr-wrap">
-            <AssetPaymentChart />
-          </div>
-          <div className="two-row-mod module-equal-thr-wrap">
+          <div className="two-row-mod module-right-wrap">
              <YtCard title="资产状态" className="part-same-shadow">
                 <ProcessChart data={processData}/>
              </YtCard>
-             <YtCard title="资产集中度" className="part-same-shadow" extra={<span>合计90%</span>}>
+             <YtCard title="资产集中度" className="part-same-shadow" extra={<span>合计{rateTotal}%</span>}>
                 <div className="asset-focus">
-                  <div className="process-item">
-                    滑县鑫农农资有限公司
-                    <Progress percent={30} />
-                  </div>
-                  <div className="process-item">
-                    滑县鑫农农资有限公司
-                    <Progress percent={30} />
-                  </div>
-                  <div className="process-item">
-                    滑县鑫农农资有限公司
-                    <Progress percent={30} />
-                  </div>
+                  {
+                    list.map((el,index)=>(
+                      <div className="process-item" key={index}>
+                        {el[0]}
+                        <Progress percent={el[1]} />
+                      </div>
+                    ))
+                  }
                 </div>
              </YtCard>
           </div>

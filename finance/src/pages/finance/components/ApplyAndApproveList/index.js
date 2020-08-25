@@ -1,4 +1,5 @@
 import { Statistic, Progress } from 'antd';
+import moment from 'moment';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import { YtStatistic, YtPagination, YtTable, YtBtn } from 'common';
 import ViewCardPane from '../../../components/ViewCardPane';
@@ -14,78 +15,58 @@ function withSubscription(handleType,Mod) {
   return class FinanceShow extends React.Component {
     state={
       visible:false,
+      inputValues:{},
 			data: [],
 			pagination: {
-				totalSize: 0, 
-				totalPage: 0, 
-				pageSize: 15, 
+				totalSize: 0,
+				pageSize: 15,
 				pageNow: 1,
 			},
-			searchParam: {
-				loanStatus:-1
-			},
-			summary: {
-				total1: 0,
-				total2: 0,
-				total3: 0,
-				total4: 0,
-				w1: 0,
-				w2: 0,
-				w3: 0,
-				w4: 0,
-				d1: 0,
-				d2: 0,
-				d3: 0,
-				d4: 0,
-				a1: 0,
-				a2: 0,
-				a3: 0,
-				a4: 0
-			}
+			summary: {}
     }
-		fetchFinanceList=()=> {
-			const param={
-				pageSize: this.state.pagination.pageSize,
-				pageNow: this.state.pagination.pageNow,
-				typeCode: "ALL",
-				enterpriseId: "ALL",
-				loanStatus: this.state.loanStatus,
-				startDate: this.state.searchParam.startDate,
-				endDate: this.state.searchParam.endDate
-			}
-			GetFinanceList(param)
-			.then((res)=> {
-			  this.setState({ 
-					data: res.data.result,
-					pagination: res.data.pagination,
-				})
-				
-				this.forceUpdate()
-			})
-		}
+
     componentDidMount(){
-			this.fetchFinanceList()
-			
-      GetStatisticalData({})
+			this.fetchFinanceList();
+      this.fetchTotal();
+    }
+    fetchFinanceList=(values)=> {
+      const { pagination, inputValues } =this.state;
+      const param={
+        pageSize: pagination.pageSize,
+        pageNow: pagination.pageNow,
+        ...inputValues,
+        ...values
+      }
+      GetFinanceList(param)
       .then((res)=> {
-        console.log(res)
-				var d = res.data;
-				this.state.summary.total1=d[0].total
-				this.state.summary.total2=d[0].countNum
-				this.state.summary.total3=d[1].total
-				this.state.summary.total4=d[1].countNum
-				this.state.summary.w1=d[0].numWeekRatio
-				this.state.summary.w2=d[0].amountWeekRatio
-				this.state.summary.w3=d[1].numWeekRatio
-				this.state.summary.w4=d[1].amountWeekRatio
-				this.state.summary.d1=d[0].numDayRatio
-				this.state.summary.d2=d[0].amountDayRatio
-				this.state.summary.d3=d[1].numDayRatio
-				this.state.summary.d4=d[1].amountDayRatio
-				this.state.summary.a1=d[0].numTodayRatio
-				this.state.summary.a2=d[0].amountTodayRatio
-				this.state.summary.a3=d[1].numTodayRatio
-				this.state.summary.a4=d[1].amountTodayRatio
+        const { result, pagination } =res.data;
+        result.map((el,index)=>{ index++; el.key = index});
+        this.setState({ data: result, pagination: pagination })
+      })
+    }
+    fetchTotal=()=> {
+      GetStatisticalData()
+      .then((res)=> {
+				const { data } = res;
+				let values = {
+          total1:data[0].total,
+  				total2:data[0].countNum,
+  				total3:data[1].total,
+  				total4:data[1].countNum,
+  				w1:data[0].numWeekRatio,
+  				w2:data[0].amountWeekRatio,
+  				w3:data[1].numWeekRatio,
+  				w4:data[1].amountWeekRatio,
+  				d1:data[0].numDayRatio,
+  				d2:data[0].amountDayRatio,
+  				d3:data[1].numDayRatio,
+  				d4:data[1].amountDayRatio,
+  				a1:data[0].numTodayRatio,
+  				a2:data[0].amountTodayRatio,
+  				a3:data[1].numTodayRatio,
+  				a4:data[1].amountTodayRatio
+        }
+        this.setState({ summary: values})
       })
     }
     onOk=()=> {
@@ -94,26 +75,23 @@ function withSubscription(handleType,Mod) {
     onCancel=()=> {
       this.setState({ visible:false });
     }
-		onChange=(currentPage,limit)=> {
-			console.log(currentPage, limit)
-			this.state.pagination.pageNow=currentPage
-			this.state.pagination.pageSize=limit
-			this.fetchFinanceList();
+		onChange=(pageNow,pageSize)=> {
+			this.fetchFinanceList({ pageNow,pageSize });
 		}
     onOperateClick=(item,type)=> {
       this.setState({ visible:true });
     }
 		onSubmit = values => {
-			console.log('onSubmit', values);
-			this.state.searchParam.loanStatus = values.financeStatus;
-			this.state.searchParam.startDate = values.applyTime && values.applyTime[0];
-			this.state.searchParam.endDate = values.applyTime && values.applyTime[1];
-			
-			this.fetchFinanceList();
+      let { applyTime, ...params } = values;
+      if(applyTime){
+        params.startDate = moment(applyTime[0]).format('YYYY-MM-DD');
+        params.endDate = moment(applyTime[1]).format('YYYY-MM-DD');
+      }
+      this.setState({ inputValues:params });
+			this.fetchFinanceList(params);
 		};
     render() {
-      const { visible } =this.state;
-			const summary = this.state.summary;
+      const { data, visible, pagination, summary } =this.state;
       let columns = columnsList(handleType, this.state.pagination);
       return(
         <div className="finance-company-list-wrap">
@@ -158,8 +136,12 @@ function withSubscription(handleType,Mod) {
           <div className="main-content yt-common-list-pages-wrap">
             <FilterForm onSubmit={this.onSubmit}/>
             {Mod&&<Mod />}
-            <YtTable onOperateClick={this.onOperateClick} scroll={{ x: 1300 }} pagination={this.state.pagination} columns={columns} dataSource={this.state.data}/>
-            <YtPagination data={this.state.pagination} onChange={this.onChange}/>
+            <YtTable
+              onOperateClick={this.onOperateClick}
+              scroll={{ x: 1300 }}
+              columns={columns}
+              dataSource={data}/>
+            <YtPagination data={pagination} onChange={this.onChange}/>
             <CreatModal visible={visible} onOk={this.onOk} onCancel={this.onCancel}/>
           </div>
         </div>

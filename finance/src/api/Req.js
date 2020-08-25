@@ -3,11 +3,15 @@ import { YtMessage } from 'common';
 import { message } from 'antd';
 import { Sessions } from 'utils';
 
- console.log("env.NODE_ENV:"+process.env.NODE_ENV)
-// http://fund05.bravowhale-uat.com/admin/   资金端uat
-// http://yuntuappapitest01.bravowhale-uat.com/api   api端uat
-//const baseMainAPIURL ="https://fund05.bravowhale-uat.com/admin";
-// const baseURL =
+ let baseUrlFinance,baseUrlApi;
+ switch (process.env.NODE_ENV) {
+   case 'development':
+   case 'uat':
+     baseUrlFinance = 'http://fund05.bravowhale-uat.com/admin/'
+     baseUrlApi = 'http://yuntuappapitest01.bravowhale-uat.com/api'
+     break;
+ }
+
 let defaultHeader = {
   'Content-Type': 'application/json',
 };

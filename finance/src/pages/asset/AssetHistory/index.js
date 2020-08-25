@@ -7,16 +7,24 @@ import TotalCount from './components/TotalCount';
 import SubCrumb from '../components/SubCrumb';
 import {subCrumbOptions} from '../subCrumbOptions';
 import { columnsList } from './columns';
-import { GetListApi } from 'api/asset/AssetHistory';
+import { GetTotalApi, GetListApi } from 'api/asset/AssetHistory';
 import './index.less'
 
 const { TabPane } =Tabs;
 
 const Index=({...props})=>{
-  const [list,setList] = useState([])
+  const [list,setList] = useState([]);
+  const [totalData,setTotalData] = useState({})
   const [dataPag,setDataPag] = useState({ pageSize:10, pageNow:1, totalSize:0 });
   const { id:enterpriseId } = props.match.params;
 
+  const fetchTotal=(values )=>{
+    let params = { enterpriseId }
+    GetTotalApi(params)
+    .then((res)=> {
+      // const { aseetsStatisticsVO } =res.data;
+    })
+  }
   const fetchList=(values )=>{
     let params = {
       pageSize:dataPag.pageSize,
@@ -36,7 +44,7 @@ const Index=({...props})=>{
     fetchList({pageNow, pageSize})
   };
 
-  useEffect(() => { fetchList(); },[enterpriseId]);
+  useEffect(() => { fetchTotal(); fetchList(); },[enterpriseId]);
   return(
     <div>
       <YtBreadcrumbName>
