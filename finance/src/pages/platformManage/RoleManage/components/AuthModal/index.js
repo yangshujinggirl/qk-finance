@@ -18,27 +18,28 @@ const AuthModal = ({...props}) => {
             setDefaultExpandedKeys([treeData[0].key]);
         }
     }, [treeData, defaultSelectedKey]);
-//确定授权
+    //确定授权
     const handleOk = async () => {
-        try {
-            saveRolePermissionRef({
-                allPermissionId: checkeds.join(','),
-                roleid
-            }).then(res => {
-                YtMessage.success('操作成功');
+        saveRolePermissionRef({
+            allPermissionId: checkeds.join(','),
+            roleid
+        }).then(res => {
+            YtMessage.success('操作成功');
+            setCheckeds([])
+            props.onOk && props.onOk();
+        }).finally(() => {
+            //清空选择
+            setTimeout(() => {
                 setCheckeds([])
-                props.onOk && props.onOk();
-            })
-        } catch (errorInfo) {
-            console.log("Failed:", errorInfo);
-        }
+            }, 500)
+        })
     };
-//取消选择
+    //取消选择
     const handleCancel = (e) => {
         setCheckeds([])
         props.onCancel()
     };
-//选择授权对象
+    //选择授权对象
     const onCheck = (e) => {
         setCheckeds(e)
         console.log(e);

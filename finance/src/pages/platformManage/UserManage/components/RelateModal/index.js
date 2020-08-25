@@ -27,14 +27,14 @@ const columns = [
 
 const CreatModal = ({...props}) => {
     const {relatedUser} = props
-    console.log('relatedUser',relatedUser);
+    console.log('relatedUser', relatedUser);
     const [selectedRowKeys, setSelectedRowKeys] = useState(relatedUser);
-    console.log('selectedRowKeys',selectedRowKeys);
+    console.log('selectedRowKeys', selectedRowKeys);
     //表格选中实时回显
     useEffect(() => {
         setSelectedRowKeys(relatedUser);
     }, [relatedUser]);
-    console.log('selectedRowKeys',selectedRowKeys);
+    console.log('selectedRowKeys', selectedRowKeys);
     //获取用户数据
     useEffect(() => {
         getRelateUserLists();
@@ -67,23 +67,23 @@ const CreatModal = ({...props}) => {
     }
     //确定关联
     const handleOk = async () => {
-        try {
-            let {id, userId} = props.data
-            relateUser({
-                id,
-                roleIds: selectedRowKeys.join(','),
-                userId
-            }).then(res => {
-                YtMessage.success('操作成功');
+        let {id, userId} = props.data
+        relateUser({
+            id,
+            roleIds: selectedRowKeys.join(','),
+            userId
+        }).then(res => {
+            YtMessage.success('操作成功');
+            setSelectedRowKeys([])
+            setTimeout(() => {
+                props.onOk && props.onOk();
+            }, 500)
+        }).finally(() => {
+            //清空选择
+            setTimeout(() => {
                 setSelectedRowKeys([])
-                setTimeout(() => {
-                    props.onOk && props.onOk();
-                }, 500)
-            })
-        } catch (errorInfo) {
-            YtMessage.error('操作失败');
-            console.log("Failed:", errorInfo);
-        }
+            }, 500)
+        })
     };
     //取消选择
     const handleCancel = (e) => {

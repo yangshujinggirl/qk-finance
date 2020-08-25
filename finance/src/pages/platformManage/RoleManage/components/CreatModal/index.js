@@ -18,20 +18,19 @@ const CreatModal = ({...props}) => {
     form.setFieldsValue(props.data)
 
     const handleOk = async () => {
-        try {
-            const values = await form.validateFields();
-            console.log(values)
-            addRole({...values, id}).then(res => {
-                YtMessage.success('操作成功');
-                //清空表单
+        const values = await form.validateFields();
+        console.log(values)
+        addRole({...values, id}).then(res => {
+            YtMessage.success('操作成功');
+            //清空表单
+            form.resetFields()
+            props.onOk && props.onOk(values);
+        }).finally(() => {
+            //清空表单
+            setTimeout(() => {
                 form.resetFields()
-                props.onOk && props.onOk(values);
-            })
-
-        } catch (errorInfo) {
-
-            console.log("Failed:", errorInfo);
-        }
+            }, 500)
+        })
     };
     const handleCancel = (e) => {
         props.onCancel()
