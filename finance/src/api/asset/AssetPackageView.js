@@ -1,4 +1,4 @@
-import Req from '../Req';
+import {Req} from '../Req';
 
 export function GetListApi(values){
     return Req.post('/assets/packet/search',{...values})

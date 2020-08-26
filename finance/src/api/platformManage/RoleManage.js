@@ -1,4 +1,4 @@
-import Req from '../Req';
+import {Req} from '../Req';
 
 
 // 角色管理

@@ -2,7 +2,7 @@
  * 融资管理模块下的所有接口
  */
 
-import Req from '../Req';
+import {Req} from '../Req';
 
 // 融资申请摘要
 export function GetStatisticalData(values) {

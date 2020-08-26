@@ -1,4 +1,4 @@
-import Req from '../Req';
+import {Req} from '../Req';
 
 export function GetInfoApi(values){
     return Req.post('/assets/package/get/packageInfo',{...values})

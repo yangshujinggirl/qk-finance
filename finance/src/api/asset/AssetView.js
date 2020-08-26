@@ -1,4 +1,4 @@
-import Req from '../Req';
+import {Req} from '../Req';
 
 //近期融资
 export function GetLatestFinApi(values){

@@ -1,4 +1,4 @@
-import Req from '../Req';
+import {Req} from '../Req';
 
 
 // 组织管理
