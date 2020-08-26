@@ -14,13 +14,12 @@ const formItemLayout = {
 };
 const CreatModal = ({...props}) => {
     const [form] = Form.useForm();
-    const {id} = props.data;
-    form.setFieldsValue(props.data)
+    const {id, roleId} = props.data;
 
     const handleOk = async () => {
         const values = await form.validateFields();
         console.log(values)
-        addRole({...values, id}).then(res => {
+        addRole({...values, id, roleId}).then(res => {
             YtMessage.success('操作成功');
             //清空表单
             form.resetFields()
@@ -46,7 +45,7 @@ const CreatModal = ({...props}) => {
             onCancel={handleCancel}
             className="creat-modal"
             footer={null}>
-            <Form form={form} name="control-hooks" {...formItemLayout}>
+            <Form form={form} initialValues={props.data} name="control-hooks" {...formItemLayout}>
                 <Row gutter={24}>
                     <Col span={24}>
                         <Form.Item name="roleName" label="角色名称" rules={[{required: true, message: '请输入'}]}>
