@@ -2,14 +2,22 @@ import {Collapse} from 'antd';
 import {YtCard, YtBaseInfo, YtTable} from 'common';
 import {columnsInfo} from './columns';
 import './PaymentPlanInfo.less';
-import {getPayPlan} from "../../../api/collectionPayment";
+import {getPayPlan, getPayPlanDetailList} from "../../../api/collectionPayment";
 
 const {Panel} = Collapse;
 
 class AccountStatement extends React.Component {
     state = {
         planId: this.props.match.params.id,
-        data: []
+        totalSize: 1,
+        list: [],
+        detail: {},
+        //核销状态
+        writeOffStatusName: {
+            1: '未核销',
+            2: '部分核销',
+            3: '全部核销'
+        }
     }
 
     //初始化数据
@@ -19,10 +27,19 @@ class AccountStatement extends React.Component {
 
     //回款计划
     getPayPlanInfo = () => {
-        getPayPlan({planId: this.state.planId}).then(res => {
-            let data = res.data.result
-            let totalSize = res.data.condition.totalSize
-            let p = {...this.state, list, totalSize}
+        getPayPlan(this.state.planId).then(res => {
+            let detail = res.data.obj
+            let p = {...this.state, detail}
+            this.setState(p, () => {
+                this.getPayPlanLists();
+            })
+        })
+    }
+    //回款计列表
+    getPayPlanLists = () => {
+        getPayPlanDetailList(this.state.planId).then(res => {
+            let list = res.data
+            let p = {...this.state, list}
             this.setState(p)
         })
     }
@@ -42,26 +59,27 @@ class AccountStatement extends React.Component {
     }
 
     render() {
-        let {data} = this.state
+        let {list, detail, writeOffStatusName} = this.state;
+        let benjin = detail.payPrincipalAmount + detail.payInterest - (detail.surplusAmount ? detail.surplusAmount : 0);
         return (
             <div className="account-statement-info-wrap">
                 <YtCard title="基础信息" bordered={true}>
                     <YtBaseInfo colSpan={12} dataInfo={[
-                        {key: '融资编号', value: '成都市众惠农资有限公司'},
-                        {key: '项目名称', value: '自贡市自流井区舒坪镇上阳村4组(原四川省自贡市五金交电化工公司1#仓库)'},
-                        {key: '款项类别', value: '9151030259995829XY'},
-                        {key: '期次', value: '6223 1789 7899 1234 0001'},
-                        {key: '款项金额', value: '10000'},
-                        {key: '待回款金额', value: '0'},
-                        {key: '待回款本金', value: '全部核销'},
-                        {key: '待回款利息', value: '全部核销'},
-                        {key: '回款状态', value: '全部核销'},
+                        {key: '融资编号', value: detail.loanNo},
+                        {key: '项目名称', value: detail.projectName},
+                        {key: '款项类别', value: '贷款本息'},
+                        {key: '期次', value: detail.payPeriodNo},
+                        {key: '款项金额', value: detail.payPrincipalAmount},
+                        {key: '待回款金额', value: detail.payTotalAmount},
+                        {key: '待回款本金', value: benjin},
+                        {key: '待回款利息', value: detail.payInterest},
+                        {key: '回款状态', value: writeOffStatusName[detail.writeOffStatus]},
                     ]}/>
                 </YtCard>
                 <YtCard title="回款详情" bordered={true}>
                     <YtTable
                         columns={columnsInfo}
-                        dataSource={data}/>
+                        dataSource={list}/>
                 </YtCard>
             </div>
         )

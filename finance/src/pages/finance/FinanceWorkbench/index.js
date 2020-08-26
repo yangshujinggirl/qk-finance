@@ -50,7 +50,7 @@ class OperateWorkbench extends React.Component {
     // 融资企业
     GetManagementList() {
         GetManagementListApi({pageSize: 3, pageNow: 1}).then(res => {
-            res.data.forEach((item, index) => item.key = index);//ant table rowkey
+            res.data.forEach((item, index) => item.key = index + 1);//ant table rowkey
             let managementList = res.data;
             let p = {...this.state, managementList}
             this.setState(p)
@@ -87,7 +87,7 @@ class OperateWorkbench extends React.Component {
     //预警信息
     GetWarningInfo() {
         GetWarningInfoApi({pageSize: 3, pageNow: 1}).then(res => {
-            res.data.forEach((item, index) => item.key = index);//ant table rowkey
+            res.data.forEach((item, index) => item.key = index + 1);//ant table rowkey
             let warningInfo = res.data;
             let p = {...this.state, warningInfo}
             this.setState(p)

@@ -29,9 +29,10 @@ class AccountStatement extends React.Component {
         this.getBankStatements();
     }
 
-    //回款计划
+    //银行流水明细
     getBankStatements = () => {
         getBankStatement({...this.state.param}).then(res => {
+            res.data.result.forEach((item, index) => item.key = index+1)//ant table rowkey
             let list = res.data.result
             let totalSize = res.data.pagination.totalSize
             let p = {...this.state, list, totalSize}

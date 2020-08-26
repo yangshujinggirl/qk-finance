@@ -1,34 +1,52 @@
 import {YtCard, YtBaseInfo, YtTable} from 'common';
 import {columnsInfo} from './columns';
 import './WriteOffInfo.less';
-import {getBankStatementDetail} from '../../../api/collectionPayment';
+import {getBankStatementDetail, getBankStatementDetaillist} from '../../../api/collectionPayment';
 
 class AccountStatement extends React.Component {
     state = {
-        pageNow: 1,
-        pageSize: 5,
-        loanNo: 1,
-        projectName: 1,
+        param: {
+            pageNow: 1,
+            pageSize: 5,
+            transactionSerialNumber: this.props.match.params.id,
+        },
         totalSize: 1,
-        list: []
+        list: [],
+        detail: {},
+        //核销状态
+        writeOffStatusName: {
+            1:'未核销',
+            2:'部分核销',
+            3:'全部核销'
+        }
     }
 
     //初始化数据
     componentDidMount() {
-        this.getPayPlanInfo();
+        this.getBankStatementDetails();
     }
 
-    //回款计划
-    getPayPlanInfo = () => {
+    //核销详情
+    getBankStatementDetails = () => {
         let {
-            pageNow,
-            pageSize,
-            loanNo,
-            projectName,
+            transactionSerialNumber
+        } = this.state.param;
+        let {
+            writeOffStatusName
         } = this.state
-        getBankStatementDetail({planId}).then(res => {
+        getBankStatementDetail(transactionSerialNumber).then(r => {
+            let detail = r.data.bankTransactionFlowVO;
+            let p = {...this.state, detail}
+            this.setState(p, () => {
+                this.getBankStatementDetaillists()
+            })
+        })
+    }
+    //核销详情列表
+    getBankStatementDetaillists = () => {
+        getBankStatementDetaillist({...this.state.param}).then(res => {
             let list = res.data.result
-            let totalSize = res.data.condition.totalSize
+            let totalSize = res.data.pagination.totalSize
             let p = {...this.state, list, totalSize}
             this.setState(p)
         })
@@ -49,18 +67,19 @@ class AccountStatement extends React.Component {
     }
 
     render() {
+        let {list, detail,writeOffStatusName} = this.state
         return (
             <div className="account-statement-info-wrap">
                 <YtCard title="基础信息" bordered={true}>
                     <YtBaseInfo colSpan={12}
-                                dataInfo={[
-                                    {key: '流水编号', value: '成都市众惠农资有限公司'},
-                                    {key: '回款客户', value: '自贡市自流井区舒坪镇上阳村4组(原四川省自贡市五金交电化工公司1#仓库)'},
-                                    {key: '回款银行', value: '9151030259995829XY'},
-                                    {key: '回款银行账号', value: '6223 1789 7899 1234 0001'},
-                                    {key: '核销金额', value: '10000'},
-                                    {key: '剩余待核销金额', value: '0'},
-                                    {key: '核销状态', value: '全部核销'},
+                                dataInfo={ [
+                                    {key: '流水编号', value: detail.transactionSerialNumber},
+                                    {key: '回款客户', value: detail.accountName},
+                                    {key: '回款银行', value: detail.bankName},
+                                    {key: '回款银行账号', value: detail.accountNumber},
+                                    {key: '核销金额', value: detail.writeOffAmount},
+                                    {key: '剩余待核销金额', value: detail.surplusAmount},
+                                    {key: '核销状态', value: writeOffStatusName[detail.writeOffStatus]},
                                 ]}/>
                 </YtCard>
                 <YtCard title="核销详情" bordered={true}>
