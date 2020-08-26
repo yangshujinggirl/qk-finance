@@ -48,18 +48,18 @@ const columns = [
     title: '验真比率',
     dataIndex: 'yzbl',
   },
-  {
-    title: '多方验真源',
-    dataIndex: 'yzy',
-  },
+  // {
+  //   title: '多方验真源',
+  //   dataIndex: 'yzy',
+  // },
   {
     title: '区块ID',
     dataIndex: 'qk',
   },
-  {
-    title: '上链节点',
-    dataIndex: 'sljd',
-  },
+  // {
+  //   title: '上链节点',
+  //   dataIndex: 'sljd',
+  // },
 ];
 
   function EditTable({...props}){

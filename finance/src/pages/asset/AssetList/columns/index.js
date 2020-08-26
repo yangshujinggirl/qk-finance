@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import NP from 'number-precision';
+import moment from 'moment';
+import { CommonUtils } from 'utils';
 
 let applyLoanStatusMap = {
   1:"未占用",
@@ -7,6 +9,7 @@ let applyLoanStatusMap = {
   3:"已占用",
   4:"已请款"
 }
+
 const columnsList =[
         {
           title: '序号',
@@ -33,10 +36,8 @@ const columnsList =[
           title: '资产剩余账期',
           dataIndex: 'syzq',
           render:(text,record,index)=>{
-            let debtExpireDate = record.debtExpireDate?record.debtExpireDate:0;
-            let transactionDate = record.transactionDate?record.transactionDate:0;
-            return<>{
-              NP.minus(debtExpireDate,transactionDate)
+            return <>{
+              CommonUtils.formatTimeInterval(record.transactionDate, record.expectedDate)
             }</>
           }
         },
@@ -51,7 +52,20 @@ const columnsList =[
           title: '融资状态',
           dataIndex: 'rzzt',
           render:(text,record,index)=>{
-            return <>待融资</>
+            let fundStatus;
+            switch(record.applyLoanStatus){
+              case 1:
+              case 2:
+                fundStatus = '待融资';
+                break;
+              case 3:
+                fundStatus = '已融资';
+                break;
+              case 4:
+                fundStatus = '融资完结';
+                break;
+            }
+            return <>{fundStatus}</>
           }
         },
         {
@@ -61,10 +75,6 @@ const columnsList =[
             return <>验真通过</>
           }
         },
-        // {
-        // title: '上链节点',
-        // dataIndex: 'nodeBlockDate',
-        // },
         {
           title: '操作',
           dataIndex: '操作',

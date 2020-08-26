@@ -138,12 +138,12 @@ const AssetInfo=({...props})=>{
               <Panel header="销售合同信息" key="4">
                 <SalesInfo info={blockInfo}/>
               </Panel>
-              <Panel header="进货采购信息" key="5">
+              {/*<Panel header="进货采购信息" key="5">
                 <PurchaseInfo info={blockInfo}/>
-              </Panel>
-              <Panel header="物流发货信息（厂方直发）" key="6">
+              </Panel>*/}
+              {/*<Panel header="物流发货信息（厂方直发）" key="6">
                 <DeliveryFactoryInfo info={blockInfo}/>
-              </Panel>
+              </Panel>*/}
               <Panel header="物流发货信息（仓库直发）" key="7">
                 <DeliveryWarehouseInfo info={blockInfo}/>
               </Panel>

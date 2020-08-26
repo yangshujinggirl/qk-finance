@@ -18,16 +18,24 @@ const formItemLayout = {
 const { TabPane } = Tabs;
 const CreatModal=({...props})=>{
   const [form] = Form.useForm();
+  const { paramsVal } =props;
   let [currentItem,setCurrentItem] =useState({});
-  let dataSource = [...props.data];
   let [loading, setLoading] = useState(false);
-  let [data,setData] = useState(dataSource);
+  let [selectedRows, setSelectedRows] = useState([]);
+  let [data,setData] = useState(props.data);
 
   const handleCancel = e => {
     props.onCancel();
   };
-  const handledownLoad=(values)=> {
-    GetDownLoadFile()
+  const handledownLoad=(ids)=> {
+    let value = ids?ids:selectedRows;
+    let params = {
+      fileId:value,
+      loanNo:paramsVal.loanNo,
+      packetId:paramsVal.packageId,
+      companyOrgCode:paramsVal.organizationalCode
+    }
+    GetDownLoadFile(params)
     .then((res) => {
       console.log(res)
     })
@@ -39,32 +47,34 @@ const CreatModal=({...props})=>{
         edit(item,true)
         break;
       case 'save':
-        save();
+        save(item);
         break;
       case 'download':
-        handledownLoad();
+        handledownLoad(item.fileId);
         break;
     }
   }
   const edit = (item,status) => {
-    let currentIdx = data.findIndex((el)=>el.key == item.key);
+    let currentIdx = data.findIndex((el)=>el.id == item.id);
     item.editing = status;
     data[currentIdx] = {...data[currentIdx],...item};
     data = [...data];
     setCurrentItem(item);
     setData(data);
   };
-  const save = async () => {
+  const save = async (item) => {
     try {
       const values = await form.validateFields();
-      let fileDesc = values.fields[0].fileDesc;
+      let currentIdx = data.findIndex((el)=>el.id == item.id);
+      let fileDesc = values.fields[currentIdx].fileDesc;
       GetSaveFileList({
         fileDesc,
         id:currentItem.id
       })
       .then((res)=>{
         currentItem.fileDesc = fileDesc;
-        edit(currentItem,false)
+        form.resetFields();
+        edit(currentItem,false);
       })
     } catch (errorInfo) {
       console.log("Failed:", errorInfo);
@@ -72,13 +82,16 @@ const CreatModal=({...props})=>{
   };
   const rowSelection = {
     type: "checkbox",
+    getCheckboxProps: record => ({ disabled: !record.fileNum }),
     onChange: (selectedRowKeys, selectedRows) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+      let arr=[];
+      selectedRows.map((el)=>{
+        arr.push(el.fileId);
+      })
+      setSelectedRows(arr)
     },
   };
-  useEffect(()=>{
-    setData(props.data)
-  },[props.data])
+  useEffect(()=>{ setData(props.data) },[props.data])
   return (
       <Modal
         width={920}
@@ -92,7 +105,7 @@ const CreatModal=({...props})=>{
              <TabPane tab="全部资料" key="1">
                <>
                 <div className="download-wrap">
-                  <YtBtn>批量下载</YtBtn>
+                  <YtBtn onClick={()=>handledownLoad()}>批量下载</YtBtn>
                 </div>
                  <YtTable
                   rowSelection={rowSelection}

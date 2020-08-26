@@ -16,7 +16,7 @@ import './AssetPackageInfo.less';
 
 
 const AssetPackageInfo=({...props})=>{
-  const [totalData,setTotalData] = useState({});
+  const [totalData,setTotalData] = useState({assetTotal:1,});
   const [processData,setProcessData] = useState([]);
   const [list,setList] = useState([]);
   const [rateTotal,setRateTotal] = useState(0);
@@ -24,19 +24,22 @@ const AssetPackageInfo=({...props})=>{
   const fetchInfo=()=>{
     GetInfoApi({packetId})
     .then((res)=>{
-      setTotalData(res.data.result);
+      let { data } = res;
+      setTotalData(data.result);
+      fetchConcentr(data.result);
     })
   }
-  const fetchConcentr=()=>{
+  const fetchConcentr=(values)=>{
     GetConcentrApi({packetId})
     .then((res)=>{
       const { data } =res;
-      let sum=0
-      data.rateList.map((el) => {
-        el[1] = NP.round(el[1],2);
-        sum = NP.plus(sum,el[1]);
+      let sum=0;
+      data.map((el) => {
+        el.amount = NP.round(el.amount,2);
+        el.percent = NP.round(NP.divide(el.amount,values.assetTotal),2)
+        sum = NP.plus(sum,el.percent);
       })
-      setList(data.rateList);
+      setList(data);
       setRateTotal(sum);
     })
   }
@@ -44,7 +47,7 @@ const AssetPackageInfo=({...props})=>{
     GetAssetTypeApi({ packetId })
     .then((res)=>{
       const { data } =res;
-      const { totalCount, normalCount, sencondCount, troubleCount, lossCount } =data;
+      const { totalCount, noticeCount, normalCount, sencondCount, troubleCount, lossCount } =data;
       const processData=[{
           value:`${NP.round(NP.divide(lossCount,totalCount),2)}%`,
           key:'损失',
@@ -73,11 +76,7 @@ const AssetPackageInfo=({...props})=>{
   }
 
 
-  useEffect(()=>{
-    fetchAssetType();
-    fetchInfo();
-    fetchConcentr()
-  },[packetId]);
+  useEffect(()=>{ fetchAssetType(); fetchInfo(); },[packetId]);
 
 
   const linkList =[
@@ -112,8 +111,8 @@ const AssetPackageInfo=({...props})=>{
                   {
                     list.map((el,index)=>(
                       <div className="process-item" key={index}>
-                        {el[0]}
-                        <Progress percent={el[1]} />
+                        {el.order_source_company}
+                        <Progress percent={el.percent} />
                       </div>
                     ))
                   }

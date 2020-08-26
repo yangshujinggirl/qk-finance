@@ -47,10 +47,9 @@ const columns=[
           <span className="operate-link-btn" onClick={()=>record.onOperateClick('edit')}>编辑</span>
         }
         {
-          record.fileNum&&
+          !record.fileNum&&
           <span className="operate-link-btn" onClick={()=>record.onOperateClick('download')}>下载</span>
         }
-
       </>
     }
   },

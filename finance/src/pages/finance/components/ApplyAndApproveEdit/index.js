@@ -17,17 +17,19 @@ function withSubscription(handleType, Mod){
       // console.log(key);
     }
     render() {
+      const { params } = this.props.match;
+      let currentStatus = params.id?'edit':'add';
       return(
         <div className="finance-apply-wrap yt-common-bg-pages-wrap">
           <Tabs defaultActiveKey="1" onChange={this.callback}>
             <TabPane tab="合同要素" key="1">
-              <AppLyOne handleType={handleType} loanId={this.props.match.params.id}/>
+              <AppLyOne handleType={handleType} loanId={params.id} currentStatus={currentStatus}/>
             </TabPane>
             <TabPane tab="还款预算" key="2">
-              <AppLyTwo handleType={handleType}/>
+              <AppLyTwo handleType={handleType} loanId={params.id} currentStatus={currentStatus}/>
             </TabPane>
             <TabPane tab="合同预览" key="3">
-              <AppLyThr handleType={handleType}/>
+              <AppLyThr handleType={handleType} loanId={params.id} currentStatus={currentStatus}/>
             </TabPane>
             {Mod&&Mod()}
           </Tabs>

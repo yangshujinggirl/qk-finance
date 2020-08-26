@@ -78,12 +78,17 @@ const CreatModal=({...props})=>{
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="zq1" label="单笔资产金额不小于">
+              <Form.Item name="zq2" label="资产最长账期">
                 <Input addonAfter="天" autoComplete="off"/>
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item name="zq2" label="资产最短账期">
+                <Input addonAfter="天" autoComplete="off"/>
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name="zq1" label="单笔资产金额不小于">
                 <Input addonAfter="天" autoComplete="off"/>
               </Form.Item>
             </Col>

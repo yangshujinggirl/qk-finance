@@ -4,24 +4,53 @@ import { BaseEditForm, YtUpLoadAndDownLoad, YtBtn, YtTable } from 'common';
 import { columnsReceivable, columnsPlan } from './columns';
 import HeadFormCard from '../HeadFormCard';
 import ChangeModal from './components/ChangeModal';
+import { GetPayInfo, GetReceivablesList } from 'api/finance/ApplyAndApproveEdit';
 import './AppLyTwo.less';
 
 class ApplyOne extends BaseEditForm {
   formRef = React.createRef();
   state={
-    visible:false
+    visible:false,
+    info:{}
+  }
+  componentDidMount(){
+    this.fetchInfo()
+  }
+  fetchInfo=()=>{
+    GetPayInfo({ currentStatus:this.props.currentStatus, loanId: this.props.loanId })
+    .then((res)=> {
+      let { obj } =res.data;
+      this.setState({ info:obj });
+      this.fetchReceivables(obj)
+    })
+  }
+  fetchReceivables=(values)=>{
+    GetReceivablesList({
+      packetId:values.packetId,
+      transferStatus: values.loanId,
+      industryTypeCode:values.industryTypeCode
+    })
+    .then((res)=> {
+      console.log(res)
+    })
   }
   onSubmit = async (values) => {
     console.log(values)
   };
-  goChange=()=>{
-    this.setState({ visible:true })
-  }
+
   onOk=()=>{
     this.setState({ visible:false })
   }
   onCancel=()=>{
     this.setState({ visible:false })
+  }
+  //还款测算
+  countPayment=()=>{
+
+  }
+  //选择资产
+  goChange=()=>{
+    this.setState({ visible:true })
   }
   render() {
     const { visible } =this.state;
@@ -36,29 +65,22 @@ class ApplyOne extends BaseEditForm {
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="资产包" name="code">
+                  <Form.Item label="资产包">
                     <Row gutter={8}>
                       <Col span={18}>
-                        <Form.Item name="code">
-                          <Select placeholder="请选择" allowClear={true}>
-                            <Select.Option value="银行转账" key="银行转账">
-                              云图项目一期
-                            </Select.Option>
-                            <Select.Option value="银行转账1" key="银行转账1">
-                              云图项目二期
-                            </Select.Option>
-                          </Select>
+                        <Form.Item name="packageId">
+                          <Input autoComplete="off"   placeholder="请输入" disabled/>
                         </Form.Item>
                       </Col>
                       <Col span={6}>
-                        <Link to="/account/assetPackage/info/12" className="link-tips">资产包明细</Link>
+                        <Link to="/account/assetPackage/info/12" className="link-tips">资产池明细</Link>
                       </Col>
                     </Row>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
                   <Form.Item label="资产包金额" name="code">
-                    <Input autoComplete="off"   placeholder="请输入"  suffix="万元"/>
+                    <Input autoComplete="off"   placeholder="请输入"  suffix="万元" disabled/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
@@ -68,7 +90,7 @@ class ApplyOne extends BaseEditForm {
                 </Col>
                 <Col {...this.colspans}>
                   <Form.Item label="融资比例" name="code">
-                    <Input autoComplete="off"   placeholder="请输入" suffix="%"/>
+                    <Input autoComplete="off"   placeholder="请输入" suffix="%" disabled/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
@@ -88,7 +110,7 @@ class ApplyOne extends BaseEditForm {
               <Row>
                 <Col {...this.colspans}>
                   <Form.Item label="利率类型" name="name" rules={[{ required: true, message: '请选择'}]}>
-                    <Select placeholder="请选择" allowClear={true} onChange={this.onChangeCategoryCode}>
+                    <Select placeholder="请选择" allowClear={true}>
                       <Select.Option value="银行转账" key="银行转账">
                         电汇
                       </Select.Option>
@@ -104,7 +126,7 @@ class ApplyOne extends BaseEditForm {
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="宽期期利率" name="code" rules={[{ required: true, message: '请输入收款账户名'}]}>
+                  <Form.Item label="宽期期利率" name="code">
                     <Input autoComplete="off"   placeholder="请输入" suffix="万元"/>
                   </Form.Item>
                 </Col>
@@ -114,7 +136,7 @@ class ApplyOne extends BaseEditForm {
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="宽限期天数" name="code" rules={[{ required: true, message: '请输入收款账号'}]}>
+                  <Form.Item label="宽限期天数" name="code" rules={[{ required: true, message: '请输入'}]}>
                     <Input autoComplete="off"   placeholder="请输入" suffix="天"/>
                   </Form.Item>
                 </Col>
@@ -124,7 +146,7 @@ class ApplyOne extends BaseEditForm {
               <Row>
                 <Col {...this.colspans}>
                   <Form.Item label="还款方式" name="name" rules={[{ required: true, message: '请选择'}]}>
-                    <Select placeholder="请选择" allowClear={true} onChange={this.onChangeCategoryCode}>
+                    <Select placeholder="请选择" allowClear={true}>
                       <Select.Option value="银行转账" key="银行转账">等额本金</Select.Option>
                       <Select.Option value="银行转账1" key="银行转账1">等额本息</Select.Option>
                       <Select.Option value="银行转账1" key="银行转账1">平息</Select.Option>
@@ -167,7 +189,7 @@ class ApplyOne extends BaseEditForm {
                 </Col>
               </Row>
           </HeadFormCard>
-          <HeadFormCard title="还款计划"  extra={<YtBtn size="free">还款测算</YtBtn>}>
+          <HeadFormCard title="还款计划"  extra={<YtBtn size="free" onClick={this.countPayment}>还款测算</YtBtn>}>
               <YtUpLoadAndDownLoad />
               <YtTable columns={columnsPlan} data={[]}/>
           </HeadFormCard>

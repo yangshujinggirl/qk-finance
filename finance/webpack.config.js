@@ -125,7 +125,7 @@ module.exports = {
         changeOrigin: true,
       },
       '/blockFinance': {
-        target:'http://yuntuappapitest01.bravowhale-uat.com/api',//上链端
+        target:'http://yuntuappapitest01.bravowhale-uat.com/admin/api/',//上链端
         pathRewrite: {"^/ytFinance" : ""},
         changeOrigin: true,
       },

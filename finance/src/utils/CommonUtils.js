@@ -2,6 +2,14 @@ import NP from 'number-precision';
 import {Sessions} from 'utils';
 
 const CommonUtils = {
+    formatTimeInterval(orderDate,expectedDate){
+      let today = Date.parse(new Date());
+      let times= NP.minus(today, orderDate);
+      let interval = NP.divide(times, 24*60*60*1000);
+      interval = NP.round(interval, 0);
+      let val = NP.minus(expectedDate,interval)
+      return val;
+    },
     formatAmount(value) {
       value = value?value:0;
       value = NP.round(NP.divide(value,10000),2);

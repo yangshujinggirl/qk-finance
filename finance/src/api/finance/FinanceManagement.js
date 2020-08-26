@@ -24,10 +24,7 @@ export function GetLoanOutStatisticalData() {
     return Req.post('/loanV2/management/getLoanOutStatisticalData', {})
 }
 
-// 融资详情
-export function GetFinanceDetail(loanId) {
-    return Req.post('loanV2/apply/add/baseInfo', {loanId: loanId, currentStatus: 'view'})
-}
+
 
 // 放款详情
 export function GetLoanDetail(loanId) {

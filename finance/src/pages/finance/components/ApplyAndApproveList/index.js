@@ -16,6 +16,7 @@ function withSubscription(handleType,Mod) {
     state={
       visible:false,
       inputValues:{},
+      currentItem:{},
       fileList:[],
 			data: [],
 			pagination: {
@@ -41,7 +42,7 @@ function withSubscription(handleType,Mod) {
       GetFinanceList(param)
       .then((res)=> {
         const { result, pagination } =res.data;
-        result.map((el,index)=>{ index++; el.key = index});
+        result.map((el,index)=>{ index++; el.key = el.id});
         this.setState({ data: result, pagination: pagination })
       })
     }
@@ -82,7 +83,7 @@ function withSubscription(handleType,Mod) {
     onOperateClick=({item,type})=> {
       GetProFileList({ loanNo: item.loanNo })
       .then((res) => {
-        this.setState({ fileList:res.data,visible:true });
+        this.setState({ fileList:res.data,currentItem:item, visible:true });
       })
     }
 		onSubmit = values => {
@@ -95,7 +96,7 @@ function withSubscription(handleType,Mod) {
 			this.fetchFinanceList(params);
 		};
     render() {
-      const { fileList, data, visible, pagination, summary } =this.state;
+      const { currentItem, fileList, data, visible, pagination, summary } =this.state;
       let columns = columnsList(handleType, this.state.pagination);
       return(
         <div className="finance-company-list-wrap">
@@ -146,7 +147,12 @@ function withSubscription(handleType,Mod) {
               columns={columns}
               dataSource={data}/>
             <YtPagination data={pagination} onChange={this.onChange}/>
-          <CreatModal visible={visible} onOk={this.onOk} onCancel={this.onCancel} data={fileList}/>
+            <CreatModal
+              paramsVal={currentItem} 
+              visible={visible}
+              onOk={this.onOk}
+              onCancel={this.onCancel}
+              data={fileList}/>
           </div>
         </div>
       )

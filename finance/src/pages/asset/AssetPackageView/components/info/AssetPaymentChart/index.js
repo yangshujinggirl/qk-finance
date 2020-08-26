@@ -9,29 +9,14 @@ const IndexChart=({...props})=>{
   const initChart=()=>{
     GetRealDayApi({ packetId:props.packetId })
     .then((res)=> {
-      const data = [
-        { year: '1990', value: 90 },
-        { year: '1991', value: 180 },
-        { year: '1992', value: 300 },
-        { year: '1993', value: 260 },
-        { year: '1994', value: 190 },
-        { year: '1996', value: 250 },
-        { year: '1997', value: 220 },
-        { year: '1998', value: 360 },
-      ];
+      let { data } =res;
+      console.log(data)
       const areaPlot = new Area(document.getElementById('asset-payment-container'), {
         data,
         forceFit:true,
-        xField: 'year',
-        yField: 'value',
-        xAxis: {
-          label: {
-              visible: false,
-          },
-        },
-        yAxis: {
-          min:0,
-        },
+        xField: 'date',
+        yField: 'avgRealDay',
+        yAxis: { min:0,},
         color:'#26C1C9',
         areaStyle:{
           fill:'#26C1C9'
