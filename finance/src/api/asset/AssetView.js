@@ -16,3 +16,6 @@ export function GetBebtApi(values){
 export function GetPaymentApi(values){
     return Req.post('/loanV2/orderFinancingPeriod',{...values})
 }
+export function GetTageChartApi(values){
+    return Req.post('/loanV2/percentageOfAssetSize',{...values})
+}

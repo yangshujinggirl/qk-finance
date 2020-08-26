@@ -101,7 +101,8 @@ const IndexChart=({...props})=>{
       donutPlot.render();
   }
   const fetchInfo=()=> {
-    GetFundPoolApi()
+    let params = { enterpriseId:props.enterpriseId };
+    GetFundPoolApi(params)
     .then((res)=> {
       const { cashInFlow, cashOutFlow, supervisorAccountFlow } =res.data;
       cashInFlow.cashInOutSummaryList.map((el)=> {

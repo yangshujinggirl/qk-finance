@@ -7,6 +7,8 @@ import SubCrumb from '../components/SubCrumb';
 import DealCountChart from './components/DealCountChart';
 import {subCrumbOptions} from '../subCrumbOptions';
 import { columnsList } from './columns';
+import { GetDealApi, GetTotalApi, GetListApi } from 'api/asset/BlockbChain';
+
 import './index.less'
 
 import iconImg0 from './image/icon0.png';
@@ -18,7 +20,8 @@ import iconImg4 from './image/icon4.png';
 const { TabPane } =Tabs;
 
 const Index=({...props})=> {
-  const [list,setList] = useState([])
+  const [list,setList] = useState([]);
+  const [totalData,setTotalData] = useState({})
   const [dataPag,setDataPag] = useState({ pageSize:10, pageNow:1, totalSize:0 });
   const { id:enterpriseId } = props.match.params;
 
@@ -26,7 +29,6 @@ const Index=({...props})=> {
     let params = {
       pageSize:dataPag.pageSize,
       pageNow:dataPag.pageNow,
-      ...inputValues,
       ...values,
       enterpriseId
     }
@@ -37,12 +39,18 @@ const Index=({...props})=> {
       setList(result)
     })
   }
+  const fetchTotal=(values )=>{
+    GetTotalApi({ enterpriseId })
+    .then((res)=> {
+      // setTotalData(res);
+    })
+  }
   const changePage = (pageNow, pageSize) => {
     fetchList({pageNow, pageSize})
   };
   useEffect(() => {
-    // fetchList();
-    // fetchTotal()
+    fetchList();
+    fetchTotal();
   },[enterpriseId]);
   return(
     <div>

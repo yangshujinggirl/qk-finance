@@ -15,9 +15,10 @@ const IndexChart=({...props})=>{
       plot.changeData(data);
       return;
     }
+    console.log(data)
     const gaugePlot = new Gauge(dom, {
       forceFit: true,
-      value: data,
+      value: Number(data),
       min: 0,
       max: 100,
       range: [0, 25, 50, 75, 100],

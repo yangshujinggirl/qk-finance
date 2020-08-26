@@ -8,6 +8,7 @@ import SubCrumb from '../components/SubCrumb';
 import LatestFund from './components/LatestFund';
 import DebtMod from './components/DebtMod';
 import FundPoolChart from '../../components/FundPoolChart';
+import AssetScaleCharts from './components/AssetScaleCharts';
 import { YtBreadcrumbName, YtTable, YtCard } from 'common';
 import {subCrumbOptions} from '../subCrumbOptions';
 import { GetTotalApi,  GetPaymentApi } from 'api/asset/AssetView';
@@ -103,23 +104,18 @@ const Index=({...props})=>{
       let arr=[
         {
           item:'30天内',
-          count:loanPeriodMap.zeroThirty,
           percent:loanPeriodMap.zeroThirty,
         },{
           item:'30-60天',
-          count:loanPeriodMap.thirtySixty,
           percent:loanPeriodMap.thirtySixty,
         },{
           item:'60-90天',
-          count:loanPeriodMap.sixtyNinety,
           percent:loanPeriodMap.sixtyNinety,
         },{
           item:'90-180天',
-          count:loanPeriodMap.ninetyOneHundredAndEighty,
           percent:loanPeriodMap.ninetyOneHundredAndEighty,
         },{
           item:'180天以上',
-          count:loanPeriodMap.oneHundredAndEighty,
           percent:loanPeriodMap.oneHundredAndEighty,
         },
       ]
@@ -152,7 +148,7 @@ const Index=({...props})=>{
             label="整体融资比(%)"
             num={NP.round(NP.divide(totalData.assetsLoanTotal,totalData.assetsTotal),2)}/>
         </div>
-        <FundPoolChart />
+        <FundPoolChart enterpriseId={enterpriseId}/>
         <div className="common-column-module-wrap">
           <div className="module-equal-two-wrap">
             <RiseChart data={riseList} className="asset-view-rise-chart"/>
@@ -166,7 +162,7 @@ const Index=({...props})=>{
             <AssetDistributeChart data={payMentList}/>
           </div>
           <div className="part-same-shadow  module-equal-thr-wrap">
-            <YtCard title="资产规模分布"> 资产规模分布</YtCard>
+            <AssetScaleCharts enterpriseId={enterpriseId}/>
           </div>
           <div className="part-same-shadow  module-equal-thr-wrap">
             <DebtMod enterpriseId={enterpriseId}/>

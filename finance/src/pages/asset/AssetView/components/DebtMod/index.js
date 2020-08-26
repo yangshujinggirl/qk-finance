@@ -21,7 +21,7 @@ const Index=({...props})=> {
         ratioList.map((el,index)=>(
           <div className="process-wrap" key={index}>
             <p className="prw-title">{el.orderSourceCompany}</p>
-            <Progress percent={el.amount} />
+            <Progress percent={(el.debtRatio)} />
           </div>
         ))
       }

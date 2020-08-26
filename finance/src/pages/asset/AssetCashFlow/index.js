@@ -77,7 +77,7 @@ const Index =({...props})=>{
               desc:'今日新增',
               value:totalData.assetData.totalData,
             }]}/>
-          <FundPoolChart />
+          <FundPoolChart enterpriseId={enterpriseId}/>
           <div className="list-action part-same-shadow mt24">
             <YtTable columns={columnsList} dataSource={list} scroll={{ x: 1300 }}/>
             {

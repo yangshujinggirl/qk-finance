@@ -27,15 +27,15 @@ const columnsList =[
         },
         {
         title: '资产金额（万元）',
-        dataIndex: 'rzje',
+        dataIndex: 'assetAmount',
         },
         {
         title: '资产包编号',
-        dataIndex: 'lv',
+        dataIndex: 'packageId',
         },
         {
         title: '融资金额（万元）',
-        dataIndex: 'loanAmount',
+        dataIndex: 'loanAccount',
         },
         {
         title: '年化利率%',

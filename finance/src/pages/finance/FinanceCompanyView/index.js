@@ -57,7 +57,7 @@ const FinanceShow=({...props})=> {
       let arr=[
         {
           type:'50万以下',
-          value:assetSizeMap.fiveTen,
+          value:assetSizeMap.zeroFive,
         },{
           type:'50万-100万',
           value:assetSizeMap.fiveTen,
@@ -81,22 +81,22 @@ const FinanceShow=({...props})=> {
           <ViewCardPane
             label="融资企业累计（家）"
             num={totalData.enterpriseCount}>
-            <YtStatistic value="2家">本日新增</YtStatistic>
+            {/* <YtStatistic value="2家">本日新增</YtStatistic> */}
           </ViewCardPane>
           <ViewCardPane
             label="累计资产金额（万元）"
             num={totalData.assetTotalCount}>
-            <YtStatistic value="2家">本日新增</YtStatistic>
+            {/* <YtStatistic value="2家">本日新增</YtStatistic> */}
           </ViewCardPane>
           <ViewCardPane
             label="累计融资金额（万元）"
             num={totalData.assetsLoanTotal}>
-            <YtStatistic value="¥ 12,423">本日新增</YtStatistic>
+            {/* <YtStatistic value="¥ 12,423">本日新增</YtStatistic> */}
           </ViewCardPane>
           <ViewCardPane
             label="融资占比"
             num={`${NP.round(NP.divide(totalData.assetsLoanTotal,totalData.assetTotalCount),2)}%`}>
-            <YtStatistic value="2笔">本日新增融资笔数</YtStatistic>
+            {/* <YtStatistic value="2笔">本日新增融资笔数</YtStatistic> */}
           </ViewCardPane>
         </div>
         <div className="common-column-module-wrap">

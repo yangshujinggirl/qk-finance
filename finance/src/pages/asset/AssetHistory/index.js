@@ -22,7 +22,8 @@ const Index=({...props})=>{
     let params = { enterpriseId }
     GetTotalApi(params)
     .then((res)=> {
-      // const { aseetsStatisticsVO } =res.data;
+      let { aseetsStatisticsVO={} } =res.data;
+      setTotalData(aseetsStatisticsVO)
     })
   }
   const fetchList=(values )=>{
@@ -54,22 +55,22 @@ const Index=({...props})=>{
         <TotalCount data={[
           {
             name:'存续期融资金额(万元)',
-            num:'616',
+            num:totalData.financeAmount,
             desc:'良好 无逾期',
             value:''
           },{
             name:'月新增资金额(万元)',
-            num:'616',
+            num:totalData.monthlyAddAmount,
             desc:'今日新增',
             value:'2'
           },{
             name:'总资产规模(万元)',
-            num:'616',
+            num:totalData.assetTotalAmount,
             desc:'今日新增',
             value:'2'
           },{
             name:'总融资金额(万元)',
-            num:'616',
+            num:totalData.financeTotalAmount,
             desc:'',
             value:''
           }]}/>

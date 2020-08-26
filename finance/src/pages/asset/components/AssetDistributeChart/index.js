@@ -24,13 +24,13 @@ const AssetDistributeChart=({...props})=>{
         visible: false,
         type: 'inner',
         formatter: (val) => {
-          val = val * 100 + '%';
+          val = val + '%';
           return val;
         },
       },
       tooltip:{
         formatter: (val,name) => {
-          val = val * 100 + '%';
+          val = val + '%';
           return {name,value:val};
         },
       },
