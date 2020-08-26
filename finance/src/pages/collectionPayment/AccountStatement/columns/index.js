@@ -86,11 +86,17 @@ const columnsIndex = [
 const columnsInfo= [
         {
           title: '序列号',
-          dataIndex: 'code',
+          dataIndex: 'key',
+            render:(text,record,index)=>{
+                return  index+1
+            }
         },
         {
           title: '核销时间',
           dataIndex: 'code',
+            render:(text,record,index)=>{
+                return  moment(text).format('YYYY-MM-DD hh:mm:ss')
+            }
         },
         {
           title: '融资编号',
@@ -118,7 +124,7 @@ const columnsInfo= [
         },
         {
           title: '核销金额',
-          dataIndex: 'use',
+          dataIndex: 'writeOffAmount',
         },
 ];
 

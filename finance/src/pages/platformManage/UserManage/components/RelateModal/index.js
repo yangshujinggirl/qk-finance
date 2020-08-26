@@ -60,6 +60,7 @@ const RelateModal = ({...props}) => {
     }
     //分页
     const pagination = (pageNow) => {
+        console.log(selectedRowKeys);
         let p = {...param, pageNow};
         setParam(p);
         getRelateUserLists(p);
@@ -92,8 +93,10 @@ const RelateModal = ({...props}) => {
     //表格选择配置
     const rowSelection = {
         selectedRowKeys,
-        onChange: selectedRowKeys => {
-            setSelectedRowKeys(selectedRowKeys)
+        onChange: key => {
+            //分页保留选择
+            let set = new Set(selectedRowKeys)
+            setSelectedRowKeys([...set, ...key])
         },
     };
     return (

@@ -39,7 +39,6 @@ const CreatModal = ({...props}) => {
     };
     return (
         <Modal
-            getContainer={false}
             width={520}
             title={props.visible === 1 ? '新增' : '编辑'}
             visible={props.visible === 1 || props.visible === 3}

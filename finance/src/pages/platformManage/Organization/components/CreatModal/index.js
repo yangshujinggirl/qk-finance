@@ -33,7 +33,7 @@ const CreatModal = ({...props}) => {
         form.resetFields()
     };
     return (
-        <Modal getContainer={false}
+        <Modal
                width={520}
                title={props.visible === 1 ? '新增' : '编辑'}
                visible={props.visible}
