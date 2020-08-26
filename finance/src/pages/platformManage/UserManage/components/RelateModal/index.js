@@ -25,20 +25,9 @@ const columns = [
     },
 ];
 
-const CreatModal = ({...props}) => {
+const RelateModal = ({...props}) => {
     const {relatedUser} = props
-    console.log('relatedUser',relatedUser);
     const [selectedRowKeys, setSelectedRowKeys] = useState(relatedUser);
-    console.log('selectedRowKeys',selectedRowKeys);
-    //表格选中实时回显
-    useEffect(() => {
-        setSelectedRowKeys(relatedUser);
-    }, [relatedUser]);
-    console.log('selectedRowKeys',selectedRowKeys);
-    //获取用户数据
-    useEffect(() => {
-        getRelateUserLists();
-    }, []);
     const [relateUserList, setRelateUserList] = useState([]);
     const [totalSize, setTotalSize] = useState(1);
     const [param, setParam] = useState({
@@ -49,8 +38,18 @@ const CreatModal = ({...props}) => {
         pageNow,
         pageSize,
     } = {...param}
+    //表格选中实时回显
+    useEffect(() => {
+        if (relatedUser.length) {
+            setSelectedRowKeys(relatedUser);
+        }
+    }, [relatedUser]);
+    //获取用户数据
+    useEffect(() => {
+        getRelateUserLists(param);
+    }, []);
     // 角色关联列表API
-    const getRelateUserLists = () => {
+    const getRelateUserLists = (param) => {
         getRelateUserList(param).then(res => {
             setTotalSize(res.data.pagination.totalSize)
             res.data.result.forEach(item => {
@@ -67,23 +66,23 @@ const CreatModal = ({...props}) => {
     }
     //确定关联
     const handleOk = async () => {
-        try {
-            let {id, userId} = props.data
-            relateUser({
-                id,
-                roleIds: selectedRowKeys.join(','),
-                userId
-            }).then(res => {
-                YtMessage.success('操作成功');
+        let {id, userId} = props.data
+        relateUser({
+            id,
+            roleIds: selectedRowKeys.join(','),
+            userId
+        }).then(res => {
+            YtMessage.success('操作成功');
+            setSelectedRowKeys([])
+            setTimeout(() => {
+                props.onOk && props.onOk();
+            }, 500)
+        }).finally(() => {
+            //清空选择
+            setTimeout(() => {
                 setSelectedRowKeys([])
-                setTimeout(() => {
-                    props.onOk && props.onOk();
-                }, 500)
-            })
-        } catch (errorInfo) {
-            YtMessage.error('操作失败');
-            console.log("Failed:", errorInfo);
-        }
+            }, 500)
+        })
     };
     //取消选择
     const handleCancel = (e) => {
@@ -95,7 +94,6 @@ const CreatModal = ({...props}) => {
         selectedRowKeys,
         onChange: selectedRowKeys => {
             setSelectedRowKeys(selectedRowKeys)
-            console.log(selectedRowKeys);
         },
     };
     return (
@@ -108,7 +106,6 @@ const CreatModal = ({...props}) => {
             className="creat-modal">
             <YtTable
                 rowSelection={rowSelection}
-                select={true}
                 columns={columns}
                 dataSource={relateUserList}
             />
@@ -118,4 +115,4 @@ const CreatModal = ({...props}) => {
     );
 }
 
-export default CreatModal;
+export default RelateModal;

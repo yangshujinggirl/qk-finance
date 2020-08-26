@@ -1,4 +1,4 @@
-import {Form, Select, Row, Radio, Col, Modal, Checkbox, Button, Input} from 'antd';
+import {Form, Select, Row, Col, Modal, Button, Input} from 'antd';
 import './index.less';
 import {YtMessage} from 'common';
 import {addRole} from '../../../../../api/platformManage/RoleManage.js'
@@ -18,20 +18,19 @@ const CreatModal = ({...props}) => {
     form.setFieldsValue(props.data)
 
     const handleOk = async () => {
-        try {
-            const values = await form.validateFields();
-            console.log(values)
-            addRole({...values, id}).then(res => {
-                YtMessage.success('操作成功');
-                //清空表单
+        const values = await form.validateFields();
+        console.log(values)
+        addRole({...values, id}).then(res => {
+            YtMessage.success('操作成功');
+            //清空表单
+            form.resetFields()
+            props.onOk && props.onOk(values);
+        }).finally(() => {
+            //清空表单
+            setTimeout(() => {
                 form.resetFields()
-                props.onOk && props.onOk(values);
-            })
-
-        } catch (errorInfo) {
-
-            console.log("Failed:", errorInfo);
-        }
+            }, 500)
+        })
     };
     const handleCancel = (e) => {
         props.onCancel()
@@ -42,8 +41,8 @@ const CreatModal = ({...props}) => {
         <Modal
             getContainer={false}
             width={520}
-            title="新增"
-            visible={props.visible === 1}
+            title={props.visible === 1 ? '新增' : '编辑'}
+            visible={props.visible === 1 || props.visible === 3}
             onOk={handleOk}
             onCancel={handleCancel}
             className="creat-modal"

@@ -1,13 +1,11 @@
-import {YtStatistic, YtPagination, YtTable, YtBtn} from 'common';
+import {YtPagination, YtTable, YtMessage} from 'common';
 import FilterForm from './components/FilterForm';
 import {columnsIndex} from './columns';
 import './index.less'
 import {getBankStatement} from '../../../api/collectionPayment';
-import {YtMessage} from 'common';
 import moment from 'moment';
 
 class AccountStatement extends React.Component {
-
     state = {
         param: {
             pageNow: 1,
@@ -26,8 +24,8 @@ class AccountStatement extends React.Component {
         list: []
     }
 
+    //初始化数据
     componentDidMount() {
-        //初始化数据
         this.getBankStatements();
     }
 
@@ -46,15 +44,13 @@ class AccountStatement extends React.Component {
             let [startDate, endDate] = values.time
             values.startDate = moment(startDate).format('YYYY-MM-DD');
             values.endDate = moment(endDate).format('YYYY-MM-DD');
-            delete values.time;
+            delete values.time;//删除多余参数
         }
         let param = {...this.state.param, ...values}
-        let p={...this.state, param}
-        console.log(p)
+        let p = {...this.state, param}
         this.setState(p, () => {
             this.getBankStatements();
         })
-
     }
     //分页
     pagination = (pageNow) => {
@@ -62,13 +58,11 @@ class AccountStatement extends React.Component {
         this.setState(p, () => {
             this.getBankStatements();
         })
-
     }
 
     render() {
         let {totalSize, list} = {...this.state}
         let {pageNow, pageSize} = {...this.state.param}
-
         return (
             <div className="yt-common-list-pages-wrap">
                 <FilterForm onSubmit={this.search}/>

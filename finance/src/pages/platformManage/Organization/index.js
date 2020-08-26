@@ -12,40 +12,42 @@ const Index = ({...props}) => {
     const [visible, setVisible] = useState(false);
     const [currentItem, setCurrentItem] = useState({});
     const [totalSize, setTotalSize] = useState(1);
+    const [list, setList] = useState([]);
     const [param, setParam] = useState({
         orgName: '',
         pageNow: 1,
         pageSize: 5,
     });
-    const [list, setList] = useState([]);
     const {
         pageNow,
         pageSize,
         orgName
     } = {...param}
+
+    //获取组织数据
+    useEffect(() => {
+        getOrgLists(param);
+    }, []);
+
     //组织管理API
     const getOrgLists = (param) => {
         getOrgList(param).then(res => {
             setTotalSize(res.data.pagination.totalSize)
             setList(res.data.result)
-            console.log(res)
-        }, e => {
-            console.log("Failed:", e);
         })
     }
-    //获取组织数据
-    useEffect(() => {
-        getOrgLists(param);
-    }, []);
+    //新增弹窗
     const goCreat = () => {
-        setVisible(true);
+        setVisible(1);
         setCurrentItem({})
     }
+    //确认新增
     const onOk = () => {
         setVisible(false);
         getOrgLists(param);
         setCurrentItem({})
     }
+    //取消新增
     const onCancel = () => {
         setCurrentItem({})
         setVisible(false);
@@ -54,7 +56,6 @@ const Index = ({...props}) => {
     //查询
     const search = ({orgName}) => {
         let p = {...param, orgName};
-        console.log(p)
         setParam(p);
         getOrgLists(p);
     }
@@ -67,7 +68,7 @@ const Index = ({...props}) => {
     const onOperateClick = ({type, item}) => {
         switch (type) {
             case 'edit':
-                setVisible(true);
+                setVisible(2);
                 setCurrentItem(item);
                 break;
             case 'delete':
@@ -89,7 +90,6 @@ const Index = ({...props}) => {
                 })
             }
         });
-        console.log(record)
     }
     return (
         <div className="account-organization-wrap yt-common-list-pages-wrap">

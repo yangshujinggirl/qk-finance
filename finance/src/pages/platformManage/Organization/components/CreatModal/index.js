@@ -1,4 +1,4 @@
-import {Form, Row, Radio, Col, Modal, Checkbox, Button, Input} from 'antd';
+import {Form, Row, Radio, Col, Modal, Button, Input} from 'antd';
 import './index.less';
 import {addOrg} from '../../../../../api/platformManage/Organization.js'
 import {YtMessage} from 'common';
@@ -12,47 +12,35 @@ const formItemLayout = {
     }
 };
 const CreatModal = ({...props}) => {
-    console.log('props', props);
     const [form] = Form.useForm();
     const {id} = props.data;
     form.setFieldsValue(props.data)
-
+    //确认
     const handleOk = async () => {
-        try {
-            const values = await form.validateFields();
-            console.log(values)
-            addOrg({...values, id}).then(res => {
-                YtMessage.success('操作成功');
-                //清空表单
-                form.resetFields()
-                props.onOk && props.onOk(values);
-            }, e => {
-                console.log(e)
-                //清空表单
-                form.resetFields()
-                YtMessage.error(e || '操作失败');
-                // props.onCancel()
-
-            })
-        } catch (errorInfo) {
-            console.log("Failed:", errorInfo);
-        }
+        const values = await form.validateFields();
+        addOrg({...values, id}).then(res => {
+            YtMessage.success('操作成功');
+            props.onOk && props.onOk(values);
+        }).finally(() => {
+            //清空表单
+            form.resetFields()
+        })
     };
+    //取消
     const handleCancel = (e) => {
         props.onCancel()
         //清空表单
         form.resetFields()
     };
     return (
-        <Modal
-            getContainer={false}
-            width={520}
-            title="新增"
-            visible={props.visible}
-            onOk={handleOk}
-            onCancel={handleCancel}
-            className="creat-modal"
-            footer={null}>
+        <Modal getContainer={false}
+               width={520}
+               title={props.visible === 1 ? '新增' : '编辑'}
+               visible={props.visible}
+               onOk={handleOk}
+               onCancel={handleCancel}
+               className="creat-modal"
+               footer={null}>
             <Form form={form} name="control-hooks" {...formItemLayout}>
                 <Row gutter={24}>
                     <Col span={24}>
