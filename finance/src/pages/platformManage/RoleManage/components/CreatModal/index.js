@@ -14,12 +14,12 @@ const formItemLayout = {
 };
 const CreatModal = ({...props}) => {
     const [form] = Form.useForm();
-    const {id} = props.data;
+    const {id, roleId} = props.data;
 
     const handleOk = async () => {
         const values = await form.validateFields();
         console.log(values)
-        addRole({...values, id}).then(res => {
+        addRole({...values, id, roleId}).then(res => {
             YtMessage.success('操作成功');
             //清空表单
             form.resetFields()
