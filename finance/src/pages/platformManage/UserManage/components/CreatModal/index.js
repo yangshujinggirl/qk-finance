@@ -61,10 +61,9 @@ const CreatModal = ({...props}) => {
     }, []);
     return (
         <Modal
-            getContainer={false}
             width={520}
-            title={title}
-            visible={visible}
+            title={props.visible === 1 ? '新增' : '编辑'}
+            visible={props.visible === 1 || props.visible === 3}
             onOk={handleOk}
             onCancel={handleCancel}
             className="creat-modal"
