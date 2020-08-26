@@ -16,9 +16,6 @@ const CreatModal = ({...props}) => {
     const [treeOrgs, setTreeOrgs] = useState([]);
     const {userPassword, id, userId} = props.data;
     const [form] = Form.useForm();
-    const title = props.visible === 1 ? '新增' : '编辑';
-    const visible = props.visible === 1 || props.visible === 3;
-    form.setFieldsValue({...props.data, userPassword2: userPassword})
     //确认操作
     const handleOk = async () => {
         const values = await form.validateFields();
@@ -68,7 +65,8 @@ const CreatModal = ({...props}) => {
             onCancel={handleCancel}
             className="creat-modal"
             footer={null}>
-            <Form form={form} name="control-hooks" {...formItemLayout}>
+            <Form form={form} initialValues={{...props.data, userPassword2: userPassword}}
+                  name="control-hooks" {...formItemLayout}>
                 <Row gutter={24}>
                     <Col span={24}>
                         <Form.Item name="userName" label="用户名称" rules={[{required: true, message: '请输入'}]}>
