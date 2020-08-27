@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import NP from 'number-precision';
 import moment from 'moment';
 import { useState, useEffect } from 'react';
+import { CommonUtils } from 'utils';
 import { YtBreadcrumbName, YtCard, YtBaseInfo, YtCollapse } from 'common';
 import VerifySource from './components/VerifySource';
 import BlockInfo from './components/BlockInfo';
@@ -16,44 +17,37 @@ import ReceiveGoodsInfo from './components/ReceiveGoodsInfo';
 import ReturnedMoneyInfo from './components/ReturnedMoneyInfo';
 import AssetStepMod from './components/AssetStepMod';
 import { GetInfoApi } from 'api/asset/AssetInfo';
-import { financeStatusMap } from './components/option';
+import { financeStatusMap, assetStatusMap } from './components/option';
 import './index.less';
 
-const assetStatusMap={
-  1:'未验证',
-  2:'已验证',
-  3:'无效',
-  4:'已K座',
-  5:'部分付款',
-}
 
 const { Panel } = Collapse;
 
 const AssetInfo=({...props})=>{
   const { id:assetNo } = props.match.params;
   const [assetsInfo,setAssetsInfo] = useState({});
-  const [companyBaseInfo,setCompanyBaseInfo] = useState({});
-  const [blockInfo,setBlockInfo] = useState({});
+  const [companyBaseInfo,setCompanyBaseInfo] = useState({});//企业信息
+  const [blockInfo,setBlockInfo] = useState({});//区块信息
+  const [saleInfo,setSaleInfo] = useState({});//销售信息
+  const [shipment,setShipment] = useState({});//发货信息
+  const [receiveInfo,setReceiveInfo] = useState({});//收货信息
   const industryTypeCode = 'AGNPK';
   const fetchInfo=(values )=>{
     let params = { industryTypeCode, assetNo }
     GetInfoApi(params)
     .then((res)=> {
-      const { authStatus, assetsInfo, assetEnterpriseInfo, blockChainInfo } =res.data;
-      setCompanyBaseInfo(assetEnterpriseInfo);
+      const { authStatus, assetsInfo, blockChainInfo, assetDetailVO } =res.data;
+      let { salesInfoVO, logisticsSendVO, logisticsReceivingVO, shipperType } =assetDetailVO;
+      salesInfoVO ={...salesInfoVO, shipperType };
       setBlockInfo(blockChainInfo);
-      setAssetsInfo({...assetsInfo,authStatus});
+      setSaleInfo(salesInfoVO);
+      setShipment(logisticsSendVO);
+      setReceiveInfo(logisticsReceivingVO);
+      setAssetsInfo({...assetsInfo,authStatus,shipperType});
     })
   }
-  const remainDays=()=>{
-    let expectedDate = assetsInfo.debtExpireDate?assetsInfo.debtExpireDate:0;
-    let transactionDate = assetsInfo.transactionDate?assetsInfo.transactionDate:0;
-    return<>{
-      NP.minus(expectedDate,transactionDate)
-    }
-    </>
-  }
   useEffect(() => { fetchInfo() },[assetNo]);
+  const surplusPayMent = CommonUtils.formatTimeInterval(assetsInfo.transactionDate,assetsInfo.expectedDate)
   return(
     <>
       <YtBreadcrumbName />
@@ -83,7 +77,7 @@ const AssetInfo=({...props})=>{
             <div className="info-im">
               <p className="label-name">剩余账期(天)</p>
               <p className="label-value">
-                {remainDays()}
+                {surplusPayMent}
               </p>
             </div>
             <div className="info-im">
@@ -136,7 +130,7 @@ const AssetInfo=({...props})=>{
                 <SupplySellInfo info={blockInfo}/>
               </Panel>
               <Panel header="销售合同信息" key="4">
-                <SalesInfo info={blockInfo}/>
+                <SalesInfo info={saleInfo}/>
               </Panel>
               {/*<Panel header="进货采购信息" key="5">
                 <PurchaseInfo info={blockInfo}/>

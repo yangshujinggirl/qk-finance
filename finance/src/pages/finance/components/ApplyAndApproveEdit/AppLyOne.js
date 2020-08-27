@@ -1,6 +1,6 @@
 import { Form,Row,Col,Select,Input,Button } from 'antd';
 import { Link } from 'react-router-dom';
-import { BaseEditForm, YtBtn } from 'common';
+import { BaseEditForm, YtBtn, CommonBankList } from 'common';
 import HeadFormCard from '../HeadFormCard';
 import PopoverMod from './components/PopoverMod';
 import { tradeOption, moneyPathOption } from './options'
@@ -9,19 +9,19 @@ import {
   GetSaveElement,
   GetCompanyList,
   GetPackageList,
-  GetBankList
+  GetBankList,
 } from 'api/finance/ApplyAndApproveEdit';
 
 class ApplyOne extends BaseEditForm {
   formRef = React.createRef();
-	state = {
+  state = {
 		basicInfo: {},
     companyList:[],//融资企业
     packageList:[],//资产包
     packageId:null,//资产包id
     jgBank:[],//监管银行
-    fundBank:[],//资金方银行
 	}
+
   componentDidMount(){
 		this.fetchBasicInfo();
 	}
@@ -29,9 +29,13 @@ class ApplyOne extends BaseEditForm {
     console.log(values)
   };
 	fetchBasicInfo=()=> {
+    let { basicInfo } =this.state;
 		GetFinanceDetail({ loanId: this.props.loanId, currentStatus:'view' })
 		.then((res)=> {
-      this.setState({ basicInfo: res.data.obj });
+      let { obj } =res.data;
+      this.formRef.current.setFieldsValue(obj);
+      basicInfo= {...basicInfo, ...obj }
+      this.setState({ basicInfo });
 		})
 	}
   //选择行业
@@ -46,12 +50,13 @@ class ApplyOne extends BaseEditForm {
   }
   //选择企业
   onChangeCompany=(value)=>{
+    let { basicInfo } = this.state;
     let item = this.state.companyList.find((el)=>{ return value == el.enterpriseId });
     //请求企业资产包
     GetPackageList({ enterpriseId:value})
     .then((res)=> {
-      console.log(res);
-      this.setState({ packageList: [] });
+      let { data } =res;
+      this.setState({ packageList: data });
     })
     GetBankList({
       accountUsage:1,
@@ -61,26 +66,44 @@ class ApplyOne extends BaseEditForm {
       companyOrgCode:item.organizationalCode
     })
     .then((res)=> {
-      this.setState({ jgBank: [] });
+      let { data } =res;
+      this.setState({ jgBank: data.list });
     })
+    basicInfo = { ...basicInfo, ...item };
+    this.setState({ basicInfo });
+    this.formRef.current.setFieldsValue(item)
   }
   //选择企业资产包
   changePackge=(value)=>{
     //请求企业资产包
     this.setState({ packageId: '' });
   }
-  //选择银行
+  //选择监管银行
   onChangeBank=(value)=>{
-    // this.setState({ packageId: '' });
+    let { jgBank, basicInfo } =this.state;
+    let currentBankInfo = jgBank.find((el)=> el.bankCode==value);
+    let monitorBankInfo= {
+      monitorOpenBank:currentBankInfo.accountName,
+      monitorAccountName:currentBankInfo.accountName,
+      monitorBankAccountNo:currentBankInfo.accountNumber,
+    }
+    basicInfo = { ...basicInfo, ...currentBankInfo };
+    this.formRef.current.setFieldsValue(monitorBankInfo)
+    this.setState({ basicInfo });
   }
   handleSubmit = async () => {
     try {
       const values = await this.formRef.current.validateFields();
-      const { loanId } =this.props;
-      console.log(values)
-      GetSaveElement()
+      let { loanId } =this.props;
+      let { basicInfo } =this.state;
+      let params = {
+        ...values,
+        loanId,
+        companyOrgCode:basicInfo.organizationalCode,
+      }
+      GetSaveElement(params)
       .then((res)=> {
-        console.log(values)
+        console.log(res)
       })
     } catch (errorInfo) {
       console.log("Failed:", errorInfo);
@@ -88,10 +111,14 @@ class ApplyOne extends BaseEditForm {
   };
 
   render() {
-    const { companyList, packageList, packageId, jgBank, fundBank } =this.state;
+    const { basicInfo, companyList, packageList, packageId, jgBank } =this.state;
     return(
       <div>
-        <Form className="common-edit-pages-form" {...this.formItemLayout} ref={this.formRef}>
+        <Form
+          className="common-edit-pages-form"
+          {...this.formItemLayout}
+          ref={this.formRef}
+          initialValues={{...basicInfo}}>
           <HeadFormCard title="基本信息">
               <Row>
                 <Col {...this.colspans}>
@@ -119,7 +146,7 @@ class ApplyOne extends BaseEditForm {
                   <Form.Item label="融资企业">
                     <Row gutter={8}>
                       <Col span={18}>
-                        <Form.Item name="enterpriseId" rules={[{ required: true,message:'请输入'}]}>
+                        <Form.Item name="enterpriseId" rules={[{ required: true, message:'请输入'}]}>
                           <Select placeholder="请选择" allowClear={true} onSelect={this.onChangeCompany} disabled={companyList.length==0}>
                           {
                             companyList.map((el) =>(
@@ -139,7 +166,7 @@ class ApplyOne extends BaseEditForm {
                   <Form.Item label="资产包">
                     <Row gutter={8}>
                       <Col span={18}>
-                        <Form.Item name="packageId" rules={[{ required: true, message:'请输入'}]}>
+                        <Form.Item name="packageId" >
                           <Select placeholder="请选择" allowClear={true} onSelect={this.changePackge} disabled={packageList.length==0}>
                           {
                             packageList.map((el)=>(
@@ -179,7 +206,7 @@ class ApplyOne extends BaseEditForm {
                     <Select placeholder="请选择" allowClear={true} onSelect={this.onChangeBank} disabled={jgBank.length==0}>
                       {
                         jgBank.map((el)=>(
-                          <Select.Option value={el.enterpriseId} key={el.enterpriseId}>{el.enterpriseFullName}</Select.Option>
+                          <Select.Option value={el.bankCode} key={el.bankCode}>{el.bankName}</Select.Option>
                         ))
                       }
                     </Select>
@@ -218,8 +245,8 @@ class ApplyOne extends BaseEditForm {
                 <Form.Item label="选择银行" name="loanBank" rules={[{ required: true, message: '请选择'}]}>
                   <Select placeholder="请选择" allowClear={true}>
                     {
-                      fundBank.map((el)=>(
-                        <Select.Option value="建设银行" key="建设银行">建设银行</Select.Option>
+                      CommonBankList.map((el)=>(
+                        <Select.Option value={el.value} key={el.value}>{el.text}</Select.Option>
                       ))
                     }
                   </Select>
@@ -227,17 +254,17 @@ class ApplyOne extends BaseEditForm {
                 </Col>
                 <Col {...this.colspans}>
                   <Form.Item label="开户行" name="loanOpenBank" rules={[{ required: true, message: '请输入'}]}>
-                    <Input autoComplete="off"   placeholder="请输入" disabled/>
+                    <Input autoComplete="off"   placeholder="请输入"/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
                   <Form.Item label="账户名称" name="loanAccountName" rules={[{ required: true, message: '请输入'}]}>
-                    <Input autoComplete="off"   placeholder="请输入" disabled/>
+                    <Input autoComplete="off"   placeholder="请输入"/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
                   <Form.Item label="银行账号" name="loanAccount" rules={[{ required: true, message: '请输入'}]}>
-                    <Input autoComplete="off"   placeholder="请输入" disabled/>
+                    <Input autoComplete="off"   placeholder="请输入"/>
                   </Form.Item>
                 </Col>
               </Row>

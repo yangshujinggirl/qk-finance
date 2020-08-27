@@ -127,7 +127,7 @@ const columnsReceivable = [
     key: 'address',
     render:(text,record,index)=>{
       return <>
-        <span className="operate-link-btn">操作</span>
+        <span className="operate-link-btn" onClick={()=>record.onOperateClick('delete')}>移除</span>
       </>
     }
   },

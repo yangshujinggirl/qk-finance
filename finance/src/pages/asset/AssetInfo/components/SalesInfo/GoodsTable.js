@@ -1,34 +1,5 @@
 import { Table } from 'antd';
-let dataSource = [
-  {
-    code: '1',
-    name: '34%嘉施利',
-    price: "1,900.00",
-    amount: "9,500.00",
-    num: '5',
-  },
-  {
-    code: '2',
-    name: '34%嘉施利',
-    price: "1,900.00",
-    amount: "9,500.00",
-    num: '5',
-  },
-  {
-    code: '3',
-    name: '34%嘉施利',
-    price: "1,900.00",
-    amount: "9,500.00",
-    num: '5',
-  },
-  {
-    code: '4',
-    name: '34%嘉施利',
-    price: "1,900.00",
-    amount: "9,500.00",
-    num: '5',
-  },
-];
+import NP from 'number-precision';
 
 const renderContent = (value, record, index) => {
   const obj = {
@@ -70,20 +41,20 @@ const columns = [
   },
   {
     title: '产品名称',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'productName',
+    key: 'productName',
     render:renderContent
   },
   {
     title: '单价（元/吨）',
-    dataIndex: 'price',
-    key: 'price',
+    dataIndex: 'unitPrice',
+    key: 'unitPrice',
     render:renderContent
   },
   {
     title: '数量（吨））',
-    dataIndex: 'num',
-    key: 'num',
+    dataIndex: 'purchaseQuantity',
+    key: 'purchaseQuantity',
     render:renderContent
   },
   {
@@ -95,10 +66,17 @@ const columns = [
 ];
 
 function GoodsTable({...props}){
+  let { dataSource } =props;
+  let sum=0;
+  dataSource.map((el)=>{
+    el.amount = NP.times(el.purchaseQuantity,el.unitPrice);
+    sum = NP.plus(sum, el.amount);
+  })
+
   const totalRow = [{
       id: 12,
       totalIndex: '合计',
-      debit: 1165000,  //应当取从后台返回数据，此处为演示，所以自定义了默认值
+      debit: sum,  //应当取从后台返回数据，此处为演示，所以自定义了默认值
     }]
   dataSource = [...dataSource,...totalRow];
   return <Table dataSource={dataSource} columns={columns} bordered pagination={false}/>;

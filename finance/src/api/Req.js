@@ -1,4 +1,5 @@
 import axios from 'axios';
+const qs = require('qs');
 import {YtMessage} from 'common';
 import {message} from 'antd';
 import {Sessions} from 'utils';
@@ -11,6 +12,7 @@ let defaultHeader = {
 function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInterceptors = true}) {
     let Authorization = Sessions.get('token') ? `${Sessions.get('tokenType')} ${Sessions.get('token')}` : null;
     console.log('Authorization', Authorization)
+    // console.log('headers', headers)
     headers = {
         ...headers,
         Authorization
@@ -23,6 +25,16 @@ function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInt
     // 添加请求拦截器
     instance.interceptors.request.use(function (config) {
         // 在发送请求之前做些什么
+        let { reqHeader, headers, data} =config;
+        if(reqHeader == "form") {
+          data = qs.stringify(data);
+          headers = {
+            ...headers,
+            "Content-Type":"application/x-www-form-urlencoded"
+          }
+        }
+        config.headers = headers;
+        config.data = data;
         return config;
     }, function (error) {
         // 对请求错误做些什么
@@ -56,4 +68,4 @@ function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInt
 
 const Req = new request({baseURL: '/admin/ytFinance'});
 const BlockReq = new request({baseURL: '/admin/blockFinance'});
-export { Req,BlockReq } 
+export { Req,BlockReq }

@@ -3,6 +3,8 @@ import {Sessions} from 'utils';
 
 const CommonUtils = {
     formatTimeInterval(orderDate,expectedDate){
+      orderDate = orderDate?orderDate:0;
+      expectedDate = expectedDate?expectedDate:0;
       let today = Date.parse(new Date());
       let times= NP.minus(today, orderDate);
       let interval = NP.divide(times, 24*60*60*1000);

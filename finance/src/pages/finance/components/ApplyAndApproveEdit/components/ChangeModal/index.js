@@ -1,6 +1,6 @@
 import { Form, Select, Row, Col, Modal, Checkbox, Button, Input } from 'antd';
 import { useState } from 'react';
-import { YtEditModal, YtBtn } from 'common';
+import { YtEditModal, YtBtn, YtPagination } from 'common';
 import EditTable from './EditTable';
 import './index.less';
 
@@ -13,8 +13,10 @@ const formItemLayout = {
   }
 };
 const CreatModal=({...props})=>{
+  console.log('CreatModal')
   const [form] = Form.useForm();
   const [disabled, setDisabled] = useState([]);
+  const [dataPag,setDataPag] = useState({ pageSize:10, pageNow:1, totalSize:0 });
   const [dataSource, setDataSource] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -55,6 +57,7 @@ const CreatModal=({...props})=>{
     setDataSource([]);
     setDisabled(true);
   };
+  useEffect(()=>{console.log(form)},[])
   return (
       <YtEditModal
         title="选择资产"
@@ -67,38 +70,26 @@ const CreatModal=({...props})=>{
           <Row gutter={24}>
             <Col span={12}>
               <Form.Item name="name1" label="选择债务人">
-                <Select placeholder="请选择" allowClear={true}>
-                  <Select.Option value="1" key="1">
-                    1
-                  </Select.Option>
-                  <Select.Option value="2" key="2">
-                    2
-                  </Select.Option>
-                </Select>
+                <Input autoComplete="off"/>
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="zq2" label="资产最长账期">
+              <Form.Item name="maxRealDate" label="资产最长账期">
                 <Input addonAfter="天" autoComplete="off"/>
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="zq2" label="资产最短账期">
+              <Form.Item name="minRealDate" label="资产最短账期">
                 <Input addonAfter="天" autoComplete="off"/>
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="zq1" label="单笔资产金额不小于">
+              <Form.Item name="maxAssetsAmount" label="单笔资产金额不大于">
                 <Input addonAfter="天" autoComplete="off"/>
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="db1" label="单笔资产金额不大于">
-                <Input addonAfter="元" autoComplete="off"/>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="db2" label="单笔资产/总金额不大于">
+              <Form.Item name="assetAmountScale" label="单笔资产金额不小于">
                 <Input addonAfter="%" autoComplete="off"/>
               </Form.Item>
             </Col>
@@ -107,6 +98,10 @@ const CreatModal=({...props})=>{
             <YtBtn type="primary" onClick={goSearch} size="free">查询</YtBtn>
           </div>
           <EditTable dataSource={dataSource} onSelect={onSelect}/>
+          {
+            dataSource.length>0&&
+            <YtPagination data={dataPag} />
+          }
         </Form>
       </YtEditModal>
   );

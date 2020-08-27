@@ -4,28 +4,44 @@ import { BaseEditForm, YtUpLoadAndDownLoad, YtBtn, YtTable } from 'common';
 import { columnsReceivable, columnsPlan } from './columns';
 import HeadFormCard from '../HeadFormCard';
 import ChangeModal from './components/ChangeModal';
-import { GetPayInfo, GetReceivablesList } from 'api/finance/ApplyAndApproveEdit';
+import { GetSaveElement, GetPayPlanApi, GetDeleteApi, GetCountPayApi, GetPayInfo, GetReceivablesListApi } from 'api/finance/ApplyAndApproveEdit';
 import './AppLyTwo.less';
 
 class ApplyOne extends BaseEditForm {
   formRef = React.createRef();
   state={
     visible:false,
+    receivablesList:[],//转让应账款列表
+    payList:[],//还款测算列表
     info:{}
   }
   componentDidMount(){
-    this.fetchInfo()
+    this.fetchInfo();
   }
   fetchInfo=()=>{
     GetPayInfo({ currentStatus:this.props.currentStatus, loanId: this.props.loanId })
     .then((res)=> {
       let { obj } =res.data;
       this.setState({ info:obj });
-      this.fetchReceivables(obj)
+      this.fetchReceivables(obj);
+      this.fetchPayPlan(obj);
+    })
+  }
+  //还款计划列表
+  fetchPayPlan=(values)=>{
+    GetPayPlanApi({
+      enterpriseName:values.enterpriseName,
+      packetName:values.packetName,
+      packageId:values.packageId,
+      packageAmount:values.packageAmount,
+      loanId: this.props.loanId
+    })
+    .then((res)=> {
+      console.log(res)
     })
   }
   fetchReceivables=(values)=>{
-    GetReceivablesList({
+    GetReceivablesListApi({
       packetId:values.packetId,
       transferStatus: values.loanId,
       industryTypeCode:values.industryTypeCode
@@ -34,33 +50,54 @@ class ApplyOne extends BaseEditForm {
       console.log(res)
     })
   }
-  onSubmit = async (values) => {
-    console.log(values)
+  //移除转让应收列表
+  onOperateClick = ({item, type}) => {
+    GetDeleteApi({ id: item.id })
+    .then((res) => {
+      console.log(res);
+    })
   };
-
+  //还款测算
+  countPayment=()=>{
+    GetCountPayApi({ currentStatus:this.props.currentStatus, loanId: this.props.loanId })
+    .then((res)=> {
+      let { data } =res;
+      data = data?data:[];
+      this.setState({ payList: data })
+    })
+  }
+  //选择资产
+  goChange=()=>{
+    //请求列表数据
+    this.setState({ visible:true })
+  }
   onOk=()=>{
     this.setState({ visible:false })
   }
   onCancel=()=>{
     this.setState({ visible:false })
   }
-  //还款测算
-  countPayment=()=>{
-
-  }
-  //选择资产
-  goChange=()=>{
-    this.setState({ visible:true })
-  }
+  onSubmit = async (values) => {
+    try {
+      const values = await this.formRef.current.validateFields();
+      console.log(values);
+      GetSaveElement()
+      .then((res)=> {
+        console.log(res);
+      })
+    } catch (errorInfo) {
+      console.log("Failed:", errorInfo);
+    }
+  };
   render() {
-    const { visible } =this.state;
+    const { visible, receivablesList, payList} =this.state;
     return(
       <div>
         <Form className="common-edit-pages-form" {...this.formItemLayout} ref={this.formRef}>
           <HeadFormCard title="基本信息">
               <Row>
                 <Col {...this.colspans}>
-                  <Form.Item label="融资企业" name="name" rules={[{ required: true, message: '请选择融资企业'}]}>
+                  <Form.Item label="融资企业" name="enterpriseName" rules={[{ required: true, message: '请选择融资企业'}]}>
                     <Input autoComplete="off"   placeholder="请输入" disabled/>
                   </Form.Item>
                 </Col>
@@ -68,7 +105,7 @@ class ApplyOne extends BaseEditForm {
                   <Form.Item label="资产包">
                     <Row gutter={8}>
                       <Col span={18}>
-                        <Form.Item name="packageId">
+                        <Form.Item name="packetName">
                           <Input autoComplete="off"   placeholder="请输入" disabled/>
                         </Form.Item>
                       </Col>
@@ -79,12 +116,12 @@ class ApplyOne extends BaseEditForm {
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="资产包金额" name="code">
+                  <Form.Item label="资产包金额" name="packageAmount">
                     <Input autoComplete="off"   placeholder="请输入"  suffix="万元" disabled/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="授信金额" name="code" rules={[{ required: true, message: '请输入授信金额'}]}>
+                  <Form.Item label="授信金额" name="code" rules={[{ required: true, message: '请输入'}]}>
                     <Input autoComplete="off"   placeholder="请输入" suffix="万元"/>
                   </Form.Item>
                 </Col>
@@ -147,11 +184,11 @@ class ApplyOne extends BaseEditForm {
                 <Col {...this.colspans}>
                   <Form.Item label="还款方式" name="name" rules={[{ required: true, message: '请选择'}]}>
                     <Select placeholder="请选择" allowClear={true}>
-                      <Select.Option value="银行转账" key="银行转账">等额本金</Select.Option>
-                      <Select.Option value="银行转账1" key="银行转账1">等额本息</Select.Option>
-                      <Select.Option value="银行转账1" key="银行转账1">平息</Select.Option>
-                      <Select.Option value="银行转账1" key="银行转账1">先息后本</Select.Option>
-                      <Select.Option value="银行转账1" key="银行转账1">到期还本付息</Select.Option>
+                      <Select.Option value="3" key="3">等额本金</Select.Option>
+                      <Select.Option value="4" key="4">等额本息</Select.Option>
+                      <Select.Option value="5" key="5">平息</Select.Option>
+                      <Select.Option value="2" key="2">先息后本</Select.Option>
+                      <Select.Option value="1" key="1">到期还本付息</Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>
@@ -191,7 +228,7 @@ class ApplyOne extends BaseEditForm {
           </HeadFormCard>
           <HeadFormCard title="还款计划"  extra={<YtBtn size="free" onClick={this.countPayment}>还款测算</YtBtn>}>
               <YtUpLoadAndDownLoad />
-              <YtTable columns={columnsPlan} data={[]}/>
+              <YtTable columns={columnsPlan} data={payList}/>
           </HeadFormCard>
           <HeadFormCard title="转让应收账款">
               <>
@@ -199,17 +236,20 @@ class ApplyOne extends BaseEditForm {
                   <div>应收帐款条数<span className="pointerSty">200条</span>，应收帐款金额<span className="pointerSty">32000</span></div>
                   <YtBtn onClick={this.goChange}>选择资产</YtBtn>
                 </div>
-                <YtTable columns={columnsReceivable} data={[]}/>
+                <YtTable columns={columnsReceivable} data={receivablesList}/>
               </>
           </HeadFormCard>
           {
             this.props.handleType=='1'&&
             <div className="edit-btn-wrap">
-              <YtBtn size="free" onClick={this.handleSubmit}>确认并下一步</YtBtn>
+              <YtBtn size="free" onClick={this.handleSubmit} onOperateClick={this.onOperateClick}>确认并下一步</YtBtn>
             </div>
           }
         </Form>
-        <ChangeModal  visible={visible} onOk={this.onOk} onCancel={this.onCancel}/>
+        {
+          visible&&
+          <ChangeModal  visible={visible} onOk={this.onOk} onCancel={this.onCancel}/>
+        }
       </div>
     )
   }
