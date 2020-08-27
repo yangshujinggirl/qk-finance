@@ -54,6 +54,6 @@ function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInt
     return instance;
 }
 
-const Req = new request({baseURL: '/ytFinance'});
-const BlockReq = new request({baseURL: '/blockFinance'});
+const Req = new request({baseURL: '/admin/ytFinance'});
+const BlockReq = new request({baseURL: '/admin/blockFinance'});
 export { Req,BlockReq } 

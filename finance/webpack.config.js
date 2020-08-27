@@ -121,12 +121,12 @@ module.exports = {
     proxy:{
       '/admin/ytFinance': {
         target:'https://fund05.bravowhale-uat.com/admin',//资金端
-        pathRewrite: {"^/ytFinance" : ""},
+        pathRewrite: {"^/admin/ytFinance" : ""},
         changeOrigin: true,
       },
       '/admin/blockFinance': {
         target:'http://yuntuappapitest01.bravowhale-uat.com/admin/api/',//上链端
-        pathRewrite: {"^/ytFinance" : ""},
+        pathRewrite: {"^/admin/ytFinance" : ""},
         changeOrigin: true,
       },
     }
