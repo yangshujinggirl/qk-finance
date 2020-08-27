@@ -55,7 +55,7 @@ const Index = ({...props}) => {
     }
     //查询
     const search = ({orgName}) => {
-        let p = {...param, orgName};
+        let p = {...param, orgName,pageNow: 1};
         setParam(p);
         getOrgLists(p);
     }

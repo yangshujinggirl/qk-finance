@@ -36,7 +36,7 @@ const Index = ({...props}) => {
     }, []);
     //查询
     const search = ({userName}) => {
-        let p = {...param, userName};
+        let p = {...param, userName,pageNow: 1};
         setParam(p);
         getUserLists(p);
     }

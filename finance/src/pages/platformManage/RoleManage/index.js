@@ -68,7 +68,7 @@ const Index = ({...props}) => {
     }, []);
     //查询
     const search = ({roleName}) => {
-        let p = {...param, roleName};
+        let p = {...param, roleName,pageNow: 1};
         setParam(p);
         getRoleLists(p);
     }
