@@ -119,12 +119,12 @@ module.exports = {
     compress: true,
     port: 9000,
     proxy:{
-      '/ytFinance': {
+      '/admin/ytFinance': {
         target:'https://fund05.bravowhale-uat.com/admin',//资金端
         pathRewrite: {"^/ytFinance" : ""},
         changeOrigin: true,
       },
-      '/blockFinance': {
+      '/admin/blockFinance': {
         target:'http://yuntuappapitest01.bravowhale-uat.com/admin/api/',//上链端
         pathRewrite: {"^/ytFinance" : ""},
         changeOrigin: true,
