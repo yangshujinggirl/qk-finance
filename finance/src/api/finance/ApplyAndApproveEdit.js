@@ -71,6 +71,6 @@ export function GetSaveApproveApi(values) {
 }
 
 //审批列表
-export function GetApproveInfoApi(values) {
+export function GetApproveFinceListApi(values) {
     return Req.post('/loanV2/apply/add/approve', {...values}, {reqHeader: 'form'})
 }

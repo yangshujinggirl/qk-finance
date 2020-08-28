@@ -30,7 +30,7 @@ function withSubscription(handleType, pageType, Mod){
          } else {
            return 'add'
          }
-      }
+      };
 
       return(
         <div className="finance-apply-wrap yt-common-bg-pages-wrap">
@@ -53,7 +53,12 @@ function withSubscription(handleType, pageType, Mod){
               <AppLyThr handleType={handleType} pageType={pageType} loanId={params.id} handleStatus={handleStatus()}/>
             }
             </TabPane>
-              {Mod&&Mod()}
+            {
+              Mod&&
+              <TabPane tab="审批记录" key="10" forceRender={false}>
+                <Mod {...this.props}/>
+              </TabPane>
+            }
           </Tabs>
         </div>
       )

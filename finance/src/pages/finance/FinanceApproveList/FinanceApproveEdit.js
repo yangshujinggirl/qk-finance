@@ -4,10 +4,10 @@ import withSubscription from '../components/ApplyAndApproveEdit';
 
 const { TabPane } = Tabs;
 
-const Approve=({...props})=> {
-  return <TabPane tab="审批记录" key="4">
-          <ApproveRecord />
-         </TabPane>
+class Approve extends React.Component {
+  render(){
+    return <ApproveRecord  pageType="fince"/>
+  }
 }
 const  FinanceApproveEdit = withSubscription('2','edit',Approve);//1:融资申请2:审批
 export default FinanceApproveEdit;
