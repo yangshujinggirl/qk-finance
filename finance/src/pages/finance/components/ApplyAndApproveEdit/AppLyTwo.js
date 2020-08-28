@@ -90,7 +90,7 @@ class ApplyOne extends BaseEditForm {
       }
       GetSaveElement(val)
       .then((res)=> {
-        console.log(res);
+        this.props.upDateKey('payInfo')
       })
     } catch (errorInfo) {
       console.log("Failed:", errorInfo);
