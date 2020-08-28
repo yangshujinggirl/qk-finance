@@ -3,7 +3,7 @@ import {BaseEditForm, YtBtn, YtTable, YtMessage} from 'common';
 import {columnsRecord} from './columns'
 import HeadFormCard from '../HeadFormCard';
 import './index.less';
-import {ApplyAndApproveEdit, GetBankListApi, GetApproveListApi} from "../../../../api/finance/ApplyAndApproveEdit";
+import {ApplyAndApproveEdit, GetBankListApi, GetApproveListApi} from "api/finance/ApplyAndApproveEdit";
 
 class ApproveRecord extends BaseEditForm {
     formRef = React.createRef();
