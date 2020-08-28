@@ -2,7 +2,7 @@ import { YtStatistic, YtPagination, YtTable, YtBtn } from 'common';
 import FilterForm from './components/FilterForm';
 import {columnsIndex} from './columns';
 import './index.less'
-import { GetWhiteList } from 'api/finance/FinanceManagement';
+import { GetWhiteList } from 'api/finance/WhiteList';
 
 const data = [
   {
@@ -54,7 +54,7 @@ class AccountStatement extends React.Component {
 			data: [],
 			pagination: {totalSize:100, totalPage:5, pageNow:1, pageSize:15}
 		}
-			
+
 		fetchLoanList=()=> {
 			GetWhiteList({
 				"pageNow": this.state.pagination.pageNow,
@@ -72,8 +72,8 @@ class AccountStatement extends React.Component {
 				this.forceUpdate();
 			});
 		}
-		
-		componentWillMount(){		
+
+		componentWillMount(){
 			this.fetchLoanList();
 		}
 		onPageChange=(currentPage, pageSize)=> {

@@ -7,7 +7,11 @@ import { GetTipsProcess } from 'api/finance/ApplyAndApproveEdit';
 import './index.less';
 
 const {TabPane} = Tabs;
-
+const tabStatusMap={
+  "baseInfo":1,
+  "payInfo":2,
+  "contract":3,
+}
 function withSubscription(handleType, pageType, Mod){
   return class FinanceApplyEdit extends React.Component {
     state = {
@@ -22,7 +26,7 @@ function withSubscription(handleType, pageType, Mod){
       GetTipsProcess({ loanId:this.props.match.params.id })
       .then((res) => {
         const { tabStatus } =res.data;
-        this.setState({ tabStatus:tabStatus?tabStatus:'baseInfo' });
+        this.setState({ tabStatus:tabStatus });
       })
     }
     upDateKey=(value)=> {
@@ -53,16 +57,16 @@ function withSubscription(handleType, pageType, Mod){
             <TabPane tab="合同要素" key="baseInfo" forceRender={false}>
             {
               activeKey=='baseInfo'&&
-              <AppLyOne upDateKey={this.upDateKey} tabStatus={tabStatus} handleType={handleType} pageType={pageType} loanId={params.id} handleStatus={handleStatus()}/>
+              <AppLyOne upDateKey={this.upDateKey} tabStatus={[tabStatus]} handleType={handleType} pageType={pageType} loanId={params.id} handleStatus={handleStatus()}/>
             }
             </TabPane>
-            <TabPane tab="还款预算" key="payInfo" forceRender={false}>
+            <TabPane tab="还款预算" key="payInfo" forceRender={false} disabled={tabStatusMap[tabStatus]<2}>
             {
               activeKey=='payInfo'&&
               <AppLyTwo upDateKey={this.upDateKey} tabStatus={tabStatus} handleType={handleType} pageType={pageType} loanId={params.id} handleStatus={handleStatus()}/>
             }
             </TabPane>
-            <TabPane tab="合同预览" key="contract" forceRender={false}>
+            <TabPane tab="合同预览" key="contract" forceRender={false} disabled={tabStatusMap[tabStatus]>2}>
             {
               activeKey == 'contract'&&
               <AppLyThr upDateKey={this.upDateKey} tabStatus={tabStatus} handleType={handleType} pageType={pageType} loanId={params.id} handleStatus={handleStatus()}/>

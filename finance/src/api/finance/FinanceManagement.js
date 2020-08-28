@@ -32,11 +32,6 @@ export function GetLoanDetail(loanId) {
 }
 
 
-// 企业白名单
-export function GetWhiteList() {
-    return Req.post('api/dealer/bankAccount/search', {})
-}
-
 // 项目下载 企业列表
 export function GetProFileList(values) {
     return Req.post('/loanV2/file/findProjectFile', {...values})
