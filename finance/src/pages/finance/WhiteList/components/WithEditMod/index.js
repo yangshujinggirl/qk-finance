@@ -1,6 +1,6 @@
 import { Tabs } from 'antd';
 import { Link } from 'react-router-dom';
-import ApproveRecord from '../components/ApproveRecord';
+import ApproveRecord from '../ApproveRecord';
 import AppLyOne from '../AppLyOne';
 
 const { TabPane } = Tabs;
