@@ -38,7 +38,7 @@ function withSubscription(handleType, pageType, Mod){
     }
     render() {
       const { params } = this.props.match;
-      const { activeKey,tabStatus } =this.state;
+      let { activeKey,tabStatus } =this.state;
       let handleStatus =()=> {
          if(params.id) {
            if(pageType == 'view') {
@@ -66,7 +66,7 @@ function withSubscription(handleType, pageType, Mod){
               <AppLyTwo upDateKey={this.upDateKey} tabStatus={tabStatus} handleType={handleType} pageType={pageType} loanId={params.id} handleStatus={handleStatus()}/>
             }
             </TabPane>
-            <TabPane tab="合同预览" key="contract" forceRender={false} disabled={tabStatusMap[tabStatus]>2}>
+            <TabPane tab="合同预览" key="contract" forceRender={false} disabled={tabStatusMap[tabStatus] <= 2}>
             {
               activeKey == 'contract'&&
               <AppLyThr upDateKey={this.upDateKey} tabStatus={tabStatus} handleType={handleType} pageType={pageType} loanId={params.id} handleStatus={handleStatus()}/>
