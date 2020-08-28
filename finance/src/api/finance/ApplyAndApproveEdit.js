@@ -34,63 +34,43 @@ export function GetPayInfo(values) {
 export function GetReceivablesListApi(values) {
     return Req.post('/assets/package/choose/assetsListForTransfer/', {...values})
 }
+
 // 查询还款预算--转让应账款确定
 export function GetSaveReceivablesApi(values) {
-    return Req.post('/assets/package/transfer/assetsList', {...values}, {reqHeader:'form'})
+    return Req.post('/assets/package/transfer/assetsList', {...values}, {reqHeader: 'form'})
 }
+
 // 查询还款预算--转让应账款列表--删除
 export function GetDeleteApi(values) {
     return Req.post('/assets/package/transfer/remove', {...values})
 }
 
 //查询还款预算--还款测算
-export function GetCountPayApi(values){
-    return Req.post('/loanV2/apply/genPlanInfo',{...values})
+export function GetCountPayApi(values) {
+    return Req.post('/loanV2/apply/genPlanInfo', {...values})
 }
 
 //查询还款预算--还款计划列表
-export function GetPayPlanApi(values){
-    return Req.post('/loanV2/apply/payplan/',{...values},{reqHeader:'form'})
+export function GetPayPlanApi(values) {
+    return Req.post('/loanV2/apply/payplan/', {...values}, {reqHeader: 'form'})
 }
+
 //查询合同基础信息
-export function GetContractInfoApi(values){
-    return Req.post('/loanV2/apply/add/contract',{...values}, {reqHeader:'form'})
+export function GetContractInfoApi(values) {
+    return Req.post('/loanV2/apply/add/contract', {...values}, {reqHeader: 'form'})
 }
+
 //查询合同列表
-export function GetContractListApi(values){
-    return Req.post('/loanV2/apply/contractFiles',{...values},{reqHeader:'form'})
+export function GetContractListApi(values) {
+    return Req.post('/loanV2/apply/contractFiles', {...values}, {reqHeader: 'form'})
 }
+
 //提交审批
-export function GetSaveApproveApi(values){
-    return Req.post('/loanV2/apply/approved',{...values})
+export function GetSaveApproveApi(values) {
+    return Req.post('/loanV2/apply/approved', {...values})
 }
+
 //审批列表
-export function GetApproveInfoApi(values){
-    return Req.post('/loanV2/apply/add/approve',{...values},{reqHeader:'form'})
-}
-
-
-
-
-
-
-
-//放款申请/审核
-export function ApplyAndApproveEdit(values) {
-    return Req.post('/loanV2/management/financingLoan/edit', values)
-}
-
-//基本信息
-export function GetApproveDetailApi(values) {
-    return Req.post(`/loan/management/view/approveStep/${values}`)
-}
-
-//银行列表
-export function GetBankListApi() {
-    return Req.post(`/common/getBankList`)
-}
-
-//审批记录
-export function GetApproveListApi(values) {
-    return Req.post(`/loanV2/apply/add/approve`, values, {reqHeader: 'form'})
+export function GetApproveInfoApi(values) {
+    return Req.post('/loanV2/apply/add/approve', {...values}, {reqHeader: 'form'})
 }
