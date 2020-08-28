@@ -10,39 +10,20 @@ const { Option } = Select;
 
 class FilterForm extends BaseFilter{
   formRef = React.createRef();
-  onFinish = values => {
-    console.log(values);
-  };
-  onSubmit =(values)=> {
-    console.log(values)
-  };
-  onSearch = searchText => {
-    console.log(searchText)
-  };
-
-  onSelect = data => {
-    console.log('onSelect', data);
-  };
-
-  onChange = data => {
-    console.log(data)
-  };
   render() {
-    const dateFormat = "YYYY-MM-DD"
     return (
       <Form
         {...this.formItemLayout}
         ref={this.formRef}
-        onFinish={this.onFinish}
         className="yt-condition-form">
         <Row gutter={24}>
           <Col {...this.colspans}>
-            <Form.Item name="qy" label="融资企业">
+            <Form.Item name="enterpriseName" label="融资企业">
               <Input placeholder="请输入" autoComplete="off"/>
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="请款类型" name="ytlx">
+            <Form.Item label="请款类型" name="useType">
                <Select
                  placeholder="请选择"
                  allowClear>
@@ -54,22 +35,24 @@ class FilterForm extends BaseFilter{
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
-            <Form.Item label="审核状态" name="sqzt">
-               <Select
-                 placeholder="请选择"
-                 allowClear>
+            <Form.Item label="审核状态" name="applyStatus">
+               <Select placeholder="请选择"  allowClear>
                  <Option value="0">全部</Option>
+                 <Option value="1">待审批</Option>
+                 <Option value="2">已拒绝</Option>
+                 <Option value="3">已审批通过</Option>
+                 <Option value="4">已付款</Option>
                </Select>
             </Form.Item>
           </Col>
           <Col {...this.colspans}>
             <Form.Item label="请款时间" name="time">
-              <RangePicker format={dateFormat}/>
+              <RangePicker/>
             </Form.Item>
           </Col>
         </Row>
         <div className="submit-btn-wrap">
-          <YtBtn htmlType="submit" onClick={this.onSubmit}>
+          <YtBtn htmlType="submit" onClick={this.handleSubmit}>
             查询
           </YtBtn>
         </div>

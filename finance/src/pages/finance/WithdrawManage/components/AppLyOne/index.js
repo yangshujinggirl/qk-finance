@@ -2,12 +2,26 @@ import { Form,Row,Col,Select,Input } from 'antd';
 import { BaseEditForm, YtBtn, YtTable } from 'common';
 import { columnsVoucher,columnsRecord } from '../../columns';
 import HeadFormCard from '../../../components/HeadFormCard';
+import { GetInfo } from 'api/finance/WithdrawManage';
 
 class ApplyOne extends BaseEditForm {
   formRef = React.createRef();
+  state={
+    info:{}
+  }
   onSubmit = async (values) => {
     console.log(values)
   };
+  componentDidMount(){
+    this.fetchInfo()
+  }
+  fetchInfo(){
+    const { applyId } =this.props;
+    GetInfo({applyId })
+    .then((res)=> {
+      console.log(res)
+    })
+  }
   render() {
     return(
       <div>

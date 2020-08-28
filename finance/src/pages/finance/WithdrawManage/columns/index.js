@@ -67,8 +67,8 @@ const columnsIndex = [
           fixed: 'right',
           render:(text,record,index)=>{
             return <>
-              <Link to="/account/withdraw/info/12" className="operate-link-btn">查看</Link>
-              <Link to="/account/withdraw/edit/12" className="operate-link-btn">审批</Link>
+              <Link to={`/account/withdraw/info/${record.applyId}`} className="operate-link-btn">查看</Link>
+              <Link to={`/account/withdraw/edit/${record.applyId}`} className="operate-link-btn">审批</Link>
             </>
           }
         },
