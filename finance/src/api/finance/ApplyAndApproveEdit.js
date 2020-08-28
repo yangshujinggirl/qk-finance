@@ -1,5 +1,10 @@
 import {Req, BlockReq} from '../Req';
 
+// 
+export function GetTipsProcess(values) {
+    return Req.post('/loanV2/apply/tab/getTabStatus', {...values}, {reqHeader: 'form'})
+}
+
 // 融资详情
 export function GetFinanceDetail(values) {
     return Req.post('/loanV2/apply/add/baseInfo', {...values}, {reqHeader: 'form'})
