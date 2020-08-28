@@ -36,7 +36,7 @@ const Index = ({...props}) => {
     }, []);
     //查询
     const search = ({userName}) => {
-        let p = {...param, userName,pageNow: 1};
+        let p = {...param, userName, pageNow: 1};
         setParam(p);
         getUserLists(p);
     }
@@ -51,10 +51,10 @@ const Index = ({...props}) => {
         switch (type) {
             //编辑
             case 'edit':
-                //显示弹窗
-                setVisible(3);
                 //设置当前操作记录项
                 setCurrentItem(item);
+                //显示弹窗
+                setVisible(3);
                 break;
             //停用&启用
             case 'delete':
@@ -63,8 +63,8 @@ const Index = ({...props}) => {
             //关联角色
             case 'relate':
                 //获取已关联用户
-                getRelatedUsers(item.id);
                 setCurrentItem(item);
+                getRelatedUsers(item.id);
                 break;
         }
     }
@@ -103,6 +103,7 @@ const Index = ({...props}) => {
     }
     //新增弹窗
     const goCreat = () => {
+        setCurrentItem({})
         setVisible(1);
     }
     //确认操作
@@ -118,6 +119,7 @@ const Index = ({...props}) => {
     }
     //关联成功
     const onRelateOk = (item) => {
+        setCurrentItem({})
         setVisible(false);
     }
     //用户管理API

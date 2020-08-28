@@ -60,7 +60,6 @@ class AccountStatement extends React.Component {
 
     render() {
         let {list, detail, writeOffStatusName} = this.state;
-        let benjin = detail.payPrincipalAmount + detail.payInterest - (detail.surplusAmount ? detail.surplusAmount : 0);
         return (
             <div className="account-statement-info-wrap">
                 <YtCard title="基础信息" bordered={true}>
@@ -69,10 +68,10 @@ class AccountStatement extends React.Component {
                         {key: '项目名称', value: detail.projectName},
                         {key: '款项类别', value: '贷款本息'},
                         {key: '期次', value: detail.payPeriodNo},
-                        {key: '款项金额', value: detail.payPrincipalAmount},
-                        {key: '待回款金额', value: detail.payTotalAmount},
-                        {key: '待回款本金', value: benjin},
-                        {key: '待回款利息', value: detail.payInterest},
+                        {key: '款项金额', value: detail.payAmount},
+                        {key: '待回款金额', value: detail.leftPayAmount},
+                        {key: '待回款本金', value: detail.leftPayPrincipalAmount},
+                        {key: '待回款利息', value: detail.leftPayInterest},
                         {key: '回款状态', value: writeOffStatusName[detail.writeOffStatus]},
                     ]}/>
                 </YtCard>

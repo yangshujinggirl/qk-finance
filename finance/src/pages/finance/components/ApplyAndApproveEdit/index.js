@@ -11,7 +11,7 @@ const { TabPane } = Tabs;
 function withSubscription(handleType, Mod){
   return class FinanceApplyEdit extends React.Component {
     state = {
-      isEdit:this.props.match.params.id?true:false
+      isEdit:this.props.match.params.id?true:false,
     }
     callback=(key)=> {
       // console.log(key);

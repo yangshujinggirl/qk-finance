@@ -3,31 +3,25 @@ const columnsPlan = [
     title: '计划还款日',
     dataIndex: 'name',
     key: 'name',
+    render: (text, record, index) => {
+      return moment(text).format('YYYY-MM-DD')
+    }
   },
   {
     title: '期次',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: '开始计息日',
-    dataIndex: 'address',
-    key: 'address',
+    dataIndex: 'payPeriodNo',
   },
   {
     title: '还款本金',
-    dataIndex: 'end',
-    key: 'address',
+    dataIndex: 'payPrincipalAmount',
   },
   {
     title: '还款利息',
-    dataIndex: 'amount',
-    key: 'address',
+    dataIndex: 'payInterest',
   },
   {
     title: '还款总金',
-    dataIndex: 'lx',
-    key: 'address',
+    dataIndex: 'payTotalAmount',
   },
 ]
 export {
