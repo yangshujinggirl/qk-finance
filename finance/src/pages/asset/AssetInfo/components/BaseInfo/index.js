@@ -16,6 +16,7 @@ function DeliveryFactoryInfo({...props}){
       }
     </>
   }
+  console.log(props)
   return <>
           <SubTitleMod title="一级经销商">
             <YtBaseInfo colSpan={12} dataInfo={[
