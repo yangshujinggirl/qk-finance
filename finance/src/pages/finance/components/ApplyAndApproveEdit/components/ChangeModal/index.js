@@ -1,6 +1,7 @@
 import { Form, Select, Row, Col, Modal, Checkbox, Button, Input } from 'antd';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { YtEditModal, YtBtn, YtPagination } from 'common';
+import { GetSaveReceivablesApi, GetReceivablesListApi } from 'api/finance/ApplyAndApproveEdit';
 import EditTable from './EditTable';
 import './index.less';
 
@@ -15,49 +16,66 @@ const formItemLayout = {
 const CreatModal=({...props})=>{
   console.log('CreatModal')
   const [form] = Form.useForm();
-  const [disabled, setDisabled] = useState([]);
+  const [list,setList] = useState([])
+  const [inputValues,setInputValues] = useState({});
+  const [selectedRows, setSelectedRows] = useState([]);
   const [dataPag,setDataPag] = useState({ pageSize:10, pageNow:1, totalSize:0 });
-  const [dataSource, setDataSource] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  const goSearch = async () => {
-    const data=[
-      {
-        code:'code',
-        name:'name',
-        amount:'amount',
-        key:1
-      },
-      {
-        code:'code',
-        name:'name',
-        amount:'amount',
-        key:2
-      },
-      {
-        code:'code',
-        name:'name',
-        amount:'amount',
-        key:3
-      }
-    ]
-    setDataSource(data)
+  const { debtors, info } =props;
+  //还款计划列表
+  const fetchList=(values )=>{
+    let params = {
+      pageSize:dataPag.pageSize,
+      pageNow:dataPag.pageNow,
+      packetId:info.packageId,
+      industryTypeCode:info.typeCode,
+      ...inputValues,
+      ...values,
+    }
+    GetReceivablesListApi(params)
+    .then((res)=> {
+      const { pagination, data } =res;
+      // setDataPag(pagination)
+      setList(data)
+    })
+  }
+  const changePage = (pageNow, pageSize) => {
+    fetchList({pageNow, pageSize})
   };
-  const onSelect = (value) => {
-    console.log(value);
-    setDisabled(false);
-  };
-  const handleOk = e => {
-    console.log(e);
-    setLoading(true)
+  const onSubmit = async () => {
+    try {
+      const values = await form.validateFields();
+      setInputValues(values);
+      fetchList(values)
+    } catch (errorInfo) {
+      console.log("Failed:", errorInfo);
+    }
   };
   const handleCancel = e => {
     form.resetFields();
     props.onCancel();
-    setDataSource([]);
-    setDisabled(true);
+    setList([]);
   };
-  useEffect(()=>{console.log(form)},[])
+  const onSelect = (value) => {
+    setSelectedRows(value)
+  };
+  const handleOk =()=> {
+    setLoading(true)
+    let assetsNoStrs = selectedRows.join(',')
+    let params = {
+      assetsNoStrs,
+      packetId:info.packageId,
+      industryTypeCode:info.typeCode,
+    }
+    GetSaveReceivablesApi(params)
+    .then((res)=> {
+      props.onOk()
+      setLoading(false);
+      form.resetFields();
+    })
+
+  };
+  useEffect(()=>{ fetchList() },[])
   return (
       <YtEditModal
         title="选择资产"
@@ -65,12 +83,18 @@ const CreatModal=({...props})=>{
         onOk={handleOk}
         onCancel={handleCancel}
         className="search-add-modal-wrap"
-        okButtonProps={{loading,disabled}}>
+        okButtonProps={{loading,disabled:selectedRows.length==0}}>
         <Form form={form} {...formItemLayout}>
           <Row gutter={24}>
             <Col span={12}>
-              <Form.Item name="name1" label="选择债务人">
-                <Input autoComplete="off"/>
+              <Form.Item name="debtors" label="选择债务人">
+                <Select placeholder="请选择" allowClear>
+                {
+                  debtors.map((el,index)=> (
+                    <Select.Option value={el} key={index}>{el}</Select.Option>
+                  ))
+                }
+                </Select>
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -95,11 +119,11 @@ const CreatModal=({...props})=>{
             </Col>
           </Row>
           <div className="search-action">
-            <YtBtn type="primary" onClick={goSearch} size="free">查询</YtBtn>
+            <YtBtn type="primary" onClick={onSubmit} size="free">查询</YtBtn>
           </div>
-          <EditTable dataSource={dataSource} onSelect={onSelect}/>
+          <EditTable dataSource={list} onSelect={onSelect}/>
           {
-            dataSource.length>0&&
+            list.length>0&&
             <YtPagination data={dataPag} />
           }
         </Form>

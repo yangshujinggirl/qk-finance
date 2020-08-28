@@ -1,40 +1,41 @@
 import { Form,Row,Col,Select,Input,DatePicker } from 'antd';
 import { YtDownLoad, BaseEditForm, YtUpLoadAndDownLoad, YtBtn, YtTable } from 'common';
 import { columnsPlan, columnsContract } from './columns';
+import { GetContractInfoApi, GetContractListApi } from 'api/finance/ApplyAndApproveEdit';
+import { tradeOption } from './options';
 import HeadFormCard from '../HeadFormCard';
 
 class ApplyOne extends BaseEditForm {
   formRef = React.createRef();
-  onSubmit = async (values) => {
+  state = {
+    list:[],
+    info:{}
+  }
+  componentDidMount(){
+    this.fetchInfo();
+    this.fetchList();
+  }
+  fetchList=()=>{
+    GetContractListApi({ loanId: this.props.loanId })
+    .then((res)=> {
+      let { data } =res;
+      data = data?data:[]
+      this.setState({ list:data });
+    })
+  }
+  fetchInfo=()=>{
+    GetContractInfoApi({ loanId: this.props.loanId, currentStatus:'edit' })
+    .then((res)=> {
+      let { data } =res;
+      this.formRef.current.setFieldsValue(data.obj);
+      this.setState({ info:data.obj });
+    })
+  }
+  handleSubmit = async (values) => {
     console.log(values)
   };
   render() {
-    const data = [
-      {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-      },
-      {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-      },
-      {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-      },
-      {
-        key: '4',
-        name: 'Disabled User',
-        age: 99,
-        address: 'Sidney No. 1 Lake Park',
-      },
-    ];
+    const { list, info } =this.state;
     const rowSelection = {
       type: "checkbox",
       onChange: (selectedRowKeys, selectedRows) => {
@@ -51,43 +52,36 @@ class ApplyOne extends BaseEditForm {
           <HeadFormCard title="基本信息">
               <Row>
               <Col {...this.colspans}>
-                <Form.Item label="融资编号" name="name">
+                <Form.Item label="融资编号" name="loanNo">
                   <Input autoComplete="off"   placeholder="请输入" disabled/>
                 </Form.Item>
               </Col>
               <Col {...this.colspans}>
-                <Form.Item label="行业" name="code">
-                  <Input autoComplete="off"   placeholder="请输入" disabled/>
-                </Form.Item>
-              </Col>
-              <Col {...this.colspans}>
-                <Form.Item label="融资企业" name="code">
+                <Form.Item label="行业" name="typeCode">
                   <Select placeholder="请选择" allowClear={true} disabled>
-                    <Select.Option value="银行转账" key="银行转账">
-                      云图项目一期
-                    </Select.Option>
-                    <Select.Option value="银行转账1" key="银行转账1">
-                      云图项目二期
-                    </Select.Option>
+                    {
+                      tradeOption.map((el) =>(
+                        <Select.Option value={el.key} key={el.key}>{el.value}</Select.Option>
+                      ))
+                    }
                   </Select>
+                </Form.Item>
+              </Col>
+              <Col {...this.colspans}>
+                <Form.Item label="融资企业" name="enterpriseName">
+                  <Input autoComplete="off"   placeholder="请输入" disabled/>
                 </Form.Item>
               </Col>
               </Row>
           </HeadFormCard>
           <HeadFormCard title="合同列表">
-              <YtDownLoad />
+              {/*<YtDownLoad />*/}
               <YtTable
-              columns={columnsContract}
-              dataSource={data}
-              select={true}
-              rowSelection={rowSelection}/>
+                columns={columnsContract}
+                dataSource={list}
+                select={true}
+                rowSelection={rowSelection}/>
           </HeadFormCard>
-          {
-            this.props.handleType=='1'&&
-            <div className="edit-btn-wrap">
-              <YtBtn size="free" onClick={this.handleSubmit}>提交审批</YtBtn>
-            </div>
-          }
         </Form>
       </div>
     )

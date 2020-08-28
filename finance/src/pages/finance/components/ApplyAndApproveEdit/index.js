@@ -8,7 +8,7 @@ import './index.less';
 
 const { TabPane } = Tabs;
 
-function withSubscription(handleType, Mod){
+function withSubscription(handleType, pageType, Mod){
   return class FinanceApplyEdit extends React.Component {
     state = {
       activeKey:1,
@@ -20,27 +20,38 @@ function withSubscription(handleType, Mod){
     render() {
       const { params } = this.props.match;
       const { activeKey } =this.state;
-      let currentStatus = params.id?'edit':'add';
+      let handleStatus =()=> {
+         if(params.id) {
+           if(pageType == 'view') {
+             return 'view'
+           } else {
+             return 'edit'
+           }
+         } else {
+           return 'add'
+         }
+      }
+
       return(
         <div className="finance-apply-wrap yt-common-bg-pages-wrap">
           <Tabs defaultActiveKey={activeKey} onChange={this.callback}>
             <TabPane tab="合同要素" key="1" forceRender={false}>
             {
               activeKey=='1'&&
-              <AppLyOne handleType={handleType} loanId={params.id} currentStatus={currentStatus}/>
+              <AppLyOne handleType={handleType} pageType={pageType} loanId={params.id} handleStatus={handleStatus()}/>
             }
             </TabPane>
             <TabPane tab="还款预算" key="2" forceRender={false}>
             {
               activeKey=='2'&&
-              <AppLyTwo handleType={handleType} loanId={params.id} currentStatus={currentStatus}/>
+              <AppLyTwo handleType={handleType} pageType={pageType} loanId={params.id} handleStatus={handleStatus()}/>
             }
             </TabPane>
             <TabPane tab="合同预览" key="3" forceRender={false}>
             {
-              AppLyThr == '3'&&
-              <AppLyThr handleType={handleType} loanId={params.id} currentStatus={currentStatus}/>
-            }  
+              activeKey == '3'&&
+              <AppLyThr handleType={handleType} pageType={pageType} loanId={params.id} handleStatus={handleStatus()}/>
+            }
             </TabPane>
               {Mod&&Mod()}
           </Tabs>

@@ -1,5 +1,6 @@
 import { Button, Form,Row,Col,Select,Input,DatePicker } from 'antd';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 import { BaseEditForm, YtUpLoadAndDownLoad, YtBtn, YtTable } from 'common';
 import { columnsReceivable, columnsPlan } from './columns';
 import HeadFormCard from '../HeadFormCard';
@@ -10,6 +11,7 @@ import './AppLyTwo.less';
 class ApplyOne extends BaseEditForm {
   formRef = React.createRef();
   state={
+    debtors:[],//债务人
     visible:false,
     receivablesList:[],//转让应账款列表
     payList:[],//还款测算列表
@@ -21,33 +23,30 @@ class ApplyOne extends BaseEditForm {
   fetchInfo=()=>{
     GetPayInfo({ currentStatus:this.props.currentStatus, loanId: this.props.loanId })
     .then((res)=> {
-      let { obj } =res.data;
-      this.setState({ info:obj });
+      let { obj, debtors } =res.data;
+      this.setState({ info:obj, debtors:debtors });
+      this.formRef.current.setFieldsValue(obj);
       this.fetchReceivables(obj);
       this.fetchPayPlan(obj);
     })
   }
   //还款计划列表
   fetchPayPlan=(values)=>{
-    GetPayPlanApi({
-      enterpriseName:values.enterpriseName,
-      packetName:values.packetName,
-      packageId:values.packageId,
-      packageAmount:values.packageAmount,
-      loanId: this.props.loanId
-    })
+    GetPayPlanApi({ loanId: this.props.loanId })
     .then((res)=> {
-      console.log(res)
+      let { data } =res;
+      this.setState({ payList:data });
     })
   }
   fetchReceivables=(values)=>{
     GetReceivablesListApi({
-      packetId:values.packetId,
-      transferStatus: values.loanId,
-      industryTypeCode:values.industryTypeCode
+      packetId:values.packageId,
+      transferStatus: 2,
+      industryTypeCode:values.typeCode
     })
     .then((res)=> {
-      console.log(res)
+      let { data } =res;
+      this.setState({ receivablesList:data })
     })
   }
   //移除转让应收列表
@@ -68,10 +67,11 @@ class ApplyOne extends BaseEditForm {
   }
   //选择资产
   goChange=()=>{
-    //请求列表数据
     this.setState({ visible:true })
   }
   onOk=()=>{
+    let { packageId, typeCode } =this.state.info;
+    this.fetchReceivables({ packageId, typeCode })
     this.setState({ visible:false })
   }
   onCancel=()=>{
@@ -81,7 +81,14 @@ class ApplyOne extends BaseEditForm {
     try {
       const values = await this.formRef.current.validateFields();
       console.log(values);
-      GetSaveElement()
+      let { startDate, finishDate, loanDate, ...val } =values;
+      val = {
+        ...val,
+        startDate:moment(startDate).format('YYYY-MM-DD'),
+        finishDate:moment(finishDate).format('YYYY-MM-DD'),
+        loanDate:moment(loanDate).format('YYYY-MM-DD')
+      }
+      GetSaveElement(val)
       .then((res)=> {
         console.log(res);
       })
@@ -90,7 +97,10 @@ class ApplyOne extends BaseEditForm {
     }
   };
   render() {
-    const { visible, receivablesList, payList} =this.state;
+    const { debtors, info, visible, receivablesList, payList} =this.state;
+    const { handleStatus,handleType } =this.props;
+    let extra=(handleType=='1'&&handleStatus!='view')?<YtBtn size="free" onClick={this.countPayment}>还款测算</YtBtn>:null;
+    let isCanEdit = handleType=='2'||handleStatus=="view";
     return(
       <div>
         <Form className="common-edit-pages-form" {...this.formItemLayout} ref={this.formRef}>
@@ -121,23 +131,23 @@ class ApplyOne extends BaseEditForm {
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="授信金额" name="code" rules={[{ required: true, message: '请输入'}]}>
-                    <Input autoComplete="off"   placeholder="请输入" suffix="万元"/>
+                  <Form.Item label="授信金额" name="creditAmount" rules={[{ required: true, message: '请输入'}]}>
+                    <Input autoComplete="off"   placeholder="请输入" suffix="万元" disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="融资比例" name="code">
+                  <Form.Item label="融资比例" name="loanPercent">
                     <Input autoComplete="off"   placeholder="请输入" suffix="%" disabled/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="首付款金额" name="code">
-                    <Input autoComplete="off"   placeholder="请输入" suffix="万元"/>
+                  <Form.Item label="首付款金额" name="firstPayAmount">
+                    <Input autoComplete="off"   placeholder="请输入" suffix="万元" disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="保证金金额" name="code">
-                    <Input autoComplete="off"   placeholder="请输入" suffix="万元"/>
+                  <Form.Item label="保证金金额" name="depositAmount">
+                    <Input autoComplete="off"   placeholder="请输入" suffix="万元" disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
               </Row>
@@ -146,35 +156,31 @@ class ApplyOne extends BaseEditForm {
               <p className="form-row-title">资金方收款账户【监管户】</p>
               <Row>
                 <Col {...this.colspans}>
-                  <Form.Item label="利率类型" name="name" rules={[{ required: true, message: '请选择'}]}>
-                    <Select placeholder="请选择" allowClear={true}>
-                      <Select.Option value="银行转账" key="银行转账">
-                        电汇
-                      </Select.Option>
-                      <Select.Option value="银行转账1" key="银行转账1">
-                        银行转账
-                      </Select.Option>
+                  <Form.Item label="利率类型" name="rateType" rules={[{ required: true, message: '请选择'}]}>
+                    <Select placeholder="请选择" allowClear={true} disabled={isCanEdit}>
+                      <Select.Option value="1" key="1">明示利率</Select.Option>
+                      <Select.Option value="2" key="2">隐含利率</Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="融资利率" name="code" rules={[{ required: true, message: '请输入'}]}>
-                    <Input autoComplete="off"   placeholder="请输入" suffix="%"/>
+                  <Form.Item label="融资利率" name="loanRate" rules={[{ required: true, message: '请输入'}]}>
+                    <Input autoComplete="off"   placeholder="请输入" suffix="%" disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="宽期期利率" name="code">
-                    <Input autoComplete="off"   placeholder="请输入" suffix="万元"/>
+                  <Form.Item label="宽期期利率" name="gracePeriodRate">
+                    <Input autoComplete="off"   placeholder="请输入" suffix="万元" disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="罚息利率" name="code" rules={[{ required: true, message: '请输入'}]}>
-                    <Input autoComplete="off"   placeholder="请输入" suffix="万元"/>
+                  <Form.Item label="罚息利率" name="penaltyRate" rules={[{ required: true, message: '请输入'}]}>
+                    <Input autoComplete="off"   placeholder="请输入" suffix="万元" disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="宽限期天数" name="code" rules={[{ required: true, message: '请输入'}]}>
-                    <Input autoComplete="off"   placeholder="请输入" suffix="天"/>
+                  <Form.Item label="宽限期天数" name="gracePeriodDays" rules={[{ required: true, message: '请输入'}]}>
+                    <Input autoComplete="off"   placeholder="请输入" suffix="天" disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
               </Row>
@@ -182,8 +188,8 @@ class ApplyOne extends BaseEditForm {
           <HeadFormCard title="还款方式">
               <Row>
                 <Col {...this.colspans}>
-                  <Form.Item label="还款方式" name="name" rules={[{ required: true, message: '请选择'}]}>
-                    <Select placeholder="请选择" allowClear={true}>
+                  <Form.Item label="还款方式" name="repayMethod" rules={[{ required: true, message: '请选择'}]}>
+                    <Select placeholder="请选择" allowClear={true} disabled={isCanEdit}>
                       <Select.Option value="3" key="3">等额本金</Select.Option>
                       <Select.Option value="4" key="4">等额本息</Select.Option>
                       <Select.Option value="5" key="5">平息</Select.Option>
@@ -193,54 +199,55 @@ class ApplyOne extends BaseEditForm {
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="融资期限" name="code" rules={[{ required: true, message: '请输入'}]}>
-                    <Input autoComplete="off"   placeholder="请输入" disabled suffix="天"/>
+                  <Form.Item label="融资期限" name="loanPeriod" rules={[{ required: true, message: '请输入'}]}>
+                    <Input autoComplete="off"   placeholder="请输入" suffix="天" disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="融资开始日期" name="code" rules={[{ required: true, message: '请选择'}]}>
-                    <DatePicker />
+                  <Form.Item label="融资开始日期" name="startDate" rules={[{ required: true, message: '请选择'}]}>
+                    <DatePicker disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="融资结束日期" name="code" rules={[{ required: true, message: '请选择'}]}>
-                    <DatePicker />
+                  <Form.Item label="融资结束日期" name="finishDate" rules={[{ required: true, message: '请选择'}]}>
+                    <DatePicker disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="放款日" name="code">
-                    <DatePicker />
+                  <Form.Item label="放款日" name="loanDate">
+                    <DatePicker disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="还款间隔" name="code">
-                    <Select placeholder="请选择" allowClear={true} onChange={this.onChangeCategoryCode}>
+                  <Form.Item label="还款间隔" name="payPeriod">
+                    <Select placeholder="请选择" allowClear={true} onChange={this.onChangeCategoryCode} disabled={handleStatus=="view"}>
                       <Select.Option value="银行转账1" key="银行转账1">按月</Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
-                  <Form.Item label="还款次数" name="code">
-                    <Input autoComplete="off"   placeholder="请输入"/>
+                  <Form.Item label="还款次数" name="payPeriodNum">
+                    <Input autoComplete="off"   placeholder="请输入" disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
               </Row>
           </HeadFormCard>
-          <HeadFormCard title="还款计划"  extra={<YtBtn size="free" onClick={this.countPayment}>还款测算</YtBtn>}>
-              <YtUpLoadAndDownLoad />
-              <YtTable columns={columnsPlan} data={payList}/>
+          <HeadFormCard title="还款计划"  extra={extra}>
+              <YtTable columns={columnsPlan} dataSource={payList}/>
           </HeadFormCard>
           <HeadFormCard title="转让应收账款">
               <>
                 <div className="box-flex receivable-row">
                   <div>应收帐款条数<span className="pointerSty">200条</span>，应收帐款金额<span className="pointerSty">32000</span></div>
-                  <YtBtn onClick={this.goChange}>选择资产</YtBtn>
+                  { (handleType=='1'&&handleStatus!='view')&&
+                      <YtBtn onClick={this.goChange}>选择资产</YtBtn>
+                  }
                 </div>
-                <YtTable columns={columnsReceivable} data={receivablesList}/>
+                <YtTable columns={columnsReceivable} dataSource={receivablesList}/>
               </>
           </HeadFormCard>
           {
-            this.props.handleType=='1'&&
+            (handleType=='1'&&handleStatus!='view')&&
             <div className="edit-btn-wrap">
               <YtBtn size="free" onClick={this.handleSubmit} onOperateClick={this.onOperateClick}>确认并下一步</YtBtn>
             </div>
@@ -248,7 +255,12 @@ class ApplyOne extends BaseEditForm {
         </Form>
         {
           visible&&
-          <ChangeModal  visible={visible} onOk={this.onOk} onCancel={this.onCancel}/>
+          <ChangeModal
+            debtors={debtors}
+            info={info}
+            visible={visible}
+            onOk={this.onOk}
+            onCancel={this.onCancel}/>
         }
       </div>
     )

@@ -17,6 +17,7 @@ import FinanceWorkbench from './finance/FinanceWorkbench';//工作台
 import FinanceCompanyView from './finance/FinanceCompanyView';//融资企业
 import FinanceApplyList from './finance/FinanceApplyList';//融资申请列表
 import FinanceApplyEdit from './finance/FinanceApplyList/FinanceApplyEdit';//融资申请
+import FinanceApplyInfo from './finance/FinanceApplyList/FinanceApplyInfo';//融资申请
 import FinanceApproveList from './finance/FinanceApproveList';//融资审批
 import FinanceApproveEdit from './finance/FinanceApproveList/FinanceApproveEdit';//融资审批
 import LoanApplyList from './finance/LoanApplyList';//放款申请列表
@@ -79,6 +80,7 @@ function HomeRoutes() {
         <Route exact path="/account/whiteList/edit/:id" component={WhiteListEdit} />
         <Route exact path="/account/whiteList/info/:id" component={WhiteListInfo} />
 
+        <Route exact path="/account/financeApply/info/:id" component={FinanceApplyInfo} />
         <Route exact path="/account/financeApply/edit/:id?" component={FinanceApplyEdit} />
         <Route exact path="/account/financeApplyList" component={FinanceApplyList} />
         <Route exact path="/account/financeApproveList" component={FinanceApproveList} />

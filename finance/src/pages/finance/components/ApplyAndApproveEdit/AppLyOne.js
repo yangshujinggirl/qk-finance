@@ -20,24 +20,35 @@ class ApplyOne extends BaseEditForm {
     packageList:[],//资产包
     packageId:null,//资产包id
     jgBank:[],//监管银行
+    currentStatus:''
 	}
 
   componentDidMount(){
 		this.fetchBasicInfo();
 	}
-  onSubmit = (values) => {
-    console.log(values)
-  };
 	fetchBasicInfo=()=> {
-    let { basicInfo } =this.state;
-		GetFinanceDetail({ loanId: this.props.loanId, currentStatus:'view' })
+		GetFinanceDetail({ loanId: this.props.loanId, currentStatus:'edit' })
 		.then((res)=> {
       let { obj } =res.data;
+      this.setState({ basicInfo:obj });
+      this.fetMoreInfo(obj);
       this.formRef.current.setFieldsValue(obj);
-      basicInfo= {...basicInfo, ...obj }
-      this.setState({ basicInfo });
 		})
 	}
+  fetMoreInfo=(values)=> {
+    let { handleStatus } =this.props;
+    if(handleStatus == 'add') {
+      return;
+    }
+    GetCompanyList({typeCode : values.typeCode })
+    .then((res)=> {
+      const { data } =res;
+      data.map((el)=>el.key = el.id);
+      this.setState({ companyList: data });
+      let item = data.find((el)=>{ return values.enterpriseId == el.enterpriseId });
+      this.getLinkedInfo(values.enterpriseId, item)
+    })
+  }
   //选择行业
   onChangeTrade=(value)=>{
     GetCompanyList({ typeCode :value})
@@ -46,16 +57,20 @@ class ApplyOne extends BaseEditForm {
       data.map((el)=>el.key = el.id);
       this.setState({ companyList: data });
     })
-
   }
   //选择企业
   onChangeCompany=(value)=>{
-    let { basicInfo } = this.state;
     let item = this.state.companyList.find((el)=>{ return value == el.enterpriseId });
+    this.getLinkedInfo(value,item)
+  }
+  //获取联动信息
+  getLinkedInfo=(value, item)=>{
+    let { basicInfo } = this.state;
     //请求企业资产包
     GetPackageList({ enterpriseId:value})
     .then((res)=> {
       let { data } =res;
+      data.map((el,idex)=>el.key = idex)
       this.setState({ packageList: data });
     })
     GetBankList({
@@ -66,24 +81,31 @@ class ApplyOne extends BaseEditForm {
       companyOrgCode:item.organizationalCode
     })
     .then((res)=> {
-      let { data } =res;
-      this.setState({ jgBank: data.list });
+      let { list } =res.data;
+      list.map((el,index)=>el.key = index)
+      this.setState({ jgBank: list });
     })
-    basicInfo = { ...basicInfo, ...item };
+    let enterpriseVal ={
+      enterpriseName:item.enterpriseName,
+      legalPerson:item.legalPerson,
+      telephone:item.telephone,
+      faxNo:item.faxNo,
+      enterpriseAddress:item.enterpriseAddress,
+    }
+    basicInfo = { ...basicInfo, ...enterpriseVal };
     this.setState({ basicInfo });
-    this.formRef.current.setFieldsValue(item)
+    this.formRef.current.setFieldsValue(enterpriseVal)
   }
   //选择企业资产包
   changePackge=(value)=>{
-    //请求企业资产包
     this.setState({ packageId: '' });
   }
   //选择监管银行
   onChangeBank=(value)=>{
     let { jgBank, basicInfo } =this.state;
-    let currentBankInfo = jgBank.find((el)=> el.bankCode==value);
+    let currentBankInfo = jgBank.find((el)=> el.bankName==value);
     let monitorBankInfo= {
-      monitorOpenBank:currentBankInfo.accountName,
+      monitorOpenBank:currentBankInfo.openBankName,
       monitorAccountName:currentBankInfo.accountName,
       monitorBankAccountNo:currentBankInfo.accountNumber,
     }
@@ -99,7 +121,7 @@ class ApplyOne extends BaseEditForm {
       let params = {
         ...values,
         loanId,
-        companyOrgCode:basicInfo.organizationalCode,
+        organizationalCode:basicInfo.organizationalCode,
       }
       GetSaveElement(params)
       .then((res)=> {
@@ -111,7 +133,10 @@ class ApplyOne extends BaseEditForm {
   };
 
   render() {
+    const { handleStatus, handleType } =this.props;
+    console.log(handleStatus, handleType)
     const { basicInfo, companyList, packageList, packageId, jgBank } =this.state;
+    let isCanEdit = handleType=='2'||handleStatus=="view";
     return(
       <div>
         <Form
@@ -128,7 +153,7 @@ class ApplyOne extends BaseEditForm {
                 </Col>
                 <Col {...this.colspans}>
                   <Form.Item label="行业" name="typeCode">
-                    <Select placeholder="请选择" allowClear={true} onSelect={this.onChangeTrade}>
+                    <Select placeholder="请选择" allowClear={true} onSelect={this.onChangeTrade} disabled={isCanEdit}>
                       {
                         tradeOption.map((el) =>(
                           <Select.Option value={el.key} key={el.key}>{el.value}</Select.Option>
@@ -139,7 +164,7 @@ class ApplyOne extends BaseEditForm {
                 </Col>
                 <Col {...this.colspans}>
                   <Form.Item label="项目名称" name="projectName" rules={[{ required: true, message:'请输入'}]}>
-                    <Input autoComplete="off" placeholder="请输入"/>
+                    <Input autoComplete="off" placeholder="请输入" disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
@@ -147,7 +172,7 @@ class ApplyOne extends BaseEditForm {
                     <Row gutter={8}>
                       <Col span={18}>
                         <Form.Item name="enterpriseId" rules={[{ required: true, message:'请输入'}]}>
-                          <Select placeholder="请选择" allowClear={true} onSelect={this.onChangeCompany} disabled={companyList.length==0}>
+                          <Select placeholder="请选择" allowClear={true} onSelect={this.onChangeCompany} disabled={isCanEdit||companyList.length==0}>
                           {
                             companyList.map((el) =>(
                               <Select.Option value={el.enterpriseId} key={el.enterpriseId}>{el.enterpriseFullName}</Select.Option>
@@ -167,7 +192,7 @@ class ApplyOne extends BaseEditForm {
                     <Row gutter={8}>
                       <Col span={18}>
                         <Form.Item name="packageId" >
-                          <Select placeholder="请选择" allowClear={true} onSelect={this.changePackge} disabled={packageList.length==0}>
+                          <Select placeholder="请选择" allowClear={true} onSelect={this.changePackge} disabled={isCanEdit||packageList.length==0}>
                           {
                             packageList.map((el)=>(
                               <Select.Option value={el.key} key={el.key}>{el.value}</Select.Option>
@@ -192,7 +217,7 @@ class ApplyOne extends BaseEditForm {
               <Row>
                 <Col {...this.colspans}>
                   <Form.Item label="回款路径" name="receiveMoneyMethod" rules={[{ required: true, message: '请选择'}]}>
-                    <Select placeholder="请选择" allowClear={true}>
+                    <Select placeholder="请选择" allowClear={true} disabled={isCanEdit}>
                       {
                         moneyPathOption.map((el) =>(
                           <Select.Option value={el.key} key={el.key}>{el.value}</Select.Option>
@@ -203,10 +228,10 @@ class ApplyOne extends BaseEditForm {
                 </Col>
                 <Col {...this.colspans}>
                   <Form.Item label="监管银行" name="monitorBank" rules={[{ required: true, message: '请选择'}]}>
-                    <Select placeholder="请选择" allowClear={true} onSelect={this.onChangeBank} disabled={jgBank.length==0}>
+                    <Select placeholder="请选择" allowClear={true} onSelect={this.onChangeBank} disabled={isCanEdit}>
                       {
                         jgBank.map((el)=>(
-                          <Select.Option value={el.bankCode} key={el.bankCode}>{el.bankName}</Select.Option>
+                          <Select.Option value={el.bankName} key={el.bankName}>{el.bankName}</Select.Option>
                         ))
                       }
                     </Select>
@@ -232,7 +257,7 @@ class ApplyOne extends BaseEditForm {
               <Row>
                 <Col {...this.colspans}>
                   <Form.Item label="收款方式" name="receiveMoneyMethod" rules={[{ required: true, message: '请选择'}]}>
-                    <Select placeholder="请选择" allowClear={true}>
+                    <Select placeholder="请选择" allowClear={true} disabled={isCanEdit}>
                       {
                         moneyPathOption.map((el) =>(
                           <Select.Option value={el.key} key={el.key}>{el.value}</Select.Option>
@@ -243,10 +268,10 @@ class ApplyOne extends BaseEditForm {
                 </Col>
                 <Col {...this.colspans}>
                 <Form.Item label="选择银行" name="loanBank" rules={[{ required: true, message: '请选择'}]}>
-                  <Select placeholder="请选择" allowClear={true}>
+                  <Select placeholder="请选择" allowClear={true} disabled={isCanEdit}>
                     {
                       CommonBankList.map((el)=>(
-                        <Select.Option value={el.value} key={el.value}>{el.text}</Select.Option>
+                        <Select.Option value={el.text} key={el.text}>{el.text}</Select.Option>
                       ))
                     }
                   </Select>
@@ -254,17 +279,17 @@ class ApplyOne extends BaseEditForm {
                 </Col>
                 <Col {...this.colspans}>
                   <Form.Item label="开户行" name="loanOpenBank" rules={[{ required: true, message: '请输入'}]}>
-                    <Input autoComplete="off"   placeholder="请输入"/>
+                    <Input autoComplete="off"   placeholder="请输入" disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
                   <Form.Item label="账户名称" name="loanAccountName" rules={[{ required: true, message: '请输入'}]}>
-                    <Input autoComplete="off"   placeholder="请输入"/>
+                    <Input autoComplete="off"   placeholder="请输入" disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
                   <Form.Item label="银行账号" name="loanAccount" rules={[{ required: true, message: '请输入'}]}>
-                    <Input autoComplete="off"   placeholder="请输入"/>
+                    <Input autoComplete="off"   placeholder="请输入" disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
               </Row>
@@ -302,33 +327,33 @@ class ApplyOne extends BaseEditForm {
               <Row>
                 <Col {...this.colspans}>
                   <Form.Item label="融资企业" name="fundEnterpriseName">
-                    <Input autoComplete="off"   placeholder="请输入"/>
+                    <Input autoComplete="off"   placeholder="请输入" disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
                   <Form.Item label="法人代表" name="fundLegalPerson">
-                    <Input autoComplete="off"   placeholder="请输入"/>
+                    <Input autoComplete="off"   placeholder="请输入" disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
                   <Form.Item label="电话" name="fundTelephone">
-                    <Input autoComplete="off"   placeholder="请输入"/>
+                    <Input autoComplete="off"   placeholder="请输入" disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
                   <Form.Item label="传真" name="fundFaxNo">
-                    <Input autoComplete="off"   placeholder="请输入"/>
+                    <Input autoComplete="off"   placeholder="请输入" disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
                 <Col {...this.colspans}>
                   <Form.Item label="地址" name="fundEnterpriseAddress">
-                    <Input autoComplete="off"   placeholder="请输入"/>
+                    <Input autoComplete="off"   placeholder="请输入" disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
               </Row>
           </HeadFormCard>
           {
-            this.props.handleType=='1'&&
+            (handleType=='1'&&handleStatus!='view')&&
             <div className="edit-btn-wrap">
               <YtBtn size="free" onClick={this.handleSubmit}>确认并下一步</YtBtn>
             </div>

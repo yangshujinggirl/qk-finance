@@ -1,38 +1,49 @@
+import moment from 'moment';
+
 const columnsPlan = [
   {
     title: '还款计划日',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'payDate',
+    key: 'payDate',
+    render:(text,record,index)=> {
+      return <>{moment(text).format('YYYY-MM-DD')}</>
+    }
   },
   {
     title: '期次',
-    dataIndex: 'age',
-    key: 'age',
+    dataIndex: 'payPeriodNo',
+    key: 'payPeriodNo',
   },
   {
     title: '开始计息日',
-    dataIndex: 'address',
-    key: 'address',
+    dataIndex: 'startDate',
+    key: 'startDate',
+    render:(text,record,index)=> {
+      return <>{moment(text).format('YYYY-MM-DD')}</>
+    }
   },
   {
     title: '结束计息日',
-    dataIndex: 'end',
-    key: 'address',
+    dataIndex: 'finishDate',
+    key: 'finishDate',
+    render:(text,record,index)=> {
+      return <>{moment(text).format('YYYY-MM-DD')}</>
+    }
   },
   {
     title: '还款本金',
-    dataIndex: 'amount',
-    key: 'address',
+    dataIndex: 'payPrincipalAmount',
+    key: 'payPrincipalAmount',
   },
   {
     title: '还款利息',
-    dataIndex: 'lx',
-    key: 'address',
+    dataIndex: 'payInterest',
+    key: 'payInterest',
   },
   {
     title: '还款总金额',
-    dataIndex: 'hkAmount',
-    key: 'address',
+    dataIndex: 'payTotalAmount',
+    key: 'payTotalAmount',
   },
 ];
 const columnsContract = [
@@ -72,10 +83,7 @@ const columnsContract = [
     key: 'address',
     render:(text,record,index)=>{
       return <>
-        <span className="operate-link-btn">预览</span>
-        <span className="operate-link-btn">下载</span>
         <span className="operate-link-btn">手动上传</span>
-        <span className="operate-link-btn">移除</span>
       </>
     }
   },

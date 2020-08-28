@@ -9,5 +9,5 @@ const Approve=({...props})=> {
           <ApproveRecord />
          </TabPane>
 }
-const  FinanceApproveEdit = withSubscription('2',Approve);//1:融资申请2:审批
+const  FinanceApproveEdit = withSubscription('2','edit',Approve);//1:融资申请2:审批
 export default FinanceApproveEdit;

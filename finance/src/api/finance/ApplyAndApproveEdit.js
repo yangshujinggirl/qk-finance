@@ -28,27 +28,35 @@ export function GetPayInfo(values) {
 export function GetReceivablesListApi(values) {
     return Req.post('/assets/package/choose/assetsListForTransfer/', {...values})
 }
+// 查询还款预算--转让应账款确定
+export function GetSaveReceivablesApi(values) {
+    return Req.post('/assets/package/transfer/assetsList', {...values}, {reqHeader:'form'})
+}
 // 查询还款预算--转让应账款列表--删除
 export function GetDeleteApi(values) {
     return Req.post('/assets/package/transfer/remove', {...values})
 }
 //查询还款预算--还款测算
 export function GetCountPayApi(values){
-    return Req.post('/loanV2/apply/payplan/',{...values})
+    return Req.post('/loanV2/apply/genPlanInfo',{...values})
 }
 //查询还款预算--还款计划列表
 export function GetPayPlanApi(values){
-    return Req.post('/loanV2/apply/genPlanInfo',{...values})
+    return Req.post('/loanV2/apply/payplan/',{...values},{reqHeader:'form'})
 }
-//查询合同
-export function GetContractApi(values){
-    return Req.post('/loanV2/apply/contractFiles',{...values})
+//查询合同基础信息
+export function GetContractInfoApi(values){
+    return Req.post('/loanV2/apply/add/contract',{...values}, {reqHeader:'form'})
 }
-// //资产增长趋势
-// export function GetAssetRiseApi(values){
-//     return Req.post('/assets/assetGrowthTrend',{...values})
-// }
-// //资产规模
-// export function GetAssetScaleApi(values){
-//     return Req.post('/assets/assetSizeAndAuth',{...values})
-// }
+//查询合同列表
+export function GetContractListApi(values){
+    return Req.post('/loanV2/apply/contractFiles',{...values},{reqHeader:'form'})
+}
+//提交审批
+export function GetSaveApproveApi(values){
+    return Req.post('/loanV2/apply/approved',{...values})
+}
+//审批列表
+export function GetApproveInfoApi(values){
+    return Req.post('/loanV2/apply/add/approve',{...values},{reqHeader:'form'})
+}

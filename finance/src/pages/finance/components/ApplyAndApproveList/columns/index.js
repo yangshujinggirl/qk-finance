@@ -56,13 +56,14 @@ const columnsList =(handleType, pagination)=>{
               {
                 handleType=="1"?
                 <>
+                  <Link to={'/account/financeApply/info/'+record.loanId} className="operate-link-btn">查看</Link>
                   <Link to={'/account/financeApply/edit/'+record.loanId} className="operate-link-btn">编辑</Link>
                   <span className="operate-link-btn" onClick={()=>record.onOperateClick('download')}>项目资料下载</span>
                 </>
                 :
                 <>
-                  <Link to="/account/financeApprove/edit/12" className="operate-link-btn">审核</Link>
-                  <Link to="/account/financeApprove/info/12" className="operate-link-btn">查看</Link>
+                  <Link to={`/account/financeApprove/edit/${record.loanId}`} className="operate-link-btn">审核</Link>
+                  <Link to={`/account/financeApprove/info/${record.loanId}`} className="operate-link-btn">查看</Link>
                 </>
               }
 
