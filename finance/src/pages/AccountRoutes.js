@@ -17,9 +17,10 @@ import FinanceWorkbench from './finance/FinanceWorkbench';//工作台
 import FinanceCompanyView from './finance/FinanceCompanyView';//融资企业
 import FinanceApplyList from './finance/FinanceApplyList';//融资申请列表
 import FinanceApplyEdit from './finance/FinanceApplyList/FinanceApplyEdit';//融资申请
-import FinanceApplyInfo from './finance/FinanceApplyList/FinanceApplyInfo';//融资申请
+import FinanceApplyInfo from './finance/FinanceApplyList/FinanceApplyInfo';//融资申请详情
 import FinanceApproveList from './finance/FinanceApproveList';//融资审批
-import FinanceApproveEdit from './finance/FinanceApproveList/FinanceApproveEdit';//融资审批
+import FinanceApproveEdit from './finance/FinanceApproveList/FinanceApproveEdit';//融资审批编辑
+import FinanceApproveInfo from './finance/FinanceApproveList/FinanceApproveInfo';//融资审批详情
 import LoanApplyList from './finance/LoanApplyList';//放款申请列表
 import LoanApplyEdit from './finance/LoanApplyList/LoanApplyEdit';//放款申请
 import LoanApproveList from './finance/LoanApproveList';//放款审批列表
@@ -85,6 +86,7 @@ function HomeRoutes() {
         <Route exact path="/account/financeApplyList" component={FinanceApplyList} />
         <Route exact path="/account/financeApproveList" component={FinanceApproveList} />
         <Route exact path="/account/financeApprove/edit/:id?" component={FinanceApproveEdit} />
+        <Route exact path="/account/financeApprove/info/:id" component={FinanceApproveInfo} />
         <Route exact path="/account/loanApproveList" component={LoanApproveList} />
         <Route exact path="/account/loanApprove/edit/:id?" component={LoanApproveEdit} />
         <Route exact path="/account/loanApplyList" component={LoanApplyList} />

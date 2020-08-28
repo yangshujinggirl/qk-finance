@@ -55,8 +55,8 @@ function withSubscription(handleType, pageType, Mod){
             </TabPane>
             {
               Mod&&
-              <TabPane tab="审批记录" key="10" forceRender={false}>
-                <Mod {...this.props}/>
+              <TabPane tab="审批记录" key="10"  forceRender={false}>
+                <Mod {...this.props} loanId={params.id} handleStatus={handleStatus()}/>
               </TabPane>
             }
           </Tabs>

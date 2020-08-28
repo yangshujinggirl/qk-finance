@@ -66,7 +66,6 @@ const columnsList =(handleType, pagination)=>{
                   <Link to={`/account/financeApprove/info/${record.loanId}`} className="operate-link-btn">查看</Link>
                 </>
               }
-
               </>
             }
           },

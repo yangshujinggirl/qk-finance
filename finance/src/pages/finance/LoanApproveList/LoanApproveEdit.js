@@ -1,7 +1,7 @@
 import { Select, Input, Tabs, Form, Row, Col } from 'antd';
 import { useState, useEffect } from 'react';
 import HeadFormCard from '../components/HeadFormCard';
-import ApproveRecord from '../components/ApproveRecord';
+import LoanApproveRecord from './components/LoanApproveRecord';
 import withSubscription from '../components/LoanApplyApproveEdit';
 import { GetBankListApi } from "api/finance/LoanApproveManagement";
 
@@ -36,7 +36,7 @@ class Approve extends React.Component{
   render(){
     const { bankList } =this.state;
     return (
-          <ApproveRecord  loanId={this.props.loanId} pageType="loan">
+          <LoanApproveRecord  loanId={this.props.loanId} pageType="loan">
             <HeadFormCard title="打款银行信息">
                 <Row>
                     <Col {...colspans}>
@@ -66,7 +66,7 @@ class Approve extends React.Component{
                     </Col>
                 </Row>
             </HeadFormCard>
-          </ApproveRecord>
+          </LoanApproveRecord>
     )
   }
 }
