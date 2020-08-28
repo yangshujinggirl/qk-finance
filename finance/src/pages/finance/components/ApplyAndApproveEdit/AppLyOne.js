@@ -116,16 +116,17 @@ class ApplyOne extends BaseEditForm {
   handleSubmit = async () => {
     try {
       const values = await this.formRef.current.validateFields();
-      let { loanId } =this.props;
+      let { loanId,tabStatus } =this.props;
       let { basicInfo } =this.state;
       let params = {
         ...values,
         loanId,
+        tabStatus,
         organizationalCode:basicInfo.organizationalCode,
       }
       GetSaveElement(params)
       .then((res)=> {
-        console.log(res)
+        this.props.upDateKey('baseInfo')
       })
     } catch (errorInfo) {
       console.log("Failed:", errorInfo);
@@ -134,7 +135,6 @@ class ApplyOne extends BaseEditForm {
 
   render() {
     const { handleStatus, handleType } =this.props;
-    console.log(handleStatus, handleType)
     const { basicInfo, companyList, packageList, packageId, jgBank } =this.state;
     let isCanEdit = handleType=='2'||handleStatus=="view";
     return(
@@ -195,7 +195,7 @@ class ApplyOne extends BaseEditForm {
                           <Select placeholder="请选择" allowClear={true} onSelect={this.changePackge} disabled={isCanEdit||packageList.length==0}>
                           {
                             packageList.map((el)=>(
-                              <Select.Option value={el.key} key={el.key}>{el.value}</Select.Option>
+                              <Select.Option value={el.packet_id} key={el.packet_id}>{el.packet_name}</Select.Option>
                             ))
                           }
                           </Select>
