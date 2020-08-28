@@ -2,7 +2,7 @@ import {Form, Row, Col, Select, Input} from 'antd';
 import {BaseEditForm, YtBtn, YtTable, YtMessage} from 'common';
 import {columnsPlan} from './columns';
 import HeadFormCard from '../HeadFormCard';
-import {ApplyAndApproveEdit, GetApproveDetailApi, GetBankListApi} from '../../../../api/finance/ApplyAndApproveEdit'
+import {ApplyAndApproveEdit, GetApproveDetailApi, GetBankListApi} from '../../../../api/finance/LoanApproveManagement'
 
 class ApplyOne extends BaseEditForm {
     formRef = React.createRef();
