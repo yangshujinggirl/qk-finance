@@ -14,7 +14,7 @@ const formItemLayout = {
 const CreatModal = ({...props}) => {
     const [form] = Form.useForm();
     const {id} = props.data;
-    // form.setFieldsValue(props.data)
+    form.setFieldsValue(props.data)
     //确认
     const handleOk = async () => {
         const values = await form.validateFields();
@@ -34,14 +34,17 @@ const CreatModal = ({...props}) => {
     };
     return (
         <Modal
-               width={520}
-               title={props.visible === 1 ? '新增' : '编辑'}
-               visible={props.visible}
-               onOk={handleOk}
-               onCancel={handleCancel}
-               className="creat-modal"
-               footer={null}>
-            <Form form={form} initialValues={props.data} name="control-hooks" {...formItemLayout}>
+            width={520}
+            title={props.visible === 1 ? '新增' : '编辑'}
+            visible={props.visible}
+            onOk={handleOk}
+            onCancel={handleCancel}
+            className="creat-modal"
+            forceRender
+            footer={null}>
+            <Form form={form}
+                // initialValues={props.data}
+                  name="control-hooks" {...formItemLayout}>
                 <Row gutter={24}>
                     <Col span={24}>
                         <Form.Item name="orgName" label="组织名称" rules={[{required: true, message: '请输入'}]}>

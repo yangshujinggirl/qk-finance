@@ -1,12 +1,12 @@
-import { Tabs } from 'antd';
-import { Link } from 'react-router-dom';
+import {Tabs} from 'antd';
+import {Link} from 'react-router-dom';
 import AppLyOne from './AppLyOne.js';
 import AppLyTwo from './AppLyTwo.js';
 import AppLyThr from './AppLyThr.js';
-import { GetFinanceDetail } from 'api/finance/FinanceManagement';
+import {GetFinanceDetail} from 'api/finance/FinanceManagement';
 import './index.less';
 
-const { TabPane } = Tabs;
+const {TabPane} = Tabs;
 
 function withSubscription(handleType, pageType, Mod){
   return class FinanceApplyEdit extends React.Component {

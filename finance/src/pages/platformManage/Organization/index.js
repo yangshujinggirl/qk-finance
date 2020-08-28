@@ -38,14 +38,14 @@ const Index = ({...props}) => {
     }
     //新增弹窗
     const goCreat = () => {
-        setVisible(1);
         setCurrentItem({})
+        setVisible(1);
     }
     //确认新增
     const onOk = () => {
+        setCurrentItem({})
         setVisible(false);
         getOrgLists(param);
-        setCurrentItem({})
     }
     //取消新增
     const onCancel = () => {

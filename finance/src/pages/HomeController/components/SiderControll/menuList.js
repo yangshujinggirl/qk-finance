@@ -55,12 +55,14 @@ const menuList=[
         name:'融资审批',
         chidrenNode:null,
         path:'financeApproveList',
-      },{
-        id:'2-2',
-        name:'放款申请',
-        chidrenNode:null,
-        path:'loanApplyList',
-      },{
+      },
+      // {
+      //   id:'2-2',
+      //   name:'放款申请',
+      //   chidrenNode:null,
+      //   path:'loanApplyList',
+      // },
+      {
         id:'2-3',
         name:'放款审批',
         chidrenNode:null,

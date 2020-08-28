@@ -1,43 +1,40 @@
+import moment from 'moment';
+
 const columnsRecord = [
   {
     title: '序列号',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'id',
   },
   {
     title: '任务阶段',
-    dataIndex: 'age',
-    key: 'age',
+    dataIndex: 'process',
   },
   {
     title: '动作',
-    dataIndex: 'address',
-    key: 'address',
+    dataIndex: 'action',
   },
   {
     title: '意见内容',
-    dataIndex: 'end',
-    key: 'address',
+    dataIndex: 'comments',
   },
   {
     title: '角色',
-    dataIndex: 'amount',
-    key: 'address',
+    dataIndex: 'roleName',
   },
   {
     title: '操作人',
-    dataIndex: 'ac',
-    key: 'address',
+    dataIndex: 'userFullName',
   },
   {
     title: '操作人账户',
-    dataIndex: 'lx',
-    key: 'address',
+    dataIndex: 'userName',
   },
   {
     title: '时间',
-    dataIndex: 'vx',
-    key: 'address',
+    dataIndex: 'dateOfUpdate',
+    render: (text, record, index) => {
+      return moment(text).format('YYYY-MM-DD')
+    }
   },
 ]
 export {

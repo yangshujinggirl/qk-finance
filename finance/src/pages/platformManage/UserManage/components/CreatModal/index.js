@@ -13,9 +13,12 @@ const formItemLayout = {
     }
 };
 const CreatModal = ({...props}) => {
+    console.log(props.data);
     const [treeOrgs, setTreeOrgs] = useState([]);
     const {userPassword, id, userId} = props.data;
     const [form] = Form.useForm();
+    form.setFieldsValue({...props.data, userPassword2: props.data.userPassword})
+
     //确认操作
     const handleOk = async () => {
         const values = await form.validateFields();
@@ -63,9 +66,10 @@ const CreatModal = ({...props}) => {
             visible={props.visible === 1 || props.visible === 3}
             onOk={handleOk}
             onCancel={handleCancel}
+            forceRender
             className="creat-modal"
             footer={null}>
-            <Form form={form} initialValues={{...props.data, userPassword2: userPassword}}
+            <Form form={form}
                   name="control-hooks" {...formItemLayout}>
                 <Row gutter={24}>
                     <Col span={24}>

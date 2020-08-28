@@ -7,7 +7,7 @@ export function getUserList(values) {
         pageNow,
         pageSize
     } = values
-    return Req.post(`/users/search?userName=${values.userName}`, {pageNow, pageSize})
+    return Req.post(`/users/search?userName=${values.userName||''}`, {pageNow, pageSize})
 }
 
 // 机构列表
