@@ -49,33 +49,19 @@ class ApproveRecord extends BaseEditForm {
     getApproveList() {
         GetApproveListApi({loanId: this.props.loanId}).then(res => {
             console.log(res.data);
-            let approveList = res.data;
+            let approveList = res.data.comments;
             let p = {...this.state, approveList}
             this.setState(p)
         })
     }
 
     render() {
-        const data = [
-            {
-                name: 'name',
-                age: 'age',
-                ac: 'ac',
-                key: 1
-            },
-            {
-                name: 'name',
-                age: 'age',
-                ac: 'ac',
-                key: 2
-            },
-        ]
-        let {bankList} = this.state;
+        let {bankList,approveList} = this.state;
         return (
             <div>
                 <Form className="common-edit-pages-form" {...this.formItemLayout} ref={this.formRef}>
                     <div className="record-wrap">
-                        <YtTable dataSource={data} columns={columnsRecord}/>
+                        <YtTable dataSource={approveList} columns={columnsRecord}/>
                     </div>
                     <HeadFormCard title="打款银行信息">
                         <Row>

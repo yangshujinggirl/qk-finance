@@ -44,6 +44,7 @@ const CreatModal = ({...props}) => {
             onOk={handleOk}
             onCancel={handleCancel}
             className="creat-modal"
+            forceRender
             footer={null}>
             <Form form={form} name="control-hooks" {...formItemLayout}>
                 <Row gutter={24}>

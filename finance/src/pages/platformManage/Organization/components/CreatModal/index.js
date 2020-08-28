@@ -40,6 +40,7 @@ const CreatModal = ({...props}) => {
             onOk={handleOk}
             onCancel={handleCancel}
             className="creat-modal"
+            forceRender
             footer={null}>
             <Form form={form}
                 // initialValues={props.data}

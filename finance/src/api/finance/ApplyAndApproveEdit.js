@@ -80,5 +80,5 @@ export function GetBankListApi() {
 
 //审批记录
 export function GetApproveListApi(values) {
-    return Req.post(`/loanV2/apply/add/approve`, values)
+    return Req.post(`/loanV2/apply/add/approve`, values, {reqHeader: 'form'})
 }

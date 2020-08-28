@@ -66,6 +66,7 @@ const CreatModal = ({...props}) => {
             visible={props.visible === 1 || props.visible === 3}
             onOk={handleOk}
             onCancel={handleCancel}
+            forceRender
             className="creat-modal"
             footer={null}>
             <Form form={form}
