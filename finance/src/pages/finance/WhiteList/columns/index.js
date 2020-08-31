@@ -8,7 +8,7 @@ const columnsIndex = [
         },
         {
           title: '融资企业名称',
-          dataIndex: 'code',
+          dataIndex: 'companyFullName',
           width: 120,
         },
         {
