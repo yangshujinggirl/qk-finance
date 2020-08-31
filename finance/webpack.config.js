@@ -125,8 +125,13 @@ module.exports = {
         changeOrigin: true,
       },
       '/admin/blockFinance': {
-        target:'http://yuntuappapitest01.bravowhale-uat.com/admin/api/',//上链端
+        target:'http://yuntuappapitest01.bravowhale-uat.com/admin/api/',//运营端
         pathRewrite: {"^/admin/blockFinance" : ""},
+        changeOrigin: true,
+      },
+      '/admin/ytAsset': {
+        target:'http://yuntuappapitest01.bravowhale-uat.com/admin/api/',//上链端
+        pathRewrite: {"^/admin/ytAsset" : ""},
         changeOrigin: true,
       },
     }

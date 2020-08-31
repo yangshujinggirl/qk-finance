@@ -4,7 +4,6 @@ import Arrow from './Arrow';
 import './index.less';
 
 function AssetStatuStep({...props}){
-  console.log(props)
   let finishedPro = props.index <= props.status ?'step-finished':'';
   let currentPro = props.index == props.status?'step-active':'';
   return <div className={`aspw-item ${finishedPro} ${currentPro}`}>
@@ -14,6 +13,8 @@ function AssetStatuStep({...props}){
 }
 
 function AssetStepMod({...props}){
+  let { applyLoanStatus } =props.info;
+
   let statusList=[
     {
       key:'0',
@@ -25,7 +26,7 @@ function AssetStepMod({...props}){
     },
     {
       key:'2',
-      name:'已打包',
+      name:'已占用',
     },
     {
       key:'3',
@@ -39,11 +40,11 @@ function AssetStepMod({...props}){
           <div className="aspw-content box-flex">
             {
               statusList.map((el,index)=>(
-                <AssetStatuStep  index={el.key} status="1" {...el}/>
+                <AssetStatuStep  index={el.key} status={applyLoanStatus} {...el}/>
               ))
             }
           </div>
-          <ProcessMod />
+          <ProcessMod info={props.info}/>
       </div>
 }
 

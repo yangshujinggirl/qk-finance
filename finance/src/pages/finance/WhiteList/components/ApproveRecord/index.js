@@ -3,7 +3,7 @@ import {BaseEditForm, YtBtn, YtTable, YtMessage} from 'common';
 import {columnsRecord} from './columns'
 import HeadFormCard from '../../../components/HeadFormCard';
 import './index.less';
-import { GetSaveApprove, GetApproveList } from "../../../../../api/finance/WithdrawManage";
+import { GetSaveApprove, GetApproveList } from "api/finance/WhiteList";
 
 class ApproveRecord extends BaseEditForm {
     formRef = React.createRef();
@@ -18,19 +18,20 @@ class ApproveRecord extends BaseEditForm {
     onSubmit =(values) => {
       GetSaveApprove({
         ...values,
-        businessId: this.props.loanId,
+        accountId: this.props.accountId,
       })
       .then(res => {
           YtMessage.success('操作成功');
-          this.getApproveList()
+          this.getApproveList();
+          this.formRef.current.resetFields()
       })
     };
     //审批列表
     getApproveList() {
-      GetApproveList({loanId: this.props.loanId,currentStatus:'approve'})
+      GetApproveList({accountId: this.props.accountId })
       .then(res => {
-        // let approveList = res.data.comments;
-        // this.setState({approveList})
+        const { list } = res.data;
+        this.setState({ approveList:list })
       })
     }
 
@@ -47,11 +48,11 @@ class ApproveRecord extends BaseEditForm {
                 <>
                   <Row>
                       <Col {...this.colspans}>
-                          <Form.Item label="审批状态" name="status"
+                          <Form.Item label="审批状态" name="reviewStatus"
                                      rules={[{required: true, message: "请选择"}]}>
                               <Radio.Group>
-                                  <Radio value={2}>不通过</Radio>
-                                  <Radio value={3}>通过</Radio>
+                                  <Radio value={1}>不通过</Radio>
+                                  <Radio value={2}>通过</Radio>
                               </Radio.Group>
                           </Form.Item>
                           <Form.Item name="comments" label="审批意见" rules={[{required: true, message: "请输入"}]}>

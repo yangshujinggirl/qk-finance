@@ -18,7 +18,7 @@ class ApproveRecord extends BaseEditForm {
     onSubmit =(values) => {
       GetSaveApprove({
         ...values,
-        businessId: this.props.loanId,
+        businessId: this.props.applyId,
       })
       .then(res => {
           YtMessage.success('操作成功');
@@ -27,7 +27,7 @@ class ApproveRecord extends BaseEditForm {
     };
     //审批列表
     getApproveList() {
-      GetApproveList({loanId: this.props.loanId,currentStatus:'approve'})
+      GetApproveList({applyId: this.props.applyId,currentStatus:'approve'})
       .then(res => {
         let approveList = res.data.comments;
         this.setState({approveList})

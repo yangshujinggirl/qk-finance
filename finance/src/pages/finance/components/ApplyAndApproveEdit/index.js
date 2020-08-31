@@ -57,19 +57,35 @@ function withSubscription(handleType, pageType, Mod){
             <TabPane tab="合同要素" key="baseInfo" forceRender={false}>
             {
               activeKey=='baseInfo'&&
-              <AppLyOne upDateKey={this.upDateKey} tabStatus={[tabStatus]} handleType={handleType} pageType={pageType} loanId={params.id} handleStatus={handleStatus()}/>
+              <AppLyOne
+                upDateKey={this.upDateKey}
+                tabStatus={tabStatus}
+                handleType={handleType}
+                pageType={pageType}
+                loanId={params.id} handleStatus={handleStatus()}/>
             }
             </TabPane>
             <TabPane tab="还款预算" key="payInfo" forceRender={false} disabled={tabStatusMap[tabStatus]<2}>
             {
               activeKey=='payInfo'&&
-              <AppLyTwo upDateKey={this.upDateKey} tabStatus={tabStatus} handleType={handleType} pageType={pageType} loanId={params.id} handleStatus={handleStatus()}/>
+              <AppLyTwo
+                upDateKey={this.upDateKey}
+                tabStatus={tabStatus}
+                handleType={handleType}
+                pageType={pageType}
+                loanId={params.id} handleStatus={handleStatus()}/>
             }
             </TabPane>
             <TabPane tab="合同预览" key="contract" forceRender={false} disabled={tabStatusMap[tabStatus] <= 2}>
             {
               activeKey == 'contract'&&
-              <AppLyThr upDateKey={this.upDateKey} tabStatus={tabStatus} handleType={handleType} pageType={pageType} loanId={params.id} handleStatus={handleStatus()}/>
+              <AppLyThr
+                upDateKey={this.upDateKey}
+                tabStatus={tabStatus}
+                handleType={handleType}
+                pageType={pageType}
+                loanId={params.id}
+                handleStatus={handleStatus()}/>
             }
             </TabPane>
             {

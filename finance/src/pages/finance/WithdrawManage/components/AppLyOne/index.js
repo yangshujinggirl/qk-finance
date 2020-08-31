@@ -10,10 +10,6 @@ class ApplyOne extends BaseEditForm {
         info: {},
         historyList: []
     }
-    onSubmit = async (values) => {
-        console.log(values)
-    };
-
     componentDidMount() {
         this.fetchInfo()
     }
@@ -24,16 +20,16 @@ class ApplyOne extends BaseEditForm {
             .then((res) => {
                 let {finacing, obj, result} = res.data
                 let historyList = result.list;
-                let info = {...finacing, ...obj}
-                let p = {...this.state, historyList, info}
-                this.setState(p)
-                this.formRef.current.setFieldsValue(info);
+                historyList.map((el,index)=>el.key=`${el.id}/${index}`);
+                obj.key=obj.id;
+                this.setState({ historyList, info:obj })
+                this.formRef.current.setFieldsValue(obj);
             })
     }
 
     render() {
-        let {historyList, info} = this.state
-        console.log('table', historyList, info);
+        let { historyList, info } = this.state
+
         return (
             <div>
                 <Form className="common-edit-pages-form" {...this.formItemLayout} ref={this.formRef}>
@@ -148,14 +144,11 @@ class ApplyOne extends BaseEditForm {
                         </Row>
                     </HeadFormCard>
                     <HeadFormCard title="请款凭证">
-                        <YtTable columns={columnsVoucher} data={[info]}/>
+                        <YtTable columns={columnsVoucher} dataSource={[info]}/>
                     </HeadFormCard>
                     <HeadFormCard title="历史请款记录">
-                        <YtTable columns={columnsRecord} data={historyList}/>
+                        <YtTable columns={columnsRecord} dataSource={historyList}/>
                     </HeadFormCard>
-                    {/*<div className="edit-btn-wrap">
-            <YtBtn size="free" onClick={this.handleSubmit}>确认并下一步</YtBtn>
-          </div>*/}
                 </Form>
             </div>
         )

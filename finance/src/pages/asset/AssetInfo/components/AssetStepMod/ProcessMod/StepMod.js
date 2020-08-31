@@ -2,7 +2,7 @@
 function Step({...props}){
   let finishedPro = props.index <= props.current?'step-finished':'';
   let currentPro = props.index == props.current?'step-active':'';
-  return <div className={`item-step ${finishedPro} ${currentPro}`}>
+  return <div className={`item-step ${finishedPro} ${currentPro} ${props.index==9?'lastStep':''}`}>
             <p className="isp-icon">
               <span className="inner-circle">{props.index}</span>
               <span className="ps-title">{props.title}</span>

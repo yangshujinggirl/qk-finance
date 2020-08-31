@@ -40,7 +40,8 @@ const AssetInfo = ({...props}) => {
                 const {authStatus, assetsInfo, blockChainInfo, assetDetailVO} = res.data;
                 let {shipperType, longTeamInfoVO, salesInfoVO, logisticsSendVO, logisticsReceivingVO, moneyBackVO} = assetDetailVO
                 //资产信息
-                setAssetsInfo({...assetsInfo, authStatus, shipperType});
+                const surplusPayMent = CommonUtils.formatTimeInterval(assetsInfo.transactionDate, assetsInfo.expectedDate)
+                setAssetsInfo({...assetsInfo, surplusPayMent, authStatus, shipperType});
                 //1.区块信息
                 setBlockInfo(blockChainInfo);
                 //longTeamInfoVO 2.企业信息 ||  3.长协信息
@@ -56,10 +57,7 @@ const AssetInfo = ({...props}) => {
                 setMoneyBack(moneyBackVO)
             })
     }
-    useEffect(() => {
-        fetchInfo()
-    }, [assetNo]);
-    const surplusPayMent = CommonUtils.formatTimeInterval(assetsInfo.transactionDate, assetsInfo.expectedDate)
+    useEffect(() => { fetchInfo() }, [assetNo]);
     return (
         <>
             <YtBreadcrumbName/>
@@ -68,8 +66,9 @@ const AssetInfo = ({...props}) => {
                     <div className="box-flex aiom-top">
                         <p className="card-hd">资产详情</p>
                         <p className="sub-hd"><span className="label">资产编号</span>{assetsInfo.assetNo}</p>
-                        <p className="sub-hd"><span className="label">
-              所属企业</span>{assetsInfo.companyFullName}
+                        <p className="sub-hd">
+                          <span className="label">所属企业</span>
+                          {assetsInfo.companyFullName}
                             <Button type="primary" ghost className="link-default-btn">
                                 主体验证通过
                                 {/*<Link to="/account/creditVerify/12">主体信用</Link>*/}
@@ -90,7 +89,7 @@ const AssetInfo = ({...props}) => {
                         <div className="info-im">
                             <p className="label-name">剩余账期(天)</p>
                             <p className="label-value">
-                                {surplusPayMent}
+                                {assetsInfo.surplusPayMent}
                             </p>
                         </div>
                         <div className="info-im">
@@ -128,7 +127,7 @@ const AssetInfo = ({...props}) => {
                         </div>
                     </div>
                 </div>
-                <AssetStepMod/>
+                <AssetStepMod info={assetsInfo}/>
                 <div className="aio-bottom-part">
                     <VerifySource/>
                     <YtCollapse defaultActiveKey={['1']} expandIconPosition="right">

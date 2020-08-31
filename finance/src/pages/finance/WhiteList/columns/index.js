@@ -1,4 +1,6 @@
 import {Link} from 'react-router-dom';
+import { useTypeOption, approveStatusOption, useStatusOption } from '../option';
+
 
 const columnsIndex = [
     {
@@ -30,16 +32,43 @@ const columnsIndex = [
         title: '用途类型',
         dataIndex: 'accountUsage',
         width: 100,
+        render:(text,record,index)=> {
+          return <>
+            {
+              useTypeOption.map((el)=> (
+                <>{el.key == record.accountUsage&&el.value}</>
+              ))
+            }
+          </>
+        }
     },
     {
         title: '帐户状态',
         dataIndex: 'accountStatus',
         width: 200,
+        render:(text,record,index)=> {
+          return <>
+            {
+              useStatusOption.map((el)=> (
+                <>{el.key == record.accountStatus&&el.value}</>
+              ))
+            }
+          </>
+        }
     },
     {
         title: '审批状态',
         dataIndex: 'reviewStatus',
         width: 200,
+        render:(text,record,index)=> {
+          return <>
+            {
+              approveStatusOption.map((el)=> (
+                <>{el.key == record.reviewStatus&&el.value}</>
+              ))
+            }
+          </>
+        }
     },
     {
         title: '审批人',
@@ -58,8 +87,8 @@ const columnsIndex = [
         fixed: 'right',
         render: (text, record, index) => {
             return <>
-                <Link to={`/account/whiteList/edit/${record.accountId}`} className="operate-link-btn">审核</Link>
-                <Link to={`/account/whiteList/info/${record.accountId}`} className="operate-link-btn">查看</Link>
+                <Link to={`/account/whiteList/edit/${record.id}`} className="operate-link-btn">审核</Link>
+                <Link to={`/account/whiteList/info/${record.id}`} className="operate-link-btn">查看</Link>
             </>
         }
     },

@@ -24,7 +24,7 @@ function withSubscription(handleType){
               {activeKey=='1'&&<AppLyOne applyId={id}/>}
             </TabPane>
             <TabPane tab="审批记录" key="2">
-              {activeKey=='2'&&<ApproveRecord handleType={handleType}/>}
+              {activeKey=='2'&&<ApproveRecord applyId={id}/>}
             </TabPane>
           </Tabs>
         </div>
