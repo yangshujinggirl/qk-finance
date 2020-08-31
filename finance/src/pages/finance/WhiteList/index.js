@@ -1,52 +1,63 @@
-import { YtStatistic, YtPagination, YtTable, YtBtn } from 'common';
+import {YtStatistic, YtPagination, YtTable, YtBtn} from 'common';
 import FilterForm from './components/FilterForm';
 import {columnsIndex} from './columns';
 import './index.less'
-import { GetWhiteList } from '../../../api/finance/WhiteList';
+import {GetWhiteList} from '../../../api/finance/WhiteList';
 
 class AccountStatement extends React.Component {
-		state={
-			data: [],
-			pagination: {totalSize:100, totalPage:5, pageNow:1, pageSize:15}
-		}
+    state = {
+        data: [],
+        totalSize:1,
+        param: {
+            "pageNow": 1,
+            "pageSize": 10,
+            "accountType": "",
+            "accountUsageArr": "",
+            "companyFullName": "",
+            "accountUsage": "",
+            "reviewStatus": ""
+        }
+    }
 
-		fetchLoanList=()=> {
-			GetWhiteList({
-				"pageNow": this.state.pagination.pageNow,
-				"pageSize": this.state.pagination.pageSize,
-				"accountType": "1",
-				"accountUsageArr": "2,3,4",
-				"companyFullName": "",
-				"accountUsage": "",
-				"reviewStatus": ""
-			})
-			.then((res)=> {
-				console.log(res)
-				this.state.data = res.data.list;
-				this.state.pagination.totalSize = res.data.totalSize;
-				this.forceUpdate();
-			});
-		}
+    fetchLoanList = () => {
+        GetWhiteList(this.state.param)
+            .then((res) => {
+                console.log(res)
+                this.state.data = res.data.list;
+                this.state.totalSize = res.data.totalSize;
+                this.forceUpdate();
+            });
+    }
 
-		componentWillMount(){
-			this.fetchLoanList();
-		}
-		onPageChange=(pageNow, pageSize)=> {
-			console.log('onPageChange:', currentPage, pageSize);
-			this.state.pagination.pageNow = pageNow;
-			this.fetchLoanList();
-		}
+    componentWillMount() {
+        this.fetchLoanList();
+    }
+
+    onPageChange = (pageNow) => {
+        this.state.pagination.pageNow = pageNow;
+        this.fetchLoanList();
+    }
+    //查询
+    search = (param) => {
+        let p = {...this.state.param, ...param};
+        this.setState(p, () => {
+            fetchLoanList(p);
+        });
+    }
+
     render() {
-      return(
-        <div className="yt-common-list-pages-wrap">
-            <FilterForm />
-            <YtTable
-            scroll={{x:1300}}
-             columns={columnsIndex}
-             dataSource={this.state.data}/>
-            <YtPagination data={this.state.pagination} onChange={this.onPageChange}/>
-        </div>
-      )
+        let {totalSize} = this.state
+        let {pageNow, pageSize} = this.state.param
+        return (
+            <div className="yt-common-list-pages-wrap">
+                <FilterForm onSubmit={this.search}/>
+                <YtTable
+                    scroll={{x: 1300}}
+                    columns={columnsIndex}
+                    dataSource={this.state.data}/>
+                <YtPagination data={{totalSize, pageNow, pageSize}} onChange={this.onPageChange}/>
+            </div>
+        )
     }
 }
 

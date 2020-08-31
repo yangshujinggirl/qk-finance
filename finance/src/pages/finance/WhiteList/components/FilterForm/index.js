@@ -37,7 +37,7 @@ class FilterForm extends BaseFilter{
         className="yt-condition-form">
         <Row gutter={24}>
           <Col {...this.colspans}>
-            <Form.Item name="qy" label="融资企业">
+            <Form.Item name="companyFullName" label="融资企业">
               <Input placeholder="请输入" autoComplete="off"/>
             </Form.Item>
           </Col>
@@ -74,7 +74,7 @@ class FilterForm extends BaseFilter{
           </Col>
         </Row>
         <div className="submit-btn-wrap">
-          <YtBtn htmlType="submit" onClick={this.onSubmit}>
+          <YtBtn htmlType="submit" onClick={this.handleSubmit}>
             查询
           </YtBtn>
         </div>
