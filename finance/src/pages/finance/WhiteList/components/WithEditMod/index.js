@@ -18,7 +18,7 @@ function withSubscription(handleType){
         <div className="yt-common-bg-pages-wrap">
           <Tabs defaultActiveKey="1" onChange={this.callback}>
             <TabPane tab="白名单企业" key="1">
-              <AppLyOne />
+              <AppLyOne  />
             </TabPane>
             <TabPane tab="审批记录" key="2">
               <ApproveRecord handleType={handleType}/>

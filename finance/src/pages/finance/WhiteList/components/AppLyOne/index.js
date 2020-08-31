@@ -14,7 +14,7 @@ class ApplyOne extends BaseEditForm {
           <HeadFormCard title="基本信息">
               <Row>
                 <Col {...this.colspans}>
-                  <Form.Item label="融资企业" name="name">
+                  <Form.Item label="融资企业" name="companyFullName">
                     <Input autoComplete="off"   placeholder="请输入" disabled/>
                   </Form.Item>
                 </Col>
