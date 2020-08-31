@@ -31,9 +31,9 @@ function SalesInfo({...props}) {
                 {key: '收货地址', value: info.salesShippingAddress},
                 {key: '操作人', value: info.salesOperatorSourceCompanyName},
                 {key: '欠款账期（天）', value: info.expectedDate},
-                {key: '欠条凭证', value: <YtenlargeImg url={testImg}/>},
+                // {key: '欠条凭证', value: <YtenlargeImg url={testImg}/>},
                 {key: '预收款（元）', value: info.earnestMoney},
-                {key: '预收款凭证', value: <YtenlargeImg url={testImg}/>},
+                // {key: '预收款凭证', value: <YtenlargeImg url={testImg}/>},
             ]}/>
         </SubTitleMod>
         <SubTitleMod title="订单确认信息">
@@ -47,7 +47,7 @@ function SalesInfo({...props}) {
                 {key: '合同签订时间', value: moment(info.signDate).format('YYYY-MM-DD')},
                 // {key:'付款方式',value:'成都市众惠农资有限公司'},
                 // {key:'预计还款时间',value:'成都市众惠农资有限公司'},
-                {key: '合同照', value: <YtenlargeImg url={info.contractPDFUrl}/>},
+                {key: '合同照', value: <a href={info.contractPDFUrl}>查看</a>},
             ]}/>
         </SubTitleMod>
     </>
