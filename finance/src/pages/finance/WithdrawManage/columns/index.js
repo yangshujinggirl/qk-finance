@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom';
+import moment from 'moment';
 
 const columnsIndex = [
     {
@@ -15,6 +16,9 @@ const columnsIndex = [
         title: '请款时间',
         dataIndex: 'applyTime',
         width: 200,
+        render: (text, record, index) => {
+            return moment(text).format('YYYY-MM-DD')
+        }
     },
     {
         title: '融资编号',
@@ -31,15 +35,24 @@ const columnsIndex = [
         dataIndex: 'loanAmount',
         width: 100,
     },
-    {
-        title: '年化利率%',
-        dataIndex: 'loanRate',
-        width: 200,
-    },
+    // {
+    //     title: '年化利率%',
+    //     dataIndex: 'loanRate',
+    //     width: 200,
+    // },
     {
         title: '用途类型',
         dataIndex: 'useType',
         width: 200,
+        render: (text, record, index) => {
+            // 请款类型-用途类型：1-再经营，2-还贷 3-提取利润
+            let typeName = {
+                1: '再经营',
+                2: '还贷',
+                3: '提取利润',
+            }
+            return typeName[text]
+        }
     },
     {
         title: '请款金额（万元）',
@@ -55,12 +68,29 @@ const columnsIndex = [
         title: '审批状态',
         dataIndex: 'loanStatus',
         width: 100,
+        render: (text, record, index) => {
+            let typeName = {
+                1: '已提交申请审核',
+                2: '申请审核未通过',
+                3: '待提交放款',
+                4: '已提交放款审核',
+                5: '放款审核不通过',
+                6: '已放款',
+                7: '已放款存续中',
+                8: '待确认还款审核',
+                9: '已结束',
+            }
+            return typeName[text]
+        }
     },
-    {
-        title: '实际放款时间',
-        dataIndex: 'payTime',
-        width: 100,
-    },
+    // {
+    //     title: '实际放款时间',
+    //     dataIndex: 'payTime',
+    //     width: 100,
+    //     render: (text, record, index) => {
+    //         return moment(text).format('YYYY-MM-DD')
+    //     }
+    // },
     {
         title: '操作',
         width: 100,
