@@ -29,8 +29,8 @@ class ApproveRecord extends BaseEditForm {
     getApproveList() {
       GetApproveList({loanId: this.props.loanId,currentStatus:'approve'})
       .then(res => {
-        // let approveList = res.data.comments;
-        // this.setState({approveList})
+        let approveList = res.data.comments;
+        this.setState({approveList})
       })
     }
 

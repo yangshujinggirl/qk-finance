@@ -14,7 +14,6 @@ class ApproveRecord extends BaseEditForm {
     //初始化数据
     componentDidMount() {
         this.getApproveList();
-        console.log('loanId',this.props.loanId);
         this.fetchList()
     }
     fetchList=()=> {
@@ -41,8 +40,7 @@ class ApproveRecord extends BaseEditForm {
     }
     //提交审批
     onSubmit =(values) => {
-        console.log(this.props.loanId);
-        ApplyAndApproveEdit({ ...values, loanId: this.props.loanId})
+      ApplyAndApproveEdit({ ...values, loanId: this.props.loanId})
       .then(res => {
           YtMessage.success('操作成功');
           this.getApproveList()

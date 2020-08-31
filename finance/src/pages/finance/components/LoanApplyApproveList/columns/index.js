@@ -137,7 +137,7 @@ const columnsApprove = [
             return <>
                 <Link to={`/account/loanApply/edit/${record.loanId}`} className="operate-link-btn">申请放款</Link>
                 <Link to={`/account/loanApprove/edit/${record.loanId}`} className="operate-link-btn">审核</Link>
-                <Link to="/" className="operate-link-btn">查看</Link>
+                {/*<Link to="/" className="operate-link-btn">查看</Link>*/}
             </>
         }
     },
