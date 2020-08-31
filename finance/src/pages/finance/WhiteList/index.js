@@ -31,9 +31,9 @@ class AccountStatement extends React.Component {
 		componentWillMount(){
 			this.fetchLoanList();
 		}
-		onPageChange=(currentPage, pageSize)=> {
+		onPageChange=(pageNow, pageSize)=> {
 			console.log('onPageChange:', currentPage, pageSize);
-			this.state.pagination.pageNow = currentPage;
+			this.state.pagination.pageNow = pageNow;
 			this.fetchLoanList();
 		}
     render() {
