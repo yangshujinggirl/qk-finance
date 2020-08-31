@@ -6,10 +6,11 @@ import CreatModal from './components/CreatModal';
 import AuthModal from './components/AuthModal';
 import {columnsIndex} from './columns';
 import './index.less'
-import {Modal} from 'antd';
+import {Modal, Spin} from 'antd';
 
 const Index = ({...props}) => {
     const [visible, setVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [currentItem, setCurrentItem] = useState({});
     const [totalSize, setTotalSize] = useState(1);
     const [treeData, setTreeData] = useState({});
@@ -26,17 +27,21 @@ const Index = ({...props}) => {
     } = {...param}
     // 角色管理API
     const getRoleLists = (param) => {
+        setLoading(true)
         getRoleList(param).then(res => {
             setTotalSize(res.data.pagination.totalSize)
             setList(res.data.result)
+            setLoading(false)
         })
     }
     // 获取授权数据
     const getPermissionTrees = (roleId) => {
+        setLoading(true)
         getPermissionTree(roleId).then(res => {
             let arr = getTree(res.data)
             setTreeData(arr);
             setTimeout(() => {
+                setLoading(false)
                 setVisible(2);
             }, 500)
         })
@@ -68,7 +73,7 @@ const Index = ({...props}) => {
     }, []);
     //查询
     const search = ({roleName}) => {
-        let p = {...param, roleName,pageNow: 1};
+        let p = {...param, roleName, pageNow: 1};
         setParam(p);
         getRoleLists(p);
     }
@@ -131,24 +136,26 @@ const Index = ({...props}) => {
         setVisible(false);
     }
     return (
-        <div className="account-organization-wrap yt-common-list-pages-wrap">
-            <FilterForm onSubmit={search}/>
-            <div className="handle-common-action">
-                <YtBtn onClick={goCreat}>新增</YtBtn>
+        <Spin spinning={loading}>
+            <div className="account-organization-wrap yt-common-list-pages-wrap">
+                <FilterForm onSubmit={search}/>
+                <div className="handle-common-action">
+                    <YtBtn onClick={goCreat}>新增</YtBtn>
+                </div>
+                <YtTable
+                    columns={columnsIndex}
+                    dataSource={list}
+                    onOperateClick={onOperateClick}/>
+                <YtPagination data={{totalSize, pageNow, pageSize}} onChange={pagination}/>
+                <CreatModal data={currentItem} visible={visible} onOk={onOk} onCancel={onCancel}/>
+                <AuthModal treeData={treeData}
+                           roleid={currentItem.roleId}
+                           defaultSelectedKey={defaultSelectedKeys}
+                           visible={visible}
+                           onOk={onAuthOk}
+                           onCancel={onCancel}/>
             </div>
-            <YtTable
-                columns={columnsIndex}
-                dataSource={list}
-                onOperateClick={onOperateClick}/>
-            <YtPagination data={{totalSize, pageNow, pageSize}} onChange={pagination}/>
-            <CreatModal data={currentItem} visible={visible} onOk={onOk} onCancel={onCancel}/>
-            <AuthModal treeData={treeData}
-                       roleid={currentItem.roleId}
-                       defaultSelectedKey={defaultSelectedKeys}
-                       visible={visible}
-                       onOk={onAuthOk}
-                       onCancel={onCancel}/>
-        </div>
+        </Spin>
     )
 }
 

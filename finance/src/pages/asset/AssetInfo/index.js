@@ -1,4 +1,4 @@
-import {Collapse, Progress, Row, Col, Button} from 'antd';
+import {Collapse, Progress, Row, Col, Button,Spin} from 'antd';
 import {Link} from 'react-router-dom';
 import NP from 'number-precision';
 import moment from 'moment';
@@ -161,7 +161,7 @@ const AssetInfo = ({...props}) => {
                                 <ReceiveGoodsInfo info={receiveInfo}/>
                             </Panel>
                             {
-                                (assetsInfo.applyLoanStatus !== 4) &&
+                                (assetsInfo.applyLoanStatus === 4) &&
                                 <Panel header="回款信息" key="9">
                                     <ReturnedMoneyInfo info={moneyBack}/>
                                 </Panel>

@@ -4,7 +4,6 @@ import {YtMessage} from 'common';
 import {message} from 'antd';
 import {Sessions} from 'utils';
 
-
 let defaultHeader = {
     'Content-Type': 'application/json',
 };

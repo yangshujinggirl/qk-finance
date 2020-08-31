@@ -3,6 +3,7 @@ import FilterForm from './components/FilterForm';
 import {columnsIndex} from './columns';
 import './index.less'
 import {getPayPlanList} from '../../../api/collectionPayment';
+import {Spin} from 'antd';
 
 class AccountStatement extends React.Component {
     state = {
@@ -11,7 +12,8 @@ class AccountStatement extends React.Component {
         loanNo: 1,
         projectName: 1,
         totalSize: 1,
-        list: []
+        list: [],
+        loading: false
     }
 
     //初始化数据
@@ -26,7 +28,8 @@ class AccountStatement extends React.Component {
             pageSize,
             loanNo,
             projectName,
-        } = this.state
+        } = this.state;
+        this.setState({...this.state, loading: true});
         getPayPlanList({
             pageNow,
             pageSize,
@@ -35,7 +38,7 @@ class AccountStatement extends React.Component {
         }).then(res => {
             let list = res.data.result
             let totalSize = res.data.condition.totalSize
-            let p = {...this.state, list, totalSize}
+            let p = {...this.state, list, totalSize, loading: false}
             this.setState(p)
         })
     }
@@ -57,15 +60,17 @@ class AccountStatement extends React.Component {
     }
 
     render() {
-        let {totalSize, pageNow, pageSize, list} = this.state
+        let {totalSize, pageNow, pageSize, list, loading} = this.state
         return (
-            <div className="yt-common-list-pages-wrap">
-                <FilterForm onSubmit={this.search}/>
-                <YtTable
-                    columns={columnsIndex}
-                    dataSource={list}/>
-                <YtPagination data={{totalSize, pageNow, pageSize}} onChange={this.pagination}/>
-            </div>
+            <Spin spinning={loading}>
+                <div className="yt-common-list-pages-wrap">
+                    <FilterForm onSubmit={this.search}/>
+                    <YtTable
+                        columns={columnsIndex}
+                        dataSource={list}/>
+                    <YtPagination data={{totalSize, pageNow, pageSize}} onChange={this.pagination}/>
+                </div>
+            </Spin>
         )
     }
 }

@@ -4,6 +4,7 @@ import {columnsIndex} from './columns';
 import './index.less'
 import {getBankStatement} from '../../../api/collectionPayment';
 import moment from 'moment';
+import {Spin} from 'antd';
 
 class AccountStatement extends React.Component {
     state = {
@@ -21,7 +22,8 @@ class AccountStatement extends React.Component {
             reciprocalAccountNo: '',
         },
         totalSize: 1,
-        list: []
+        list: [],
+        loading: false
     }
 
     //初始化数据
@@ -31,11 +33,16 @@ class AccountStatement extends React.Component {
 
     //银行流水明细
     getBankStatements = () => {
+        this.setState({...this.state, loading: true});
         getBankStatement({...this.state.param}).then(res => {
-            res.data.result.forEach((item, index) => item.key = index+1)//ant table rowkey
+            if (!res.data.result) {
+                this.setState({...this.state, loading: false});
+                return
+            }
+            res.data.result.forEach((item, index) => item.key = index + 1)//ant table rowkey
             let list = res.data.result
             let totalSize = res.data.pagination.totalSize
-            let p = {...this.state, list, totalSize}
+            let p = {...this.state, list, totalSize, loading: false}
             this.setState(p)
         })
     }
@@ -62,17 +69,19 @@ class AccountStatement extends React.Component {
     }
 
     render() {
-        let {totalSize, list} = {...this.state}
+        let {totalSize, list, loading} = {...this.state}
         let {pageNow, pageSize} = {...this.state.param}
         return (
-            <div className="yt-common-list-pages-wrap">
-                <FilterForm onSubmit={this.search}/>
-                <YtTable
-                    scroll={{x: 1300}}
-                    columns={columnsIndex}
-                    dataSource={list}/>
-                <YtPagination data={{totalSize, pageNow, pageSize}} onChange={this.pagination}/>
-            </div>
+            <Spin spinning={loading}>
+                <div className="yt-common-list-pages-wrap">
+                    <FilterForm onSubmit={this.search}/>
+                    <YtTable
+                        scroll={{x: 1300}}
+                        columns={columnsIndex}
+                        dataSource={list}/>
+                    <YtPagination data={{totalSize, pageNow, pageSize}} onChange={this.pagination}/>
+                </div>
+            </Spin>
         )
     }
 }

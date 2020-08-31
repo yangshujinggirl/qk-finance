@@ -10,12 +10,13 @@ import {
     validUser,
     getRelatedUser
 } from '../../../api/platformManage/UserManage.js';
-import {Modal} from 'antd';
+import {Modal, Spin} from 'antd';
 
 import {YtMessage} from 'common';
 
 const Index = ({...props}) => {
     const [visible, setVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [currentItem, setCurrentItem] = useState({});
     const [totalSize, setTotalSize] = useState(1);
     const [relate_totalSize, setRelate_totalSize] = useState(1);
@@ -70,6 +71,7 @@ const Index = ({...props}) => {
     }
     //获取已关联用户
     const getRelatedUsers = (id) => {
+        setLoading(true)
         getRelatedUser(id).then(res => {
             let arr = []
             res.data.roleList.forEach(item => {
@@ -77,6 +79,7 @@ const Index = ({...props}) => {
             })
             setRelatedUser(arr);
             setTimeout(() => {
+                setLoading(false)
                 setVisible(2);
             }, 500)
         })
@@ -124,33 +127,37 @@ const Index = ({...props}) => {
     }
     //用户管理API
     const getUserLists = (param) => {
+        setLoading(true)
         getUserList(param).then(res => {
             setList(res.data.result)
             setTotalSize(res.data.pagination.totalSize)
+            setLoading(false)
         })
     }
     return (
-        <div className="account-organization-wrap yt-common-list-pages-wrap">
-            <FilterForm onSubmit={search}/>
-            <div className="handle-common-action">
-                <YtBtn onClick={goCreat}>新增</YtBtn>
+        <Spin spinning={loading}>
+            <div className="account-organization-wrap yt-common-list-pages-wrap">
+                <FilterForm onSubmit={search}/>
+                <div className="handle-common-action">
+                    <YtBtn onClick={goCreat}>新增</YtBtn>
+                </div>
+                <YtTable
+                    columns={columnsIndex}
+                    dataSource={list}
+                    onOperateClick={onOperateClick}/>
+                <YtPagination data={{totalSize, pageNow, pageSize}}
+                              onChange={pagination}/>
+                <CreatModal data={currentItem}
+                            visible={visible}
+                            onOk={onOk}
+                            onCancel={onCancel}/>
+                <RelateModal data={currentItem}
+                             relatedUser={relatedUser}
+                             visible={visible}
+                             onOk={onRelateOk}
+                             onCancel={onCancel}/>
             </div>
-            <YtTable
-                columns={columnsIndex}
-                dataSource={list}
-                onOperateClick={onOperateClick}/>
-            <YtPagination data={{totalSize, pageNow, pageSize}}
-                          onChange={pagination}/>
-            <CreatModal data={currentItem}
-                        visible={visible}
-                        onOk={onOk}
-                        onCancel={onCancel}/>
-            <RelateModal data={currentItem}
-                         relatedUser={relatedUser}
-                         visible={visible}
-                         onOk={onRelateOk}
-                         onCancel={onCancel}/>
-        </div>
+        </Spin>
     )
 }
 

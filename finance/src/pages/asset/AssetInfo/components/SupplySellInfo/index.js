@@ -1,6 +1,7 @@
 import {Collapse, Progress, Row, Col, Button} from 'antd';
 import {YtCard, YtBaseInfo, YtCollapse} from 'common';
 import SubTitleMod from '../SubTitleMod';
+import moment from 'moment';
 
 const {Panel} = Collapse;
 
@@ -15,7 +16,7 @@ function DeliveryFactoryInfo({...props}) {
                 {key: '甲方地址', value: firstCompanyInfo.companyAddress},
                 {key: '法定代表人', value: firstCompanyInfo.legalPersonName},
                 {key: '联系电话', value: firstCompanyInfo.telephone},
-                {key: '签订时间', value: info.contractSignDate},
+                {key: '签订时间', value: moment(info.contractSignDate).format('YYYY-MM-DD')},
                 {key: '操作人', value: firstCompanyInfo.legalPersonName},
             ]}/>
         </SubTitleMod>
@@ -25,7 +26,7 @@ function DeliveryFactoryInfo({...props}) {
                 {key: '乙方地址', value: secondCompanyInfo.companyAddress},
                 {key: '法定代表人', value: secondCompanyInfo.legalPersonName},
                 {key: '联系电话', value: secondCompanyInfo.telephone},
-                {key: '签订时间', value: info.contractSignDate},
+                {key: '签订时间', value: moment(info.contractSignDate).format('YYYY-MM-DD')},
                 {key: '操作人', value: secondCompanyInfo.legalPersonName},
             ]}/>
         </SubTitleMod>

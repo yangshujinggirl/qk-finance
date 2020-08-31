@@ -15,10 +15,11 @@ class AccountStatement extends React.Component {
         detail: {},
         //核销状态
         writeOffStatusName: {
-            1:'未核销',
-            2:'部分核销',
-            3:'全部核销'
-        }
+            1: '未核销',
+            2: '部分核销',
+            3: '全部核销'
+        },
+        loading: false
     }
 
     //初始化数据
@@ -67,12 +68,12 @@ class AccountStatement extends React.Component {
     }
 
     render() {
-        let {list, detail,writeOffStatusName} = this.state
+        let {list, detail, writeOffStatusName} = this.state
         return (
             <div className="account-statement-info-wrap">
                 <YtCard title="基础信息" bordered={true}>
                     <YtBaseInfo colSpan={12}
-                                dataInfo={ [
+                                dataInfo={[
                                     {key: '流水编号', value: detail.transactionSerialNumber},
                                     {key: '回款客户', value: detail.accountName},
                                     {key: '回款银行', value: detail.bankName},
