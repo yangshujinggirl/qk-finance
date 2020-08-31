@@ -42,7 +42,7 @@ function withSubscription(handleType,Mod) {
       GetFinanceList(param)
       .then((res)=> {
         const { result, pagination } =res.data;
-        result.map((el,index)=>{ index++; el.key = el.id});
+        result.map((el,index)=>{ index++; el.key = index});
         this.setState({ data: result, pagination: pagination })
       })
     }
@@ -148,7 +148,7 @@ function withSubscription(handleType,Mod) {
               dataSource={data}/>
             <YtPagination data={pagination} onChange={this.onChange}/>
             <CreatModal
-              paramsVal={currentItem} 
+              paramsVal={currentItem}
               visible={visible}
               onOk={this.onOk}
               onCancel={this.onCancel}

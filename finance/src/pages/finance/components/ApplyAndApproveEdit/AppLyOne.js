@@ -118,15 +118,19 @@ class ApplyOne extends BaseEditForm {
       const values = await this.formRef.current.validateFields();
       let { loanId,tabStatus } =this.props;
       let { basicInfo } =this.state;
+      this.setState({ submitLoading:true })
       let params = {
         ...values,
         loanId,
-        tabStatus,
+        // tabStatus,
         organizationalCode:basicInfo.organizationalCode,
       }
       GetSaveElement(params)
       .then((res)=> {
-        this.props.upDateKey('baseInfo')
+        this.setState({ submitLoading:false });
+        let { loanId } =res.data;
+        loanId = '12333';
+        this.props.upDateKey('payInfo',loanId)
       })
     } catch (errorInfo) {
       console.log("Failed:", errorInfo);
@@ -135,7 +139,7 @@ class ApplyOne extends BaseEditForm {
 
   render() {
     const { handleStatus, handleType } =this.props;
-    const { basicInfo, companyList, packageList, packageId, jgBank } =this.state;
+    const { submitLoading, basicInfo, companyList, packageList, packageId, jgBank } =this.state;
     let isCanEdit = handleType=='2'||handleStatus=="view";
     return(
       <div>
@@ -355,7 +359,7 @@ class ApplyOne extends BaseEditForm {
           {
             (handleType=='1'&&handleStatus!='view')&&
             <div className="edit-btn-wrap">
-              <YtBtn size="free" onClick={this.handleSubmit}>确认并下一步</YtBtn>
+              <YtBtn size="free" onClick={this.handleSubmit} loading={submitLoading}>确认并下一步</YtBtn>
             </div>
           }
         </Form>

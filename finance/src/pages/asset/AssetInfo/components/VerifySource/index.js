@@ -53,17 +53,13 @@ function VerifySource({...props}) {
                   <div className="verd-row box-flex">
                     <div className="verdr-lf"><img src={iconImg7}/></div>
                     <div className="verdr-rf">
-                      <Button type="primary" ghost  className="status-default-btn">采购付款数据</Button>
-                      <Button type="primary" ghost disabled className="status-default-btn">收货物流数据</Button>
+                      <Button type="primary" ghost  className="status-default-btn">二级回款数据</Button>
                     </div>
                   </div>
                   <div className="verd-row box-flex">
                     <div className="verdr-lf"><img src={iconImg0}/></div>
                     <div className="verdr-rf">
-                      <Button type="primary" ghost className="status-default-btn">一级采购订单</Button>
-                      <Button type="primary" ghost className="status-default-btn">收款数据</Button>
-                      <Button type="primary" ghost className="status-default-btn">发票信息</Button>
-                      <Button type="primary" ghost className="status-default-btn">发货物流数据</Button>
+                      <Button type="primary" ghost className="status-default-btn">银行流水数据</Button>
                     </div>
                   </div>
                  </div>

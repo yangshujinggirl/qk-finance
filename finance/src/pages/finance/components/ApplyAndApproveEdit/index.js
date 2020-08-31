@@ -17,7 +17,8 @@ function withSubscription(handleType, pageType, Mod){
     state = {
       activeKey:'baseInfo',
       isEdit:this.props.match.params.id?true:false,
-      tabStatus:'baseInfo'
+      tabStatus:'baseInfo',
+      loanId:null
     }
     componentDidMount(){
       this.fetchProcess()
@@ -29,16 +30,20 @@ function withSubscription(handleType, pageType, Mod){
         this.setState({ tabStatus:tabStatus });
       })
     }
-    upDateKey=(value)=> {
+    upDateKey=(value,loanId)=> {
       this.setState({ activeKey:value });
+      if(loanId) {
+        this.setState({ loanId });
+      }
       this.fetchProcess();
     }
     callback=(key)=> {
       this.setState({ activeKey:key });
     }
     render() {
-      const { params } = this.props.match;
-      let { activeKey,tabStatus } =this.state;
+      let { params } = this.props.match;
+      let { activeKey, tabStatus, loanId } =this.state;
+      loanId = params.id?params.id:loanId;
       let handleStatus =()=> {
          if(params.id) {
            if(pageType == 'view') {
@@ -53,8 +58,8 @@ function withSubscription(handleType, pageType, Mod){
 
       return(
         <div className="finance-apply-wrap yt-common-bg-pages-wrap">
-          <Tabs defaultActiveKey={activeKey} onChange={this.callback}>
-            <TabPane tab="合同要素" key="baseInfo" forceRender={false}>
+          <Tabs activeKey={activeKey} onChange={this.callback}>
+            <TabPane tab="合同要素" key="baseInfo" >
             {
               activeKey=='baseInfo'&&
               <AppLyOne
@@ -62,10 +67,10 @@ function withSubscription(handleType, pageType, Mod){
                 tabStatus={tabStatus}
                 handleType={handleType}
                 pageType={pageType}
-                loanId={params.id} handleStatus={handleStatus()}/>
+                loanId={loanId} handleStatus={handleStatus()}/>
             }
             </TabPane>
-            <TabPane tab="还款预算" key="payInfo" forceRender={false} disabled={tabStatusMap[tabStatus]<2}>
+            <TabPane tab="还款预算" key="payInfo"  disabled={tabStatusMap[tabStatus]<1}>
             {
               activeKey=='payInfo'&&
               <AppLyTwo
@@ -73,10 +78,10 @@ function withSubscription(handleType, pageType, Mod){
                 tabStatus={tabStatus}
                 handleType={handleType}
                 pageType={pageType}
-                loanId={params.id} handleStatus={handleStatus()}/>
+                loanId={loanId} handleStatus={handleStatus()}/>
             }
             </TabPane>
-            <TabPane tab="合同预览" key="contract" forceRender={false} disabled={tabStatusMap[tabStatus] <= 2}>
+            <TabPane tab="合同预览" key="contract"  disabled={tabStatusMap[tabStatus] <= 2}>
             {
               activeKey == 'contract'&&
               <AppLyThr
@@ -84,14 +89,14 @@ function withSubscription(handleType, pageType, Mod){
                 tabStatus={tabStatus}
                 handleType={handleType}
                 pageType={pageType}
-                loanId={params.id}
+                loanId={loanId}
                 handleStatus={handleStatus()}/>
             }
             </TabPane>
             {
               Mod&&
-              <TabPane tab="审批记录" key="10"  forceRender={false}>
-                <Mod {...this.props} loanId={params.id} handleStatus={handleStatus()}/>
+              <TabPane tab="审批记录" key="10">
+                <Mod {...this.props} loanId={loanId} handleStatus={handleStatus()}/>
               </TabPane>
             }
           </Tabs>

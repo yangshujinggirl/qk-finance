@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { approveStatusOption } from '../option';
 
 const columnsList =(handleType, pagination)=>{
   return [
@@ -43,8 +44,17 @@ const columnsList =(handleType, pagination)=>{
 						}
           },
           {
-          title: '审核状态',
-          dataIndex: 'loanStatus',
+            title: '审核状态',
+            dataIndex: 'loanStatus',
+            render:(text,record,index)=> {
+              return <>
+                {
+                  approveStatusOption.map((el)=>(
+                    <>{el.key==text&&el.value}</>
+                  ))
+                }
+              </>
+            }
           },
           {
             title: '操作',
@@ -57,7 +67,10 @@ const columnsList =(handleType, pagination)=>{
                 handleType=="1"?
                 <>
                   <Link to={'/account/financeApply/info/'+record.loanId} className="operate-link-btn">查看</Link>
-                  <Link to={'/account/financeApply/edit/'+record.loanId} className="operate-link-btn">编辑</Link>
+                  {
+                    record.loanStatus!=1&&
+                    <Link to={'/account/financeApply/edit/'+record.loanId} className="operate-link-btn">编辑</Link>
+                  }
                   <span className="operate-link-btn" onClick={()=>record.onOperateClick('download')}>项目资料下载</span>
                 </>
                 :

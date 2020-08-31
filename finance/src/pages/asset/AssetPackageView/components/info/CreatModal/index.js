@@ -33,7 +33,9 @@ const CreatModal=({...props})=>{
   };
   const fetchList=(values)=> {
     let params = {
-      industryTypeCode, packetId:info.packetId,
+      industryTypeCode,
+      enterpriseId:info.enterpriseId,
+      packetId:info.packetId,
       pageNow:dataPag.pageNow,
       pageSize:dataPag.pageSize,
       ...values
@@ -86,26 +88,6 @@ const CreatModal=({...props})=>{
         okButtonProps={{loading,disabled:selectedRows.length==0}}>
         <Form form={form} {...formItemLayout}>
           <Row gutter={24}>
-            <Col span={12}>
-              <Form.Item name="name1" label="资产笔数上限">
-                <Input addonAfter="笔" autoComplete="off"/>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="name2" label="资产笔数下限">
-                <Input addonAfter="笔" autoComplete="off"/>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="amount1" label="资产包金额上限">
-                <Input addonAfter="元" autoComplete="off"/>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="amount2" label="资产包金额下限">
-                <Input addonAfter="元" autoComplete="off"/>
-              </Form.Item>
-            </Col>
             <Col span={12}>
               <Form.Item name="zq1" label="资产最长账期">
                 <Input addonAfter="天" autoComplete="off"/>

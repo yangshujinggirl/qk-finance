@@ -129,7 +129,7 @@ const AssetInfo = ({...props}) => {
                 </div>
                 <AssetStepMod info={assetsInfo}/>
                 <div className="aio-bottom-part">
-                    <VerifySource/>
+                    <VerifySource  />
                     <YtCollapse defaultActiveKey={['1']} expandIconPosition="right">
                         <>
                             <Panel header="区块信息" key="1">
@@ -145,11 +145,13 @@ const AssetInfo = ({...props}) => {
                                 <SalesInfo info={saleInfo}/>
                             </Panel>
                             {/*<Panel header="进货采购信息" key="5">
-                <PurchaseInfo info={blockInfo}/>
-              </Panel>*/}
+                              <PurchaseInfo info={blockInfo}/>
+                              </Panel>*/
+                            }
                             {/*<Panel header="物流发货信息（厂方直发）" key="6">
-                <DeliveryFactoryInfo info={blockInfo}/>
-              </Panel>*/}
+                              <DeliveryFactoryInfo info={blockInfo}/>
+                              </Panel>*/
+                            }
                             {
                                 (saleInfo.shipperType === 1) &&
                                 <Panel header="物流发货信息（仓库直发）" key="7">

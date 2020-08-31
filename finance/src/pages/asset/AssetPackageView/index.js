@@ -9,18 +9,43 @@ import CashChart from './components/CashChart';
 import FilterForm from './components/FilterForm';
 import ChangeRankMod from './components/ChangeRankMod';
 import {statusOption} from './components/options';
-import { GetListApi, GetTotalApi, GetAmountChangeChartApi } from 'api/asset/AssetPackageView';
+import { GetPayMentApi, GetListApi, GetTotalApi, GetAmountChangeChartApi } from 'api/asset/AssetPackageView';
 import './index.less';
 
 const OperateWorkbench=({...props})=>{
     const [totalData,setTotalData] = useState({});
     const [dataPag,setDataPag] =useState({pageSize:5,pageNow:1,totalSize:0});
+    const [payMentList,setPayMentList] = useState([]);
     const [list,setList] = useState([]);
     const [inputValues,setInputValues] = useState({});
     const fetchTotal=()=>{
       GetTotalApi()
       .then((res)=>{
         setTotalData(res.data)
+      })
+    }
+    const fetchPayMent=()=>{
+      GetPayMentApi()
+      .then((res)=>{
+        const { data } =res;
+        let arr=[
+          {
+            item:'一年以上',
+            percent:data.yearMoreCount,
+          },{
+            item:'180-365天',
+            percent:data.yearCount,
+          },{
+            item:'90-180天',
+            percent:data.halfYearCount,
+          },{
+            item:'30-90天',
+            percent:data.ninetyCount,
+          },{
+            item:'30天以内',
+            percent:data.thirtyCount,
+          }]
+          setPayMentList(arr);
       })
     }
     const fetchList=(values)=>{
@@ -46,10 +71,7 @@ const OperateWorkbench=({...props})=>{
       setInputValues(params);
       fetchList(params)
     };
-    useEffect(()=>{
-      fetchTotal();
-      fetchList();
-    },[])
+    useEffect(()=>{ fetchTotal(); fetchList(); fetchPayMent() },[])
 
     return(
       <div className="asset-package-view-pages-wrap">
@@ -88,7 +110,7 @@ const OperateWorkbench=({...props})=>{
           </div>
           <div className="module-right-wrap">
             <div className="part-same-shadow">
-              <AssetDistributeChart className="big-chart" data={[]}/>
+              <AssetDistributeChart className="big-chart" data={payMentList}/>
             </div>
           </div>
         </div>

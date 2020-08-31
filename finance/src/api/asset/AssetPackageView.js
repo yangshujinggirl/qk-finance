@@ -12,3 +12,7 @@ export function GetAmountChangeChartApi(values){
 export function GetPackegChangeApi(values){
     return Req.post('/assets/packet/findTop5List',{...values})
 }
+//资产账期
+export function GetPayMentApi(values){
+    return Req.post('/assets/package/avgRealDate/statistics',{...values})
+}

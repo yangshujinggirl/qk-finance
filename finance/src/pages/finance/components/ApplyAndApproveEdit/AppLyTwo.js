@@ -23,7 +23,8 @@ class ApplyOne extends BaseEditForm {
   fetchInfo=()=>{
     GetPayInfo({ currentStatus:this.props.currentStatus, loanId: this.props.loanId })
     .then((res)=> {
-      let { obj, debtors } =res.data;
+      let { obj, debtors, tranferAmount, tranferCount } =res.data;
+      obj = {...obj, tranferAmount, tranferCount };
       this.setState({ info:obj, debtors:debtors });
       this.formRef.current.setFieldsValue(obj);
       this.fetchReceivables(obj);
@@ -80,7 +81,6 @@ class ApplyOne extends BaseEditForm {
   onSubmit = async (values) => {
     try {
       const values = await this.formRef.current.validateFields();
-      console.log(values);
       let { startDate, finishDate, loanDate, ...val } =values;
       val = {
         ...val,
@@ -90,7 +90,7 @@ class ApplyOne extends BaseEditForm {
       }
       GetSaveElement(val)
       .then((res)=> {
-        this.props.upDateKey('payInfo')
+        this.props.upDateKey('contract')
       })
     } catch (errorInfo) {
       console.log("Failed:", errorInfo);
@@ -238,7 +238,7 @@ class ApplyOne extends BaseEditForm {
           <HeadFormCard title="转让应收账款">
               <>
                 <div className="box-flex receivable-row">
-                  <div>应收帐款条数<span className="pointerSty">200条</span>，应收帐款金额<span className="pointerSty">32000</span></div>
+                  <div>应收帐款条数<span className="pointerSty">{info.tranferCount}条</span>，应收帐款金额<span className="pointerSty">{info.tranferAmount}</span></div>
                   { (handleType=='1'&&handleStatus!='view')&&
                       <YtBtn onClick={this.goChange}>选择资产</YtBtn>
                   }
