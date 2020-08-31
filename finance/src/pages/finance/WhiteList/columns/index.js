@@ -1,5 +1,6 @@
 import {Link} from 'react-router-dom';
-import { useTypeOption, approveStatusOption, useStatusOption } from '../option';
+import {useTypeOption, approveStatusOption, useStatusOption} from '../option';
+import moment from 'moment';
 
 
 const columnsIndex = [
@@ -32,42 +33,42 @@ const columnsIndex = [
         title: '用途类型',
         dataIndex: 'accountUsage',
         width: 100,
-        render:(text,record,index)=> {
-          return <>
-            {
-              useTypeOption.map((el)=> (
-                <>{el.key == record.accountUsage&&el.value}</>
-              ))
-            }
-          </>
+        render: (text, record, index) => {
+            return <>
+                {
+                    useTypeOption.map((el) => (
+                        <>{el.key == record.accountUsage && el.value}</>
+                    ))
+                }
+            </>
         }
     },
     {
         title: '帐户状态',
         dataIndex: 'accountStatus',
         width: 200,
-        render:(text,record,index)=> {
-          return <>
-            {
-              useStatusOption.map((el)=> (
-                <>{el.key == record.accountStatus&&el.value}</>
-              ))
-            }
-          </>
+        render: (text, record, index) => {
+            return <>
+                {
+                    useStatusOption.map((el) => (
+                        <>{el.key == record.accountStatus && el.value}</>
+                    ))
+                }
+            </>
         }
     },
     {
         title: '审批状态',
         dataIndex: 'reviewStatus',
         width: 200,
-        render:(text,record,index)=> {
-          return <>
-            {
-              approveStatusOption.map((el)=> (
-                <>{el.key == record.reviewStatus&&el.value}</>
-              ))
-            }
-          </>
+        render: (text, record, index) => {
+            return <>
+                {
+                    approveStatusOption.map((el) => (
+                        <>{el.key == record.reviewStatus && el.value}</>
+                    ))
+                }
+            </>
         }
     },
     {
@@ -79,6 +80,9 @@ const columnsIndex = [
         title: '审批时间',
         dataIndex: 'reviewTime',
         width: 100,
+        render: (text, record, index) => {
+            return moment(text).format('YYYY-MM-DD')
+        }
     },
     {
         title: '操作',
