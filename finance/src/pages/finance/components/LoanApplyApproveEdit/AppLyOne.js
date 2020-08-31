@@ -87,7 +87,7 @@ class ApplyOne extends BaseEditForm {
                         </Row>
                     </HeadFormCard>
                     <HeadFormCard title="资金收付计划">
-                        <YtTable columns={columnsPlan} data={payPlanInfoList}/>
+                        <YtTable columns={columnsPlan} dataSource={payPlanInfoList}/>
                     </HeadFormCard>
                     <HeadFormCard title="放款信息【监管户】">
                         <Row>
