@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
 import moment from 'moment';
-import {utils}
+import CommonUtils from '../../../../utils/CommonUtils'
+
 // 1-未回款待还，2-已回款结清 3-部分待还
 const typeName = {
     1: '未回款待还', 2: '已回款结清', 3: '部分待还'
@@ -53,6 +54,7 @@ const columnsIndex = [
     {
         title: '本金（万元）',
         dataIndex: 'payPrincipalAmount',
+        render: (text, record, index) => CommonUtils.formatAmount(text)
     },
     {
         title: '操作',
@@ -80,16 +82,19 @@ const columnsInfo = [
         }
     },
     {
-        title: '回款金额',
+        title: '回款金额（万元）',
         dataIndex: 'payAmount',
+        render: (text, record, index) => CommonUtils.formatAmount(text)
     },
     {
-        title: '本金回款',
+        title: '本金回款（万元）',
         dataIndex: 'payPrincipalAmount',
+        render: (text, record, index) => CommonUtils.formatAmount(text)
     },
     {
-        title: '利息回款',
+        title: '利息回款（万元）',
         dataIndex: 'payInterest',
+        render: (text, record, index) => CommonUtils.formatAmount(text)
     },
     {
         title: '关联流水',

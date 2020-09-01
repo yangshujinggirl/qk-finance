@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom';
+import CommonUtils from '../../../../utils/CommonUtils'
 
 const columns = [
     {
@@ -6,12 +7,14 @@ const columns = [
         dataIndex: 'companyName',
     },
     {
-        title: '放款总额',
+        title: '放款总额（万元）',
         dataIndex: 'loanAmount',
+        render: (text, record, index) => CommonUtils.formatAmount(text)
     },
     {
         title: '应收回款额',
-        dataIndex: 'payBackAmount',
+        dataIndex: 'payBackAmount（万元）',
+        render: (text, record, index) => CommonUtils.formatAmount(text)
     },
     // {
     //     title: '操作',
