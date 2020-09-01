@@ -69,7 +69,8 @@ const OperateWorkbench=({...props})=>{
     };
     const onSubmit = params => {
       setInputValues(params);
-      fetchList(params)
+      setDataPag({...dataPag, pageNow: 1})
+      fetchList({...params,pageNow: 1})
     };
     useEffect(()=>{ fetchTotal(); fetchList(); fetchPayMent() },[])
 
