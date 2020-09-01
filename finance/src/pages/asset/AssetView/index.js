@@ -11,6 +11,7 @@ import FundPoolChart from '../../components/FundPoolChart';
 import AssetScaleCharts from './components/AssetScaleCharts';
 import { YtBreadcrumbName, YtTable, YtCard } from 'common';
 import {subCrumbOptions} from '../subCrumbOptions';
+import { CommonUtils } from 'utils';
 import { GetTotalApi,  GetPaymentApi } from 'api/asset/AssetView';
 import { GetAssetRiseApi } from 'api/finance/FinanceCompanyView';
 
@@ -134,7 +135,7 @@ const Index=({...props})=>{
           <ViewCardPane
             className="view-diy"
             label="累计资产总额(万元)"
-            num={totalData.assetsTotal}/>
+            num={CommonUtils.formatAmount(totalData.assetsTotal)}/>
           <ViewCardPane
             className="view-diy"
             label="累计融资总数(笔)"
@@ -142,7 +143,7 @@ const Index=({...props})=>{
           <ViewCardPane
             className="view-diy"
             label="当前融资总额(万元)"
-            num={totalData.assetsLoanTotal}/>
+            num={CommonUtils.formatAmount(totalData.assetsLoanTotal)}/>
           <ViewCardPane
             className="view-diy"
             label="整体融资比(%)"
