@@ -80,11 +80,11 @@ const AssetInfo = ({...props}) => {
                     <div className="box-flex aiom-bottom">
                         <div className="info-im">
                             <p className="label-name">资产价值(万元)</p>
-                            <p className="label-value">{assetsInfo.orderAmount}万</p>
+                            <p className="label-value">{CommonUtils.formatAmount(assetsInfo.orderAmount)}万</p>
                         </div>
                         <div className="info-im">
                             <p className="label-name">资产账期(天)</p>
-                            <p className="label-value">{assetsInfo.realDate}</p>
+                            <p className="label-value">{assetsInfo.expectedDate}</p>
                         </div>
                         <div className="info-im">
                             <p className="label-name">剩余账期(天)</p>

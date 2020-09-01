@@ -6,6 +6,7 @@ import ViewCardPane from '../../../components/ViewCardPane';
 import FilterForm from './components/FilterForm';
 import CreatModal from './components/CreatModal';
 import {columnsList} from './columns';
+import { CommonUtils } from 'utils';
 import './index.less'
 import {GetProFileList, GetStatisticalData, GetFinanceList} from 'api/finance/FinanceManagement';
 import {useState, useEffect} from 'react';
@@ -116,7 +117,7 @@ function withSubscription(handleType, Mod) {
                         </ViewCardPane>
                         <ViewCardPane
                             label="累计申请融资金额(万元)"
-                            num={summary.total2}>
+                            num={CommonUtils.formatAmount(summary.total2)}>
                             <div className="box-flex">
                                 <YtStatistic value={summary.w2} type="up">周同比</YtStatistic>
                                 <YtStatistic value={summary.d2} type="down">日环比</YtStatistic>
@@ -134,7 +135,7 @@ function withSubscription(handleType, Mod) {
                         </ViewCardPane>
                         <ViewCardPane
                             label="已审核融资金额(万元)"
-                            num={summary.total4}>
+                            num={CommonUtils.formatAmount(summary.total4)}>
                             <div className="box-flex">
                                 <YtStatistic value={summary.w4} type="up">周同比</YtStatistic>
                                 <YtStatistic value={summary.d4} type="down">日环比</YtStatistic>

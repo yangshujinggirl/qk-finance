@@ -11,7 +11,6 @@ let defaultHeader = {
 function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInterceptors = true}) {
     let Authorization = Sessions.get('token') ? `${Sessions.get('tokenType')} ${Sessions.get('token')}` : null;
     console.log('Authorization', Authorization)
-    // console.log('headers', headers)
     headers = {
         ...headers,
         Authorization
@@ -67,4 +66,5 @@ function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInt
 
 const Req = new request({baseURL: '/admin/ytFinance'});
 const BlockReq = new request({baseURL: '/admin/blockFinance'});
-export { Req,BlockReq }
+const ChainReq = new request({baseURL: '/admin/ytChain'});
+export { Req,BlockReq,ChainReq }

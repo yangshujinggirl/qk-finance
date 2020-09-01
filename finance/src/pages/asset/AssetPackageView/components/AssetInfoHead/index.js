@@ -1,4 +1,5 @@
 import { YtBtn } from 'common';
+import { CommonUtils } from 'utils';
 import { statusOption } from '../options';
 import './index.less';
 
@@ -25,7 +26,7 @@ function AssetInfoHead({...props}) {
               </div>
               <div className="box-flex data-info">
                 <div className="info-im">
-                  <p className="label-value">{data.assetTotal}万</p>
+                  <p className="label-value">{CommonUtils.formatAmount(data.assetTotal)}万</p>
                   <p className="label-name">资产包含金额</p>
                 </div>
                 <div className="info-im">
@@ -41,11 +42,11 @@ function AssetInfoHead({...props}) {
                   <p className="label-name">平均账期</p>
                 </div>
                 <div className="info-im">
-                  <p className="label-value">{data.avgAsset}元</p>
+                  <p className="label-value">{CommonUtils.formatAmount(data.avgAsset)}元</p>
                   <p className="label-name">平均资产金额</p>
                 </div>
                 <div className="info-im">
-                  <p className="label-value">{data.maxAsset}</p>
+                  <p className="label-value">{CommonUtils.formatAmount(data.maxAsset)}</p>
                   <p className="label-name">单笔最高资产金额</p>
                 </div>
               </div>
