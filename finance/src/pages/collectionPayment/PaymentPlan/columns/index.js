@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import moment from 'moment';
-
+import {utils}
 // 1-未回款待还，2-已回款结清 3-部分待还
 const typeName = {
     1: '未回款待还', 2: '已回款结清', 3: '部分待还'
@@ -51,7 +51,7 @@ const columnsIndex = [
         }
     },
     {
-        title: '本金',
+        title: '本金（万元）',
         dataIndex: 'payPrincipalAmount',
     },
     {

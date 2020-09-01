@@ -116,7 +116,7 @@ const columnsInfo = [
         dataIndex: 'zwf',
     },
     {
-        title: '核销本金',
+        title: '核销本金（万元）',
         dataIndex: 'pay',
     },
     {
