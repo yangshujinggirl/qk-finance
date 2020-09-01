@@ -1,5 +1,6 @@
 import {Link} from 'react-router-dom';
 import moment from 'moment';
+import CommonUtils from '../../../../utils/CommonUtils'
 
 const columnsIndex = [
     {
@@ -116,16 +117,19 @@ const columnsInfo = [
         dataIndex: 'zwf',
     },
     {
-        title: '核销本金',
+        title: '核销本金（万元）',
         dataIndex: 'pay',
+        render: (text, record, index) => CommonUtils.formatAmount(text)
     },
     {
-        title: '核销利息',
+        title: '核销利息（万元）',
         dataIndex: 'paycode',
+        render: (text, record, index) => CommonUtils.formatAmount(text)
     },
     {
-        title: '核销金额',
+        title: '核销金额（万元）',
         dataIndex: 'writeOffAmount',
+        render: (text, record, index) => CommonUtils.formatAmount(text)
     },
 ];
 
