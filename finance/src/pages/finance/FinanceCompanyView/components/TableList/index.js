@@ -31,7 +31,8 @@ const Index=({...props})=> {
   }
   const onSubmit = params => {
     setInputValues(params);
-    fetchList(params)
+    setDataPag({...dataPag, pageNow: 1})
+    fetchList({...params,pageNow: 1})
   };
   const changePage = (pageNow, pageSize) => {
     fetchList({pageNow, pageSize})

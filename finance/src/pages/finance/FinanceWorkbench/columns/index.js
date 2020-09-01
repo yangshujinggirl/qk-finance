@@ -13,13 +13,13 @@ const columns = [
         title: '应收回款额',
         dataIndex: 'payBackAmount',
     },
-    {
-        title: '操作',
-        dataIndex: 'action',
-        render: (text, record, index) => {
-            return <Link to="/account/asset/financeCompany/view/9">详情</Link>
-        }
-    },
+    // {
+    //     title: '操作',
+    //     dataIndex: 'action',
+    //     render: (text, record, index) => {
+    //         return <Link to="/account/asset/financeCompany/view/9">详情</Link>
+    //     }
+    // },
 ];
 // "warningType": "融资审核",
 //     "warningMsg": "未通过",
@@ -33,12 +33,12 @@ export const management = [
         title: '预警时间',
         dataIndex: 'warningDate',
     },
-    {
-        title: '操作',
-        dataIndex: 'action',
-        render: (text, record, index) => {
-            return <Link to="/account/asset/financeCompany/view/9">详情</Link>
-        }
-    },
+    // {
+    //     title: '操作',
+    //     dataIndex: 'action',
+    //     render: (text, record, index) => {
+    //         return <Link to="/account/asset/financeCompany/view/9">详情</Link>
+    //     }
+    // },
 ];
 export default columns;

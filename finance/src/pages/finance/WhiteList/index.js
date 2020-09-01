@@ -10,40 +10,44 @@ class AccountStatement extends React.Component {
         dataPag: {
             pageNow: 1,
             pageSize: 10,
-            totalSize:0
+            totalSize: 0
         },
-        inputValues:{}
+        inputValues: {}
     }
+
     componentWillMount() {
         this.fetchLoanList();
     }
+
     fetchLoanList = () => {
-      const { dataPag,inputValues } =this.state;
-      let params = {
-        pageNow:dataPag.pageNow,
-        pageSize:dataPag.pageSize,
-        ...inputValues,
-      }
+        const {dataPag, inputValues} = this.state;
+        let params = {
+            pageNow: dataPag.pageNow,
+            pageSize: dataPag.pageSize,
+            ...inputValues,
+        }
         GetWhiteList(params)
             .then((res) => {
-              let { pageNow, totalSize, list } =res.data;
-                this.setState({ data:list, dataPag:{ pageSize:10,totalSize, pageNow:pageNow?pageNow:1 }})
+                let {pageNow, totalSize, list} = res.data;
+                this.setState({data: list, dataPag: {...this.state.dataPag, totalSize}})
             });
     }
     onPageChange = (pageNow) => {
-        this.setState({ pageNow },()=>{
-          this.fetchLoanList()
+        let dataPag = {...this.state.dataPag, pageNow}
+        this.setState({...this.state, dataPag}, () => {
+            this.fetchLoanList()
         })
     }
     //查询
     search = (param) => {
-        this.setState({inputValues:param}, () => {
+        let dataPag = {...this.state.dataPag, pageNow: 1}
+        this.setState({inputValues: param, dataPag}, () => {
             this.fetchLoanList();
         });
     }
 
     render() {
-        let { dataPag, data} = this.state
+        let {dataPag, data} = this.state
         return (
             <div className="yt-common-list-pages-wrap">
                 <FilterForm onSubmit={this.search}/>
