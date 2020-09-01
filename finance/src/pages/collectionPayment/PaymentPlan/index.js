@@ -44,7 +44,7 @@ class AccountStatement extends React.Component {
     }
     //查询
     search = ({loanNo, projectName}) => {
-        let p = {...this.state, loanNo, projectName}
+        let p = {...this.state, loanNo, projectName, pageNow: 1}
         this.setState(p, () => {
             this.getPayPlanInfo();
         })

@@ -54,7 +54,7 @@ class AccountStatement extends React.Component {
             values.endDate = moment(endDate).format('YYYY-MM-DD');
             delete values.time;//删除多余参数
         }
-        let param = {...this.state.param, ...values}
+        let param = {...this.state.param, ...values, pageNow: 1}
         let p = {...this.state, param}
         this.setState(p, () => {
             this.getBankStatements();
