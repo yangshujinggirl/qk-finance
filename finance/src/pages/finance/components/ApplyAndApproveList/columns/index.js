@@ -1,5 +1,6 @@
 import {Link} from 'react-router-dom';
 import {approveStatusOption} from '../option';
+import CommonUtils from '../../../../../utils/CommonUtils'
 
 const columnsList = (handleType, pagination) => {
     return [
@@ -31,10 +32,12 @@ const columnsList = (handleType, pagination) => {
         {
             title: '资产包金额（万元）',
             dataIndex: 'packageAmount',
+            render: (text, record, index) => CommonUtils.formatAmount(text)
         },
         {
             title: '融资金额（万元）',
             dataIndex: 'creditAmount',
+            render: (text, record, index) => CommonUtils.formatAmount(text)
         },
         {
             title: '年利率',
@@ -64,34 +67,39 @@ const columnsList = (handleType, pagination) => {
             dataIndex: '操作',
             width: 200,
             fixed: 'right',
-            render:(text,record,index)=>{
-              return <>
-              {
-                handleType=="1"?
-                <>
-                  <Link to={'/account/financeApply/info/'+record.loanId} className="operate-link-btn">查看</Link>
-                  {
-                    (record.loanStatus==0||record.loanStatus==2)&&
-                    <Link to={'/account/financeApply/edit/'+record.loanId} className="operate-link-btn">编辑</Link>
-                  }
-                  {
-                    record.loanStatus!=0&&
-                    <span className="operate-link-btn" onClick={()=>record.onOperateClick('download')}>项目资料下载</span>
-                  }
-                </>
-                :
-                  <>
-                  {
-                    record.loanStatus==1&&
-                    <Link to={`/account/financeApprove/edit/${record.loanId}`} className="operate-link-btn">审核</Link>
-                  }
-                    <Link to={`/account/financeApprove/info/${record.loanId}`} className="operate-link-btn">查看</Link>
-                  </>
-                }
+            render: (text, record, index) => {
+                return <>
+                    {
+                        handleType == "1" ?
+                            <>
+                                <Link to={'/account/financeApply/info/' + record.loanId}
+                                      className="operate-link-btn">查看</Link>
+                                {
+                                    (record.loanStatus == 0 || record.loanStatus == 2) &&
+                                    <Link to={'/account/financeApply/edit/' + record.loanId}
+                                          className="operate-link-btn">编辑</Link>
+                                }
+                                {
+                                    record.loanStatus != 0 &&
+                                    <span className="operate-link-btn"
+                                          onClick={() => record.onOperateClick('download')}>项目资料下载</span>
+                                }
+                            </>
+                            :
+                            <>
+                                {
+                                    record.loanStatus == 1 &&
+                                    <Link to={`/account/financeApprove/edit/${record.loanId}`}
+                                          className="operate-link-btn">审核</Link>
+                                }
+                                <Link to={`/account/financeApprove/info/${record.loanId}`}
+                                      className="operate-link-btn">查看</Link>
+                            </>
+                    }
                 </>
             }
         },
     ];
 }
 
-export { columnsList };
+export {columnsList};

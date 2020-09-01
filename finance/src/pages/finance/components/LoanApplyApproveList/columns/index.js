@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom';
+import CommonUtils from '../../../../../utils/CommonUtils'
 
 const columnsApply = [
     {
@@ -28,6 +29,8 @@ const columnsApply = [
     {
         title: '资产金额（万元）',
         dataIndex: 'assetAmount',
+        render: (text, record, index) => CommonUtils.formatAmount(text)
+
     },
     {
         title: '资产包编号',
@@ -36,6 +39,8 @@ const columnsApply = [
     {
         title: '授信金额（万元）',
         dataIndex: 'creditAmount',
+        render: (text, record, index) => CommonUtils.formatAmount(text)
+
     },
     {
         title: '融资利率',
@@ -99,6 +104,7 @@ const columnsApprove = [
     {
         title: '资产金额（万元）',
         dataIndex: 'assetAmount',
+        render: (text, record, index) => CommonUtils.formatAmount(text)
     },
     {
         title: '资产包编号',
@@ -107,6 +113,7 @@ const columnsApprove = [
     {
         title: '授信金额（万元）',
         dataIndex: 'creditAmount',
+        render: (text, record, index) => CommonUtils.formatAmount(text)
     },
     {
         title: '融资利率',
