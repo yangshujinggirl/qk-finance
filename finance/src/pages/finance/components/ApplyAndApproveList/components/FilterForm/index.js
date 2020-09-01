@@ -20,7 +20,7 @@ class FilterForm extends BaseFilter{
         className="yt-condition-form">
         <Row gutter={24}>
           <Col {...this.colspans}>
-            <Form.Item label="融资客户" name="customerName">
+            <Form.Item label="融资客户" name="enterpriseName">
               <Input   placeholder="请输入"/>
             </Form.Item>
           </Col>

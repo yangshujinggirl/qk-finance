@@ -67,8 +67,8 @@ function withSubscription(handleType, Mod) {
         onSearch = (values) => {
             let {time, ...searchParam} = values;
             if (time) {
-                searchParam.applyTime_Start = moment(time[0]).format('YYYY-MM-DD');
-                searchParam.applyTime_End = moment(time[1]).format('YYYY-MM-DD');
+                searchParam.startDate = moment(time[0]).format('YYYY-MM-DD');
+                searchParam.endDate = moment(time[1]).format('YYYY-MM-DD');
             }
             let pagination = {...this.state.pagination, pageNow: 1}
             this.setState({searchParam, pagination}, () => {
