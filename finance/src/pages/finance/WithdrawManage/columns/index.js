@@ -1,5 +1,6 @@
 import {Link} from 'react-router-dom';
 import moment from 'moment';
+import CommonUtils from '../../../../utils/CommonUtils'
 
 const columnsIndex = [
     {
@@ -34,6 +35,7 @@ const columnsIndex = [
         title: '融资金额（万元）',
         dataIndex: 'loanAmount',
         width: 100,
+        render: (text, record, index) => CommonUtils.formatAmount(text)
     },
     // {
     //     title: '年化利率%',
@@ -58,6 +60,7 @@ const columnsIndex = [
         title: '请款金额（万元）',
         dataIndex: 'purchaseAmount',
         width: 100,
+        render: (text, record, index) => CommonUtils.formatAmount(text)
     },
     {
         title: '收款方',
@@ -127,6 +130,7 @@ const columnsVoucher = [
     {
         title: '金额（万元)',
         dataIndex: 'purchaseAmount',
+        render: (text, record, index) => CommonUtils.formatAmount(text)
     },
     {
         title: '操作',
@@ -172,8 +176,9 @@ const columnsRecord = [
     //     key: 'address',
     // },
     {
-        title: '本次请款金额',
+        title: '本次请款金额（万元)',
         dataIndex: 'loan_amount',
+        render: (text, record, index) => CommonUtils.formatAmount(text)
     },
     {
         title: '收款方',
