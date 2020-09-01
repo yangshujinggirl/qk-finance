@@ -34,8 +34,8 @@ const CreatModal=({...props})=>{
     }
     GetReceivablesListApi(params)
     .then((res)=> {
-      const { pagination, data } =res;
-      // setDataPag(pagination)
+      let { pagination, data } =res;
+      data = data?data:[]
       setList(data)
     })
   }

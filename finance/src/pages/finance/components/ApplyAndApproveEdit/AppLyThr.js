@@ -1,7 +1,7 @@
 import { Form,Row,Col,Select,Input,DatePicker } from 'antd';
-import { YtDownLoad, BaseEditForm, YtUpLoadAndDownLoad, YtBtn, YtTable } from 'common';
+import { YtMessage, YtDownLoad, BaseEditForm, YtUpLoadAndDownLoad, YtBtn, YtTable } from 'common';
 import { columnsPlan, columnsContract } from './columns';
-import { GetContractInfoApi, GetContractListApi } from 'api/finance/ApplyAndApproveEdit';
+import { GetSaveContractApi, GetContractInfoApi, GetContractListApi } from 'api/finance/ApplyAndApproveEdit';
 import { tradeOption } from './options';
 import HeadFormCard from '../HeadFormCard';
 
@@ -24,18 +24,24 @@ class ApplyOne extends BaseEditForm {
     })
   }
   fetchInfo=()=>{
+    this.setState({ submitLoading:true })
     GetContractInfoApi({ loanId: this.props.loanId, currentStatus:'edit' })
     .then((res)=> {
       let { data } =res;
       this.formRef.current.setFieldsValue(data.obj);
-      this.setState({ info:data.obj });
+      this.setState({ info:data.obj, submitLoading:false });
     })
   }
-  handleSubmit = async (values) => {
-    console.log(values)
+  handleSubmit =(values) => {
+    GetSaveContractApi({ loanId: this.props.loanId })
+    .then((res)=> {
+      YtMessage.success('提交成功')
+      console.log(res)
+    })
   };
   render() {
-    const { list, info } =this.state;
+    const { list, info, submitLoading } =this.state;
+    const { handleStatus,handleType } =this.props;
     const rowSelection = {
       type: "checkbox",
       onChange: (selectedRowKeys, selectedRows) => {
@@ -82,6 +88,12 @@ class ApplyOne extends BaseEditForm {
                 select={true}
                 rowSelection={rowSelection}/>
           </HeadFormCard>
+          {
+            (handleType=='1'&&handleStatus!='view')&&
+            <div className="edit-btn-wrap">
+              <YtBtn size="free" onClick={this.handleSubmit} loading={submitLoading}>提交审核</YtBtn>
+            </div>
+          }
         </Form>
       </div>
     )

@@ -31,6 +31,7 @@ class ApplyOne extends BaseEditForm {
 		.then((res)=> {
       let { obj } =res.data;
       this.setState({ basicInfo:obj });
+      this.props.upDateLoanId(obj.loanId);
       this.fetMoreInfo(obj);
       this.formRef.current.setFieldsValue(obj);
 		})
@@ -128,9 +129,7 @@ class ApplyOne extends BaseEditForm {
       GetSaveElement(params)
       .then((res)=> {
         this.setState({ submitLoading:false });
-        let { loanId } =res.data;
-        loanId = '12333';
-        this.props.upDateKey('payInfo',loanId)
+        this.props.upDateKey('payInfo')
       })
     } catch (errorInfo) {
       console.log("Failed:", errorInfo);

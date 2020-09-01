@@ -5,7 +5,7 @@ import { BaseEditForm, YtUpLoadAndDownLoad, YtBtn, YtTable } from 'common';
 import { columnsReceivable, columnsPlan } from './columns';
 import HeadFormCard from '../HeadFormCard';
 import ChangeModal from './components/ChangeModal';
-import { GetSaveElement, GetPayPlanApi, GetDeleteApi, GetCountPayApi, GetPayInfo, GetReceivablesListApi } from 'api/finance/ApplyAndApproveEdit';
+import { GetReceiTotalCountApi, GetSavePayMent, GetPayPlanApi, GetDeleteApi, GetCountPayApi, GetPayInfo, GetReceivablesListApi } from 'api/finance/ApplyAndApproveEdit';
 import './AppLyTwo.less';
 
 class ApplyOne extends BaseEditForm {
@@ -24,10 +24,17 @@ class ApplyOne extends BaseEditForm {
     GetPayInfo({ currentStatus:this.props.currentStatus, loanId: this.props.loanId })
     .then((res)=> {
       let { obj, debtors, tranferAmount, tranferCount } =res.data;
-      obj = {...obj, tranferAmount, tranferCount };
+      let { startDate, finishDate, loanDate } =obj;
+      startDate = startDate?moment(startDate):'';
+      finishDate = finishDate?moment(finishDate):'';
+      loanDate = loanDate?moment(loanDate):'';
+      obj = {
+        ...obj,tranferAmount, tranferCount,startDate, finishDate, loanDate
+      }
       this.setState({ info:obj, debtors:debtors });
       this.formRef.current.setFieldsValue(obj);
       this.fetchReceivables(obj);
+      this.fetchReceivablesTotal(obj);
       this.fetchPayPlan(obj);
     })
   }
@@ -39,6 +46,22 @@ class ApplyOne extends BaseEditForm {
       this.setState({ payList:data });
     })
   }
+  //转账列表总条数
+  fetchReceivablesTotal=(values)=>{
+    GetReceiTotalCountApi({
+      packetId:values.packageId,
+      transferStatus: 2,
+      industryTypeCode:values.typeCode
+    })
+    .then((res)=> {
+      let { currentAssetAmount, currentAssetNum } =res.data;
+      let { info } =this.state;
+      info = {...info, currentAssetAmount, currentAssetNum };
+      this.setState({ info })
+
+    })
+  }
+  //转让应收列表
   fetchReceivables=(values)=>{
     GetReceivablesListApi({
       packetId:values.packageId,
@@ -58,13 +81,25 @@ class ApplyOne extends BaseEditForm {
     })
   };
   //还款测算
-  countPayment=()=>{
-    GetCountPayApi({ currentStatus:this.props.currentStatus, loanId: this.props.loanId })
-    .then((res)=> {
-      let { data } =res;
-      data = data?data:[];
-      this.setState({ payList: data })
-    })
+  countPayment= async()=>{
+    try {
+      const values = await this.formRef.current.validateFields(['creditAmount','loanRate','repayMethod','startDate','finishDate']);
+      let { startDate, finishDate, loanDate, ...val } =values;
+      val = {
+        ...val,
+        loanId: this.props.loanId,
+        startDate:moment(startDate).format('YYYY-MM-DD'),
+        finishDate:moment(finishDate).format('YYYY-MM-DD'),
+        loanDate:moment(loanDate).format('YYYY-MM-DD')
+      }
+      GetCountPayApi(val)
+      .then((res)=> {
+        this.fetchPayPlan({loanId: this.props.loanId})
+      })
+    } catch (errorInfo) {
+      console.log("Failed:", errorInfo);
+    }
+
   }
   //选择资产
   goChange=()=>{
@@ -81,14 +116,18 @@ class ApplyOne extends BaseEditForm {
   onSubmit = async (values) => {
     try {
       const values = await this.formRef.current.validateFields();
+      const { info } =this.state;
       let { startDate, finishDate, loanDate, ...val } =values;
       val = {
         ...val,
-        startDate:moment(startDate).format('YYYY-MM-DD'),
-        finishDate:moment(finishDate).format('YYYY-MM-DD'),
-        loanDate:moment(loanDate).format('YYYY-MM-DD')
+        enterpriseId:info.enterpriseId,
+        loanId: this.props.loanId,
+        packageId:'zcb1597117027316',
+        startDate:startDate?moment(startDate).format('YYYY-MM-DD'):null,
+        finishDate:finishDate?moment(finishDate).format('YYYY-MM-DD'):null,
+        loanDate:loanDate?moment(loanDate).format('YYYY-MM-DD'):null
       }
-      GetSaveElement(val)
+      GetSavePayMent(val)
       .then((res)=> {
         this.props.upDateKey('contract')
       })
@@ -218,7 +257,7 @@ class ApplyOne extends BaseEditForm {
                     <DatePicker disabled={isCanEdit}/>
                   </Form.Item>
                 </Col>
-                <Col {...this.colspans}>
+                {/*<Col {...this.colspans}>
                   <Form.Item label="还款间隔" name="payPeriod">
                     <Select placeholder="请选择" allowClear={true} onChange={this.onChangeCategoryCode} disabled={handleStatus=="view"}>
                       <Select.Option value="银行转账1" key="银行转账1">按月</Select.Option>
@@ -229,7 +268,7 @@ class ApplyOne extends BaseEditForm {
                   <Form.Item label="还款次数" name="payPeriodNum">
                     <Input autoComplete="off"   placeholder="请输入" disabled={isCanEdit}/>
                   </Form.Item>
-                </Col>
+                </Col>*/}
               </Row>
           </HeadFormCard>
           <HeadFormCard title="还款计划"  extra={extra}>
@@ -238,7 +277,7 @@ class ApplyOne extends BaseEditForm {
           <HeadFormCard title="转让应收账款">
               <>
                 <div className="box-flex receivable-row">
-                  <div>应收帐款条数<span className="pointerSty">{info.tranferCount}条</span>，应收帐款金额<span className="pointerSty">{info.tranferAmount}</span></div>
+                  <div>应收帐款条数<span className="pointerSty">{info.currentAssetNum}条</span>，应收帐款金额<span className="pointerSty">{info.currentAssetAmount}</span></div>
                   { (handleType=='1'&&handleStatus!='view')&&
                       <YtBtn onClick={this.goChange}>选择资产</YtBtn>
                   }

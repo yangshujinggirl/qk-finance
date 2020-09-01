@@ -9,6 +9,7 @@ import CashChart from './components/CashChart';
 import FilterForm from './components/FilterForm';
 import ChangeRankMod from './components/ChangeRankMod';
 import {statusOption} from './components/options';
+import { CommonUtils } from 'utils';
 import { GetPayMentApi, GetListApi, GetTotalApi, GetAmountChangeChartApi } from 'api/asset/AssetPackageView';
 import './index.less';
 
@@ -79,7 +80,7 @@ const OperateWorkbench=({...props})=>{
           <ViewCardPane
             className="apvp-diy-card"
             label="资产包总金额(万元)"
-            num={totalData.assetAmount}/>
+            num={CommonUtils.formatAmount(totalData.assetAmount)}/>
           <ViewCardPane
             className="apvp-diy-card"
             label="资产包数量(个)"

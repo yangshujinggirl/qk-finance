@@ -30,11 +30,11 @@ function withSubscription(handleType, pageType, Mod){
         this.setState({ tabStatus:tabStatus });
       })
     }
-    upDateKey=(value,loanId)=> {
+    upDateLoanId=(loanId)=> {
+      this.setState({ loanId });
+    }
+    upDateKey=(value)=> {
       this.setState({ activeKey:value });
-      if(loanId) {
-        this.setState({ loanId });
-      }
       this.fetchProcess();
     }
     callback=(key)=> {
@@ -63,6 +63,7 @@ function withSubscription(handleType, pageType, Mod){
             {
               activeKey=='baseInfo'&&
               <AppLyOne
+                upDateLoanId={this.upDateLoanId}
                 upDateKey={this.upDateKey}
                 tabStatus={tabStatus}
                 handleType={handleType}
@@ -81,7 +82,7 @@ function withSubscription(handleType, pageType, Mod){
                 loanId={loanId} handleStatus={handleStatus()}/>
             }
             </TabPane>
-            <TabPane tab="合同预览" key="contract"  disabled={tabStatusMap[tabStatus] <= 2}>
+            <TabPane tab="合同预览" key="contract"  disabled={tabStatusMap[tabStatus] < 2}>
             {
               activeKey == 'contract'&&
               <AppLyThr
