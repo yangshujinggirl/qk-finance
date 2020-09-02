@@ -3,6 +3,7 @@ import FilterForm from './components/FilterForm';
 import {columnsIndex} from './columns';
 import './index.less'
 import {GetWhiteList} from '../../../api/finance/WhiteList';
+import {Spin} from 'antd';
 
 class AccountStatement extends React.Component {
     state = {
@@ -12,7 +13,8 @@ class AccountStatement extends React.Component {
             pageSize: 10,
             totalSize: 0
         },
-        inputValues: {}
+        inputValues: {},
+        loading: false
     }
 
     componentWillMount() {
@@ -20,6 +22,7 @@ class AccountStatement extends React.Component {
     }
 
     fetchLoanList = () => {
+        this.setState({...this.state, loading: true});
         const {dataPag, inputValues} = this.state;
         let params = {
             pageNow: dataPag.pageNow,
@@ -28,8 +31,8 @@ class AccountStatement extends React.Component {
         }
         GetWhiteList(params)
             .then((res) => {
-                let {pageNow, totalSize, list} = res.data;
-                this.setState({data: list, dataPag: {...this.state.dataPag, totalSize}})
+                let {totalSize, list} = res.data;
+                this.setState({data: list, dataPag: {...this.state.dataPag, totalSize}, loading: false})
             });
     }
     onPageChange = (pageNow) => {
@@ -47,16 +50,18 @@ class AccountStatement extends React.Component {
     }
 
     render() {
-        let {dataPag, data} = this.state
+        let {dataPag, data, loading} = this.state
         return (
-            <div className="yt-common-list-pages-wrap">
-                <FilterForm onSubmit={this.search}/>
-                <YtTable
-                    scroll={{x: 1300}}
-                    columns={columnsIndex}
-                    dataSource={data}/>
-                <YtPagination data={dataPag} onChange={this.onPageChange}/>
-            </div>
+            <Spin spinning={loading}>
+                <div className="yt-common-list-pages-wrap">
+                    <FilterForm onSubmit={this.search}/>
+                    <YtTable
+                        scroll={{x: 1300}}
+                        columns={columnsIndex}
+                        dataSource={data}/>
+                    <YtPagination data={dataPag} onChange={this.onPageChange}/>
+                </div>
+            </Spin>
         )
     }
 }

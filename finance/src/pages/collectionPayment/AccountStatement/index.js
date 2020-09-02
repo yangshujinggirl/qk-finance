@@ -69,8 +69,8 @@ class AccountStatement extends React.Component {
     }
 
     render() {
-        let {totalSize, list, loading} = {...this.state}
-        let {pageNow, pageSize} = {...this.state.param}
+        let {totalSize, list, loading} = this.state
+        let {pageNow, pageSize} = this.state.param
         return (
             <Spin spinning={loading}>
                 <div className="yt-common-list-pages-wrap">

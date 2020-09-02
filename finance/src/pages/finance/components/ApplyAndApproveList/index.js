@@ -10,6 +10,7 @@ import { CommonUtils } from 'utils';
 import './index.less'
 import {GetProFileList, GetStatisticalData, GetFinanceList} from 'api/finance/FinanceManagement';
 import {useState, useEffect} from 'react';
+import {Spin} from 'antd';
 
 function withSubscription(handleType, Mod) {
 
@@ -25,7 +26,8 @@ function withSubscription(handleType, Mod) {
                 pageSize: 10,
                 pageNow: 1,
             },
-            summary: {}
+            summary: {},
+            loading: false
         }
 
         componentDidMount() {
@@ -34,6 +36,7 @@ function withSubscription(handleType, Mod) {
         }
 
         fetchFinanceList = (values) => {
+            this.setState({...this.state, loading: true});
             let {pageSize, pageNow} = this.state.pagination
             let param = {...this.state.inputValues, pageSize, pageNow}
             const {pagination, inputValues} = this.state;
@@ -42,7 +45,7 @@ function withSubscription(handleType, Mod) {
                     const {result, pagination} = res.data;
                     result.map((el, index) => el.key = index + 1);
                     let p = {...this.state.pagination, totalSize: pagination.totalSize}
-                    this.setState({...this.state, data: result, pagination: p})
+                    this.setState({...this.state, data: result, pagination: p, loading: false})
                 })
         }
         fetchTotal = () => {
@@ -101,9 +104,67 @@ function withSubscription(handleType, Mod) {
         };
 
         render() {
-            const {currentItem, fileList, data, visible, pagination, summary} = this.state;
+            const {currentItem, fileList, data, visible, pagination, summary, loading} = this.state;
             let columns = columnsList(handleType, this.state.pagination);
             return (
+<<<<<<< HEAD
+                <Spin spinning={loading}>
+                    <div className="finance-company-list-wrap">
+                        <div className="box-flex">
+                            <ViewCardPane
+                                label="累计申请融资笔数"
+                                num={summary.total1}>
+                                <div className="box-flex">
+                                    <YtStatistic value={summary.w1} type="up">周同比</YtStatistic>
+                                    <YtStatistic value={summary.d1} type="down">日环比</YtStatistic>
+                                    <YtStatistic value={summary.a1}>本日新增</YtStatistic>
+                                </div>
+                            </ViewCardPane>
+                            <ViewCardPane
+                                label="累计申请融资金额(万元)"
+                                num={summary.total2}>
+                                <div className="box-flex">
+                                    <YtStatistic value={summary.w2} type="up">周同比</YtStatistic>
+                                    <YtStatistic value={summary.d2} type="down">日环比</YtStatistic>
+                                    <YtStatistic value={summary.a2}>本日新增</YtStatistic>
+                                </div>
+                            </ViewCardPane>
+                            <ViewCardPane
+                                label="已审核融资笔数"
+                                num={summary.total3}>
+                                <div className="box-flex">
+                                    <YtStatistic value={summary.w3} type="up">周同比</YtStatistic>
+                                    <YtStatistic value={summary.d3} type="down">日环比</YtStatistic>
+                                    <YtStatistic value={summary.a3}>本日新增</YtStatistic>
+                                </div>
+                            </ViewCardPane>
+                            <ViewCardPane
+                                label="已审核融资金额(万元)"
+                                num={summary.total4}>
+                                <div className="box-flex">
+                                    <YtStatistic value={summary.w4} type="up">周同比</YtStatistic>
+                                    <YtStatistic value={summary.d4} type="down">日环比</YtStatistic>
+                                    <YtStatistic value={summary.a4}>本日新增</YtStatistic>
+                                </div>
+                            </ViewCardPane>
+                        </div>
+                        <div className="main-content yt-common-list-pages-wrap">
+                            <FilterForm onSubmit={this.onSubmit}/>
+                            {Mod && <Mod/>}
+                            <YtTable
+                                onOperateClick={this.onOperateClick}
+                                scroll={{x: 1300}}
+                                columns={columns}
+                                dataSource={data}/>
+                            <YtPagination data={pagination} onChange={this.onChange}/>
+                            <CreatModal
+                                paramsVal={currentItem}
+                                visible={visible}
+                                onOk={this.onOk}
+                                onCancel={this.onCancel}
+                                data={fileList}/>
+                        </div>
+=======
                 <div className="finance-company-list-wrap">
                     <div className="box-flex">
                         <ViewCardPane
@@ -142,24 +203,9 @@ function withSubscription(handleType, Mod) {
                                 <YtStatistic value={summary.a4}>本日新增</YtStatistic>
                             </div>
                         </ViewCardPane>
+>>>>>>> 395ea71f69785d1d43da98b8cf4ceae6e14f3e52
                     </div>
-                    <div className="main-content yt-common-list-pages-wrap">
-                        <FilterForm onSubmit={this.onSubmit}/>
-                        {Mod && <Mod/>}
-                        <YtTable
-                            onOperateClick={this.onOperateClick}
-                            scroll={{x: 1300}}
-                            columns={columns}
-                            dataSource={data}/>
-                        <YtPagination data={pagination} onChange={this.onChange}/>
-                        <CreatModal
-                            paramsVal={currentItem}
-                            visible={visible}
-                            onOk={this.onOk}
-                            onCancel={this.onCancel}
-                            data={fileList}/>
-                    </div>
-                </div>
+                </Spin>
             )
         }
     }

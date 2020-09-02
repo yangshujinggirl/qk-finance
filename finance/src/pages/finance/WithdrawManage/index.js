@@ -5,15 +5,18 @@ import FilterForm from './components/FilterForm';
 import {columnsIndex} from './columns';
 import './index.less'
 import {GetLoanManagementList} from 'api/finance/WithdrawManage';
+import {Spin} from 'antd';
 
 
 const AccountStatement = ({...props}) => {
     const [visible, setVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [list, setList] = useState([])
     const [dataPag, setDataPag] = useState({pageSize: 10, pageNow: 1, totalSize: 0});
     const [inputValues, setInputValues] = useState({});
 
     const fetchList = (values = {}) => {
+        setLoading(true)
         console.log(values);
         GetLoanManagementList({
             pageNow: dataPag.pageNow,
@@ -29,6 +32,7 @@ const AccountStatement = ({...props}) => {
                 console.log(p);
                 setDataPag(p)
                 setList(result)
+                setLoading(false)
             });
     }
 
@@ -52,14 +56,16 @@ const AccountStatement = ({...props}) => {
         fetchList()
     }, []);
     return (
-        <div className="yt-common-list-pages-wrap">
-            <FilterForm onSubmit={onSubmit}/>
-            <YtTable
-                scroll={{x: 1300}}
-                columns={columnsIndex}
-                dataSource={list}/>
-            <YtPagination data={dataPag} onChange={changePage}/>
-        </div>
+        <Spin spinning={loading}>
+            <div className="yt-common-list-pages-wrap">
+                <FilterForm onSubmit={onSubmit}/>
+                <YtTable
+                    scroll={{x: 1300}}
+                    columns={columnsIndex}
+                    dataSource={list}/>
+                <YtPagination data={dataPag} onChange={changePage}/>
+            </div>
+        </Spin>
     )
 }
 
