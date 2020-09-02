@@ -107,7 +107,6 @@ function withSubscription(handleType, Mod) {
             const {currentItem, fileList, data, visible, pagination, summary, loading} = this.state;
             let columns = columnsList(handleType, this.state.pagination);
             return (
-<<<<<<< HEAD
                 <Spin spinning={loading}>
                     <div className="finance-company-list-wrap">
                         <div className="box-flex">
@@ -164,46 +163,6 @@ function withSubscription(handleType, Mod) {
                                 onCancel={this.onCancel}
                                 data={fileList}/>
                         </div>
-=======
-                <div className="finance-company-list-wrap">
-                    <div className="box-flex">
-                        <ViewCardPane
-                            label="累计申请融资笔数"
-                            num={summary.total1}>
-                            <div className="box-flex">
-                                <YtStatistic value={summary.w1} type="up">周同比</YtStatistic>
-                                <YtStatistic value={summary.d1} type="down">日环比</YtStatistic>
-                                <YtStatistic value={summary.a1}>本日新增</YtStatistic>
-                            </div>
-                        </ViewCardPane>
-                        <ViewCardPane
-                            label="累计申请融资金额(万元)"
-                            num={CommonUtils.formatAmount(summary.total2)}>
-                            <div className="box-flex">
-                                <YtStatistic value={summary.w2} type="up">周同比</YtStatistic>
-                                <YtStatistic value={summary.d2} type="down">日环比</YtStatistic>
-                                <YtStatistic value={summary.a2}>本日新增</YtStatistic>
-                            </div>
-                        </ViewCardPane>
-                        <ViewCardPane
-                            label="已审核融资笔数"
-                            num={summary.total3}>
-                            <div className="box-flex">
-                                <YtStatistic value={summary.w3} type="up">周同比</YtStatistic>
-                                <YtStatistic value={summary.d3} type="down">日环比</YtStatistic>
-                                <YtStatistic value={summary.a3}>本日新增</YtStatistic>
-                            </div>
-                        </ViewCardPane>
-                        <ViewCardPane
-                            label="已审核融资金额(万元)"
-                            num={CommonUtils.formatAmount(summary.total4)}>
-                            <div className="box-flex">
-                                <YtStatistic value={summary.w4} type="up">周同比</YtStatistic>
-                                <YtStatistic value={summary.d4} type="down">日环比</YtStatistic>
-                                <YtStatistic value={summary.a4}>本日新增</YtStatistic>
-                            </div>
-                        </ViewCardPane>
->>>>>>> 395ea71f69785d1d43da98b8cf4ceae6e14f3e52
                     </div>
                 </Spin>
             )
