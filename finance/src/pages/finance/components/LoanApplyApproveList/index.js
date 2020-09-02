@@ -9,6 +9,7 @@ import {columnsApply, columnsApprove} from './columns';
 import {GetLoanOutStatisticalData, GetLoanList} from 'api/finance/FinanceManagement';
 import './index.less'
 import moment from 'moment';
+import {Spin} from 'antd';
 
 
 function withSubscription(handleType, Mod) {
@@ -30,7 +31,7 @@ function withSubscription(handleType, Mod) {
                 cumulativeLoanApplication: {},
                 reviewLoan: {},
             },
-
+            loading: false
         }
 
         componentWillMount() {
@@ -52,6 +53,7 @@ function withSubscription(handleType, Mod) {
             this.setState({visible: false});
         }
         fetchLoanList = () => {
+            this.setState({...this.state, loading: true});
             let param = {...this.state.searchParam, pageNow: this.state.pagination.pageNow}
             GetLoanList(param)
                 .then((res) => {
@@ -60,7 +62,8 @@ function withSubscription(handleType, Mod) {
                     this.setState({
                         ...this.state,
                         loanList,
-                        pagination: {...this.state.pagination, totalSize}
+                        pagination: {...this.state.pagination, totalSize},
+                        loading: false
                     });
                 });
         }
@@ -83,63 +86,65 @@ function withSubscription(handleType, Mod) {
         }
 
         render() {
-            // const { visible } =this.state;
-            const summary = this.state.summary;
-            const loanList = this.state.loanList;
-            console.log('loanList==>', loanList);
             let columns = handleType == "1" ? columnsApply : columnsApprove;
+            let {summary, loading, loanList} = this.state;
             return (
-                <div className="finance-company-list-wrap">
-                    <div className="box-flex">
-                        <ViewCardPane
-                            label="累计申请融资笔数"
-                            num={summary.cumulativeLoan.totalData}>
-                            <div className="box-flex">
-                                <YtStatistic value={summary.cumulativeLoan.weekYoY} type="up">周同比</YtStatistic>
-                                <YtStatistic value={summary.cumulativeLoan.dayChainRation} type="down">日环比</YtStatistic>
-                                <YtStatistic value={summary.cumulativeLoan.dayAddition}>本日新增</YtStatistic>
-                            </div>
-                        </ViewCardPane>
-                        <ViewCardPane
-                            label="累计申请放款金额(万元)"
-                            num={summary.accumulatedFinancing.totalData}>
-                            <div className="box-flex">
-                                <YtStatistic value={summary.accumulatedFinancing.weekYoY} type="up">周同比</YtStatistic>
-                                <YtStatistic value={summary.accumulatedFinancing.dayChainRation}
-                                             type="down">日环比</YtStatistic>
-                                <YtStatistic value={summary.accumulatedFinancing.dayAddition}>本日新增</YtStatistic>
-                            </div>
-                        </ViewCardPane>
-                        <ViewCardPane
-                            label="已审核放款笔数"
-                            num={summary.cumulativeLoanApplication.totalData}>
-                            <div className="box-flex">
-                                <YtStatistic value={summary.cumulativeLoanApplication.weekYoY}
-                                             type="up">周同比</YtStatistic>
-                                <YtStatistic value={summary.cumulativeLoanApplication.dayChainRation}
-                                             type="down">日环比</YtStatistic>
-                                <YtStatistic value={summary.cumulativeLoanApplication.dayAddition}>本日新增</YtStatistic>
-                            </div>
-                        </ViewCardPane>
-                        <ViewCardPane
-                            label="累计放款金额(万元)"
-                            num={summary.reviewLoan.totalData}>
-                            <div className="box-flex">
-                                <YtStatistic value={summary.reviewLoan.weekYoY} type="up">周同比</YtStatistic>
-                                <YtStatistic value={summary.reviewLoan.dayChainRation} type="down">日环比</YtStatistic>
-                                <YtStatistic value={summary.reviewLoan.dayAddition}>本日新增</YtStatistic>
-                            </div>
-                        </ViewCardPane>
+                <Spin spinning={loading}>
+                    <div className="finance-company-list-wrap">
+                        <div className="box-flex">
+                            <ViewCardPane
+                                label="累计申请融资笔数"
+                                num={summary.cumulativeLoan.totalData}>
+                                <div className="box-flex">
+                                    <YtStatistic value={summary.cumulativeLoan.weekYoY} type="up">周同比</YtStatistic>
+                                    <YtStatistic value={summary.cumulativeLoan.dayChainRation}
+                                                 type="down">日环比</YtStatistic>
+                                    <YtStatistic value={summary.cumulativeLoan.dayAddition}>本日新增</YtStatistic>
+                                </div>
+                            </ViewCardPane>
+                            <ViewCardPane
+                                label="累计申请放款金额(万元)"
+                                num={summary.accumulatedFinancing.totalData}>
+                                <div className="box-flex">
+                                    <YtStatistic value={summary.accumulatedFinancing.weekYoY}
+                                                 type="up">周同比</YtStatistic>
+                                    <YtStatistic value={summary.accumulatedFinancing.dayChainRation}
+                                                 type="down">日环比</YtStatistic>
+                                    <YtStatistic value={summary.accumulatedFinancing.dayAddition}>本日新增</YtStatistic>
+                                </div>
+                            </ViewCardPane>
+                            <ViewCardPane
+                                label="已审核放款笔数"
+                                num={summary.cumulativeLoanApplication.totalData}>
+                                <div className="box-flex">
+                                    <YtStatistic value={summary.cumulativeLoanApplication.weekYoY}
+                                                 type="up">周同比</YtStatistic>
+                                    <YtStatistic value={summary.cumulativeLoanApplication.dayChainRation}
+                                                 type="down">日环比</YtStatistic>
+                                    <YtStatistic
+                                        value={summary.cumulativeLoanApplication.dayAddition}>本日新增</YtStatistic>
+                                </div>
+                            </ViewCardPane>
+                            <ViewCardPane
+                                label="累计放款金额(万元)"
+                                num={summary.reviewLoan.totalData}>
+                                <div className="box-flex">
+                                    <YtStatistic value={summary.reviewLoan.weekYoY} type="up">周同比</YtStatistic>
+                                    <YtStatistic value={summary.reviewLoan.dayChainRation} type="down">日环比</YtStatistic>
+                                    <YtStatistic value={summary.reviewLoan.dayAddition}>本日新增</YtStatistic>
+                                </div>
+                            </ViewCardPane>
+                        </div>
+                        <div className="main-content yt-common-list-pages-wrap">
+                            <FilterForm onSearch={this.onSearch}/>
+                            <YtTable
+                                scroll={{x: 1300}}
+                                columns={columns}
+                                dataSource={loanList}/>
+                            <YtPagination data={this.state.pagination} onChange={this.onPageChange}/>
+                        </div>
                     </div>
-                    <div className="main-content yt-common-list-pages-wrap">
-                        <FilterForm onSearch={this.onSearch}/>
-                        <YtTable
-                            scroll={{x: 1300}}
-                            columns={columns}
-                            dataSource={loanList}/>
-                        <YtPagination data={this.state.pagination} onChange={this.onPageChange}/>
-                    </div>
-                </div>
+                </Spin>
             )
         }
     }
