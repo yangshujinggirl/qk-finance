@@ -17,7 +17,7 @@ const  YtBaseInfo=({...props})=>{
           dataInfo.map((el,index)=> {
             let formItemLayout = el.formItemLayout?el.formItemLayout:fixedFormItemLayout;
             let span = el.colSpan?el.colSpan:fixedColSpan;
-            console.log(el.key,span)
+
             return <Col key={index} span={span}>
                       <Form.Item  {...formItemLayout} label={el.key}>{el.value}</Form.Item>
                   </Col>

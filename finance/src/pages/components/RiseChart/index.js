@@ -22,9 +22,13 @@ const IndexChart=({...props})=>{
       xField: 'dateNode',
       yField: 'value',
       seriesField: 'type',
-      // yAxis: {
-      //   tickInterval:15,
-      // },
+      yAxis: {
+        label:{
+          formatter:( value)=>{
+            return `${value/10000}万`
+          }
+        },
+      },
       legend: {
         position: 'top',
         marker:{

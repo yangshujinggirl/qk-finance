@@ -125,7 +125,7 @@ const OperateWorkbench=({...props})=>{
                 <div className="fin-item box-flex">
                   <div className="data-lf">
                     <div className="company-info box-flex">
-                      <p className="cmy-name">债权方:成都市众惠农资有限公司</p>
+                      <p className="cmy-name">债权方:{el.companyFullName}</p>
                       <p className="status">
                         {
                           statusOption.map((item,idx)=>(
@@ -150,7 +150,7 @@ const OperateWorkbench=({...props})=>{
                         <p className="label-name">最长账期</p>
                       </div>
                       <div className="info-im">
-                        <p className="label-value">{CommonUtils.formatAmount(el.maxAssetAmount)}</p>
+                        <p className="label-value">{CommonUtils.formatAmount(el.maxAssetAmount)}万</p>
                         <p className="label-name">最大资产金额</p>
                       </div>
                       <div className="info-im">

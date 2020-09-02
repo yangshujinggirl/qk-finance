@@ -96,7 +96,7 @@ function withSubscription(handleType, pageType, Mod){
             </TabPane>
             {
               Mod&&
-              <TabPane tab="审批记录" key="10">
+              <TabPane tab="审批记录" key="10" disabled={tabStatusMap[tabStatus] < 3}>
                 <Mod {...this.props} loanId={loanId} handleStatus={handleStatus()}/>
               </TabPane>
             }

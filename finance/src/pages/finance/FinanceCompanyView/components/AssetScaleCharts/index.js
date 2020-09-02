@@ -30,6 +30,13 @@ const IndexChart=({...props})=>{
           type: 'outer',
           content: (text) => text.value,
         },
+        tooltip: {
+          visible: true,
+          type: 'outer',
+          formatter: (value,name) => {
+            return { name, value:`${value}%`}
+          },
+        },
       });
       rosePlot.render();
       setPlot(rosePlot);

@@ -14,6 +14,7 @@ import _YtBreadcrumbName from './YtBreadcrumbName';
 import _YtenlargeImg from './YtenlargeImg';
 import _YtEditModal from './YtEditModal';
 import _CommonBankList from './CommonBankList';
+import _YtenlargeFile from './YtenlargeFile';
 
 export const YtTable = _YtTable;
 export const YtCard = _YtCard;
@@ -31,3 +32,4 @@ export const YtBreadcrumbName = _YtBreadcrumbName;
 export const YtenlargeImg = _YtenlargeImg;
 export const YtEditModal = _YtEditModal;
 export const CommonBankList = _CommonBankList;
+export const YtenlargeFile = _YtenlargeFile;

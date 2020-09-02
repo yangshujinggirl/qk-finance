@@ -1,8 +1,10 @@
 import {Collapse, Progress, Row, Col, Button} from 'antd';
 import moment from 'moment';
-import {YtenlargeImg, YtCard, YtBaseInfo, YtCollapse} from 'common';
+import {YtenlargeFile, YtenlargeImg, YtCard, YtBaseInfo, YtCollapse} from 'common';
 import SubTitleMod from '../SubTitleMod';
 import GoodsTable from './GoodsTable';
+import { useState, useRef } from 'react';
+import { usePdf } from '@mikecousins/react-pdf';
 import {shipperTypeMap} from '../option'
 
 const {Panel} = Collapse;
@@ -18,8 +20,37 @@ let formItemLayout = {
 };
 
 function SalesInfo({...props}) {
+    const [page, setPage] = useState(1);
+    const canvasRef = useRef(null);
     let {info} = props;
     let productDetailJsonArr = info.productDetailJsonArr ? info.productDetailJsonArr : [];
+    productDetailJsonArr.map((el,index)=>el.key=index)
+    const { pdfDocument, pdfPage } = usePdf({ file: info.contractPDFUrl, page, canvasRef });
+
+    const PdfMod=(
+      <div>
+          <canvas ref={canvasRef} />
+          {Boolean(pdfDocument && pdfDocument.numPages) && (
+          <nav>
+            <ul className="pager">
+              <li className="previous">
+                <Button disabled={page === 1} onClick={() => setPage(page - 1)}>
+                  Previous
+                </Button>
+              </li>
+              <li className="next">
+                <Button
+                  disabled={page === pdfDocument.numPages}
+                  onClick={() => setPage(page + 1)}
+                >
+                  Next
+                </Button>
+              </li>
+            </ul>
+          </nav>
+        )}
+      </div>
+    )
     return <>
         <SubTitleMod title="订单创建信息">
             <YtBaseInfo colSpan={12} dataInfo={[
@@ -47,7 +78,7 @@ function SalesInfo({...props}) {
                 {key: '合同签订时间', value: moment(info.signDate).format('YYYY-MM-DD')},
                 // {key:'付款方式',value:'成都市众惠农资有限公司'},
                 // {key:'预计还款时间',value:'成都市众惠农资有限公司'},
-                {key: '合同照', value: <a href={info.contractPDFUrl}>查看</a>},
+                {key: '合同照', value: <YtenlargeFile file={info.contractPDFUrl}/>},
             ]}/>
         </SubTitleMod>
     </>

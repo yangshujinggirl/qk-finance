@@ -11,5 +11,5 @@ export function GetTotalApi(values){
 }
 //列表
 export function GetListApi(values){
-    return ChainReq.post('/callback1/transactionlist',{...values})
+    return ChainReq.get('/callback1/transactionlist',{...values})
 }

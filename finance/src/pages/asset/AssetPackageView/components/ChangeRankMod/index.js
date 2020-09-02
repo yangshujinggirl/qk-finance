@@ -1,6 +1,7 @@
 import TabsMod from '../../../../components/TabsMod';
 import { YtStatistic, YtTable, YtPagination, YtCard } from 'common';
 import { useState, useEffect } from 'react';
+import { CommonUtils } from 'utils';
 import { GetPackegChangeApi } from 'api/asset/AssetPackageView';
 import './index.less';
 
@@ -50,7 +51,7 @@ const ChangeRankMod=({...props})=>{
                   <div className="box-flex aspvr-item" key={index}>
                     <p className="aspvr-num top-one">{el.key}</p>
                     <p className="aspvr-name">{el.packet_name}</p>
-                    <YtStatistic value={`¥${el.amount}`} type="up"/>
+                  <YtStatistic value={`¥${CommonUtils.formatAmount(el.amount)}`} type="up"/>
                   </div>
                 ))
               }
