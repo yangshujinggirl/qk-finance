@@ -42,7 +42,7 @@ const Index=({...props})=> {
   const fetchTotal=(values )=>{
     GetTotalApi({ enterpriseId })
     .then((res)=> {
-      // setTotalData(res);
+      setTotalData(res.data);
     })
   }
   const changePage = (pageNow, pageSize) => {

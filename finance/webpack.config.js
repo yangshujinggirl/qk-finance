@@ -129,9 +129,9 @@ module.exports = {
         pathRewrite: {"^/admin/blockFinance" : ""},
         changeOrigin: true,
       },
-      '/admin/ytAsset': {
-        target:'http://yuntuappapitest01.bravowhale-uat.com/admin/api/',//上链端
-        pathRewrite: {"^/admin/ytAsset" : ""},
+      '/admin/ytChain': {
+        target:'http://yuntuapp.bravowhale-uat.com/api',//上链端
+        pathRewrite: {"^/admin/ytChain" : ""},
         changeOrigin: true,
       },
     }

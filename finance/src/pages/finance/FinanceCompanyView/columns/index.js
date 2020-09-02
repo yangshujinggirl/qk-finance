@@ -26,7 +26,7 @@ const columnsList =[
           }
         },
         {
-          title: '待融资产规模',
+          title: '待融资产规模（万元）',
           dataIndex: 'zwf',
           render:(text,record,index)=>{
             record.assetSize = record.assetSize?record.assetSize:0;

@@ -97,28 +97,28 @@ const Info=({...props})=>{
           <div className="top-action box-flex">
             <div className="lab-item">
               <p className="label-name">资产验真笔数</p>
-              <p className="field-val">22/<span className="num-low">23</span></p>
+              <p className="field-val">{totalData.assetCount}/<span className="num-low">{totalData.assetCount}</span></p>
             </div>
             <div className="lab-item">
               <p className="label-name">
                 <CheckCircleFilled className="label-icon-same label-icon-ok"/>
                 <span className="label-text">验真通过资产笔数</span>
               </p>
-              <p className="field-val">21</p>
+              <p className="field-val">{totalData.assetCount}</p>
             </div>
             <div className="lab-item">
               <p className="label-name">
                 <ExclamationCircleFilled className="label-icon-sus label-icon-same"/>
                 <span className="label-text">验真存疑资产笔数</span>
               </p>
-              <p className="field-val">1</p>
+              <p className="field-val">0</p>
             </div>
             <div className="lab-item">
               <p className="label-name">
                 <PayCircleFilled className="label-icon-sus label-icon-same"/>
                 <span className="label-text">资产存疑资产额</span>
               </p>
-              <p className="field-val">36,800.00 <span className="percent">(3.64%)</span></p>
+              <p className="field-val">0 <span className="percent"></span></p>
             </div>
           </div>
           <div className="bottom-action">

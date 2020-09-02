@@ -25,8 +25,13 @@ const columnsList =[
           dataIndex: 'assetNo',
         },
         {
-          title: '资产金额',
+          title: '资产金额(万元)',
           dataIndex: 'orderAmount',
+          render:(text,record,index)=>{
+            return <>{
+              CommonUtils.formatAmount(text)
+            }</>
+          }
         },
         {
         title: '债务方',

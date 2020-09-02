@@ -138,11 +138,11 @@ const OperateWorkbench=({...props})=>{
                     </div>
                     <div className="box-flex data-info">
                       <div className="info-im">
-                        <p className="label-value">{el.assetAmount}万</p>
+                        <p className="label-value">{CommonUtils.formatAmount(el.assetAmount)}万</p>
                         <p className="label-name">资产包金额</p>
                       </div>
                       <div className="info-im">
-                        <p className="label-value">2{el.assetCount}笔</p>
+                        <p className="label-value">{el.assetCount}笔</p>
                         <p className="label-name">资产笔数</p>
                       </div>
                       <div className="info-im">
@@ -150,7 +150,7 @@ const OperateWorkbench=({...props})=>{
                         <p className="label-name">最长账期</p>
                       </div>
                       <div className="info-im">
-                        <p className="label-value">{el.maxAssetAmount}</p>
+                        <p className="label-value">{CommonUtils.formatAmount(el.maxAssetAmount)}</p>
                         <p className="label-name">最大资产金额</p>
                       </div>
                       <div className="info-im">
