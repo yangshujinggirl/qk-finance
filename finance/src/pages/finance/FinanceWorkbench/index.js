@@ -1,4 +1,5 @@
 import {Statistic, Spin} from 'antd';
+import { connect } from 'react-redux';
 import ViewCardPane from '../../components/ViewCardPane';
 import BlockChainNode from '../../components/BlockChainNode';
 import LatestCashFlow from '../../components/LatestCashFlow';
@@ -14,6 +15,7 @@ import {
     GetAssetPoolApi,
     GetWarningInfoApi,
 } from 'api/finance/FinanceWorkbench';
+import { Sessions } from 'utils';
 import './index.less';
 import stateIcon0 from './image/icon_state0.png';
 import stateIcon1 from './image/icon_state1.png';
@@ -35,22 +37,32 @@ class OperateWorkbench extends React.Component {
         loading: false
     }
 
-    componentWillMount() {
+    componentDidMount() {
         // 融资企业
-        this.GetManagementList()
+        this.fetchManagementList()
         //日期时间
-        this.GetDate()
+        this.fetchDate()
         //统计信息
-        this.GetStatisticsData()
+        this.fetchStatisticsData()
         //资产池
-        this.GetAssetPool()
+        this.fetchAssetPool()
         //预警信息
-        this.GetWarningInfo()
+        this.fetchWarningInfo();
+        this.props.dispatch({
+          type:'ADD_TODO',
+          text:{data:'我是测试redux'}
+        })
     }
-
+    updateLoading=(value)=>{
+      let loading = value == 0?false:true;
+      // console.log(loading)
+      // this.setState({loading })
+    }
     // 融资企业
-    GetManagementList() {
-        GetManagementListApi({pageSize: 3, pageNow: 1}).then(res => {
+    fetchManagementList() {
+        GetManagementListApi({pageSize: 3, pageNow: 1})
+        .then(res => {
+            this.updateLoading(res.count)
             res.data.forEach((item, index) => item.key = index + 1);//ant table rowkey
             let managementList = res.data;
             let p = {...this.state, managementList}
@@ -59,48 +71,58 @@ class OperateWorkbench extends React.Component {
     }
 
     //统计信息
-    GetStatisticsData() {
-        this.setState({...this.state, loading: true});
-        GetStatisticsDataApi({pageSize: 3, pageNow: 1}).then(res => {
+    fetchStatisticsData() {
+        // this.setState({ loading: true});
+        GetStatisticsDataApi({pageSize: 3, pageNow: 1})
+        .then(res => {
+            this.updateLoading(res.count)
             let statisticsData = res.data;
-            let p = {...this.state, statisticsData, loading: false}
+            let p = {...this.state, statisticsData}
             this.setState(p)
         })
     }
 
     //日期时间
-    GetDate() {
-        GetDateApi({pageSize: 3, pageNow: 1}).then(res => {
+    fetchDate() {
+        GetDateApi({pageSize: 3, pageNow: 1})
+        .then(res => {
+            this.updateLoading(res.count)
             let dateInfo = res.data;
-            let p = {...this.state, dateInfo}
+            let p = {dateInfo}
             this.setState(p)
         })
     }
 
     //资产池
-    GetAssetPool() {
-        GetAssetPoolApi({pageSize: 3, pageNow: 1}).then(res => {
+    fetchAssetPool() {
+        GetAssetPoolApi({pageSize: 3, pageNow: 1})
+        .then(res => {
+            this.updateLoading(res.count)
             let assetPool = res.data;
-            let p = {...this.state, assetPool}
+            let p = {assetPool}
             this.setState(p)
         })
     }
 
     //预警信息
-    GetWarningInfo() {
-        GetWarningInfoApi({pageSize: 3, pageNow: 1}).then(res => {
+    fetchWarningInfo() {
+        GetWarningInfoApi({pageSize: 3, pageNow: 1})
+        .then(res => {
+            this.updateLoading(res.count)
             res.data.forEach((item, index) => item.key = index + 1);//ant table rowkey
             let warningInfo = res.data;
-            let p = {...this.state, warningInfo}
+            let p = {warningInfo}
             this.setState(p)
         })
     }
 
     render() {
         let {managementList, statisticsData, warningInfo, assetPool, dateInfo, loading} = this.state
-        let {currentLoanData, receivableData, loanWithdrawalData} = statisticsData
+        let {currentLoanData, receivableData, loanWithdrawalData} = statisticsData;
+        let loadingCount = Sessions.get('count');
+        console.log(this.props)
         return (
-            <Spin spinning={loading}>
+            <Spin spinning={loadingCount==0?false:true}>
                 <div className="financeWorkbench-pages-wrap">
                     <div className="box-flex">
                         <ViewCardPane
@@ -226,4 +248,7 @@ class OperateWorkbench extends React.Component {
     }
 }
 
-export default OperateWorkbench;
+function mapStateToProps(state){
+  return state
+}
+export default connect(mapStateToProps)(OperateWorkbench);

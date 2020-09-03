@@ -4,28 +4,25 @@ export function GetListApi(values){
     return Req.post('/assetblockchain2',{...values})
 }
 // 融资企业
-export function GetManagementListApi() {
-    return Req.post(`/bigdatadashboard/financingEnterprise`)
+export function GetManagementListApi(values) {
+    return Req.post(`/bigdatadashboard/financingEnterprise`,{...values})
 }
 // 统计数据
-export function GetStatisticsDataApi() {
-    return Req.post(`/bigdatadashboard/getStatisticsData`)
+export function GetStatisticsDataApi(values) {
+    return Req.post(`/bigdatadashboard/getStatisticsData`,{...values})
 }
 // 获取系统日期
-export function GetDateApi() {
-    return Req.post(`/bigdatadashboard/getDateInfo`)
+export function GetDateApi(values) {
+    return Req.post(`/bigdatadashboard/getDateInfo`,{...values})
 }
-// 现金流
-export function GetCashflowApi() {
-    return Req.post(`/asset/cashflow`)
-}
+
 // 资产池
-export function GetAssetPoolApi() {
-    return Req.post(`/bigdatadashboard/assetPool`)
+export function GetAssetPoolApi(values) {
+    return Req.post(`/bigdatadashboard/assetPool`,{...values})
 }
 // 预警信息
-export function GetWarningInfoApi() {
-    return Req.post(`/bigdatadashboard/warningInfo`)
+export function GetWarningInfoApi(values) {
+    return Req.post(`/bigdatadashboard/warningInfo`,{...values})
 }
 //资金池
 export function GetFundPoolApi(values) {

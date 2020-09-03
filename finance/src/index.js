@@ -4,6 +4,8 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 import { Sessions } from 'utils';
 import ReactDOM from 'react-dom';
 import zhCN from 'antd/es/locale/zh_CN';
@@ -17,27 +19,38 @@ import HomeController from './pages/HomeController';
 import Login from './pages/Login';
 
 
+function todos(state = [], action) {
+  switch (action.type) {
+    case 'ADD_TODO':
+      return state.concat([action.text])
+    default:
+      return state
+  }
+}
+let store = createStore(todos)
 ReactDOM.render(
-  <ConfigProvider locale={zhCN}>
-    <Router>
-      <Route path="/"  render={({location})=> {
-        let routeName = location.pathname;
-        let sessionKey = Sessions.get('token');
-        if(routeName == '/login') {
-          return <Route exact path="/login" component={Login}/>
-        } else {
-          if(sessionKey) {
-            return <div>
-                    <Route component={HomeController}  path="/account" />
-                    <Route  path="/login" component={Login}/>
-                    <Route  component={HomeController}  exact path="/"/>
-                  </div>
+  <Provider store={store}>
+    <ConfigProvider locale={zhCN}>
+      <Router>
+        <Route path="/"  render={({location})=> {
+          let routeName = location.pathname;
+          let sessionKey = Sessions.get('token');
+          if(routeName == '/login') {
+            return <Route exact path="/login" component={Login}/>
           } else {
-            return <Redirect to="/login"/>
+            if(sessionKey) {
+              return <div>
+                      <Route component={HomeController}  path="/account" />
+                      <Route  path="/login" component={Login}/>
+                      <Route  component={HomeController}  exact path="/"/>
+                    </div>
+            } else {
+              return <Redirect to="/login"/>
+            }
           }
-        }
-      }}/>
-    </Router>
-  </ConfigProvider>,
+        }}/>
+      </Router>
+    </ConfigProvider>
+  </Provider>,
   document.getElementById('root')
 );

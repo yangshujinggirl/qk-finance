@@ -122,7 +122,7 @@ const IndexChart=({...props})=>{
     })
   }
   useEffect(()=>{ fetchInfo();},[])
-  console.log(cashInData.cashInOutSummaryList)
+
   return <YtCard title="监管资金池表现（30日）" className="part-same-shadow mt24">
           <div className="fund-pool-mods">
             <div className="list-wrap">
