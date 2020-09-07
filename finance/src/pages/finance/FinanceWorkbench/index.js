@@ -62,7 +62,6 @@ class OperateWorkbench extends React.Component {
     fetchManagementList() {
         GetManagementListApi({pageSize: 3, pageNow: 1})
         .then(res => {
-            this.updateLoading(res.count)
             res.data.forEach((item, index) => item.key = index + 1);//ant table rowkey
             let managementList = res.data;
             let p = {...this.state, managementList}
@@ -75,7 +74,6 @@ class OperateWorkbench extends React.Component {
         // this.setState({ loading: true});
         GetStatisticsDataApi({pageSize: 3, pageNow: 1})
         .then(res => {
-            this.updateLoading(res.count)
             let statisticsData = res.data;
             let p = {...this.state, statisticsData}
             this.setState(p)
@@ -86,7 +84,6 @@ class OperateWorkbench extends React.Component {
     fetchDate() {
         GetDateApi({pageSize: 3, pageNow: 1})
         .then(res => {
-            this.updateLoading(res.count)
             let dateInfo = res.data;
             let p = {dateInfo}
             this.setState(p)
@@ -97,7 +94,6 @@ class OperateWorkbench extends React.Component {
     fetchAssetPool() {
         GetAssetPoolApi({pageSize: 3, pageNow: 1})
         .then(res => {
-            this.updateLoading(res.count)
             let assetPool = res.data;
             let p = {assetPool}
             this.setState(p)
@@ -108,7 +104,6 @@ class OperateWorkbench extends React.Component {
     fetchWarningInfo() {
         GetWarningInfoApi({pageSize: 3, pageNow: 1})
         .then(res => {
-            this.updateLoading(res.count)
             res.data.forEach((item, index) => item.key = index + 1);//ant table rowkey
             let warningInfo = res.data;
             let p = {warningInfo}
@@ -120,9 +115,9 @@ class OperateWorkbench extends React.Component {
         let {managementList, statisticsData, warningInfo, assetPool, dateInfo, loading} = this.state
         let {currentLoanData, receivableData, loanWithdrawalData} = statisticsData;
         let loadingCount = Sessions.get('count');
-        console.log(this.props)
+        loadingCount = loadingCount == 0?false:true;
         return (
-            <Spin spinning={loadingCount==0?false:true}>
+            <Spin spinning={loadingCount}>
                 <div className="financeWorkbench-pages-wrap">
                     <div className="box-flex">
                         <ViewCardPane

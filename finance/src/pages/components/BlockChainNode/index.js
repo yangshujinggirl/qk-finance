@@ -5,6 +5,7 @@ import jdImg from './image/icon_jd.png';
 import './index.less';
 
 function BlockChainNode({...props}){
+  let { data } =props;
   return (
     <YtCard title="区块链组织节点" className="part-same-shadow block-chain-wrap">
       <div className="block-chain-node">
@@ -13,14 +14,14 @@ function BlockChainNode({...props}){
          <div className="bcd-item">
             <img src={zzImg} className='icon-bd'/>
             <div className="bcd-info">
-              <p className="num">8</p>
+              <p className="num">{data.organizaCount}</p>
               <p>组织个数</p>
             </div>
          </div>
          <div className="bcd-item">
             <img src={jdImg} className='icon-bd'/>
             <div className="bcd-info">
-              <p className="num">8</p>
+              <p className="num">{data.peerCount}</p>
               <p>节点个数</p>
             </div>
          </div>

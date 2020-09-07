@@ -71,21 +71,21 @@ const Index=({...props})=> {
               <div className="bcpn-item">
                 <img src={iconImg2} />
                 <div className="node-info">
-                  <p className="num">8</p>
+                  <p className="num">{totalData.peerCount}</p>
                   当前节点数
                 </div>
               </div>
               <div className="bcpn-item">
                 <img src={iconImg3} />
                 <div className="node-info">
-                  <p className="num">8</p>
+                  <p className="num">{totalData.blockHeight}</p>
                   区块高度
                 </div>
               </div>
               <div className="bcpn-item">
                 <img src={iconImg4} />
                 <div className="node-info">
-                  <p className="num">8</p>
+                  <p className="num">{totalData.txCount}</p>
                   总交易数
                 </div>
               </div>
@@ -100,7 +100,7 @@ const Index=({...props})=> {
             <DealCountChart />
           </div>
           <div className="module-right-wrap">
-            <BlockChainNode />
+            <BlockChainNode data={{peerCount:totalData.peerCount,organizaCount:0}}/>
           </div>
         </div>
         <div className="list-action part-same-shadow mt24">

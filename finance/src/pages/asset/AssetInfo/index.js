@@ -57,6 +57,15 @@ const AssetInfo = ({...props}) => {
                 setMoneyBack(moneyBackVO)
             })
     }
+    const goSource=()=> {
+      props.history.push({
+        pathname:`/account/asset/source/${assetNo}`,
+        query:{
+          companyCode:assetsInfo.companyCode,
+          orderNo:assetsInfo.orderNo
+        }
+      })
+    }
     useEffect(() => { fetchInfo() }, [assetNo]);
     return (
         <>
@@ -107,8 +116,8 @@ const AssetInfo = ({...props}) => {
                         <div className="info-im">
                             <p className="label-name">
                                 资产状态
-                                <Button type="primary" ghost className="link-default-btn">
-                                    <Link to="/account/asset/source/12">资产溯源</Link>
+                                <Button type="primary" ghost className="link-default-btn" onClick={goSource}>
+                                  资产溯源
                                 </Button>
                             </p>
                             <p className="label-value">
