@@ -3,27 +3,25 @@ import { Link } from 'react-router-dom';
 const columns =[
         {
           title: '序号',
-          dataIndex: 'code',
+          dataIndex: 'key',
         },
         {
           title: '更新时间',
-          dataIndex: 'code',
+          dataIndex: 'updateDate',
+          width:200
         },
         {
           title: '更新组织名称',
-          dataIndex: 'type',
+          dataIndex: 'orgName',
+          width:200
         },
         {
-          title: '区块链hash值',
-          dataIndex: 'rq',
-        },
-        {
-          title: '区块高度',
-          dataIndex: 'je',
+          title: '区块交易ID',
+          dataIndex: 'txId',
         },
         {
           title: '说明',
-          dataIndex: 'mark',
+          dataIndex: 'explain',
         },
 ]
 

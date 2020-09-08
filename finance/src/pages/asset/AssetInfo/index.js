@@ -62,7 +62,8 @@ const AssetInfo = ({...props}) => {
         pathname:`/account/asset/source/${assetNo}`,
         query:{
           companyCode:assetsInfo.companyCode,
-          orderNo:assetsInfo.orderNo
+          orderNo:assetsInfo.orderNo,
+          companyFullName:assetsInfo.companyFullName
         }
       })
     }

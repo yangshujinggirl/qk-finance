@@ -22,7 +22,8 @@ class Login extends Component {
     try {
       const values = await this.formRef.current.validateFields();
       this.setState({ disabled:true,loading:true })
-      GoLogin({"userName":"superadmin","userPassword":"admin123456"})
+      // {"userName":"superadmin","userPassword":"admin123456"}
+      GoLogin(values)
       .then((res)=> {
         const { Authorization, userInfo } =res.data;
         Sessions.set('token',Authorization.accessToken)
