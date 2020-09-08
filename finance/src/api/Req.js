@@ -9,13 +9,8 @@ let defaultHeader = {
 };
 
 function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInterceptors = true}) {
-    let Authorization = Sessions.get('token') ? `${Sessions.get('tokenType')} ${Sessions.get('token')}` : null;
-    let count = 0;
-    console.log('Authorization', Authorization)
-    headers = {
-        ...headers,
-        Authorization
-    }
+    let count = 0, loadArr={};
+    headers = { ...headers }
     const instance = axios.create({
         baseURL,
         timeout, headers,
@@ -23,10 +18,13 @@ function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInt
     });
     // 添加请求拦截器
     instance.interceptors.request.use(function (config) {
-        count+=1;
-        Sessions.set('count',count)
         // 在发送请求之前做些什么
         let { reqHeader, headers, data} =config;
+        let Authorization = Sessions.get('token') ? `${Sessions.get('tokenType')} ${Sessions.get('token')}` : null;
+        headers = {...headers, Authorization };
+        count+=1;
+        loadArr[`${count}`] = true;
+        Sessions.set('count',JSON.stringify(loadArr))
         if(reqHeader == "form") {
           data = qs.stringify(data);
           headers = {
@@ -59,8 +57,9 @@ function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInt
             YtMessage.error(response.data.message);
             return Promise.reject(data);
         }
-        count-=1;
-        Sessions.set('count',count)
+        console.log(count)
+        loadArr[`${count}`] = false;
+        Sessions.set('count',JSON.stringify(loadArr))
         return {data, code, count };
     }, function (error) {
         YtMessage.error('服务异常');
@@ -71,7 +70,7 @@ function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInt
 }
 
 const Req = new request({baseURL: '/admin/ytFinance'});
-
 const BlockReq = new request({baseURL: '/admin/blockFinance'});
 const ChainReq = new request({baseURL: '/admin/ytChain'});
+
 export { Req,BlockReq,ChainReq }

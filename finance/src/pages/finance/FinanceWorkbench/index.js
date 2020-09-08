@@ -53,11 +53,6 @@ class OperateWorkbench extends React.Component {
           text:{data:'我是测试redux'}
         })
     }
-    updateLoading=(value)=>{
-      let loading = value == 0?false:true;
-      // console.log(loading)
-      // this.setState({loading })
-    }
     // 融资企业
     fetchManagementList() {
         GetManagementListApi({pageSize: 3, pageNow: 1})
@@ -115,9 +110,10 @@ class OperateWorkbench extends React.Component {
         let {managementList, statisticsData, warningInfo, assetPool, dateInfo, loading} = this.state
         let {currentLoanData, receivableData, loanWithdrawalData} = statisticsData;
         let loadingCount = Sessions.get('count');
+        console.log(loadingCount)
         loadingCount = loadingCount == 0?false:true;
         return (
-            <Spin spinning={loadingCount}>
+            <Spin spinning={false}>
                 <div className="financeWorkbench-pages-wrap">
                     <div className="box-flex">
                         <ViewCardPane

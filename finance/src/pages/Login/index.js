@@ -28,8 +28,8 @@ class Login extends Component {
         const { Authorization, userInfo } =res.data;
         Sessions.set('token',Authorization.accessToken)
         Sessions.set('tokenType',Authorization.tokenType)
-        Sessions.set('userName',userInfo.userFullNameCn)
-        this.setState({ disabled:false, loading:false })
+        Sessions.set('userName',userInfo.userFullNameCn);
+        this.setState({ disabled:false, loading:false });
         this.props.history.push('/account')
       },(err)=> {
         this.setState({ disabled:false, loading:false })

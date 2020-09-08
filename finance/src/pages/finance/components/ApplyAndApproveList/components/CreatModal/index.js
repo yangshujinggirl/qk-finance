@@ -28,7 +28,7 @@ const CreatModal=({...props})=>{
     props.onCancel();
   };
   const handledownLoad=(ids)=> {
-    let value = ids?ids:selectedRows;
+    let value = [ids]?[ids]:selectedRows;
     let params = {
       fileId:value,
       loanNo:paramsVal.loanNo,
@@ -37,7 +37,14 @@ const CreatModal=({...props})=>{
     }
     GetDownLoadFile(params)
     .then((res) => {
-      console.log(res)
+      const { totalUrl } =res.data;
+      var  a = document.createElement('a');       
+           a.download = 'filename';
+           a.style.display = 'none';
+           a.href = totalUrl;
+           document.body.appendChild(a);                   
+           a.click();                         
+           document.body.removeChild(a); 
     })
   }
 
