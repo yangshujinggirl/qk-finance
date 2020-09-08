@@ -37,7 +37,7 @@ class OperateWorkbench extends React.Component {
         loading: false
     }
 
-    componentDidMount() {
+    componentWillMount() {
         // 融资企业
         this.fetchManagementList()
         //日期时间
@@ -48,10 +48,10 @@ class OperateWorkbench extends React.Component {
         this.fetchAssetPool()
         //预警信息
         this.fetchWarningInfo();
-        this.props.dispatch({
-          type:'ADD_TODO',
-          text:{data:'我是测试redux'}
-        })
+        // this.props.dispatch({
+        //   type:'ADD_TODO',
+        //   text:{data:'我是测试redux'}
+        // })
     }
     // 融资企业
     fetchManagementList() {
@@ -107,11 +107,10 @@ class OperateWorkbench extends React.Component {
     }
 
     render() {
-        let {managementList, statisticsData, warningInfo, assetPool, dateInfo, loading} = this.state
+        let {managementList, statisticsData, warningInfo, assetPool, dateInfo} = this.state
         let {currentLoanData, receivableData, loanWithdrawalData} = statisticsData;
-        let loadingCount = Sessions.get('count');
-        console.log(loadingCount)
-        loadingCount = loadingCount == 0?false:true;
+        let spinloading = Sessions.get('loadCount')=='0'?false:true;
+        console.log('spinloading+render',Sessions.get('loadCount'))
         return (
             <Spin spinning={false}>
                 <div className="financeWorkbench-pages-wrap">

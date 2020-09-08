@@ -9,7 +9,7 @@ let defaultHeader = {
 };
 
 function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInterceptors = true}) {
-    let count = 0, loadArr={};
+    let loadCount = 0;//多个请求 loading控制
     headers = { ...headers }
     const instance = axios.create({
         baseURL,
@@ -22,9 +22,8 @@ function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInt
         let { reqHeader, headers, data} =config;
         let Authorization = Sessions.get('token') ? `${Sessions.get('tokenType')} ${Sessions.get('token')}` : null;
         headers = {...headers, Authorization };
-        count+=1;
-        loadArr[`${count}`] = true;
-        Sessions.set('count',JSON.stringify(loadArr))
+        loadCount+=1;
+        Sessions.set('loadCount',loadCount)
         if(reqHeader == "form") {
           data = qs.stringify(data);
           headers = {
@@ -57,11 +56,12 @@ function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInt
             YtMessage.error(response.data.message);
             return Promise.reject(data);
         }
-        console.log(count)
-        loadArr[`${count}`] = false;
-        Sessions.set('count',JSON.stringify(loadArr))
-        return {data, code, count };
+        loadCount--;
+        Sessions.set('loadCount',loadCount)
+        return {data, code };
     }, function (error) {
+        loadCount--;
+        Sessions.set('loadCount',loadCount)
         YtMessage.error('服务异常');
         // 对响应错误做点什么
         return Promise.reject({message: '服务异常'});
