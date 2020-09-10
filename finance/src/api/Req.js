@@ -58,7 +58,7 @@ function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInt
         }
         loadCount--;
         Sessions.set('loadCount',loadCount)
-        return {data, code };
+        return {data, code, loadCount };
     }, function (error) {
         loadCount--;
         Sessions.set('loadCount',loadCount)

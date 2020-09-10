@@ -37,7 +37,7 @@ class OperateWorkbench extends React.Component {
         loading: false
     }
 
-    componentWillMount() {
+    componentDidMount() {
         // 融资企业
         this.fetchManagementList()
         //日期时间
@@ -53,13 +53,16 @@ class OperateWorkbench extends React.Component {
         //   text:{data:'我是测试redux'}
         // })
     }
+    componentDidUpdate(){
+      console.log('componentDidUpdate',Sessions.get('loadCount'));
+    }
     // 融资企业
     fetchManagementList() {
         GetManagementListApi({pageSize: 3, pageNow: 1})
         .then(res => {
             res.data.forEach((item, index) => item.key = index + 1);//ant table rowkey
             let managementList = res.data;
-            let p = {...this.state, managementList}
+            let p = {...this.state, managementList }
             this.setState(p)
         })
     }
@@ -80,8 +83,7 @@ class OperateWorkbench extends React.Component {
         GetDateApi({pageSize: 3, pageNow: 1})
         .then(res => {
             let dateInfo = res.data;
-            let p = {dateInfo}
-            this.setState(p)
+            this.setState({ dateInfo })
         })
     }
 
@@ -90,8 +92,7 @@ class OperateWorkbench extends React.Component {
         GetAssetPoolApi({pageSize: 3, pageNow: 1})
         .then(res => {
             let assetPool = res.data;
-            let p = {assetPool}
-            this.setState(p)
+            this.setState({assetPool})
         })
     }
 
