@@ -2,7 +2,7 @@ import { Card, Collapse, Progress, Row, Col, Button } from 'antd';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Tabs } from 'antd';
-import { YtTable } from 'common';
+import { YtTable, YtBreadcrumbName } from 'common';
 import columns from './columns';
 import { Sessions } from 'utils';
 import { GetInfoApi } from 'api/asset/AssetSource';
@@ -46,6 +46,7 @@ const AssetSource=({...props})=> {
   useEffect(()=>{ fetchInfo(); return()=>{Sessions.remove('assetData');} },[assetNo])
   return(
     <div className="assetVerify-info-pages">
+      <YtBreadcrumbName/>
       <div className="aio-main-part part-same-shadow">
         <div className="box-flex aiom-top">
           <p className="card-hd">资产溯源</p>

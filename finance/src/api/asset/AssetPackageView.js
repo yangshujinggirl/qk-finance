@@ -16,3 +16,7 @@ export function GetPackegChangeApi(values){
 export function GetPayMentApi(values){
     return Req.post('/assets/package/avgRealDate/statistics',{...values})
 }
+//移除
+export function GetDeleteApi(values){
+    return Req.post(`/assets/package/delete?packetId=${values}`)
+}

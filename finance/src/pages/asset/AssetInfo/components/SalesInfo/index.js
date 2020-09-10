@@ -21,36 +21,9 @@ let formItemLayout = {
 
 function SalesInfo({...props}) {
     const [page, setPage] = useState(1);
-    const canvasRef = useRef(null);
     let {info} = props;
     let productDetailJsonArr = info.productDetailJsonArr ? info.productDetailJsonArr : [];
     productDetailJsonArr.map((el,index)=>el.key=index)
-    const { pdfDocument, pdfPage } = usePdf({ file: info.contractPDFUrl, page, canvasRef });
-
-    const PdfMod=(
-      <div>
-          <canvas ref={canvasRef} />
-          {Boolean(pdfDocument && pdfDocument.numPages) && (
-          <nav>
-            <ul className="pager">
-              <li className="previous">
-                <Button disabled={page === 1} onClick={() => setPage(page - 1)}>
-                  Previous
-                </Button>
-              </li>
-              <li className="next">
-                <Button
-                  disabled={page === pdfDocument.numPages}
-                  onClick={() => setPage(page + 1)}
-                >
-                  Next
-                </Button>
-              </li>
-            </ul>
-          </nav>
-        )}
-      </div>
-    )
     return <>
         <SubTitleMod title="订单创建信息">
             <YtBaseInfo colSpan={12} dataInfo={[

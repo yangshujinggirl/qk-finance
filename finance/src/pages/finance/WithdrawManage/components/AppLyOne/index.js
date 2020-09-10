@@ -17,14 +17,14 @@ class ApplyOne extends BaseEditForm {
     fetchInfo() {
         const {applyId} = this.props;
         GetInfo({applyId})
-            .then((res) => {
-                let {finacing, obj, result} = res.data
-                let historyList = result.list;
-                historyList.map((el,index)=>el.key=`${el.id}/${index}`);
-                obj.key=obj.id;
-                this.setState({ historyList, info:obj })
-                this.formRef.current.setFieldsValue(obj);
-            })
+        .then((res) => {
+            let {finacing, obj, result} = res.data
+            let historyList = result.list;
+            historyList.map((el,index)=>el.key=`${el.id}/${index}`);
+            obj.key=obj.id;
+            this.setState({ historyList, info:obj })
+            this.formRef.current.setFieldsValue(obj);
+        })
     }
 
     render() {
@@ -123,22 +123,22 @@ class ApplyOne extends BaseEditForm {
                         <Row>
                             <Col {...this.colspans}>
                                 <Form.Item label="收款方" name="receiverName">
-                                    <Input autoComplete="off" placeholder="请输入"/>
+                                    <Input autoComplete="off" placeholder="请输入" disabled/>
                                 </Form.Item>
                             </Col>
                             <Col {...this.colspans}>
                                 <Form.Item label="收款方账户名" name="receiverAccountName">
-                                    <Input autoComplete="off" placeholder="请输入"/>
+                                    <Input autoComplete="off" placeholder="请输入" disabled/>
                                 </Form.Item>
                             </Col>
                             <Col {...this.colspans}>
                                 <Form.Item label="收款方开户行" name="receiverOpenBank">
-                                    <Input autoComplete="off" placeholder="请输入"/>
+                                    <Input autoComplete="off" placeholder="请输入" disabled/>
                                 </Form.Item>
                             </Col>
                             <Col {...this.colspans}>
                                 <Form.Item label="收款方账号" name="receiverAccountNo">
-                                    <Input autoComplete="off" placeholder="请输入"/>
+                                    <Input autoComplete="off" placeholder="请输入" disabled/>
                                 </Form.Item>
                             </Col>
                         </Row>

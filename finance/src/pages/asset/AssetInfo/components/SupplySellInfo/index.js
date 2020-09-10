@@ -1,13 +1,15 @@
 import {Collapse, Progress, Row, Col, Button} from 'antd';
-import {YtCard, YtBaseInfo, YtCollapse} from 'common';
+import { useState, useRef } from 'react';
+import {YtenlargeFile, YtCard, YtBaseInfo, YtCollapse} from 'common';
+import { usePdf } from '@mikecousins/react-pdf';
 import SubTitleMod from '../SubTitleMod';
 import moment from 'moment';
 
 const {Panel} = Collapse;
 
 function DeliveryFactoryInfo({...props}) {
-    let {info} = props
-    let {firstCompanyInfo, secondCompanyInfo} = info || {firstCompanyInfo: {}, secondCompanyInfo: {}};
+    let { info } = props;
+    let {firstCompanyInfo={}, secondCompanyInfo={}} = info;
 
     return <>
         <SubTitleMod title="甲方信息">
@@ -32,7 +34,7 @@ function DeliveryFactoryInfo({...props}) {
         </SubTitleMod>
         <SubTitleMod title="协议信息">
             <YtBaseInfo colSpan={12} dataInfo={[
-                {key: '长期合作协议', value: '成都市众惠农资有限公司'},
+                {key: '长期合作协议', value: <YtenlargeFile file={info.contractUrl}/>},
             ]}/>
         </SubTitleMod>
     </>

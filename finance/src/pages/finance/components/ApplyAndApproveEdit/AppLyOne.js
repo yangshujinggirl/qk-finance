@@ -47,6 +47,7 @@ class ApplyOne extends BaseEditForm {
       data.map((el)=>el.key = el.id);
       this.setState({ companyList: data });
       let item = data.find((el)=>{ return values.enterpriseId == el.enterpriseId });
+      item = item?item:{};
       this.getLinkedInfo(values.enterpriseId, item)
     })
   }

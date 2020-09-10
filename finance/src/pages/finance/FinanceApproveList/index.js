@@ -9,5 +9,5 @@ const Add=({...props})=> {
             </YtBtn>
           </div>
 }
-const FinancApproveList = withSubscription('2',Add)//1:融资申请2:审批
+const FinancApproveList = withSubscription('2')//1:融资申请2:审批
 export default FinancApproveList;

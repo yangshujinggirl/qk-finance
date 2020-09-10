@@ -8,6 +8,7 @@ import './index.less';
 
 const {TabPane} = Tabs;
 const tabStatusMap={
+  'unsave':0,
   "baseInfo":1,
   "payInfo":2,
   "contract":3,
@@ -17,7 +18,7 @@ function withSubscription(handleType, pageType, Mod){
     state = {
       activeKey:'baseInfo',
       isEdit:this.props.match.params.id?true:false,
-      tabStatus:'baseInfo',
+      tabStatus:'',
       loanId:null
     }
     componentDidMount(){
@@ -26,8 +27,9 @@ function withSubscription(handleType, pageType, Mod){
     fetchProcess=()=>{
       GetTipsProcess({ loanId:this.props.match.params.id })
       .then((res) => {
-        const { tabStatus } =res.data;
-        this.setState({ tabStatus:tabStatus });
+        let { tabStatus } =res.data;
+        tabStatus  = tabStatus&&tabStatus!=''?tabStatus:'unsave';
+        this.setState({ tabStatus });
       })
     }
     upDateLoanId=(loanId)=> {
@@ -44,6 +46,7 @@ function withSubscription(handleType, pageType, Mod){
       let { params } = this.props.match;
       let { activeKey, tabStatus, loanId } =this.state;
       loanId = params.id?params.id:loanId;
+      
       let handleStatus =()=> {
          if(params.id) {
            if(pageType == 'view') {

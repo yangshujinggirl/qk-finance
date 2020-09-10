@@ -42,7 +42,7 @@ class ApplyOne extends BaseEditForm {
   fetchPayPlan=(values)=>{
     GetPayPlanApi({ loanId: this.props.loanId })
     .then((res)=> {
-      let { data } =res;
+      let { data=[] } =res;
       this.setState({ payList:data });
     })
   }
@@ -54,6 +54,7 @@ class ApplyOne extends BaseEditForm {
       industryTypeCode:values.typeCode
     })
     .then((res)=> {
+      let { data={} }=res;
       let { currentAssetAmount, currentAssetNum } =res.data;
       let { info } =this.state;
       info = {...info, currentAssetAmount, currentAssetNum };
@@ -69,7 +70,7 @@ class ApplyOne extends BaseEditForm {
       industryTypeCode:values.typeCode
     })
     .then((res)=> {
-      let { data } =res;
+      let { data=[] } =res;
       this.setState({ receivablesList:data })
     })
   }
@@ -192,7 +193,7 @@ class ApplyOne extends BaseEditForm {
               </Row>
           </HeadFormCard>
           <HeadFormCard title="利率设计">
-              <p className="form-row-title">资金方收款账户【监管户】</p>
+              {/*<p className="form-row-title">资金方收款账户【监管户】</p>*/}
               <Row>
                 <Col {...this.colspans}>
                   <Form.Item label="利率类型" name="rateType" rules={[{ required: true, message: '请选择'}]}>

@@ -10,7 +10,7 @@ let defaultHeader = {
 
 function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInterceptors = true}) {
     let loadCount = 0;//多个请求 loading控制
-    headers = { ...headers }
+    headers = { ...headers, appName:'yuntuFund' }
     const instance = axios.create({
         baseURL,
         timeout, headers,
@@ -45,7 +45,7 @@ function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInt
     instance.interceptors.response.use(function (response) {
         // 对响应数据做点什么
         let {code, message, data} = response.data;
-        data = data?data:{};
+        // data = data?data:{};
         // 用户登录超时统一处理
         if (code == 'E_300') {
             window.location.href = '/';

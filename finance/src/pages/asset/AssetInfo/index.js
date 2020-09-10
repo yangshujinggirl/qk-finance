@@ -59,7 +59,7 @@ const AssetInfo = ({...props}) => {
     }
     const goSource=()=> {
       props.history.push({
-        pathname:`/account/asset/source/${assetNo}`,
+        pathname:`/account/asset/financeCompany/source/${assetNo}`,
         query:{
           companyCode:assetsInfo.companyCode,
           orderNo:assetsInfo.orderNo,

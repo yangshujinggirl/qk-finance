@@ -59,7 +59,7 @@ function HomeRoutes() {
         <Route exact path="/account/paymentPlan/info/:id" component={PaymentPlanInfo} />
         <Route exact path="/account/writeOff/info/:id" component={WriteOffInfo} />
         <Route exact path="/account/statement" component={AccountStatement} />
-        <Route exact path="/account/asset/source/:id" component={AssetSource} />
+        <Route exact path="/account/asset/financeCompany/source/:id" component={AssetSource} />
         <Route exact path="/account/assetVerify/info/:id" component={AssetVerifyInfo} />
         <Route exact path="/account/creditVerify/:id" component={CreditVerify} />
         <Route exact path="/account/operateWorkbench" component={OperateWorkbench} />

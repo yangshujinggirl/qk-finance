@@ -1,7 +1,7 @@
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { YtStatistic, YtTable, YtPagination, YtCard } from 'common';
+import { YtBtn, YtMessage, YtStatistic, YtTable, YtPagination, YtCard } from 'common';
 import ViewCardPane from '../../components/ViewCardPane';
 import AssetDistributeChart from '../components/AssetDistributeChart';
 import AssetChart from './components/AssetChart';
@@ -10,7 +10,7 @@ import FilterForm from './components/FilterForm';
 import ChangeRankMod from './components/ChangeRankMod';
 import {statusOption} from './components/options';
 import { CommonUtils } from 'utils';
-import { GetPayMentApi, GetListApi, GetTotalApi, GetAmountChangeChartApi } from 'api/asset/AssetPackageView';
+import { GetDeleteApi, GetPayMentApi, GetListApi, GetTotalApi, GetAmountChangeChartApi } from 'api/asset/AssetPackageView';
 import './index.less';
 
 const OperateWorkbench=({...props})=>{
@@ -68,11 +68,24 @@ const OperateWorkbench=({...props})=>{
     const changePage = (pageNow, pageSize) => {
       fetchList({pageNow, pageSize})
     };
+    const goInfo=(e,value)=>{
+      e.stopPropagation();
+      props.history.push(`/account/asset/packageView/info/${value}`);
+    }
+    const goRemove=(e,value)=>{
+      e.stopPropagation()
+      GetDeleteApi(value)
+      .then((res)=> {
+        YtMessage.success('移除成功');
+        fetchList()
+      })
+    }
     const onSubmit = params => {
       setInputValues(params);
       setDataPag({...dataPag, pageNow: 1})
       fetchList({...params,pageNow: 1})
     };
+
     useEffect(()=>{ fetchTotal(); fetchList(); fetchPayMent() },[])
 
     return(
@@ -121,53 +134,56 @@ const OperateWorkbench=({...props})=>{
           <div className="finance-list">
           {
             list.map((el,index)=> (
-              <Link to={`/account/asset/packageView/info/${el.packetId}`} key={el.packetId}>
-                <div className="fin-item box-flex">
-                  <div className="data-lf">
-                    <div className="company-info box-flex">
-                      <p className="cmy-name">债权方:{el.companyFullName}</p>
-                      <p className="status">
-                        {
-                          statusOption.map((item,idx)=>(
-                            <span key={idx}>{item.key==el.packetStatus?item.value:''}</span>
-                          ))
-                        }
-                      </p>
-                      <p className="pkg-info">资产包名称：<span className="val-sty">{el.packetName}</span></p>
-                      <p className="pkg-info">资产包编号：<span className="val-sty">{el.packetId}</span></p>
-                    </div>
-                    <div className="box-flex data-info">
-                      <div className="info-im">
-                        <p className="label-value">{CommonUtils.formatAmount(el.assetAmount)}万</p>
-                        <p className="label-name">资产包金额</p>
-                      </div>
-                      <div className="info-im">
-                        <p className="label-value">{el.assetCount}笔</p>
-                        <p className="label-name">资产笔数</p>
-                      </div>
-                      <div className="info-im">
-                        <p className="label-value">{el.maxRealDate}</p>
-                        <p className="label-name">最长账期</p>
-                      </div>
-                      <div className="info-im">
-                        <p className="label-value">{CommonUtils.formatAmount(el.maxAssetAmount)}万</p>
-                        <p className="label-name">最大资产金额</p>
-                      </div>
-                      <div className="info-im">
-                        <p className="label-value">{el.enterpricesCount}</p>
-                        <p className="label-name">债务企业</p>
-                      </div>
-                      <div className="info-im">
-                        <p className="label-value">{el.minRealDate}</p>
-                        <p className="label-name">最短账期</p>
-                      </div>
-                    </div>
+              <div className="fin-item box-flex" onClick={(e)=>goInfo(e,el.packetId)}  key={el.packetId}>
+                <div className="data-lf">
+                  <div className="company-info box-flex">
+                    <p className="cmy-name">债权方:{el.companyFullName}</p>
+                    <p className="status">
+                      {
+                        statusOption.map((item,idx)=>(
+                          <span key={idx}>{item.key==el.packetStatus?item.value:''}</span>
+                        ))
+                      }
+                    </p>
+                    <p className="pkg-info">资产包名称：<span className="val-sty">{el.packetName}</span></p>
+                    <p className="pkg-info">资产包编号：<span className="val-sty">{el.packetId}</span></p>
+                    {
+                      el.packetStatus=='0'&&
+                      <Button className="remove-btn" onClick={(e)=>goRemove(e,el.packetId)}>移除</Button>
+                    }
+
                   </div>
-                  <div className="chart-rf">
-                    <AssetChart index={index}/>
+                  <div className="box-flex data-info">
+                    <div className="info-im">
+                      <p className="label-value">{CommonUtils.formatAmount(el.assetAmount)}万</p>
+                      <p className="label-name">资产包金额</p>
+                    </div>
+                    <div className="info-im">
+                      <p className="label-value">{el.assetCount}笔</p>
+                      <p className="label-name">资产笔数</p>
+                    </div>
+                    <div className="info-im">
+                      <p className="label-value">{el.maxRealDate}</p>
+                      <p className="label-name">最长账期</p>
+                    </div>
+                    <div className="info-im">
+                      <p className="label-value">{CommonUtils.formatAmount(el.maxAssetAmount)}万</p>
+                      <p className="label-name">最大资产金额</p>
+                    </div>
+                    <div className="info-im">
+                      <p className="label-value">{el.enterpricesCount}</p>
+                      <p className="label-name">债务企业</p>
+                    </div>
+                    <div className="info-im">
+                      <p className="label-value">{el.minRealDate}</p>
+                      <p className="label-name">最短账期</p>
+                    </div>
                   </div>
                 </div>
-              </Link>
+                <div className="chart-rf">
+                  <AssetChart index={index}/>
+                </div>
+              </div>
             ))
           }
           </div>
