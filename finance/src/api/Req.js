@@ -35,6 +35,8 @@ function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInt
         config.data = data;
         return config;
     }, function (error) {
+        loadCount = 0;
+        Sessions.set('loadCount',loadCount)
         // 对请求错误做些什么
         return Promise.reject({
             message: error.message || '请求参数异常',
@@ -60,7 +62,7 @@ function request({baseURL = '', timeout = 600000, headers = defaultHeader, isInt
         Sessions.set('loadCount',loadCount)
         return {data, code, loadCount };
     }, function (error) {
-        loadCount--;
+        loadCount = 0;
         Sessions.set('loadCount',loadCount)
         YtMessage.error('服务异常');
         // 对响应错误做点什么

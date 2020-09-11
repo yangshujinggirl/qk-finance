@@ -9,6 +9,7 @@ import FilterForm from './components/FilterForm';
 import CreatModal from './components/CreatModal';
 import columnsList from './columns';
 import {subCrumbOptions} from '../subCrumbOptions';
+import PagesControll from '../../PagesControll';
 import { GetTotalApi, GetListApi, GetAddApi } from 'api/asset/AssetList';
 import './index.less'
 
@@ -63,12 +64,9 @@ const FinanceShow=({...props})=> {
     setInputValues(params);
     fetchList(values)
   };
-  useEffect(() => {
-    fetchList();
-    fetchTotal()
-  },[enterpriseId]);
+  useEffect(() => { fetchList(); fetchTotal() },[enterpriseId]);
   return(
-    <div>
+    <PagesControll>
       <YtBreadcrumbName>
         <SubCrumb data={subCrumbOptions(enterpriseId)} active="2"/>
       </YtBreadcrumbName>
@@ -122,7 +120,7 @@ const FinanceShow=({...props})=> {
           enterpriseId={enterpriseId}/>
         </div>
       </div>
-    </div>
+    </PagesControll>
   )
 }
 

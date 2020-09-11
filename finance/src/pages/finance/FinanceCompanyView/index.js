@@ -6,7 +6,6 @@ import { useState, useEffect } from 'react';
 import { YtStatistic, YtBreadcrumbName, YtPagination, YtTable, YtBtn, YtCard } from 'common';
 import ViewCardPane from '../../components/ViewCardPane';
 import RiseChart from '../../components/RiseChart';
-// import AssetNumCharts from './components/AssetNumCharts';
 import AssetScaleCharts from './components/AssetScaleCharts';
 import AssetVerifyCharts from './components/AssetVerifyCharts';
 import TableList from './components/TableList';

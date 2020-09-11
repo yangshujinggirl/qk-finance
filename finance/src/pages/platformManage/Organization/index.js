@@ -34,9 +34,14 @@ const Index = ({...props}) => {
     const getOrgLists = (param) => {
         setLoading(true)
         getOrgList(param).then(res => {
-            setTotalSize(res.data.pagination.totalSize)
-            setList(res.data.result)
-            setLoading(false)
+          let { result } = res.data;
+          result = result.map((el)=> {
+            let {children,...item}=el;
+            return item;
+          })
+          setTotalSize(res.data.pagination.totalSize)
+          setList(result)
+          setLoading(false)
         })
     }
     //新增弹窗
@@ -94,6 +99,7 @@ const Index = ({...props}) => {
             }
         });
     }
+
     return (
         <Spin spinning={loading}>
             <div className="account-organization-wrap yt-common-list-pages-wrap">

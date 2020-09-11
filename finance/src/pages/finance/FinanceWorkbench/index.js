@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import ViewCardPane from '../../components/ViewCardPane';
 import BlockChainNode from '../../components/BlockChainNode';
 import LatestCashFlow from '../../components/LatestCashFlow';
-import {YtStatistic, YtTable, YtCard} from 'common';
+import { YtStatistic, YtTable, YtCard } from 'common';
+import PagesControll from '../../PagesControll';
 import TinyAearChart from './components/TinyAearChart';
 import AssetDynamicChart from './components/AssetDynamicChart';
 import columns, {management} from './columns';
@@ -53,28 +54,22 @@ class OperateWorkbench extends React.Component {
         //   text:{data:'我是测试redux'}
         // })
     }
-    componentDidUpdate(){
-      console.log('componentDidUpdate',Sessions.get('loadCount'));
-    }
     // 融资企业
     fetchManagementList() {
         GetManagementListApi({pageSize: 3, pageNow: 1})
         .then(res => {
             res.data.forEach((item, index) => item.key = index + 1);//ant table rowkey
             let managementList = res.data;
-            let p = {...this.state, managementList }
-            this.setState(p)
+            this.setState({ managementList })
         })
     }
 
     //统计信息
     fetchStatisticsData() {
-        // this.setState({ loading: true});
         GetStatisticsDataApi({pageSize: 3, pageNow: 1})
         .then(res => {
             let statisticsData = res.data;
-            let p = {...this.state, statisticsData}
-            this.setState(p)
+            this.setState({statisticsData})
         })
     }
 
@@ -86,7 +81,6 @@ class OperateWorkbench extends React.Component {
             this.setState({ dateInfo })
         })
     }
-
     //资产池
     fetchAssetPool() {
         GetAssetPoolApi({pageSize: 3, pageNow: 1})
@@ -102,18 +96,16 @@ class OperateWorkbench extends React.Component {
         .then(res => {
             res.data.forEach((item, index) => item.key = index + 1);//ant table rowkey
             let warningInfo = res.data;
-            let p = {warningInfo}
-            this.setState(p)
+            this.setState({warningInfo})
         })
     }
 
     render() {
         let {managementList, statisticsData, warningInfo, assetPool, dateInfo} = this.state
         let {currentLoanData, receivableData, loanWithdrawalData} = statisticsData;
-        let spinloading = Sessions.get('loadCount')=='0'?false:true;
-        console.log('spinloading+render',Sessions.get('loadCount'))
+
         return (
-            <Spin spinning={false}>
+            <PagesControll>
                 <div className="financeWorkbench-pages-wrap">
                     <div className="box-flex">
                         <ViewCardPane
@@ -234,7 +226,7 @@ class OperateWorkbench extends React.Component {
                         </div>
                     </div>
                 </div>
-            </Spin>
+            </PagesControll>
         )
     }
 }
